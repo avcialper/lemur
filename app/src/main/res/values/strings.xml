@@ -7,4 +7,9 @@
     <string name="login">Giriş Yap</string>
     <string name="forgot_password">Şifremi Unuttum</string>
     <string name="do_not_have_account">Hesabın yok mu? Kaydol</string>
+    <string name="is_required">Bu alan boş bırakılamaz.</string>
+    <string name="invalid_email">Geçersiz e-posta adresi.</string>"
+    <string name="invalid_length">Şifre en az 8 karakter en fazla 16 karakter olmalıdır.</string>
+    <string name="invalid_password">Şifre en az bir büyük harf, bir küçük harf ve bir rakam içermelidir.</string>
+    <string name="invalid_confirm_password">Şifreler eşleşmiyor.</string>
 </resources>
