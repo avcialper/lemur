@@ -11,6 +11,11 @@
     <!-- TextInputLayout -->
     <style name="TextInputLayout" parent="Theme.Lemur">
         <item name="android:layout_marginBottom">@dimen/margin_small</item>
+        <item name="errorTextColor">@color/red</item>
+        <item name="hintEnabled">false</item>
+        <item name="errorEnabled">true</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <!-- TextInput -->
@@ -19,21 +24,25 @@
         <item name="android:background">@drawable/text_input_bg</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textColorHint">@color/grey</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 
     <style name="TextInput" parent="Base.TextInput" />
 
     <!-- Button -->
-    <style name="Base.Button" parent="Theme.Lemur">
+    <style name="Base.AuthButton" parent="Theme.Lemur">
         <item name="android:layout_marginVertical">@dimen/margin_small</item>
         <item name="android:fontFamily">@font/poppins</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:paddingVertical">@dimen/padding_medium</item>
         <item name="cornerRadius">@dimen/corner_radius</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="Button" parent="Base.Button">
+    <style name="AuthButton" parent="Base.AuthButton">
         <item name="backgroundTint">@color/orange</item>
         <item name="android:textColor">@color/black</item>
     </style>
@@ -42,6 +51,8 @@
     <style name="Base.PressableText" parent="Theme.Lemur">
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="PressableText" parent="Base.PressableText">

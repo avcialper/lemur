@@ -19,18 +19,11 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/provider_email"
-        style="@style/TextInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:errorEnabled="true"
-        app:errorTextColor="@color/red"
-        app:hintEnabled="false">
+        style="@style/TextInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_email"
             style="@style/TextInput"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:autofillHints="emailAddress"
             android:hint="@string/e_mail"
             android:inputType="textEmailAddress" />
@@ -40,19 +33,13 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/provider_password"
         style="@style/TextInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:errorEnabled="true"
-        app:errorTextColor="@color/red"
-        app:hintEnabled="false"
+        app:errorIconDrawable="@null"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_password"
             style="@style/TextInput"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:autofillHints="password"
             android:hint="@string/password"
             android:inputType="textPassword" />
@@ -62,24 +49,18 @@
     <TextView
         android:id="@+id/text_forgot_password"
         style="@style/PressableText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:text="@string/forgot_password" />
 
     <Button
         android:id="@+id/button_login"
-        style="@style/Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/AuthButton"
         android:contentDescription="@string/login"
         android:text="@string/login" />
 
     <TextView
-        android:id="@+id/text_register"
+        android:id="@+id/text_sign_up"
         style="@style/PressableText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/do_not_have_account" />
 
 </LinearLayout>

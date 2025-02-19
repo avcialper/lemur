@@ -6,7 +6,7 @@
 
     <style name="TextInput" parent="Base.TextInput" />
 
-    <style name="Button" parent="Base.Button">
+    <style name="AuthButton" parent="Base.AuthButton">
         <item name="backgroundTint">@color/orange</item>
         <item name="android:textColor">@color/black</item>
     </style>
