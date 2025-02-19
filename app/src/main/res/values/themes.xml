@@ -1,9 +1,52 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources>
+
     <style name="Base.Theme.Lemur" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="backgroundColor">@color/white</item>
     </style>
 
-    <style name="Theme.Lemur" parent="Base.Theme.Lemur" />
+    <style name="Theme.Lemur" parent="Base.Theme.Lemur">
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+
+    <!-- TextInputLayout -->
+    <style name="TextInputLayout" parent="Theme.Lemur">
+        <item name="android:layout_marginBottom">@dimen/margin_small</item>
+    </style>
+
+    <!-- TextInput -->
+    <style name="Base.TextInput" parent="Theme.Lemur">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:background">@drawable/text_input_bg</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/grey</item>
+    </style>
+
+    <style name="TextInput" parent="Base.TextInput" />
+
+    <!-- Button -->
+    <style name="Base.Button" parent="Theme.Lemur">
+        <item name="android:layout_marginVertical">@dimen/margin_small</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:paddingVertical">@dimen/padding_medium</item>
+        <item name="cornerRadius">@dimen/corner_radius</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Button" parent="Base.Button">
+        <item name="backgroundTint">@color/orange</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!-- Pressable Text -->
+    <style name="Base.PressableText" parent="Theme.Lemur">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="PressableText" parent="Base.PressableText">
+        <item name="android:textColor">@color/black</item>
+
+    </style>
+
 </resources>

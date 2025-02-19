@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="orange">#FFA823</color>
+    <color name="grey">#454444</color>
+    <color name="vulcan">#373A40</color>
+    <color name="yellow">#F6E9B2</color>
+    <color name="papaya_whip">#FFF2DB</color>
+    <color name="red">#FF6161</color>
 </resources>
