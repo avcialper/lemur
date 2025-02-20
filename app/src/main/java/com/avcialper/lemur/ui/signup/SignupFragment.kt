@@ -41,6 +41,12 @@ class SignupFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
+            imageUser.setOnClickListener {
+                galleryPicker.pickImageFromGallery { uri ->
+                    imageUser.setImageURI(uri)
+                }
+            }
+
             buttonSignup.setOnClickListener {
                 val isValid = validate()
 
@@ -48,10 +54,6 @@ class SignupFragment : Fragment() {
                     Toast.makeText(this@SignupFragment.context, "buyrun", Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    private fun openGallery() {
-
     }
 
     private fun validate(): Boolean {
