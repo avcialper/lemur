@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="backgroundColor" format="color" />
-    <attr name="inputBackgroundColor" format="color" />
+
+    <declare-styleable name="TextInput">
+        <attr name="android:autofillHints" />
+        <attr name="android:hint" />
+        <attr name="android:inputType" />
+        <attr name="errorIconDrawable" />
+        <attr name="endIconTint" />
+        <attr name="endIconMode" />
+    </declare-styleable>
 </resources>
