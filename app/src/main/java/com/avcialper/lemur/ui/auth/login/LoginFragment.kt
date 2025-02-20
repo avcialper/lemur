@@ -1,4 +1,4 @@
-package com.avcialper.lemur.ui.login
+package com.avcialper.lemur.ui.auth.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -37,6 +37,11 @@ class LoginFragment : Fragment() {
         binding.apply {
             textSignup.setOnClickListener {
                 val direction = LoginFragmentDirections.toSignup()
+                direction.navigate()
+            }
+
+            textForgotPassword.setOnClickListener {
+                val direction = LoginFragmentDirections.toForgot()
                 direction.navigate()
             }
 

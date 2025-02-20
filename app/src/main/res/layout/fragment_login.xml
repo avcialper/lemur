@@ -2,20 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/backgroundColor"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:paddingHorizontal="@dimen/padding_large"
-    tools:context=".ui.login.LoginFragment">
+    style="@style/LinearPage"
+    tools:context=".ui.auth.login.LoginFragment">
 
     <ImageView
-        android:layout_width="240dp"
-        android:layout_height="240dp"
-        android:layout_marginBottom="@dimen/margin_medium"
-        android:contentDescription="@string/app_logo"
-        android:src="@drawable/app_logo" />
+        style="@style/Image"
+        android:contentDescription="@string/app_name" />
 
     <com.avcialper.lemur.ui.component.TextInput
         android:id="@+id/input_email"
@@ -45,7 +37,6 @@
     <Button
         android:id="@+id/button_login"
         style="@style/AuthButton"
-        android:contentDescription="@string/login"
         android:text="@string/login" />
 
     <TextView

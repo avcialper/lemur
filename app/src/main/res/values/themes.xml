@@ -8,6 +8,21 @@
         <item name="android:fontFamily">@font/poppins</item>
     </style>
 
+    <!-- LinearPage -->
+    <style name="Base.LinearPage" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingHorizontal" tools:targetApi="o">@dimen/padding_large</item>
+    </style>
+
+    <!-- LinearPage Light Mode -->
+    <style name="LinearPage" parent="Base.LinearPage">
+        <item name="android:background">@color/white</item>
+    </style>
+
+
     <!-- TextInputLayout -->
     <style name="TextInputLayout" parent="Theme.Lemur">
         <item name="android:layout_marginBottom">@dimen/margin_small</item>
@@ -28,6 +43,7 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <!-- TextInput Light Mode -->
     <style name="TextInput" parent="Base.TextInput" />
 
     <!-- Button -->
@@ -42,12 +58,13 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <!-- AuthButton Light Mode -->
     <style name="AuthButton" parent="Base.AuthButton">
         <item name="backgroundTint">@color/orange</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <!-- Pressable Text -->
+    <!-- PressableText -->
     <style name="Base.PressableText" parent="Theme.Lemur">
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textStyle">bold</item>
@@ -55,13 +72,19 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <!-- PressableText Light Mode -->
     <style name="PressableText" parent="Base.PressableText">
         <item name="android:textColor">@color/black</item>
 
     </style>
 
+    <!-- Image -->
     <style name="Image" parent="Theme.Lemur">
         <item name="cornerSize">50%</item>
+        <item name="android:layout_width">@dimen/image_size</item>
+        <item name="android:layout_height">@dimen/image_size</item>
+        <item name="android:layout_marginBottom">@dimen/margin_medium</item>
+        <item name="android:src">@drawable/app_logo</item>
     </style>
 
 </resources>

@@ -15,4 +15,5 @@
     <string name="username">Kullanıcı adı</string>
     <string name="confirm_password">Şifre tekrarı</string>
     <string name="signup">Kaydol</string>
+    <string name="reset_password">Şifre Sıfırla</string>
 </resources>

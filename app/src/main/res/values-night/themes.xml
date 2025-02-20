@@ -1,16 +1,24 @@
 <resources>
 
     <style name="Base.Theme.Lemur" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="backgroundColor">@color/black</item>
+
     </style>
 
+    <!-- LinearPage Night Mode -->
+    <style name="LinearPage" parent="Base.LinearPage">
+        <item name="android:background">@color/black</item>
+    </style>
+
+    <!-- TextInput Night Mode -->
     <style name="TextInput" parent="Base.TextInput" />
 
+    <!-- AuthButton Night Mode -->
     <style name="AuthButton" parent="Base.AuthButton">
         <item name="backgroundTint">@color/orange</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <!-- PressableText Night Mode -->
     <style name="PressableText" parent="Base.PressableText">
         <item name="android:textColor">@color/white</item>
     </style>

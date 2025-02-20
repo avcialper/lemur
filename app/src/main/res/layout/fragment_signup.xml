@@ -2,22 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/backgroundColor"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:paddingHorizontal="@dimen/padding_large"
-    tools:context=".ui.signup.SignupFragment">
+    style="@style/LinearPage"
+    tools:context=".ui.auth.signup.SignupFragment">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_user"
-        android:layout_width="240dp"
-        android:layout_height="240dp"
-        android:layout_marginBottom="@dimen/margin_medium"
+        style="@style/Image"
         android:contentDescription="@string/app_logo"
         android:scaleType="centerCrop"
-        android:src="@drawable/app_logo"
         app:shapeAppearanceOverlay="@style/Image" />
 
     <com.avcialper.lemur.ui.component.TextInput
@@ -58,8 +50,6 @@
     <Button
         android:id="@+id/button_signup"
         style="@style/AuthButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="@string/signup" />
 
 </LinearLayout>

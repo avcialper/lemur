@@ -1,4 +1,4 @@
-package com.avcialper.lemur.ui.signup
+package com.avcialper.lemur.ui.auth.signup
 
 import androidx.lifecycle.ViewModel
 

@@ -13,4 +13,5 @@
     <dimen name="text_size_large">24sp</dimen>
 
     <dimen name="corner_radius">8dp</dimen>
+    <dimen name="image_size">240dp</dimen>
 </resources>
