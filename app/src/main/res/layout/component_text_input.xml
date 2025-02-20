@@ -7,6 +7,7 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/input"
-        style="@style/TextInput" />
+        style="@style/TextInput"
+        android:hint="@string/is_required" />
 
 </com.google.android.material.textfield.TextInputLayout>

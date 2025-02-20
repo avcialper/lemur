@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Base.Theme.Lemur" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="backgroundColor">@color/white</item>
@@ -32,10 +32,10 @@
 
     <!-- Button -->
     <style name="Base.AuthButton" parent="Theme.Lemur">
-        <item name="android:layout_marginVertical">@dimen/margin_small</item>
+        <item name="android:layout_marginVertical" tools:targetApi="o">@dimen/margin_small</item>
         <item name="android:fontFamily">@font/poppins</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
-        <item name="android:paddingVertical">@dimen/padding_medium</item>
+        <item name="android:paddingVertical" tools:targetApi="o">@dimen/padding_medium</item>
         <item name="cornerRadius">@dimen/corner_radius</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">match_parent</item>
@@ -58,6 +58,10 @@
     <style name="PressableText" parent="Base.PressableText">
         <item name="android:textColor">@color/black</item>
 
+    </style>
+
+    <style name="Image" parent="Theme.Lemur">
+        <item name="cornerSize">50%</item>
     </style>
 
 </resources>

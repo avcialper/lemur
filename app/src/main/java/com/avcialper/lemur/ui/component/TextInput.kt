@@ -1,11 +1,14 @@
 package com.avcialper.lemur.ui.component
 
 import android.content.Context
+import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
 import com.avcialper.lemur.R
 import com.avcialper.lemur.databinding.ComponentTextInputBinding
+import com.avcialper.lemur.helper.validator.ValidationRule
+import com.avcialper.lemur.helper.validator.validate
 import com.google.android.material.textfield.TextInputLayout
 
 class TextInput @JvmOverloads constructor(
@@ -19,6 +22,8 @@ class TextInput @JvmOverloads constructor(
 
     val input get() = binding.input
     val value get() = input.text.toString()
+
+    fun validate(rules: List<ValidationRule>): Boolean = input.validate(rules)
 
     init {
         val a = context.obtainStyledAttributes(attrs, R.styleable.TextInput, defStyleAttr, 0)
@@ -42,7 +47,7 @@ class TextInput @JvmOverloads constructor(
 
         binding.input.apply {
             endIconMode = END_ICON_NONE
-            setAutofillHints(aAutofillHints)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) setAutofillHints(aAutofillHints)
             hint = aHint
             inputType = aInputType
         }

@@ -8,14 +8,24 @@
     android:gravity="center"
     android:orientation="vertical"
     android:paddingHorizontal="@dimen/padding_large"
-    tools:context=".ui.login.LoginFragment">
+    tools:context=".ui.signup.SignupFragment">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/image_user"
         android:layout_width="240dp"
         android:layout_height="240dp"
         android:layout_marginBottom="@dimen/margin_medium"
         android:contentDescription="@string/app_logo"
-        android:src="@drawable/app_logo" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/app_logo"
+        app:shapeAppearanceOverlay="@style/Image" />
+
+    <com.avcialper.lemur.ui.component.TextInput
+        android:id="@+id/input_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/username"
+        android:inputType="text" />
 
     <com.avcialper.lemur.ui.component.TextInput
         android:id="@+id/input_email"
@@ -29,28 +39,27 @@
         android:id="@+id/input_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:autofillHints="password"
         android:hint="@string/password"
         android:inputType="textPassword"
         app:endIconMode="password_toggle"
         app:endIconTint="@color/black"
         app:errorIconDrawable="@null" />
 
-    <TextView
-        android:id="@+id/text_forgot_password"
-        style="@style/PressableText"
-        android:layout_gravity="end"
-        android:text="@string/forgot_password" />
+    <com.avcialper.lemur.ui.component.TextInput
+        android:id="@+id/input_confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword"
+        app:endIconMode="password_toggle"
+        app:endIconTint="@color/black"
+        app:errorIconDrawable="@null" />
 
     <Button
-        android:id="@+id/button_login"
+        android:id="@+id/button_signup"
         style="@style/AuthButton"
-        android:contentDescription="@string/login"
-        android:text="@string/login" />
-
-    <TextView
-        android:id="@+id/text_signup"
-        style="@style/PressableText"
-        android:text="@string/do_not_have_account" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/signup" />
 
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.avcialper.lemur.ui.login
+package com.avcialper.lemur.ui.signup
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,26 +7,32 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
-import com.avcialper.lemur.databinding.FragmentLoginBinding
+import com.avcialper.lemur.MainActivity
+import com.avcialper.lemur.databinding.FragmentSignupBinding
+import com.avcialper.lemur.helper.GalleryPicker
+import com.avcialper.lemur.helper.validator.ConfirmPasswordRule
 import com.avcialper.lemur.helper.validator.EmailRule
 import com.avcialper.lemur.helper.validator.EmptyRule
 import com.avcialper.lemur.helper.validator.LengthRule
 import com.avcialper.lemur.helper.validator.PasswordRule
 
-class LoginFragment : Fragment() {
+class SignupFragment : Fragment() {
 
-    private var _binding: FragmentLoginBinding? = null
+    private var _binding: FragmentSignupBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by viewModels<LoginViewModel>()
+    private val viewModel by viewModels<SignupViewModel>()
+
+    private val galleryPicker by lazy {
+        val activity = requireActivity() as MainActivity
+        GalleryPicker(activity)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        _binding = FragmentSignupBinding.inflate(layoutInflater, container, false)
         val view = binding.root
         return view
     }
@@ -35,26 +41,28 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            textSignup.setOnClickListener {
-                val direction = LoginFragmentDirections.toSignup()
-                direction.navigate()
-            }
-
-            buttonLogin.setOnClickListener {
+            buttonSignup.setOnClickListener {
                 val isValid = validate()
+
                 if (isValid)
-                    Toast.makeText(this@LoginFragment.context, "buyrun", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@SignupFragment.context, "buyrun", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun NavDirections.navigate() {
-        val navController = findNavController()
-        navController.navigate(this)
+    private fun openGallery() {
+
     }
 
     private fun validate(): Boolean {
         binding.apply {
+            val isValidUsername = inputUsername.validate(
+                rules = listOf(
+                    EmptyRule(),
+                    LengthRule(4, 16)
+                )
+            )
+
             val isValidEmail = inputEmail.validate(
                 rules = listOf(
                     EmptyRule(),
@@ -70,7 +78,16 @@ class LoginFragment : Fragment() {
                 )
             )
 
-            return isValidEmail && isValidPassword
+            val isValidConfirmPassword = inputConfirmPassword.validate(
+                rules = listOf(
+                    EmptyRule(),
+                    LengthRule(),
+                    PasswordRule(),
+                    ConfirmPasswordRule(inputPassword.value)
+                )
+            )
+
+            return isValidUsername && isValidEmail && isValidPassword && isValidConfirmPassword
         }
     }
 
