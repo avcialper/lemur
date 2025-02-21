@@ -16,4 +16,6 @@
     <string name="confirm_password">Şifre tekrarı</string>
     <string name="signup">Kaydol</string>
     <string name="reset_password">Şifre Sıfırla</string>
+    <string name="close">Kapat</string>
+    <string name="select_one_image">Bir adet resim seçiniz.</string>
 </resources>

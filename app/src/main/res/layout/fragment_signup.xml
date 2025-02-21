@@ -7,10 +7,10 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_user"
-        style="@style/Image"
+        style="@style/AppLogo"
         android:contentDescription="@string/app_logo"
         android:scaleType="centerCrop"
-        app:shapeAppearanceOverlay="@style/Image" />
+        app:shapeAppearanceOverlay="@style/RoundedImage" />
 
     <com.avcialper.lemur.ui.component.TextInput
         android:id="@+id/input_username"

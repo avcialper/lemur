@@ -3,6 +3,7 @@ package com.avcialper.lemur.helper
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.READ_MEDIA_IMAGES
 import android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
+import android.content.ContentUris
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -10,6 +11,7 @@ import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.avcialper.lemur.ui.component.imageselector.PartialImageViewer
 
 class ImagePicker(
     private val fragment: Fragment,
@@ -33,7 +35,7 @@ class ImagePicker(
                         deniedPermissions.contains("android.permission.READ_MEDIA_IMAGES")
 
             if (isPartialAccess)
-                selectImageFromMedia()
+                selectFromPartialImage()
             else
                 openGallery()
         }
@@ -48,7 +50,7 @@ class ImagePicker(
             checkPermission(READ_MEDIA_VISUAL_USER_SELECTED)
         ) {
             // Partial access on Android 14 (API level 34) or higher
-            selectImageFromMedia()
+            selectFromPartialImage()
         } else if (checkPermission(READ_EXTERNAL_STORAGE)) {
             // Full access up to Android 12 (API level 32)
             openGallery()
@@ -80,24 +82,37 @@ class ImagePicker(
         galleryLauncher.launch("image/*")
     }
 
-    private fun selectImageFromMedia() {
-        // TODO foreach ile bütün resimleri gezip bir bottom sheet üzerinde göster, seçimi oradan yap
+    private fun selectFromPartialImage() {
         val projection = arrayOf(MediaStore.Images.Media._ID)
+
+        val collectionUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // Query all the device storage volumes instead of the primary only
+            MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
+        } else {
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        }
+
+        val uris = mutableListOf<Uri>()
+
         fragment.requireActivity().contentResolver.query(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            collectionUri,
             projection,
             null,
             null,
-            null
+            "${MediaStore.Images.Media.DATE_ADDED} DESC"
+
         )?.use { cursor ->
-            if (cursor.moveToFirst()) {
-                val id = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID))
-                val uri = Uri.withAppendedPath(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    id.toString()
-                )
-                onImageSelected.invoke(uri)
+            val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+
+            while (cursor.moveToNext()) {
+                val uri = ContentUris.withAppendedId(collectionUri, cursor.getLong(idColumn))
+                uris.add(uri)
             }
         }
+
+        val picker = PartialImageViewer(uris) { uri ->
+            onImageSelected.invoke(uri)
+        }
+        picker.show(fragment.parentFragmentManager, "image_selector")
     }
 }

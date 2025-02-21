@@ -1,12 +1,12 @@
 <resources>
 
     <style name="Base.Theme.Lemur" parent="Theme.Material3.DayNight.NoActionBar">
-
+        <item name="primaryColor">@color/white</item>
     </style>
 
     <!-- LinearPage Night Mode -->
     <style name="LinearPage" parent="Base.LinearPage">
-        <item name="android:background">@color/black</item>
+        <item name="android:background">@color/soft_black</item>
     </style>
 
     <!-- TextInput Night Mode -->

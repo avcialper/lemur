@@ -6,7 +6,7 @@
     tools:context=".ui.auth.login.LoginFragment">
 
     <ImageView
-        style="@style/Image"
+        style="@style/AppLogo"
         android:contentDescription="@string/app_name" />
 
     <com.avcialper.lemur.ui.component.TextInput
