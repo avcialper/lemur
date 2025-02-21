@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.avcialper.lemur.MainActivity
 import com.avcialper.lemur.databinding.FragmentSignupBinding
-import com.avcialper.lemur.helper.GalleryPicker
+import com.avcialper.lemur.helper.ImagePicker
 import com.avcialper.lemur.helper.validator.ConfirmPasswordRule
 import com.avcialper.lemur.helper.validator.EmailRule
 import com.avcialper.lemur.helper.validator.EmptyRule
@@ -23,11 +22,6 @@ class SignupFragment : Fragment() {
 
     private val viewModel by viewModels<SignupViewModel>()
 
-    private val galleryPicker by lazy {
-        val activity = requireActivity() as MainActivity
-        GalleryPicker(activity)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,14 +31,17 @@ class SignupFragment : Fragment() {
         return view
     }
 
+    private lateinit var imagePicker: ImagePicker
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        imagePicker = ImagePicker(this) { uri ->
+            binding.imageUser.setImageURI(uri)
+        }
+
         binding.apply {
             imageUser.setOnClickListener {
-                galleryPicker.pickImageFromGallery { uri ->
-                    imageUser.setImageURI(uri)
-                }
+                imagePicker.pickImage()
             }
 
             buttonSignup.setOnClickListener {

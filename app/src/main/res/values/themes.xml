@@ -14,6 +14,10 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:gravity">center</item>
         <item name="android:orientation">vertical</item>
+        <item name="android:paddingLeft">@dimen/padding_large</item>
+        <item name="android:paddingRight">@dimen/padding_large</item>
+        <item name="android:paddingTop">@dimen/padding_large</item>
+        <item name="android:paddingBottom">@dimen/padding_large</item>
         <item name="android:paddingHorizontal" tools:targetApi="o">@dimen/padding_large</item>
     </style>
 
@@ -48,9 +52,13 @@
 
     <!-- Button -->
     <style name="Base.AuthButton" parent="Theme.Lemur">
+        <item name="android:layout_marginTop">@dimen/margin_small</item>
+        <item name="android:layout_marginBottom">@dimen/margin_small</item>
         <item name="android:layout_marginVertical" tools:targetApi="o">@dimen/margin_small</item>
         <item name="android:fontFamily">@font/poppins</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:paddingTop">@dimen/padding_medium</item>
+        <item name="android:paddingBottom">@dimen/padding_medium</item>
         <item name="android:paddingVertical" tools:targetApi="o">@dimen/padding_medium</item>
         <item name="cornerRadius">@dimen/corner_radius</item>
         <item name="android:textStyle">bold</item>
