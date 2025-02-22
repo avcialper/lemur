@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="backgroundColor" format="color" />
     <attr name="primaryColor" format="color" />
     <declare-styleable name="TextInput">
         <attr name="android:autofillHints" />

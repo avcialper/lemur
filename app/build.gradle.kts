@@ -58,4 +58,7 @@ dependencies {
 
     // Coil
     implementation(libs.coil)
+
+    // Image Cropper
+    implementation(libs.android.image.cropper)
 }

@@ -11,15 +11,31 @@ import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.avcialper.lemur.R
 import com.avcialper.lemur.ui.component.imageselector.PartialImageViewer
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageContractOptions
+import com.canhub.cropper.CropImageOptions
+import com.canhub.cropper.CropImageView
 
 class ImagePicker(
     private val fragment: Fragment,
     private val onImageSelected: (Uri) -> Unit
 ) {
+    private val options = CropImageOptions(
+        activityBackgroundColor = ContextCompat.getColor(fragment.requireContext(), R.color.black),
+        activityTitle = ContextCompat.getString(fragment.requireContext(), R.string.crop_image),
+        toolbarColor = ContextCompat.getColor(fragment.requireContext(), R.color.black),
+        cropShape = CropImageView.CropShape.OVAL,
+        scaleType = CropImageView.ScaleType.CENTER_CROP,
+        aspectRatioX = 1,
+        aspectRatioY = 1,
+        fixAspectRatio = true
+    )
+
     private val galleryLauncher =
         fragment.registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-            uri?.let { onImageSelected(it) }
+            uri?.let { cropImage(uri) }
         }
 
     private val permissionLauncher =
@@ -39,6 +55,20 @@ class ImagePicker(
             else
                 openGallery()
         }
+
+    private val imageCropLauncher =
+        fragment.registerForActivityResult(CropImageContract()) { result ->
+            if (result.isSuccessful) {
+                result.uriContent?.let { uri ->
+                    onImageSelected.invoke(uri)
+                }
+            }
+        }
+
+    private fun cropImage(uri: Uri) {
+        val cropOptions = CropImageContractOptions(uri, options)
+        imageCropLauncher.launch(cropOptions)
+    }
 
     fun pickImage() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
@@ -111,7 +141,7 @@ class ImagePicker(
         }
 
         val picker = PartialImageViewer(uris) { uri ->
-            onImageSelected.invoke(uri)
+            cropImage(uri)
         }
         picker.show(fragment.parentFragmentManager, "image_selector")
     }

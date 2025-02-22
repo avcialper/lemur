@@ -10,6 +10,7 @@
         style="@style/AppLogo"
         android:contentDescription="@string/app_logo"
         android:scaleType="centerCrop"
+        android:src="@drawable/select_image"
         app:shapeAppearanceOverlay="@style/RoundedImage" />
 
     <com.avcialper.lemur.ui.component.TextInput

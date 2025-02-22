@@ -1,6 +1,7 @@
 <resources>
 
     <style name="Base.Theme.Lemur" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="backgroundColor">@color/soft_black</item>
         <item name="primaryColor">@color/white</item>
     </style>
 
