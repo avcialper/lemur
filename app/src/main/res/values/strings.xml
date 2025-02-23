@@ -19,4 +19,5 @@
     <string name="close">Kapat</string>
     <string name="select_one_image">Bir adet resim seçiniz.</string>
     <string name="crop_image">Resim Kırpma</string>
+    <string name="crop">KIRP</string>
 </resources>

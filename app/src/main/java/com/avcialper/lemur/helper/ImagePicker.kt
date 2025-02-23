@@ -25,8 +25,9 @@ class ImagePicker(
     private val options = CropImageOptions(
         activityBackgroundColor = ContextCompat.getColor(fragment.requireContext(), R.color.black),
         activityTitle = ContextCompat.getString(fragment.requireContext(), R.string.crop_image),
+        cropMenuCropButtonTitle = ContextCompat.getString(fragment.requireContext(), R.string.crop),
         toolbarColor = ContextCompat.getColor(fragment.requireContext(), R.color.black),
-        cropShape = CropImageView.CropShape.OVAL,
+        cropShape = CropImageView.CropShape.RECTANGLE,
         scaleType = CropImageView.ScaleType.CENTER_CROP,
         aspectRatioX = 1,
         aspectRatioY = 1,
