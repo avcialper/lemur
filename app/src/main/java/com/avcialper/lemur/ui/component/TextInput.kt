@@ -20,8 +20,8 @@ class TextInput @JvmOverloads constructor(
     private val layoutInflater = LayoutInflater.from(context)
     private val binding = ComponentTextInputBinding.inflate(layoutInflater, this, true)
 
-    val input get() = binding.input
-    val value get() = input.text.toString()
+    private val input get() = binding.input
+    val value get() = input.text.toString().trim()
 
     fun validate(rules: List<ValidationRule>): Boolean = input.validate(rules)
 

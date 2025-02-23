@@ -24,7 +24,7 @@
         tools:layout="@layout/fragment_signup" />
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.avcialper.lemur.ui.auth.forgot.ForgotPasswordFragment"
+        android:name="com.avcialper.lemur.ui.auth.reset.ResetPasswordFragment"
         android:label="fragment_forgot_password"
-        tools:layout="@layout/fragment_forgot_password" />
+        tools:layout="@layout/fragment_reset_password" />
 </navigation>

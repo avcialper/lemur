@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "512194261638",
+    "project_id": "lemur-1a332",
+    "storage_bucket": "lemur-1a332.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512194261638:android:8a2d7f4998f5bab7fe1707",
+        "android_client_info": {
+          "package_name": "com.avcialper.lemur"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3jqkF7reoj9s_0Hl2I-LTIDZiIlF1gMw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
