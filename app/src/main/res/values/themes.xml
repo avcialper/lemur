@@ -9,6 +9,13 @@
         <item name="android:fontFamily">@font/poppins</item>
     </style>
 
+    <!-- ScrollView -->
+    <style name="ScrollView" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:fillViewport">true</item>
+    </style>
+
     <!-- LinearPage -->
     <style name="Base.LinearPage" parent="Theme.Lemur">
         <item name="android:layout_width">match_parent</item>

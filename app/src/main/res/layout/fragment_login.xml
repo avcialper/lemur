@@ -1,47 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/LinearPage"
+    style="@style/ScrollView"
     tools:context=".ui.auth.login.LoginFragment">
 
-    <ImageView
-        style="@style/AppLogo"
-        android:contentDescription="@string/app_name" />
+    <LinearLayout style="@style/LinearPage">
 
-    <com.avcialper.lemur.ui.component.TextInput
-        android:id="@+id/input_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autofillHints="emailAddress"
-        android:hint="@string/email"
-        android:inputType="textEmailAddress" />
+        <ImageView
+            style="@style/AppLogo"
+            android:contentDescription="@string/app_name" />
 
-    <com.avcialper.lemur.ui.component.TextInput
-        android:id="@+id/input_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autofillHints="password"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        app:endIconMode="password_toggle"
-        app:endIconTint="@color/black"
-        app:errorIconDrawable="@null" />
+        <com.avcialper.lemur.ui.component.TextInput
+            android:id="@+id/input_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="emailAddress"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress" />
 
-    <TextView
-        android:id="@+id/text_forgot_password"
-        style="@style/PressableText"
-        android:layout_gravity="end"
-        android:text="@string/forgot_password" />
+        <com.avcialper.lemur.ui.component.TextInput
+            android:id="@+id/input_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="password"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/black"
+            app:errorIconDrawable="@null" />
 
-    <Button
-        android:id="@+id/button_login"
-        style="@style/AuthButton"
-        android:text="@string/login" />
+        <TextView
+            android:id="@+id/text_forgot_password"
+            style="@style/PressableText"
+            android:layout_gravity="end"
+            android:text="@string/forgot_password" />
 
-    <TextView
-        android:id="@+id/text_signup"
-        style="@style/PressableText"
-        android:text="@string/do_not_have_account" />
+        <Button
+            android:id="@+id/button_login"
+            style="@style/AuthButton"
+            android:text="@string/login" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/text_signup"
+            style="@style/PressableText"
+            android:text="@string/do_not_have_account" />
+
+    </LinearLayout>
+</ScrollView>

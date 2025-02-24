@@ -1,56 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/LinearPage"
+    style="@style/ScrollView"
     tools:context=".ui.auth.signup.SignupFragment">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/image_user"
-        style="@style/AppLogo"
-        android:contentDescription="@string/app_logo"
-        android:scaleType="centerCrop"
-        android:src="@drawable/select_image"
-        app:shapeAppearanceOverlay="@style/RoundedImage" />
+    <LinearLayout style="@style/LinearPage">
 
-    <com.avcialper.lemur.ui.component.TextInput
-        android:id="@+id/input_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/username"
-        android:inputType="text" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_user"
+            style="@style/AppLogo"
+            android:contentDescription="@string/app_logo"
+            android:scaleType="centerCrop"
+            android:src="@drawable/select_image"
+            app:shapeAppearanceOverlay="@style/RoundedImage" />
 
-    <com.avcialper.lemur.ui.component.TextInput
-        android:id="@+id/input_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autofillHints="emailAddress"
-        android:hint="@string/email"
-        android:inputType="textEmailAddress" />
+        <com.avcialper.lemur.ui.component.TextInput
+            android:id="@+id/input_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/username"
+            android:inputType="text" />
 
-    <com.avcialper.lemur.ui.component.TextInput
-        android:id="@+id/input_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        app:endIconMode="password_toggle"
-        app:endIconTint="@color/black"
-        app:errorIconDrawable="@null" />
+        <com.avcialper.lemur.ui.component.TextInput
+            android:id="@+id/input_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="emailAddress"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress" />
 
-    <com.avcialper.lemur.ui.component.TextInput
-        android:id="@+id/input_confirm_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/confirm_password"
-        android:inputType="textPassword"
-        app:endIconMode="password_toggle"
-        app:endIconTint="@color/black"
-        app:errorIconDrawable="@null" />
+        <com.avcialper.lemur.ui.component.TextInput
+            android:id="@+id/input_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/black"
+            app:errorIconDrawable="@null" />
 
-    <Button
-        android:id="@+id/button_signup"
-        style="@style/AuthButton"
-        android:text="@string/signup" />
+        <com.avcialper.lemur.ui.component.TextInput
+            android:id="@+id/input_confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/confirm_password"
+            android:inputType="textPassword"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/black"
+            app:errorIconDrawable="@null" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/button_signup"
+            style="@style/AuthButton"
+            android:text="@string/signup" />
+
+    </LinearLayout>
+
+</ScrollView>
