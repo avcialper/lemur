@@ -1,5 +1,6 @@
 package com.avcialper.lemur.ui.auth.login
 
+import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.repository.AuthRepository
@@ -19,7 +20,24 @@ class LoginViewModel @Inject constructor(
     private val _state = MutableStateFlow<Resource<FirebaseUser>?>(null)
     val state = _state.asStateFlow()
 
-    fun login(email: String, password: String) = viewModelScope.launch {
+    private val _email = MutableStateFlow("")
+    private val _password = MutableStateFlow("")
+
+    fun onEmailChanged(email: String) {
+        _email.value = email
+    }
+
+    fun onPasswordChanged(password: String) {
+        _password.value = password
+    }
+
+    fun onLoginClicked() {
+        val email = _email.value
+        val password = _password.value
+        login(email, password)
+    }
+
+    private fun login(email: String, password: String) = viewModelScope.launch {
         _state.value = Resource.Loading()
         val result = repository.login(email, password)
         _state.value = result

@@ -1,7 +1,9 @@
 package com.avcialper.lemur.ui.auth.login
 
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.avcialper.lemur.databinding.FragmentLoginBinding
 import com.avcialper.lemur.helper.validator.EmailRule
 import com.avcialper.lemur.helper.validator.EmptyRule
@@ -18,10 +20,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     private val viewModel by viewModels<LoginViewModel>()
 
     override fun FragmentLoginBinding.initialize() {
-
         viewModelObserver()
 
         binding.apply {
+
+            inputEmail.setOnTextChangedListener(viewModel::onEmailChanged)
+            inputPassword.setOnTextChangedListener(viewModel::onPasswordChanged)
+
             textSignup.setOnClickListener {
                 val direction = LoginFragmentDirections.toSignup()
                 direction.navigate()
@@ -35,33 +40,45 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             buttonLogin.setOnClickListener {
                 val isValid = validate()
                 if (!isValid) return@setOnClickListener
-
-                val email = inputEmail.value
-                val password = inputPassword.value
-                viewModel.login(email, password)
+                viewModel.onLoginClicked()
             }
         }
     }
 
     private fun viewModelObserver() {
         lifecycleScope.launch {
-            viewModel.state.collect { state ->
-                when (state) {
-                    is Resource.Loading -> {
-                        toast("Loading")
-                    }
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect { state ->
+                    when (state) {
+                        is Resource.Loading -> {
+                            loadingState(true)
+                            toast("Loading")
+                        }
 
-                    is Resource.Success -> {
-                        toast("Success")
-                    }
+                        is Resource.Success -> {
+                            loadingState(false)
+                            toast("Success")
+                        }
 
-                    is Resource.Error -> {
-                        toast("Error: ${state.throwable.toString()}")
-                    }
+                        is Resource.Error -> {
+                            loadingState(false)
+                            toast("Error: ${state.throwable}")
+                        }
 
-                    else -> {}
+                        else -> Unit
+                    }
                 }
             }
+        }
+    }
+
+    private fun loadingState(isLoading: Boolean) {
+        binding.apply {
+            inputEmail.setLoadingState(isLoading)
+            inputPassword.setLoadingState(isLoading)
+            buttonLogin.updateLoadingState(isLoading)
+            textForgotPassword.updateLoadingState(isLoading)
+            textSignup.updateLoadingState(isLoading)
         }
     }
 

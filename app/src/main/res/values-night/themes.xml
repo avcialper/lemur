@@ -15,7 +15,6 @@
 
     <!-- AuthButton Night Mode -->
     <style name="AuthButton" parent="Base.AuthButton">
-        <item name="backgroundTint">@color/orange</item>
         <item name="android:textColor">@color/black</item>
     </style>
 

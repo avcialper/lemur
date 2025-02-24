@@ -5,6 +5,7 @@ import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
+import androidx.core.widget.doOnTextChanged
 import com.avcialper.lemur.R
 import com.avcialper.lemur.databinding.ComponentTextInputBinding
 import com.avcialper.lemur.helper.validator.ValidationRule
@@ -21,9 +22,24 @@ class TextInput @JvmOverloads constructor(
     private val binding = ComponentTextInputBinding.inflate(layoutInflater, this, true)
 
     private val input get() = binding.input
-    val value get() = input.text.toString().trim()
+    var value
+        get() = input.text.toString().trim()
+        set(value) = input.setText(value)
 
     fun validate(rules: List<ValidationRule>): Boolean = input.validate(rules)
+
+    fun setLoadingState(isLoading: Boolean) {
+        input.apply {
+            isEnabled = !isLoading
+            alpha = if (isLoading) 0.5f else 1f
+        }
+    }
+
+    fun setOnTextChangedListener(listener: (String) -> Unit) {
+        input.doOnTextChanged { text, _, _, _ ->
+            listener.invoke(text.toString())
+        }
+    }
 
     init {
         val a = context.obtainStyledAttributes(attrs, R.styleable.TextInput, defStyleAttr, 0)
