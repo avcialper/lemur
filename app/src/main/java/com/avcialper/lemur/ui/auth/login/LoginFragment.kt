@@ -1,45 +1,25 @@
 package com.avcialper.lemur.ui.auth.login
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
 import com.avcialper.lemur.databinding.FragmentLoginBinding
 import com.avcialper.lemur.helper.validator.EmailRule
 import com.avcialper.lemur.helper.validator.EmptyRule
 import com.avcialper.lemur.helper.validator.LengthRule
 import com.avcialper.lemur.helper.validator.PasswordRule
+import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.util.constants.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
-
-    private var _binding: FragmentLoginBinding? = null
-    private val binding get() = _binding!!
+class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
 
     private val viewModel by viewModels<LoginViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
-    }
+    override fun FragmentLoginBinding.initialize() {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        observeState()
+        viewModelObserver()
 
         binding.apply {
             textSignup.setOnClickListener {
@@ -63,7 +43,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun observeState() {
+    private fun viewModelObserver() {
         lifecycleScope.launch {
             viewModel.state.collect { state ->
                 when (state) {
@@ -85,17 +65,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun toast(message: String) {
-        val context = requireContext()
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun NavDirections.navigate() {
-        val navController = findNavController()
-        navController.navigate(this)
-    }
-
-    private fun validate(): Boolean {
+    override fun validate(): Boolean {
         binding.apply {
             val isValidEmail = inputEmail.validate(
                 rules = listOf(
@@ -114,11 +84,6 @@ class LoginFragment : Fragment() {
 
             return isValidEmail && isValidPassword
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
 }
