@@ -20,16 +20,15 @@ class LoginViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     fun onEmailChanged(email: String) {
-        _state.update { it.copy(email = email) }
+        _state.value.email = email
     }
 
     fun onPasswordChanged(password: String) {
-        _state.update { it.copy(password = password) }
+        _state.value.password = password
     }
 
     fun onLoginClicked() = viewModelScope.launch {
-        val email = _state.value.email
-        val password = _state.value.password
+        val (email, password, _) = _state.value
 
         repository.login(email, password).collect { resource ->
             _state.update { it.copy(resource = resource) }

@@ -4,7 +4,7 @@ import com.avcialper.lemur.BuildConfig
 import com.avcialper.lemur.data.model.ImgBBResponse
 import com.avcialper.lemur.data.model.RegisterUser
 import com.avcialper.lemur.data.repository.remote.StorageApi
-import com.avcialper.lemur.util.constants.Resource
+import com.avcialper.lemur.util.constant.Resource
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

@@ -12,8 +12,10 @@ import com.avcialper.lemur.helper.validator.EmptyRule
 import com.avcialper.lemur.helper.validator.LengthRule
 import com.avcialper.lemur.helper.validator.PasswordRule
 import com.avcialper.lemur.ui.BaseFragment
-import com.avcialper.lemur.util.constants.Resource
+import com.avcialper.lemur.util.constant.Resource
+import com.avcialper.lemur.util.extension.exceptionConverter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.io.File
 
@@ -63,7 +65,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding
 
     private fun observer() {
         lifecycleScope.launch {
-            vm.state.collect { signupState ->
+            vm.state.collectLatest { signupState ->
                 when (signupState.resource) {
                     is Resource.Loading -> {
                         loadingState(true)
@@ -75,8 +77,10 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding
                     }
 
                     is Resource.Error -> {
+                        val errorMessage =
+                            requireContext().exceptionConverter(signupState.resource.throwable!!)
+                        toast(errorMessage)
                         loadingState(false)
-                        toast("Error: ${signupState.resource.throwable}")
                     }
 
                     else -> Unit

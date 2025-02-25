@@ -1,7 +1,6 @@
 package com.avcialper.lemur.data.repository.remote
 
 import com.avcialper.lemur.data.model.ImgBBResponse
-import com.avcialper.lemur.util.constants.Resource
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Multipart

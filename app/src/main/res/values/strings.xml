@@ -20,4 +20,13 @@
     <string name="select_one_image">Bir adet resim seçiniz.</string>
     <string name="crop_image">Resim Kırpma</string>
     <string name="crop">KIRP</string>
+
+    <!-- Error -->
+    <string name="error_unknown">Bilinmeyen bir hata oluştu.</string>
+    <string name="error_email_already_exists">E-posta zaten kayıtlı.</string>
+    <string name="error_to_many_request">Çok fazla istek gönderildi. Lütfen biraz bekleyin.</string>
+    <string name="error_invalid_credential">E-posta veya şifre hatalı.</string>
+    <string name="error_user_not_found">Kullanıcı bulunamadı veya şifre hatalı.</string>
+    <string name="error_login_user_disabled">Kullanıcı hesabı askıya alınmış.</string>
+    <string name="error_login_password_is_weak">Geçersiz şifre.</string>
 </resources>

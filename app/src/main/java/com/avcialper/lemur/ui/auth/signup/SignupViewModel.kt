@@ -7,7 +7,7 @@ import com.avcialper.lemur.data.model.RegisterUser
 import com.avcialper.lemur.data.repository.auth.AuthRepository
 import com.avcialper.lemur.data.repository.storage.StorageRepository
 import com.avcialper.lemur.data.state.SignupState
-import com.avcialper.lemur.util.constants.Resource
+import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,62 +26,57 @@ class SignupViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     fun onUsernameChanged(username: String) {
-        _state.update { it.copy(username = username) }
+        _state.value.username = username
     }
 
     fun onEmailChanged(email: String) {
-        _state.update { it.copy(email = email) }
+        _state.value.email = email
     }
 
     fun onPasswordChanged(password: String) {
-        _state.update { it.copy(password = password) }
+        _state.value.password = password
     }
 
     fun onConfirmPasswordChanged(confirmPassword: String) {
-        _state.update { it.copy(confirmPassword = confirmPassword) }
+        _state.value.confirmPassword = confirmPassword
     }
 
     fun onImageChanged(imageUri: Uri) {
-        _state.update { it.copy(imageUri = imageUri) }
+        _state.value.imageUri = imageUri
     }
 
     fun onSignupClicked(convert: () -> File) = viewModelScope.launch {
-        val imageUri = _state.value.imageUri
+        val (_, email, password, _, _, _, _) = _state.value
 
-        // Upload image to ImgBB
-        if (imageUri != null)
-            uploadImage(convert)
-        else
-            signup()
-    }
-
-    private fun signup() = viewModelScope.launch {
-        val (username, email, password, _, _, imgBB, _) = _state.value
-
-        auth.signup(username, email, password, imgBB).collect { resource ->
+        auth.signup(email, password).collect { resource ->
             if (resource is Resource.Success) {
-                val id = resource.data?.uid!!
-                val user = RegisterUser(id, username, imgBB?.url, imgBB?.deleteUrl)
-                createUser(user)
-            }
+                uploadImage(convert) {
+                    val id = resource.data?.uid!!
+                    createUser(id)
+                }
+            } else if (resource.throwable != null)
+                _state.update { it.copy(resource = Resource.Error(resource.throwable)) }
         }
     }
 
-    private fun uploadImage(convert: () -> File) = viewModelScope.launch {
+    private fun uploadImage(convert: () -> File, onSuccess: () -> Unit) = viewModelScope.launch {
         val file = convert()
         _state.update { it.copy(resource = Resource.Loading()) }
-        storageRepository.uploadImage(file).collect { result ->
-            if (result.throwable != null) {
-                _state.update { it.copy(resource = Resource.Error(result.throwable)) }
+        storageRepository.uploadImage(file).collect { resource ->
+            if (resource.throwable != null) {
+                _state.update { it.copy(resource = Resource.Error(resource.throwable)) }
                 return@collect
-            } else if (result.data != null) {
-                _state.update { it.copy(imgBB = result.data.data) }
-                signup()
+            } else if (resource.data != null) {
+                _state.value.imgBB = resource.data.data
+                onSuccess()
             }
         }
     }
 
-    private fun createUser(registerUser: RegisterUser) = viewModelScope.launch {
+    private fun createUser(id: String) = viewModelScope.launch {
+        val (username, _, _, _, _, imgBB, _) = _state.value
+        val registerUser = RegisterUser(id, username, imgBB?.url, imgBB?.deleteUrl)
+
         storageRepository.createUser(registerUser).collect { resource ->
             _state.update { it.copy(resource = resource) }
         }

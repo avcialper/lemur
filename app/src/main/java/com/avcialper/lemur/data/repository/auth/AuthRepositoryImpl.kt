@@ -1,8 +1,8 @@
 package com.avcialper.lemur.data.repository.auth
 
-import com.avcialper.lemur.data.model.ImgBBData
-import com.avcialper.lemur.util.constants.Resource
+import com.avcialper.lemur.util.constant.Resource
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -16,22 +16,21 @@ class AuthRepositoryImpl @Inject constructor(
     override val currentUser: FirebaseUser?
         get() = auth.currentUser
 
-    override suspend fun signup(
-        username: String,
-        email: String,
-        password: String,
-        imgBB: ImgBBData?
-    ): Flow<Resource<FirebaseUser>> = flow {
-        emit(Resource.Loading())
-        try {
-            val result = auth.createUserWithEmailAndPassword(email, password).await()
-            val user = result.user
-            emit(Resource.Success(user))
-        } catch (e: Exception) {
-            e.printStackTrace()
-            emit(Resource.Error(e))
+    override suspend fun signup(email: String, password: String): Flow<Resource<FirebaseUser>> =
+        flow {
+            emit(Resource.Loading())
+            try {
+                val result = auth.createUserWithEmailAndPassword(email, password).await()
+                val user = result.user
+                emit(Resource.Success(user))
+            } catch (e: FirebaseAuthException) {
+                e.printStackTrace()
+                emit(Resource.Error(e))
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(Resource.Error(e))
+            }
         }
-    }
 
     override suspend fun login(email: String, password: String): Flow<Resource<FirebaseUser>> =
         flow {
@@ -40,6 +39,9 @@ class AuthRepositoryImpl @Inject constructor(
                 val result = auth.signInWithEmailAndPassword(email, password).await()
                 val user = result.user
                 emit(Resource.Success(user))
+            } catch (e: FirebaseAuthException) {
+                e.printStackTrace()
+                emit(Resource.Error(e))
             } catch (e: Exception) {
                 e.printStackTrace()
                 emit(Resource.Error(e))

@@ -1,7 +1,7 @@
 package com.avcialper.lemur.di
 
 import com.avcialper.lemur.data.repository.remote.StorageApi
-import com.avcialper.lemur.util.constants.Constant
+import com.avcialper.lemur.util.constant.Constant
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -22,7 +22,6 @@ object NetworkModule {
     @Singleton
     fun provideGsonBuilder(): Gson {
         return GsonBuilder()
-            .setLenient()
             .excludeFieldsWithoutExposeAnnotation()
             .create()
     }

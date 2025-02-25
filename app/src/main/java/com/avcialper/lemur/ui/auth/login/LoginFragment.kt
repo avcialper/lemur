@@ -8,7 +8,8 @@ import com.avcialper.lemur.helper.validator.EmptyRule
 import com.avcialper.lemur.helper.validator.LengthRule
 import com.avcialper.lemur.helper.validator.PasswordRule
 import com.avcialper.lemur.ui.BaseFragment
-import com.avcialper.lemur.util.constants.Resource
+import com.avcialper.lemur.util.constant.Resource
+import com.avcialper.lemur.util.extension.exceptionConverter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -51,17 +52,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             vm.state.collect { loginState ->
                 when (loginState.resource) {
                     is Resource.Loading -> {
-                        toast("Loading")
                         loadingState(true)
                     }
 
                     is Resource.Error -> {
-                        toast("Error: ${loginState.resource.throwable}")
+                        val errorMessage =
+                            requireContext().exceptionConverter(loginState.resource.throwable!!)
+                        toast(errorMessage)
                         loadingState(false)
                     }
 
                     is Resource.Success -> {
-                        toast("Success: ${loginState.resource.data}")
                         loadingState(false)
                     }
                     // Starting state

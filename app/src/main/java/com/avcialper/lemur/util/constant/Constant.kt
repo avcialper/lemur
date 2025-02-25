@@ -1,4 +1,4 @@
-package com.avcialper.lemur.util.constants
+package com.avcialper.lemur.util.constant
 
 object Constant {
 

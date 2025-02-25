@@ -1,8 +1,8 @@
-package com.avcialper.lemur.util.constants
+package com.avcialper.lemur.util.constant
 
 sealed class Resource<T>(
     val data: T? = null,
-    val throwable: Throwable? = null,
+    val throwable: Exception? = null,
     val status: ResourceStatus
 ) {
     class Loading<T> : Resource<T>(
@@ -14,7 +14,7 @@ sealed class Resource<T>(
         status = ResourceStatus.SUCCESS
     )
 
-    class Error<T>(exception: Throwable?) : Resource<T>(
+    class Error<T>(exception: Exception?) : Resource<T>(
         throwable = exception,
         status = ResourceStatus.ERROR
     )
