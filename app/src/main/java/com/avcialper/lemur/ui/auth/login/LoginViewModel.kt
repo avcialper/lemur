@@ -1,14 +1,13 @@
 package com.avcialper.lemur.ui.auth.login
 
-import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.avcialper.lemur.data.repository.AuthRepository
-import com.avcialper.lemur.util.constants.Resource
-import com.google.firebase.auth.FirebaseUser
+import com.avcialper.lemur.data.repository.auth.AuthRepository
+import com.avcialper.lemur.data.state.LoginState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,30 +16,23 @@ class LoginViewModel @Inject constructor(
     private val repository: AuthRepository
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<Resource<FirebaseUser>?>(null)
+    private val _state = MutableStateFlow(LoginState())
     val state = _state.asStateFlow()
 
-    private val _email = MutableStateFlow("")
-    private val _password = MutableStateFlow("")
-
     fun onEmailChanged(email: String) {
-        _email.value = email
+        _state.update { it.copy(email = email) }
     }
 
     fun onPasswordChanged(password: String) {
-        _password.value = password
+        _state.update { it.copy(password = password) }
     }
 
-    fun onLoginClicked() {
-        val email = _email.value
-        val password = _password.value
-        login(email, password)
-    }
+    fun onLoginClicked() = viewModelScope.launch {
+        val email = _state.value.email
+        val password = _state.value.password
 
-    private fun login(email: String, password: String) = viewModelScope.launch {
-        _state.value = Resource.Loading()
-        val result = repository.login(email, password)
-        _state.value = result
+        repository.login(email, password).collect { resource ->
+            _state.update { it.copy(resource = resource) }
+        }
     }
-
 }

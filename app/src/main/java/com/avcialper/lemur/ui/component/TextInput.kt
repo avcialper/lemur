@@ -5,11 +5,12 @@ import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
-import androidx.core.widget.doOnTextChanged
+import androidx.core.widget.addTextChangedListener
 import com.avcialper.lemur.R
 import com.avcialper.lemur.databinding.ComponentTextInputBinding
 import com.avcialper.lemur.helper.validator.ValidationRule
 import com.avcialper.lemur.helper.validator.validate
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 class TextInput @JvmOverloads constructor(
@@ -21,7 +22,8 @@ class TextInput @JvmOverloads constructor(
     private val layoutInflater = LayoutInflater.from(context)
     private val binding = ComponentTextInputBinding.inflate(layoutInflater, this, true)
 
-    private val input get() = binding.input
+    private val input: TextInputEditText
+        get() = binding.provider.editText as TextInputEditText
     var value
         get() = input.text.toString().trim()
         set(value) = input.setText(value)
@@ -35,10 +37,13 @@ class TextInput @JvmOverloads constructor(
         }
     }
 
-    fun setOnTextChangedListener(listener: (String) -> Unit) {
-        input.doOnTextChanged { text, _, _, _ ->
+    fun onTextChanged(listener: (String) -> Unit) {
+        input.addTextChangedListener { text ->
             listener.invoke(text.toString())
         }
+//        input.doAfterTextChanged { text ->
+//            listener.invoke(text.toString())
+//        }
     }
 
     init {
@@ -61,7 +66,7 @@ class TextInput @JvmOverloads constructor(
             endIconMode = aEndIconMode
         }
 
-        binding.input.apply {
+        input.apply {
             endIconMode = END_ICON_NONE
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) setAutofillHints(aAutofillHints)
             hint = aHint

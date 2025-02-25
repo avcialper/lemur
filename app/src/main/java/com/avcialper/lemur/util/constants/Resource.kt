@@ -14,7 +14,7 @@ sealed class Resource<T>(
         status = ResourceStatus.SUCCESS
     )
 
-    class Error<T>(exception: Exception) : Resource<T>(
+    class Error<T>(exception: Throwable?) : Resource<T>(
         throwable = exception,
         status = ResourceStatus.ERROR
     )

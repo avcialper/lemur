@@ -6,7 +6,6 @@
     tools:context=".ui.component.TextInput">
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/input"
         style="@style/TextInput"
         android:hint="@string/is_required" />
 

@@ -1,59 +1,114 @@
 package com.avcialper.lemur.ui.auth.signup
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.avcialper.lemur.databinding.FragmentSignupBinding
 import com.avcialper.lemur.helper.ImagePicker
+import com.avcialper.lemur.helper.UriToFile
 import com.avcialper.lemur.helper.validator.ConfirmPasswordRule
 import com.avcialper.lemur.helper.validator.EmailRule
 import com.avcialper.lemur.helper.validator.EmptyRule
 import com.avcialper.lemur.helper.validator.LengthRule
 import com.avcialper.lemur.helper.validator.PasswordRule
+import com.avcialper.lemur.ui.BaseFragment
+import com.avcialper.lemur.util.constants.Resource
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import java.io.File
 
-class SignupFragment : Fragment() {
-
-    private var _binding: FragmentSignupBinding? = null
-    private val binding get() = _binding!!
-
-    private val viewModel by viewModels<SignupViewModel>()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSignupBinding.inflate(layoutInflater, container, false)
-        val view = binding.root
-        return view
-    }
+@AndroidEntryPoint
+class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding::inflate) {
 
     private lateinit var imagePicker: ImagePicker
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        imagePicker = ImagePicker(this) { uri ->
+    private val vm by viewModels<SignupViewModel>()
+
+    override fun FragmentSignupBinding.initialize() {
+        imagePicker = ImagePicker(this@SignupFragment) { uri ->
             binding.imageUser.setImageURI(uri)
+            vm.onImageChanged(uri)
         }
 
+        observer()
+        restore()
+        setupListeners()
+    }
+
+    private fun setupListeners() {
         binding.apply {
+
+            inputUsername.onTextChanged(vm::onUsernameChanged)
+            inputEmail.onTextChanged(vm::onEmailChanged)
+            inputPassword.onTextChanged(vm::onPasswordChanged)
+            inputConfirmPassword.onTextChanged(vm::onConfirmPasswordChanged)
+
             imageUser.setOnClickListener {
                 imagePicker.pickImage()
             }
 
             buttonSignup.setOnClickListener {
                 val isValid = validate()
-
                 if (isValid)
-                    Toast.makeText(this@SignupFragment.context, "buyrun", Toast.LENGTH_SHORT).show()
+                    vm.onSignupClicked(::convert)
             }
         }
     }
 
-    private fun validate(): Boolean {
+    private fun convert(): File {
+        val username = vm.state.value.username
+        val imageUri = vm.state.value.imageUri!!
+        return UriToFile(requireContext()).convert(username, imageUri)
+    }
+
+    private fun observer() {
+        lifecycleScope.launch {
+            vm.state.collect { signupState ->
+                when (signupState.resource) {
+                    is Resource.Loading -> {
+                        loadingState(true)
+                    }
+
+                    is Resource.Success -> {
+                        loadingState(false)
+                        findNavController().popBackStack()
+                    }
+
+                    is Resource.Error -> {
+                        loadingState(false)
+                        toast("Error: ${signupState.resource.throwable}")
+                    }
+
+                    else -> Unit
+                }
+            }
+        }
+    }
+
+    private fun loadingState(isLoading: Boolean) {
+        binding.apply {
+            inputUsername.setLoadingState(isLoading)
+            inputEmail.setLoadingState(isLoading)
+            inputPassword.setLoadingState(isLoading)
+            inputConfirmPassword.setLoadingState(isLoading)
+            imageUser.updateLoadingState(isLoading)
+            buttonSignup.updateLoadingState(isLoading)
+        }
+    }
+
+    private fun restore() {
+        binding.apply {
+            val (username, email, password, confirmPassword, imageUri, _) = vm.state.value
+
+            imageUser.setImageURI(imageUri)
+            inputUsername.value = username
+            inputEmail.value = email
+            inputPassword.value = password
+            inputConfirmPassword.value = confirmPassword
+        }
+    }
+
+    override fun validate(): Boolean {
         binding.apply {
             val isValidUsername = inputUsername.validate(
                 rules = listOf(
@@ -89,10 +144,4 @@ class SignupFragment : Fragment() {
             return isValidUsername && isValidEmail && isValidPassword && isValidConfirmPassword
         }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
 }
