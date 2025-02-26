@@ -81,6 +81,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding
                             requireContext().exceptionConverter(signupState.resource.throwable!!)
                         toast(errorMessage)
                         loadingState(false)
+                        vm.clearError()
                     }
 
                     else -> Unit

@@ -23,9 +23,6 @@ class AuthRepositoryImpl @Inject constructor(
                 val result = auth.createUserWithEmailAndPassword(email, password).await()
                 val user = result.user
                 emit(Resource.Success(user))
-            } catch (e: FirebaseAuthException) {
-                e.printStackTrace()
-                emit(Resource.Error(e))
             } catch (e: Exception) {
                 e.printStackTrace()
                 emit(Resource.Error(e))
@@ -39,9 +36,6 @@ class AuthRepositoryImpl @Inject constructor(
                 val result = auth.signInWithEmailAndPassword(email, password).await()
                 val user = result.user
                 emit(Resource.Success(user))
-            } catch (e: FirebaseAuthException) {
-                e.printStackTrace()
-                emit(Resource.Error(e))
             } catch (e: Exception) {
                 e.printStackTrace()
                 emit(Resource.Error(e))
@@ -49,7 +43,9 @@ class AuthRepositoryImpl @Inject constructor(
         }
 
     override suspend fun logout(): Flow<Resource<Boolean>> = flow {
-        // TODO Implement logout logic
+        emit(Resource.Loading())
+        auth.signOut()
+        emit(Resource.Success(true))
     }
 
     override suspend fun forgotPassword(email: String): Flow<Resource<Boolean>> = flow {

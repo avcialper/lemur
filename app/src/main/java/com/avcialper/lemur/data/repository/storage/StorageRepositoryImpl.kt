@@ -2,9 +2,10 @@ package com.avcialper.lemur.data.repository.storage
 
 import com.avcialper.lemur.BuildConfig
 import com.avcialper.lemur.data.model.ImgBBResponse
-import com.avcialper.lemur.data.model.RegisterUser
+import com.avcialper.lemur.data.model.UserProfile
 import com.avcialper.lemur.data.repository.remote.StorageApi
 import com.avcialper.lemur.util.constant.Resource
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -37,19 +38,29 @@ class StorageRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun createUser(registerUser: RegisterUser): Flow<Resource<Boolean>> = flow {
+    override fun createUser(userProfile: UserProfile): Flow<Resource<Boolean>> = flow {
         emit(Resource.Loading())
 
         val user = hashMapOf(
-            "id" to registerUser.id,
-            "username" to registerUser.username,
-            "imageUrl" to registerUser.imageUrl,
-            "imageDeleteUrl" to registerUser.imageDeleteUrl
+            "id" to userProfile.id,
+            "username" to userProfile.username,
+            "imageUrl" to userProfile.imageUrl,
+            "imageDeleteUrl" to userProfile.imageDeleteUrl
         )
 
         try {
-            db.collection("users").document(registerUser.id).set(user).await()
+            db.collection("users").document(userProfile.id).set(user).await()
             emit(Resource.Success(true))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(Resource.Error(e))
+        }
+    }
+
+    override fun getUser(): Flow<Resource<FirebaseUser>> = flow {
+        emit(Resource.Loading())
+        try {
+            emit(Resource.Success(null))
         } catch (e: Exception) {
             e.printStackTrace()
             emit(Resource.Error(e))

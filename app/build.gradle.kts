@@ -95,6 +95,9 @@ dependencies {
     // Okhttp
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
+
+    // Splash Screen
+    implementation(libs.androidx.core.splashscreen)
 }
 
 kapt {

@@ -60,6 +60,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                             requireContext().exceptionConverter(loginState.resource.throwable!!)
                         toast(errorMessage)
                         loadingState(false)
+                        vm.clearError()
                     }
 
                     is Resource.Success -> {

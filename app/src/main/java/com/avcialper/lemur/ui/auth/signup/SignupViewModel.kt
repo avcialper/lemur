@@ -3,7 +3,7 @@ package com.avcialper.lemur.ui.auth.signup
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.avcialper.lemur.data.model.RegisterUser
+import com.avcialper.lemur.data.model.UserProfile
 import com.avcialper.lemur.data.repository.auth.AuthRepository
 import com.avcialper.lemur.data.repository.storage.StorageRepository
 import com.avcialper.lemur.data.state.SignupState
@@ -26,23 +26,23 @@ class SignupViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     fun onUsernameChanged(username: String) {
-        _state.value.username = username
+        _state.update { it.copy(username = username) }
     }
 
     fun onEmailChanged(email: String) {
-        _state.value.email = email
+        _state.update { it.copy(email = email) }
     }
 
     fun onPasswordChanged(password: String) {
-        _state.value.password = password
+        _state.update { it.copy(password = password) }
     }
 
     fun onConfirmPasswordChanged(confirmPassword: String) {
-        _state.value.confirmPassword = confirmPassword
+        _state.update { it.copy(confirmPassword = confirmPassword) }
     }
 
     fun onImageChanged(imageUri: Uri) {
-        _state.value.imageUri = imageUri
+        _state.update { it.copy(imageUri = imageUri) }
     }
 
     fun onSignupClicked(convert: () -> File) = viewModelScope.launch {
@@ -67,7 +67,7 @@ class SignupViewModel @Inject constructor(
                 _state.update { it.copy(resource = Resource.Error(resource.throwable)) }
                 return@collect
             } else if (resource.data != null) {
-                _state.value.imgBB = resource.data.data
+                _state.update { it.copy(imgBB = resource.data.data) }
                 onSuccess()
             }
         }
@@ -75,11 +75,15 @@ class SignupViewModel @Inject constructor(
 
     private fun createUser(id: String) = viewModelScope.launch {
         val (username, _, _, _, _, imgBB, _) = _state.value
-        val registerUser = RegisterUser(id, username, imgBB?.url, imgBB?.deleteUrl)
+        val userProfile = UserProfile(id, username, imgBB?.url, imgBB?.deleteUrl)
 
-        storageRepository.createUser(registerUser).collect { resource ->
+        storageRepository.createUser(userProfile).collect { resource ->
             _state.update { it.copy(resource = resource) }
         }
+    }
+
+    fun clearError(){
+        _state.update { it.copy(resource = null) }
     }
 
 }
