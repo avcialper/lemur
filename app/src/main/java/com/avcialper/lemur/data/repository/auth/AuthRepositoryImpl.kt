@@ -48,7 +48,14 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun forgotPassword(email: String): Flow<Resource<Boolean>> = flow {
-        // TODO Implement forgot password logic
+        emit(Resource.Loading())
+        try {
+            auth.sendPasswordResetEmail(email).await()
+            emit(Resource.Success(true))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(Resource.Error(e))
+        }
     }
 
     override suspend fun isLoggedIn(): Flow<Boolean> = flow {
