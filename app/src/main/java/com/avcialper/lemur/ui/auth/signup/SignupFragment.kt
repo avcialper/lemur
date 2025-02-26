@@ -24,7 +24,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding
 
     private lateinit var imagePicker: ImagePicker
 
-    private val vm by viewModels<SignupViewModel>()
+    private val vm: SignupViewModel by viewModels()
 
     override fun FragmentSignupBinding.initialize() {
         imagePicker = ImagePicker(this@SignupFragment) { uri ->

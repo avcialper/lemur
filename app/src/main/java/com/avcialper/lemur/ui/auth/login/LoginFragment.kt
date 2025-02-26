@@ -2,6 +2,7 @@ package com.avcialper.lemur.ui.auth.login
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.databinding.FragmentLoginBinding
 import com.avcialper.lemur.helper.validator.EmailRule
 import com.avcialper.lemur.helper.validator.EmptyRule
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
 
-    private val vm by viewModels<LoginViewModel>()
+    private val vm: LoginViewModel by viewModels()
 
     override fun FragmentLoginBinding.initialize() {
         observer()
@@ -64,6 +65,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                     }
 
                     is Resource.Success -> {
+                        toast(UserManager.user?.email ?: "boş")
                         loadingState(false)
                     }
                     // Starting state

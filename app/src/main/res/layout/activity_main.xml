@@ -9,4 +9,4 @@
     android:background="?attr/backgroundColor"
     app:defaultNavHost="true"
     app:navGraph="@navigation/nav_auth"
-    tools:context=".MainActivity" />
+    tools:context=".ui.MainActivity" />

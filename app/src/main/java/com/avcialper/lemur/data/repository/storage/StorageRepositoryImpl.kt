@@ -5,7 +5,6 @@ import com.avcialper.lemur.data.model.ImgBBResponse
 import com.avcialper.lemur.data.model.UserProfile
 import com.avcialper.lemur.data.repository.remote.StorageApi
 import com.avcialper.lemur.util.constant.Resource
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -19,8 +18,10 @@ import javax.inject.Inject
 
 class StorageRepositoryImpl @Inject constructor(
     private val api: StorageApi,
-    private val db: FirebaseFirestore
+    db: FirebaseFirestore
 ) : StorageRepository {
+
+    private val collection = db.collection("users")
 
     override fun uploadImage(file: File): Flow<Resource<ImgBBResponse>> = flow {
         emit(Resource.Loading())
@@ -41,15 +42,17 @@ class StorageRepositoryImpl @Inject constructor(
     override fun createUser(userProfile: UserProfile): Flow<Resource<Boolean>> = flow {
         emit(Resource.Loading())
 
+        val (id, username, imageUrl, imageDeleteUrl) = userProfile
+
         val user = hashMapOf(
-            "id" to userProfile.id,
-            "username" to userProfile.username,
-            "imageUrl" to userProfile.imageUrl,
-            "imageDeleteUrl" to userProfile.imageDeleteUrl
+            "id" to id,
+            "username" to username,
+            "imageUrl" to imageUrl,
+            "imageDeleteUrl" to imageDeleteUrl
         )
 
         try {
-            db.collection("users").document(userProfile.id).set(user).await()
+            collection.document(userProfile.id).set(user).await()
             emit(Resource.Success(true))
         } catch (e: Exception) {
             e.printStackTrace()
@@ -57,10 +60,12 @@ class StorageRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getUser(): Flow<Resource<FirebaseUser>> = flow {
+    override fun getUser(id: String): Flow<Resource<UserProfile>> = flow {
         emit(Resource.Loading())
         try {
-            emit(Resource.Success(null))
+            val response = collection.document(id).get().await()
+            val user = response.toObject(UserProfile::class.java)
+            emit(Resource.Success(user))
         } catch (e: Exception) {
             e.printStackTrace()
             emit(Resource.Error(e))

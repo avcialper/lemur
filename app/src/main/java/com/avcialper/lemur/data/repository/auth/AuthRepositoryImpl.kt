@@ -2,7 +2,6 @@ package com.avcialper.lemur.data.repository.auth
 
 import com.avcialper.lemur.util.constant.Resource
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

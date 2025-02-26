@@ -5,4 +5,6 @@ data class UserProfile(
     val username: String,
     val imageUrl: String?,
     val imageDeleteUrl: String?,
-)
+) {
+    constructor() : this("", "", null, null)
+}
