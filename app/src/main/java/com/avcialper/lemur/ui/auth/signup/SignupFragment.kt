@@ -11,7 +11,7 @@ import com.avcialper.lemur.helper.validator.EmailRule
 import com.avcialper.lemur.helper.validator.EmptyRule
 import com.avcialper.lemur.helper.validator.LengthRule
 import com.avcialper.lemur.helper.validator.PasswordRule
-import com.avcialper.lemur.ui.BaseFragment
+import com.avcialper.lemur.ui.auth.AuthBaseFragment
 import com.avcialper.lemur.util.constant.Resource
 import com.avcialper.lemur.util.extension.exceptionConverter
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 import java.io.File
 
 @AndroidEntryPoint
-class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding::inflate) {
+class SignupFragment : AuthBaseFragment<FragmentSignupBinding>(FragmentSignupBinding::inflate) {
 
     private lateinit var imagePicker: ImagePicker
 

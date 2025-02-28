@@ -37,7 +37,6 @@ abstract class BaseFragment<VB : ViewBinding>(
     }
 
     abstract fun VB.initialize()
-    abstract fun validate(): Boolean
 
     fun View.updateLoadingState(isLoading: Boolean) {
         alpha = if (isLoading) 0.5f else 1f

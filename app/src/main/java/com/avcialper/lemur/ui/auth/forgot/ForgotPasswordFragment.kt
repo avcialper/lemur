@@ -8,14 +8,14 @@ import com.avcialper.lemur.R
 import com.avcialper.lemur.databinding.FragmentForgotPasswordBinding
 import com.avcialper.lemur.helper.validator.EmailRule
 import com.avcialper.lemur.helper.validator.EmptyRule
-import com.avcialper.lemur.ui.BaseFragment
+import com.avcialper.lemur.ui.auth.AuthBaseFragment
 import com.avcialper.lemur.util.constant.Resource
 import com.avcialper.lemur.util.extension.exceptionConverter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(
+class ForgotPasswordFragment : AuthBaseFragment<FragmentForgotPasswordBinding>(
     FragmentForgotPasswordBinding::inflate
 ) {
 

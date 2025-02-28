@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ScrollView"
+    tools:context=".ui.profile.ProfileFragment">
+
+    <LinearLayout style="@style/LinearPage">
+
+        <ImageView
+            android:id="@+id/imageProfilePicture"
+            style="@style/AppLogo"
+            android:contentDescription="@string/user_profile_picture" />
+
+        <TextView
+            android:id="@+id/textUsername"
+            style="@style/Text"
+            android:textColor="?attr/primaryColor"
+            android:textSize="@dimen/text_size_large"
+            android:textStyle="bold"
+            tools:text="developerlemur" />
+
+        <TextView
+            android:id="@+id/textEmail"
+            style="@style/Text"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:textColor="?attr/primaryColor"
+            android:textSize="@dimen/text_size_medium"
+            tools:text="info.lemurapp@gmail.com" />
+
+        <include
+            android:id="@+id/componentUpdateProfile"
+            layout="@layout/component_icon_label" />
+
+        <include
+            android:id="@+id/componentUpdatePassword"
+            layout="@layout/component_icon_label" />
+
+        <include
+            android:id="@+id/componentNotification"
+            layout="@layout/component_icon_label" />
+
+        <include
+            android:id="@+id/componentTheme"
+            layout="@layout/component_icon_label" />
+
+        <include
+            android:id="@+id/componentGitHub"
+            layout="@layout/component_icon_label" />
+
+        <include
+            android:id="@+id/componentEmailVerify"
+            layout="@layout/component_icon_label" />
+
+        <include
+            android:id="@+id/componentLogout"
+            layout="@layout/component_icon_label" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

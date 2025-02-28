@@ -41,9 +41,6 @@ class TextInput @JvmOverloads constructor(
         input.addTextChangedListener { text ->
             listener.invoke(text.toString())
         }
-//        input.doAfterTextChanged { text ->
-//            listener.invoke(text.toString())
-//        }
     }
 
     init {

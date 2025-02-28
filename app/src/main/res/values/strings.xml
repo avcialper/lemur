@@ -21,6 +21,14 @@
     <string name="crop_image">Resim Kırpma</string>
     <string name="crop">KIRP</string>
     <string name="email_sent">E-posta gönderildi.</string>
+    <string name="update_profile">Profil Güncelle</string>
+    <string name="change_password">Şifre Güncelle</string>
+    <string name="notifications">Bildirimler</string>
+    <string name="theme">Tema</string>
+    <string name="github">GitHub</string>
+    <string name="email_verify">E-posta Doğrula</string>
+    <string name="email_verified">E-posta Doğrulandı</string>
+    <string name="logout">Çıkış Yap</string>
 
     <!-- Error -->
     <string name="error_unknown">Bilinmeyen bir hata oluştu.</string>
@@ -30,4 +38,6 @@
     <string name="error_user_not_found">Kullanıcı bulunamadı veya şifre hatalı.</string>
     <string name="error_login_user_disabled">Kullanıcı hesabı askıya alınmış.</string>
     <string name="error_login_password_is_weak">Geçersiz şifre.</string>
+    <string name="user_profile_picture">Kullanıcı fotoğrafı.</string>
+    <string name="icon_of_icon_label">Buton resmi.</string>
 </resources>

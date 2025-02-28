@@ -112,4 +112,13 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <!-- Text -->
+    <style name="Text" parent="Theme.Lemur">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:layout_marginEnd">@dimen/margin_small</item>
+        <item name="android:layout_marginStart">@dimen/margin_small</item>
+    </style>
+
 </resources>

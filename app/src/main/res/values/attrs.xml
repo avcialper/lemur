@@ -10,4 +10,9 @@
         <attr name="endIconTint" />
         <attr name="endIconMode" />
     </declare-styleable>
+    <declare-styleable name="IconLabel">
+        <attr name="label" format="string" />
+        <attr name="sub_text" format="string" />
+        <attr name="left_icon" format="integer" />
+    </declare-styleable>
 </resources>
