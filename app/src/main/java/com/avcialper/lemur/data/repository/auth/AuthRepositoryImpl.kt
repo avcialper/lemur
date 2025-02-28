@@ -62,4 +62,15 @@ class AuthRepositoryImpl @Inject constructor(
         val isLogged = auth.currentUser != null
         emit(isLogged)
     }
+
+    override suspend fun sendEmailVerification(): Flow<Resource<Boolean>> = flow {
+        emit(Resource.Loading())
+        try {
+            auth.currentUser!!.sendEmailVerification().await()
+            emit(Resource.Success(true))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(Resource.Error(e))
+        }
+    }
 }

@@ -7,7 +7,5 @@ data class User(
     val id: String,
     val username: String,
     val imageUrl: String?,
-    val imageDeleteUrl: String?,
     val email: String,
-    val isEmailVerified: Boolean
 )

@@ -57,12 +57,11 @@ class LoginViewModel @Inject constructor(
         storageRepository.getUser(currentUser!!.uid).collect { userResource ->
             when (userResource) {
                 is Resource.Success -> {
-                    val (_, username, imageUrl, imageDeleteUrl) = userResource.data!!
+                    val (_, username, imageUrl) = userResource.data!!
                     UserManager.updateUser(
                         currentUser,
                         username,
                         imageUrl,
-                        imageDeleteUrl
                     )
                     _state.update { it.copy(resource = Resource.Success(true)) }
                 }

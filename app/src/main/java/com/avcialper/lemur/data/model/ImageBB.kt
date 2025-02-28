@@ -14,5 +14,4 @@ data class ImgBBResponse(
 data class ImgBBData(
     @SerializedName("id") val id: String,
     @SerializedName("url") val url: String,
-    @SerializedName("delete_url") val deleteUrl: String
 )

@@ -19,4 +19,6 @@ interface AuthRepository {
     suspend fun forgotPassword(email: String): Flow<Resource<Boolean>>
 
     suspend fun isLoggedIn(): Flow<Boolean>
+
+    suspend fun sendEmailVerification(): Flow<Resource<Boolean>>
 }

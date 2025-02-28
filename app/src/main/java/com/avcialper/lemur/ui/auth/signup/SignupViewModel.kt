@@ -3,6 +3,7 @@ package com.avcialper.lemur.ui.auth.signup
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.UserProfile
 import com.avcialper.lemur.data.repository.auth.AuthRepository
 import com.avcialper.lemur.data.repository.storage.StorageRepository
@@ -81,12 +82,15 @@ class SignupViewModel @Inject constructor(
 
     private fun createUser(id: String) = viewModelScope.launch {
         val (username, _, _, _, _, imgBB, _) = _state.value
-        val userProfile = UserProfile(id, username, imgBB?.url, imgBB?.deleteUrl)
+        val userProfile = UserProfile(id, username, imgBB?.url)
 
         storageRepository.createUser(userProfile).collect { resource ->
             _state.update { it.copy(resource = resource) }
         }
-        auth.logout()
+        auth.logout().collect {
+            if (it is Resource.Success)
+                UserManager.logout()
+        }
     }
 
     fun clearError() {

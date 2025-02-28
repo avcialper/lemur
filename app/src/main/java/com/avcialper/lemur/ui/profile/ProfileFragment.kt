@@ -29,7 +29,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             componentNotification.init(R.string.notifications, R.drawable.ic_notifications_active)
             componentTheme.init(R.string.theme, R.drawable.ic_light_mode)
             componentGitHub.init(R.string.github, R.drawable.ic_github)
-            componentEmailVerify.init(R.string.email_verify, R.drawable.ic_email)
             componentLogout.init(R.string.logout, R.drawable.ic_logout, ::logout)
         }
     }
@@ -44,6 +43,19 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                         crossfade(true)
                         placeholder(R.drawable.logo)
                         error(R.drawable.logo)
+                    }
+
+                    if (it?.firebaseUser?.isEmailVerified == true) {
+                        componentEmailVerify.init(
+                            R.string.email_verified,
+                            R.drawable.ic_email_verified
+                        )
+                    } else {
+                        componentEmailVerify.init(
+                            R.string.email_verify,
+                            R.drawable.ic_email,
+                            ::verifyEmail
+                        )
                     }
                 }
             }
@@ -73,6 +85,19 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             }
         }
         alert.show(childFragmentManager, "alert")
+    }
+
+    private fun verifyEmail() {
+        vm.sendEmailVerification {
+            val message =
+                ContextCompat.getString(requireContext(), R.string.email_verification_sent)
+            toast(message)
+        }
+    }
+
+    override fun onResume() {
+        vm.reloadData()
+        super.onResume()
     }
 
 }

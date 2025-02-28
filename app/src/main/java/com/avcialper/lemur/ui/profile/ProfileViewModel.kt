@@ -31,8 +31,8 @@ class ProfileViewModel @Inject constructor(
         if (currentUser != null) {
             storageRepository.getUser(currentUser.uid).collect { resource ->
                 if (resource.status == ResourceStatus.SUCCESS) {
-                    val (_, username, imageUrl, imageDeleteUrl) = resource.data!!
-                    UserManager.updateUser(currentUser, username, imageUrl, imageDeleteUrl)
+                    val (_, username, imageUrl) = resource.data!!
+                    UserManager.updateUser(currentUser, username, imageUrl)
                     _user.value = UserManager.user
                 }
             }
@@ -46,6 +46,18 @@ class ProfileViewModel @Inject constructor(
                 onCompleted()
             }
         }
+    }
+
+    fun sendEmailVerification(onCompleted: () -> Unit) = viewModelScope.launch {
+        auth.sendEmailVerification().collect { resource ->
+            if (resource.status == ResourceStatus.SUCCESS) {
+                onCompleted.invoke()
+            }
+        }
+    }
+
+    fun reloadData() = viewModelScope.launch {
+        getUser()
     }
 
 }

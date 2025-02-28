@@ -42,13 +42,12 @@ class StorageRepositoryImpl @Inject constructor(
     override fun createUser(userProfile: UserProfile): Flow<Resource<Boolean>> = flow {
         emit(Resource.Loading())
 
-        val (id, username, imageUrl, imageDeleteUrl) = userProfile
+        val (id, username, imageUrl) = userProfile
 
         val user = hashMapOf(
             "id" to id,
             "username" to username,
             "imageUrl" to imageUrl,
-            "imageDeleteUrl" to imageDeleteUrl
         )
 
         try {

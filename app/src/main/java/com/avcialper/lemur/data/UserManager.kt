@@ -11,16 +11,13 @@ object UserManager {
         firebaseUser: FirebaseUser,
         username: String,
         imageUrl: String?,
-        imageDeleteUrl: String?
     ) {
         val newUser = User(
             firebaseUser = firebaseUser,
             id = firebaseUser.uid,
             username = username,
             imageUrl = imageUrl,
-            imageDeleteUrl = imageDeleteUrl,
             email = firebaseUser.email!!,
-            isEmailVerified = firebaseUser.isEmailVerified
         )
         user = newUser
     }
