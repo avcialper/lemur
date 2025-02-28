@@ -8,5 +8,5 @@
     android:layout_height="match_parent"
     android:background="?attr/backgroundColor"
     app:defaultNavHost="true"
-    app:navGraph="@navigation/nav_auth"
+    app:navGraph="@navigation/nav_main"
     tools:context=".ui.MainActivity" />

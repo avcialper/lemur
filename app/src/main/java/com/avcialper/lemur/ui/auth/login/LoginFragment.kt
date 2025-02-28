@@ -2,7 +2,6 @@ package com.avcialper.lemur.ui.auth.login
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.databinding.FragmentLoginBinding
 import com.avcialper.lemur.helper.validator.EmailRule
 import com.avcialper.lemur.helper.validator.EmptyRule
@@ -20,6 +19,12 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>(FragmentLoginBindin
     private val vm: LoginViewModel by viewModels()
 
     override fun FragmentLoginBinding.initialize() {
+
+        if (vm.isLoggedIn.value) {
+            val direction = LoginFragmentDirections.toProfile()
+            direction.navigate()
+        }
+
         observer()
         restore()
         setupListeners()
@@ -65,8 +70,9 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>(FragmentLoginBindin
                     }
 
                     is Resource.Success -> {
-                        toast(UserManager.user?.email ?: "boş")
                         loadingState(false)
+                        val direction = LoginFragmentDirections.toProfile()
+                        direction.navigate()
                     }
                     // Starting state
                     null -> Unit

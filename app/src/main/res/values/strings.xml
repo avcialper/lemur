@@ -40,4 +40,8 @@
     <string name="error_login_password_is_weak">Geçersiz şifre.</string>
     <string name="user_profile_picture">Kullanıcı fotoğrafı.</string>
     <string name="icon_of_icon_label">Buton resmi.</string>
+
+    <string name="yes">EVET</string>
+    <string name="no">HAYIR</string>
+    <string name="logout_message">Çıkış yapmak istediğinize emin misiniz?</string>
 </resources>

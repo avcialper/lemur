@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/ScrollView"
     tools:context=".ui.profile.ProfileFragment">
 
     <LinearLayout style="@style/LinearPage">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageProfilePicture"
             style="@style/AppLogo"
-            android:contentDescription="@string/user_profile_picture" />
+            android:contentDescription="@string/user_profile_picture"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logo"
+            app:shapeAppearanceOverlay="@style/RoundedImage" />
 
         <TextView
             android:id="@+id/textUsername"

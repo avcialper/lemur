@@ -121,4 +121,19 @@
         <item name="android:layout_marginStart">@dimen/margin_small</item>
     </style>
 
+    <!-- Alert Text Button -->
+    <style name="Base.AlertTextButton" parent="Theme.Lemur">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:layout_marginStart">@dimen/margin_medium</item>
+        <item name="android:layout_marginEnd">@dimen/margin_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Alert Text Button Light Mode-->
+    <style name="AlertTextButton" parent="Base.AlertTextButton">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>
