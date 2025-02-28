@@ -15,6 +15,15 @@ class AuthRepositoryImpl @Inject constructor(
     override val currentUser: FirebaseUser?
         get() = auth.currentUser
 
+    override suspend fun reload(): Flow<FirebaseUser?> = flow {
+        try {
+            auth.currentUser!!.reload().await()
+            emit(auth.currentUser)
+        } catch (e: Exception) {
+            emit(auth.currentUser)
+        }
+    }
+
     override suspend fun signup(email: String, password: String): Flow<Resource<FirebaseUser>> =
         flow {
             emit(Resource.Loading())

@@ -51,10 +51,14 @@ class SignupViewModel @Inject constructor(
 
         auth.signup(email, password).collect { resource ->
             if (resource is Resource.Success) {
-                uploadImage(convert) {
-                    val id = resource.data?.uid!!
-                    createUser(id)
-                }
+                if (_state.value.imageUri != null)
+                    uploadImage(convert) {
+                        val id = resource.data?.uid!!
+                        createUser(id)
+                    }
+                else
+                    createUser(resource.data?.uid!!)
+
             } else if (resource.throwable != null)
                 _state.update { it.copy(resource = Resource.Error(resource.throwable)) }
         }

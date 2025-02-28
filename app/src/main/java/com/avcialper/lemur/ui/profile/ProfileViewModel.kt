@@ -7,6 +7,7 @@ import com.avcialper.lemur.data.model.User
 import com.avcialper.lemur.data.repository.auth.AuthRepository
 import com.avcialper.lemur.data.repository.storage.StorageRepository
 import com.avcialper.lemur.util.constant.ResourceStatus
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,12 +30,20 @@ class ProfileViewModel @Inject constructor(
     private fun getUser() = viewModelScope.launch {
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            storageRepository.getUser(currentUser.uid).collect { resource ->
-                if (resource.status == ResourceStatus.SUCCESS) {
-                    val (_, username, imageUrl) = resource.data!!
-                    UserManager.updateUser(currentUser, username, imageUrl)
-                    _user.value = UserManager.user
+            auth.reload().collect { resignedUser ->
+                if (resignedUser != null) {
+                    getUserFromRepository(resignedUser)
                 }
+            }
+        }
+    }
+
+    private fun getUserFromRepository(user: FirebaseUser) = viewModelScope.launch {
+        storageRepository.getUser(user.uid).collect { resource ->
+            if (resource.status == ResourceStatus.SUCCESS) {
+                val (_, username, imageUrl) = resource.data!!
+                UserManager.updateUser(user, username, imageUrl)
+                _user.value = UserManager.user
             }
         }
     }

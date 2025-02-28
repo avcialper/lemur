@@ -23,6 +23,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>(FragmentLoginBindin
         if (vm.isLoggedIn.value) {
             val direction = LoginFragmentDirections.toProfile()
             direction.navigate()
+            return
         }
 
         observer()
@@ -54,7 +55,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>(FragmentLoginBindin
     }
 
     private fun observer() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             vm.state.collect { loginState ->
                 when (loginState.resource) {
                     is Resource.Loading -> {

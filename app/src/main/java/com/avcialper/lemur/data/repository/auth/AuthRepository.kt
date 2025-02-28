@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.Flow
 interface AuthRepository {
     val currentUser: FirebaseUser?
 
+    suspend fun reload(): Flow<FirebaseUser?>
+
     suspend fun signup(
         email: String,
         password: String,
