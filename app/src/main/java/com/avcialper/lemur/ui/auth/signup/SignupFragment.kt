@@ -37,116 +37,106 @@ class SignupFragment : AuthBaseFragment<FragmentSignupBinding>(FragmentSignupBin
         setupListeners()
     }
 
-    private fun setupListeners() {
-        binding.apply {
+    private fun setupListeners() = with(binding) {
 
-            inputUsername.onTextChanged(vm::onUsernameChanged)
-            inputEmail.onTextChanged(vm::onEmailChanged)
-            inputPassword.onTextChanged(vm::onPasswordChanged)
-            inputConfirmPassword.onTextChanged(vm::onConfirmPasswordChanged)
+        inputUsername.onTextChanged(vm::onUsernameChanged)
+        inputEmail.onTextChanged(vm::onEmailChanged)
+        inputPassword.onTextChanged(vm::onPasswordChanged)
+        inputConfirmPassword.onTextChanged(vm::onConfirmPasswordChanged)
 
-            imageUser.setOnClickListener {
-                imagePicker.pickImage()
-            }
+        imageUser.setOnClickListener {
+            imagePicker.pickImage()
+        }
 
-            buttonSignup.setOnClickListener {
-                val isValid = validate()
-                if (isValid)
-                    vm.onSignupClicked(::convert)
-            }
+        buttonSignup.setOnClickListener {
+            val isValid = validate()
+            if (isValid)
+                vm.onSignupClicked(::convert)
         }
     }
 
-    private fun convert(): File {
-        val username = vm.state.value.username
-        val imageUri = vm.state.value.imageUri!!
-        return UriToFile(requireContext()).convert(username, imageUri)
+    private fun convert(): File = with(vm.state.value) {
+        return UriToFile(requireContext()).convert(username, imageUri!!)
     }
 
     private fun observer() {
-        lifecycleScope.launch {
-            vm.state.collectLatest { signupState ->
-                when (signupState.resource) {
-                    is Resource.Loading -> {
-                        loadingState(true)
-                    }
-
-                    is Resource.Success -> {
-                        loadingState(false)
-                        findNavController().popBackStack()
-                    }
-
-                    is Resource.Error -> {
-                        val errorMessage =
-                            requireContext().exceptionConverter(signupState.resource.throwable!!)
-                        toast(errorMessage)
-                        loadingState(false)
-                        vm.clearError()
-                    }
-
-                    else -> Unit
-                }
-            }
+        viewLifecycleOwner.lifecycleScope.launch {
+            vm.state.collectLatest { signupState -> handleResource(signupState.resource) }
         }
     }
 
-    private fun loadingState(isLoading: Boolean) {
-        binding.apply {
-            inputUsername.setLoadingState(isLoading)
-            inputEmail.setLoadingState(isLoading)
-            inputPassword.setLoadingState(isLoading)
-            inputConfirmPassword.setLoadingState(isLoading)
-            imageUser.updateLoadingState(isLoading)
-            buttonSignup.updateLoadingState(isLoading)
+    private fun handleResource(resource: Resource<Boolean>?) {
+        when (resource) {
+            is Resource.Loading -> loadingState(true)
+            is Resource.Success -> handleSuccess()
+            is Resource.Error -> handleError(resource.throwable!!)
+            null -> Unit
         }
     }
 
-    private fun restore() {
-        binding.apply {
-            val (username, email, password, confirmPassword, imageUri, _) = vm.state.value
-
-            imageUser.setImageURI(imageUri)
-            inputUsername.value = username
-            inputEmail.value = email
-            inputPassword.value = password
-            inputConfirmPassword.value = confirmPassword
-        }
+    private fun handleSuccess() {
+        loadingState(false)
+        findNavController().popBackStack()
     }
 
-    override fun validate(): Boolean {
-        binding.apply {
-            val isValidUsername = inputUsername.validate(
-                rules = listOf(
-                    EmptyRule(),
-                    LengthRule(4, 16)
-                )
-            )
+    private fun handleError(e: Exception) {
+        val errorMessage = requireContext().exceptionConverter(e)
+        toast(errorMessage)
+        loadingState(false)
+        vm.clearError()
+    }
 
-            val isValidEmail = inputEmail.validate(
-                rules = listOf(
-                    EmptyRule(),
-                    EmailRule()
-                )
-            )
+    private fun loadingState(isLoading: Boolean) = with(binding) {
+        inputUsername.setLoadingState(isLoading)
+        inputEmail.setLoadingState(isLoading)
+        inputPassword.setLoadingState(isLoading)
+        inputConfirmPassword.setLoadingState(isLoading)
+        imageUser.updateLoadingState(isLoading)
+        buttonSignup.updateLoadingState(isLoading)
+    }
 
-            val isValidPassword = inputPassword.validate(
-                rules = listOf(
-                    EmptyRule(),
-                    LengthRule(),
-                    PasswordRule()
-                )
-            )
+    private fun restore() = with(binding) {
+        val (username, email, password, confirmPassword, imageUri, _) = vm.state.value
 
-            val isValidConfirmPassword = inputConfirmPassword.validate(
-                rules = listOf(
-                    EmptyRule(),
-                    LengthRule(),
-                    PasswordRule(),
-                    ConfirmPasswordRule(inputPassword.value)
-                )
-            )
+        imageUser.setImageURI(imageUri)
+        inputUsername.value = username
+        inputEmail.value = email
+        inputPassword.value = password
+        inputConfirmPassword.value = confirmPassword
+    }
 
-            return isValidUsername && isValidEmail && isValidPassword && isValidConfirmPassword
-        }
+    override fun validate(): Boolean = with(binding) {
+        val isValidUsername = inputUsername.validate(
+            rules = listOf(
+                EmptyRule(),
+                LengthRule(4, 16)
+            )
+        )
+
+        val isValidEmail = inputEmail.validate(
+            rules = listOf(
+                EmptyRule(),
+                EmailRule()
+            )
+        )
+
+        val isValidPassword = inputPassword.validate(
+            rules = listOf(
+                EmptyRule(),
+                LengthRule(),
+                PasswordRule()
+            )
+        )
+
+        val isValidConfirmPassword = inputConfirmPassword.validate(
+            rules = listOf(
+                EmptyRule(),
+                LengthRule(),
+                PasswordRule(),
+                ConfirmPasswordRule(inputPassword.value)
+            )
+        )
+
+        return isValidUsername && isValidEmail && isValidPassword && isValidConfirmPassword
     }
 }

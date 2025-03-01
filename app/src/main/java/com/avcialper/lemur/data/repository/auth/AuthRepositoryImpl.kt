@@ -17,7 +17,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun reload(): Flow<FirebaseUser?> = flow {
         try {
-            auth.currentUser!!.reload().await()
+            auth.currentUser?.reload()?.await()
             emit(auth.currentUser)
         } catch (e: Exception) {
             emit(auth.currentUser)

@@ -59,8 +59,8 @@ class SignupViewModel @Inject constructor(
                 else
                     createUser(resource.data?.uid!!)
 
-            } else if (resource.throwable != null)
-                _state.update { it.copy(resource = Resource.Error(resource.throwable)) }
+            } else if (resource is Resource.Error)
+                handleError(resource.throwable!!)
         }
     }
 
@@ -68,19 +68,11 @@ class SignupViewModel @Inject constructor(
         val file = convert()
         _state.update { it.copy(resource = Resource.Loading()) }
         storageRepository.uploadImage(file).collect { resource ->
-            when (resource) {
-                is Resource.Success -> {
-                    _state.update {
-                        it.copy(
-                            imgBB = resource.data?.data
-                        )
-                    }
-                    onSuccess()
-                }
-
-                is Resource.Error -> _state.update { it.copy(resource = Resource.Error(resource.throwable)) }
-                else -> Unit
-            }
+            if (resource is Resource.Success) {
+                _state.update { it.copy(imgBB = resource.data?.data) }
+                onSuccess()
+            } else if (resource is Resource.Error)
+                handleError(resource.throwable!!)
         }
     }
 
@@ -99,6 +91,10 @@ class SignupViewModel @Inject constructor(
 
     fun clearError() {
         _state.update { it.copy(resource = null) }
+    }
+
+    private fun handleError(e: Exception) {
+        _state.update { it.copy(resource = Resource.Error(e)) }
     }
 
 }

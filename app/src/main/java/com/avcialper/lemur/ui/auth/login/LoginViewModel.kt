@@ -42,17 +42,15 @@ class LoginViewModel @Inject constructor(
         val (email, password, _) = _state.value
 
         auth.login(email, password).collect { resource ->
-            when (resource) {
-                is Resource.Success -> getUser()
-                is Resource.Error ->
-                    _state.update { it.copy(resource = Resource.Error(resource.throwable)) }
+            if (resource is Resource.Success)
+                getUser()
+            else if (resource is Resource.Error)
+                _state.update { it.copy(resource = Resource.Error(resource.throwable)) }
 
-                else -> Unit
-            }
         }
     }
 
-    private fun getUser() = viewModelScope.launch {
+    private suspend fun getUser() {
         val currentUser = auth.currentUser
         storageRepository.getUser(currentUser!!.uid).collect { userResource ->
             when (userResource) {

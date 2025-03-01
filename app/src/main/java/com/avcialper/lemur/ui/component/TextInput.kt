@@ -39,7 +39,7 @@ class TextInput @JvmOverloads constructor(
 
     fun onTextChanged(listener: (String) -> Unit) {
         input.addTextChangedListener { text ->
-            listener.invoke(text.toString())
+            listener.invoke(text.toString().trim())
         }
     }
 

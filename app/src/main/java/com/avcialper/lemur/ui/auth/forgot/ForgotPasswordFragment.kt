@@ -1,6 +1,5 @@
 package com.avcialper.lemur.ui.auth.forgot
 
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -38,41 +37,40 @@ class ForgotPasswordFragment : AuthBaseFragment<FragmentForgotPasswordBinding>(
     }
 
     private fun observer() {
-        lifecycleScope.launch {
-            vm.state.collect { state ->
-                when (state.resource) {
-                    is Resource.Error -> {
-                        loadingState(false)
-                        val errorMessage =
-                            requireContext().exceptionConverter(state.resource.throwable!!)
-                        toast(errorMessage)
-                        vm.clearError()
-                    }
-
-                    is Resource.Loading -> loadingState(true)
-
-                    is Resource.Success -> {
-                        loadingState(false)
-                        val message = ContextCompat.getString(requireContext(), R.string.email_sent)
-                        toast(message)
-                        findNavController().popBackStack()
-                    }
-
-                    null -> Unit
-                }
-            }
+        viewLifecycleOwner.lifecycleScope.launch {
+            vm.state.collect { state -> handleResource(state.resource) }
         }
     }
 
-    private fun setupListeners() {
-        binding.apply {
-            inputEmail.onTextChanged(vm::onEmailChanged)
+    private fun handleResource(resource: Resource<Boolean>?) {
+        when (resource) {
+            is Resource.Error -> handleError(resource.throwable!!)
+            is Resource.Loading -> loadingState(true)
+            is Resource.Success -> handleSuccess()
+            null -> Unit
+        }
+    }
 
-            buttonSend.setOnClickListener {
-                val isValid = validate()
-                if (isValid)
-                    vm.sendPasswordResetEmail()
-            }
+    private fun handleSuccess() {
+        loadingState(false)
+        val message = getString(R.string.email_sent)
+        toast(message)
+        findNavController().popBackStack()
+    }
+
+    private fun handleError(e: Exception) {
+        loadingState(false)
+        val errorMessage = requireContext().exceptionConverter(e)
+        toast(errorMessage)
+        vm.clearError()
+    }
+
+    private fun setupListeners() = with(binding) {
+        inputEmail.onTextChanged(vm::onEmailChanged)
+        buttonSend.setOnClickListener {
+            val isValid = validate()
+            if (isValid)
+                vm.sendPasswordResetEmail()
         }
     }
 
@@ -80,11 +78,9 @@ class ForgotPasswordFragment : AuthBaseFragment<FragmentForgotPasswordBinding>(
         binding.inputEmail.value = vm.state.value.email
     }
 
-    private fun loadingState(isLoading: Boolean) {
-        binding.apply {
-            inputEmail.setLoadingState(isLoading)
-            buttonSend.updateLoadingState(isLoading)
-        }
+    private fun loadingState(isLoading: Boolean) = with(binding) {
+        inputEmail.setLoadingState(isLoading)
+        buttonSend.updateLoadingState(isLoading)
     }
 
 }

@@ -7,6 +7,7 @@ import com.avcialper.lemur.data.state.ForgotPasswordState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,17 +20,17 @@ class ForgotPasswordViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     fun onEmailChanged(email: String) {
-        _state.value = _state.value.copy(email = email)
+        _state.update { it.copy(email = email) }
     }
 
     fun sendPasswordResetEmail() = viewModelScope.launch {
         val email = _state.value.email
         auth.forgotPassword(email).collect { resource ->
-            _state.value = _state.value.copy(resource = resource)
+            _state.update { it.copy(resource = resource) }
         }
     }
 
     fun clearError() {
-        _state.value = _state.value.copy(resource = null)
+        _state.update { it.copy(resource = null) }
     }
 }
