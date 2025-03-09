@@ -1,0 +1,33 @@
+package com.avcialper.lemur.helper
+
+import androidx.appcompat.app.AppCompatDelegate
+import com.avcialper.lemur.data.repository.datastore.DataStoreRepository
+import com.avcialper.lemur.util.constant.Theme
+import kotlinx.coroutines.flow.first
+import javax.inject.Inject
+
+class ThemeManager @Inject constructor(
+    private val dataStoreRepository: DataStoreRepository
+) {
+
+    val theme = dataStoreRepository.getTheme()
+
+    suspend fun loadTheme() {
+        val theme = dataStoreRepository.getTheme().first()
+        applyTheme(theme)
+    }
+
+    suspend fun changeTheme(theme: Theme) {
+        dataStoreRepository.setTheme(theme)
+        applyTheme(theme)
+    }
+
+    private fun applyTheme(theme: Theme) {
+        val mode = when (theme) {
+            Theme.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+            Theme.DARK -> AppCompatDelegate.MODE_NIGHT_YES
+            Theme.SYSTEM_DEFAULT -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        }
+        AppCompatDelegate.setDefaultNightMode(mode)
+    }
+}

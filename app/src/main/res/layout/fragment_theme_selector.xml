@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bottom_sheet_background"
+    android:padding="@dimen/padding_medium"
+    tools:context=".ui.component.themeselector.ThemeSelector">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:text="@string/theme"
+        android:textColor="?attr/primaryColor"
+        android:textSize="@dimen/text_size_large"
+        android:textStyle="bold" />
+
+    <RadioGroup
+        android:id="@+id/theme_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/light"
+            style="@style/RadioButton"
+            android:text="@string/light" />
+
+        <RadioButton
+            android:id="@+id/dark"
+            style="@style/RadioButton"
+            android:text="@string/dark" />
+
+        <RadioButton
+            android:id="@+id/system_default"
+            style="@style/RadioButton"
+            android:text="@string/system_default" />
+
+    </RadioGroup>
+
+</LinearLayout>

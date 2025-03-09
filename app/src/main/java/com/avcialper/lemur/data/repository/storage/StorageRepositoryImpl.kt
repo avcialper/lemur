@@ -15,7 +15,9 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class StorageRepositoryImpl @Inject constructor(
     private val api: StorageApi,
     db: FirebaseFirestore

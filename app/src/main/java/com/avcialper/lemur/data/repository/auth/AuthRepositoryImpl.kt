@@ -7,7 +7,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class AuthRepositoryImpl @Inject constructor(
     private val auth: FirebaseAuth
 ) : AuthRepository {
@@ -15,7 +17,7 @@ class AuthRepositoryImpl @Inject constructor(
     override val currentUser: FirebaseUser?
         get() = auth.currentUser
 
-    override suspend fun reload(): Flow<FirebaseUser?> = flow {
+    override fun reload(): Flow<FirebaseUser?> = flow {
         try {
             auth.currentUser?.reload()?.await()
             emit(auth.currentUser)
@@ -24,7 +26,7 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun signup(email: String, password: String): Flow<Resource<FirebaseUser>> =
+    override fun signup(email: String, password: String): Flow<Resource<FirebaseUser>> =
         flow {
             emit(Resource.Loading())
             try {
@@ -37,7 +39,7 @@ class AuthRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun login(email: String, password: String): Flow<Resource<FirebaseUser>> =
+    override fun login(email: String, password: String): Flow<Resource<FirebaseUser>> =
         flow {
             emit(Resource.Loading())
             try {
@@ -50,13 +52,13 @@ class AuthRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun logout(): Flow<Resource<Boolean>> = flow {
+    override fun logout(): Flow<Resource<Boolean>> = flow {
         emit(Resource.Loading())
         auth.signOut()
         emit(Resource.Success(true))
     }
 
-    override suspend fun forgotPassword(email: String): Flow<Resource<Boolean>> = flow {
+    override fun forgotPassword(email: String): Flow<Resource<Boolean>> = flow {
         emit(Resource.Loading())
         try {
             auth.sendPasswordResetEmail(email).await()
@@ -67,12 +69,12 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun isLoggedIn(): Flow<Boolean> = flow {
+    override fun isLoggedIn(): Flow<Boolean> = flow {
         val isLogged = auth.currentUser != null
         emit(isLogged)
     }
 
-    override suspend fun sendEmailVerification(): Flow<Resource<Boolean>> = flow {
+    override fun sendEmailVerification(): Flow<Resource<Boolean>> = flow {
         emit(Resource.Loading())
         try {
             auth.currentUser!!.sendEmailVerification().await()

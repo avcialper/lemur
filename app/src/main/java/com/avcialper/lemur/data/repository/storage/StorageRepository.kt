@@ -7,11 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import java.io.File
 
 interface StorageRepository {
-
     fun uploadImage(file: File): Flow<Resource<ImgBBResponse>>
-
     fun createUser(userProfile: UserProfile): Flow<Resource<Boolean>>
-
     fun getUser(id: String): Flow<Resource<UserProfile>>
-
 }

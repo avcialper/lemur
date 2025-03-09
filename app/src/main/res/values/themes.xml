@@ -136,4 +136,18 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <!-- Radio Button -->
+    <style name="Base.RadioButton" parent="Theme.Lemur">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="buttonTint">@color/radio_button</item>
+    </style>
+
+    <!-- Radio Button Light Mode -->
+    <style name="RadioButton" parent="Base.RadioButton">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>

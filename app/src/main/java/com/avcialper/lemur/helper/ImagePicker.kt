@@ -141,9 +141,8 @@ class ImagePicker(
             }
         }
 
-        val picker = PartialImageViewer(uris) { uri ->
+        PartialImageViewer(uris) { uri ->
             cropImage(uri)
-        }
-        picker.show(fragment.parentFragmentManager, "image_selector")
+        }.show(fragment.parentFragmentManager, "image_selector")
     }
 }

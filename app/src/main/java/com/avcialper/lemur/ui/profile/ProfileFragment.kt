@@ -9,6 +9,7 @@ import com.avcialper.lemur.databinding.ComponentIconLabelBinding
 import com.avcialper.lemur.databinding.FragmentProfileBinding
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.component.AlertFragment
+import com.avcialper.lemur.ui.component.themeselector.ThemeSelector
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -26,7 +27,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         componentUpdateProfile.init(R.string.update_profile, R.drawable.ic_edit)
         componentUpdatePassword.init(R.string.change_password, R.drawable.ic_change_password)
         componentNotification.init(R.string.notifications, R.drawable.ic_notifications_active)
-        componentTheme.init(R.string.theme, R.drawable.ic_light_mode)
+        componentTheme.init(R.string.theme, R.drawable.ic_light_mode, ::openThemeSelector)
         componentGitHub.init(R.string.github, R.drawable.ic_github)
         componentLogout.init(R.string.logout, R.drawable.ic_logout, ::logout)
     }
@@ -44,7 +45,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             crossfade(true)
             placeholder(R.drawable.logo)
             error(R.drawable.logo)
-
         }
         handleEmailVerification(user?.firebaseUser?.isEmailVerified ?: false)
     }
@@ -59,13 +59,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         textLabel.setOnClickListener { onClick?.invoke() }
     }
 
-    private fun logout() {
-        AlertFragment(R.string.logout_message) {
-            vm.logout {
-                val destination = ProfileFragmentDirections.toLogin()
-                destination.navigate()
-            }
-        }.show(childFragmentManager, "alert")
+    private fun openThemeSelector() {
+        ThemeSelector().show(childFragmentManager, "theme_selector")
     }
 
     private fun verifyEmail() {
@@ -81,6 +76,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             icon = if (isEmailVerified) R.drawable.ic_email_verified else R.drawable.ic_email,
             onClick = if (isEmailVerified) null else ::verifyEmail
         )
+    }
+
+    private fun logout() {
+        AlertFragment(R.string.logout_message) {
+            vm.logout {
+                val destination = ProfileFragmentDirections.toLogin()
+                destination.navigate()
+            }
+        }.show(childFragmentManager, "alert")
     }
 
     override fun onResume() {

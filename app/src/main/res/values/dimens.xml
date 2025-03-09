@@ -14,6 +14,7 @@
 
     <dimen name="corner_radius">8dp</dimen>
     <dimen name="image_size">200dp</dimen>
+    <dimen name="bottom_sheet_corner_radius">32dp</dimen>
 
     <dimen name="icon_of_icon_label">64dp</dimen>
     <dimen name="icon_size">32dp</dimen>

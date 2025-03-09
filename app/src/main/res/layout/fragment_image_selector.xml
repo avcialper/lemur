@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="?attr/backgroundColor"
+    android:background="@drawable/bottom_sheet_background"
     android:orientation="vertical"
     tools:context=".ui.component.imageselector.PartialImageViewer">
 

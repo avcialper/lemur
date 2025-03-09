@@ -6,21 +6,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
     val currentUser: FirebaseUser?
-
-    suspend fun reload(): Flow<FirebaseUser?>
-
-    suspend fun signup(
-        email: String,
-        password: String,
-    ): Flow<Resource<FirebaseUser>>
-
-    suspend fun login(email: String, password: String): Flow<Resource<FirebaseUser>>
-
-    suspend fun logout(): Flow<Resource<Boolean>>
-
-    suspend fun forgotPassword(email: String): Flow<Resource<Boolean>>
-
-    suspend fun isLoggedIn(): Flow<Boolean>
-
-    suspend fun sendEmailVerification(): Flow<Resource<Boolean>>
+    fun reload(): Flow<FirebaseUser?>
+    fun signup(email: String, password: String): Flow<Resource<FirebaseUser>>
+    fun login(email: String, password: String): Flow<Resource<FirebaseUser>>
+    fun logout(): Flow<Resource<Boolean>>
+    fun forgotPassword(email: String): Flow<Resource<Boolean>>
+    fun isLoggedIn(): Flow<Boolean>
+    fun sendEmailVerification(): Flow<Resource<Boolean>>
 }
