@@ -17,8 +17,8 @@
             android:id="@+id/toForgot"
             app:destination="@id/forgotPasswordFragment" />
         <action
-            android:id="@+id/toProfile"
-            app:destination="@id/profileFragment"
+            android:id="@+id/toMenu"
+            app:destination="@id/homeFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -33,14 +33,24 @@
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" />
     <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.avcialper.lemur.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/teamFragment"
+        android:name="com.avcialper.lemur.ui.team.TeamFragment"
+        android:label="fragment_team"
+        tools:layout="@layout/fragment_team" />
+    <fragment
         android:id="@+id/profileFragment"
         android:name="com.avcialper.lemur.ui.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile">
+        tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/toLogin"
             app:destination="@id/loginFragment"
-            app:popUpTo="@id/profileFragment"
+            app:popUpTo="@id/nav_main"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>

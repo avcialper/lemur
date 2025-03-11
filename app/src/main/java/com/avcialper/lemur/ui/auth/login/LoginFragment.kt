@@ -20,13 +20,6 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>(FragmentLoginBindin
     private val vm: LoginViewModel by viewModels()
 
     override fun FragmentLoginBinding.initialize() {
-
-        if (vm.isLoggedIn.value) {
-            val direction = LoginFragmentDirections.toProfile()
-            direction.navigate()
-            return
-        }
-
         observer()
         restore()
         setupListeners()
@@ -67,7 +60,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>(FragmentLoginBindin
 
     private fun handleSuccess() {
         loadingState(false)
-        val direction = LoginFragmentDirections.toProfile()
+        val direction = LoginFragmentDirections.toMenu()
         direction.navigate()
     }
 

@@ -45,4 +45,7 @@
     <string name="light">Açık</string>
     <string name="dark">Koyu</string>
     <string name="system_default">Sistem varsayılanı</string>
+    <string name="home">Anasayfa</string>
+    <string name="team">Takım</string>
+    <string name="profile">Profil</string>
 </resources>
