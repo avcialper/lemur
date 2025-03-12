@@ -3,6 +3,7 @@ package com.avcialper.lemur.helper
 import androidx.appcompat.app.AppCompatDelegate
 import com.avcialper.lemur.data.repository.datastore.DataStoreRepository
 import com.avcialper.lemur.util.constant.Theme
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
@@ -15,6 +16,7 @@ class ThemeManager @Inject constructor(
     suspend fun loadTheme() {
         val theme = dataStoreRepository.getTheme().first()
         applyTheme(theme)
+        delay(100) // wait theme update
     }
 
     suspend fun changeTheme(theme: Theme) {

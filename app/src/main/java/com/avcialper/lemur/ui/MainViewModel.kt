@@ -60,7 +60,8 @@ class MainViewModel @Inject constructor(
                     UserManager.updateUser(user, username, imageUrl)
                     _state.update { it.copy(user = user, isCurrentUserChecked = true) }
                 }
-            }
+            } else if (resource.status == ResourceStatus.ERROR)
+                _state.update { it.copy(isCurrentUserChecked = true) }
         }
     }
 
