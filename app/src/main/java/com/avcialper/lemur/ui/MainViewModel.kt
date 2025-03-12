@@ -3,15 +3,16 @@ package com.avcialper.lemur.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.UserManager
-import com.avcialper.lemur.data.model.User
 import com.avcialper.lemur.data.repository.auth.AuthRepository
 import com.avcialper.lemur.data.repository.storage.StorageRepository
+import com.avcialper.lemur.data.state.MainState
 import com.avcialper.lemur.helper.ThemeManager
 import com.avcialper.lemur.util.constant.ResourceStatus
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,11 +23,8 @@ class MainViewModel @Inject constructor(
     private val themeManager: ThemeManager,
 ) : ViewModel() {
 
-    private val _user = MutableStateFlow<User?>(null)
-    val user = _user.asStateFlow()
-
-    private val _isCompeted = MutableStateFlow(false)
-    val isCompeted = _isCompeted.asStateFlow()
+    private val _state = MutableStateFlow(MainState())
+    val state = _state.asStateFlow()
 
     init {
         loadTheme()
@@ -35,6 +33,7 @@ class MainViewModel @Inject constructor(
 
     private fun loadTheme() = viewModelScope.launch {
         themeManager.loadTheme()
+        _state.update { it.copy(isThemeChecked = true) }
     }
 
     private fun getUser() {
@@ -42,7 +41,7 @@ class MainViewModel @Inject constructor(
         if (user != null)
             reload()
         else
-            _isCompeted.value = true
+            _state.update { it.copy(isCurrentUserChecked = true) }
     }
 
     private fun reload() = viewModelScope.launch {
@@ -50,7 +49,7 @@ class MainViewModel @Inject constructor(
             if (resignedUser != null)
                 getUserFromRepository(resignedUser)
             else
-                _isCompeted.value = true
+                _state.update { it.copy(isCurrentUserChecked = true) }
         }
     }
 
@@ -59,8 +58,7 @@ class MainViewModel @Inject constructor(
             if (resource.status == ResourceStatus.SUCCESS) {
                 resource.data?.let { (_, username, imageUrl) ->
                     UserManager.updateUser(user, username, imageUrl)
-                    _user.value = UserManager.user
-                    _isCompeted.value = true
+                    _state.update { it.copy(user = user, isCurrentUserChecked = true) }
                 }
             }
         }

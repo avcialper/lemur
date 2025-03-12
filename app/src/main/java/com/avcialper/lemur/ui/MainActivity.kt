@@ -8,15 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.avcialper.lemur.R
 import com.avcialper.lemur.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -34,7 +31,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen().setKeepOnScreenCondition {
-            vm.isCompeted.value.not()
+            val (_, isCurrentUserChecked, isThemeChecked) = vm.state.value
+            val isSplashCompleted = isThemeChecked && isCurrentUserChecked
+            if (isSplashCompleted) handleFlow()
+            isSplashCompleted.not()
         }
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -45,15 +45,13 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         createNavigation()
-        observeUser()
     }
 
-    private fun observeUser() = lifecycleScope.launch {
-        vm.user.collect {
-            it?.let {
-                navController.navigate(R.id.toMenu)
-            }
-        }
+    private fun handleFlow() {
+        val isLoginPage = navController.currentDestination?.id == R.id.loginFragment
+        val isLoggedIn = vm.state.value.user != null
+        if (isLoginPage && isLoggedIn)
+            navController.navigate(R.id.toMenu)
     }
 
     private fun createNavigation() = with(binding) {
@@ -61,14 +59,12 @@ class MainActivity : AppCompatActivity() {
             visibility = View.VISIBLE
             setupWithNavController(navController)
         }
-        navController.addOnDestinationChangedListener(::onDestinationChangedListener)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            onDestinationChangedListener(destination)
+        }
     }
 
-    private fun onDestinationChangedListener(
-        controller: NavController,
-        destination: NavDestination,
-        arguments: Bundle?
-    ) {
+    private fun onDestinationChangedListener(destination: NavDestination) {
         val visibility =
             if (isNotBottomNavigationDestinations(destination)) View.GONE else View.VISIBLE
         binding.bottomMenu.visibility = visibility
