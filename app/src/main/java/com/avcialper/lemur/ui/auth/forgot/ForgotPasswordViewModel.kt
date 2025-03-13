@@ -3,7 +3,7 @@ package com.avcialper.lemur.ui.auth.forgot
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.repository.auth.AuthRepository
-import com.avcialper.lemur.data.state.ForgotPasswordState
+import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,21 +16,20 @@ class ForgotPasswordViewModel @Inject constructor(
     private val auth: AuthRepository
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(ForgotPasswordState())
+    private val _state = MutableStateFlow<Resource<Boolean>?>(null)
     val state = _state.asStateFlow()
 
+    private val _email = MutableStateFlow("")
+    val email = _email.asStateFlow()
+
     fun onEmailChanged(email: String) {
-        _state.update { it.copy(email = email) }
+        _email.update { email }
     }
 
+    // Send password reset email
     fun sendPasswordResetEmail() = viewModelScope.launch {
-        val email = _state.value.email
-        auth.forgotPassword(email).collect { resource ->
-            _state.update { it.copy(resource = resource) }
+        auth.forgotPassword(_email.value).collect { resource ->
+            _state.update { resource }
         }
-    }
-
-    fun clearError() {
-        _state.update { it.copy(resource = null) }
     }
 }

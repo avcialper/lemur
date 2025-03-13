@@ -2,7 +2,6 @@ package com.avcialper.lemur.ui.auth.login
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavDirections
 import com.avcialper.lemur.databinding.FragmentLoginBinding
 import com.avcialper.lemur.helper.validator.EmailRule
 import com.avcialper.lemur.helper.validator.EmptyRule
@@ -11,6 +10,7 @@ import com.avcialper.lemur.helper.validator.PasswordRule
 import com.avcialper.lemur.ui.auth.AuthBaseFragment
 import com.avcialper.lemur.util.constant.Resource
 import com.avcialper.lemur.util.extension.exceptionConverter
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -29,8 +29,8 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>(FragmentLoginBindin
         inputEmail.onTextChanged(vm::onEmailChanged)
         inputPassword.onTextChanged(vm::onPasswordChanged)
 
-        textSignup.setOnClickListener { handleNavigation(LoginFragmentDirections.toSignup()) }
-        textForgotPassword.setOnClickListener { handleNavigation(LoginFragmentDirections.toForgot()) }
+        textSignup.setOnClickListener { LoginFragmentDirections.toSignup().navigate() }
+        textForgotPassword.setOnClickListener { LoginFragmentDirections.toForgot().navigate() }
 
         buttonLogin.setOnClickListener {
             val isValid = validate()
@@ -39,17 +39,14 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>(FragmentLoginBindin
         }
     }
 
-    private fun handleNavigation(direction: NavDirections) {
-        direction.navigate()
-    }
-
     private fun observer() {
         viewLifecycleOwner.lifecycleScope.launch {
-            vm.state.collect { loginState -> handleResource(loginState.resource) }
+            vm.state.collect(::handleResource)
         }
     }
 
-    private fun handleResource(resource: Resource<Boolean>?) {
+    // Handle resource state and update UI accordingly
+    private fun handleResource(resource: Resource<FirebaseUser>?) {
         when (resource) {
             is Resource.Error -> handleError(resource.throwable!!)
             is Resource.Loading -> loadingState(true)
@@ -68,7 +65,6 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>(FragmentLoginBindin
         val errorMessage = requireContext().exceptionConverter(e)
         toast(errorMessage)
         loadingState(false)
-        vm.clearError()
     }
 
     private fun loadingState(isLoading: Boolean) = with(binding) {
@@ -80,8 +76,8 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>(FragmentLoginBindin
     }
 
     private fun restore() = with(binding) {
-        inputEmail.value = vm.state.value.email
-        inputPassword.value = vm.state.value.password
+        inputEmail.value = vm.email.value
+        inputPassword.value = vm.password.value
     }
 
     override fun validate(): Boolean = with(binding) {

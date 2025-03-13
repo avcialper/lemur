@@ -38,7 +38,7 @@ class ForgotPasswordFragment : AuthBaseFragment<FragmentForgotPasswordBinding>(
 
     private fun observer() {
         viewLifecycleOwner.lifecycleScope.launch {
-            vm.state.collect { state -> handleResource(state.resource) }
+            vm.state.collect(::handleResource)
         }
     }
 
@@ -62,7 +62,6 @@ class ForgotPasswordFragment : AuthBaseFragment<FragmentForgotPasswordBinding>(
         loadingState(false)
         val errorMessage = requireContext().exceptionConverter(e)
         toast(errorMessage)
-        vm.clearError()
     }
 
     private fun setupListeners() = with(binding) {
@@ -75,7 +74,7 @@ class ForgotPasswordFragment : AuthBaseFragment<FragmentForgotPasswordBinding>(
     }
 
     private fun restore() {
-        binding.inputEmail.value = vm.state.value.email
+        binding.inputEmail.value = vm.email.value
     }
 
     private fun loadingState(isLoading: Boolean) = with(binding) {

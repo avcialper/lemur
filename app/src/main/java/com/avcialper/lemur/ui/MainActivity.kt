@@ -31,8 +31,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen().setKeepOnScreenCondition {
-            val (_, isCurrentUserChecked, isThemeChecked) = vm.state.value
-            val isSplashCompleted = isThemeChecked && isCurrentUserChecked
+            val isSplashCompleted = vm.isThemeChecked.value && vm.isCurrentUserChecked.value
             if (isSplashCompleted) handleFlow()
             isSplashCompleted.not()
         }
@@ -49,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleFlow() {
         val isLoginPage = navController.currentDestination?.id == R.id.loginFragment
-        val isLoggedIn = vm.state.value.user != null
+        val isLoggedIn = vm.user.value != null
         if (isLoginPage && isLoggedIn)
             navController.navigate(R.id.toMenu)
     }

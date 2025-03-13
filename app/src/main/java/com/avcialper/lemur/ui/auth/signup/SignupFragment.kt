@@ -55,13 +55,13 @@ class SignupFragment : AuthBaseFragment<FragmentSignupBinding>(FragmentSignupBin
         }
     }
 
-    private fun convert(): File = with(vm.state.value) {
-        return UriToFile(requireContext()).convert(username, imageUri!!)
+    private fun convert(): File = with(vm) {
+        return UriToFile(requireContext()).convert(username.value, imageUri.value!!)
     }
 
     private fun observer() {
         viewLifecycleOwner.lifecycleScope.launch {
-            vm.state.collectLatest { signupState -> handleResource(signupState.resource) }
+            vm.state.collectLatest(::handleResource)
         }
     }
 
@@ -83,7 +83,6 @@ class SignupFragment : AuthBaseFragment<FragmentSignupBinding>(FragmentSignupBin
         val errorMessage = requireContext().exceptionConverter(e)
         toast(errorMessage)
         loadingState(false)
-        vm.clearError()
     }
 
     private fun loadingState(isLoading: Boolean) = with(binding) {
@@ -96,13 +95,11 @@ class SignupFragment : AuthBaseFragment<FragmentSignupBinding>(FragmentSignupBin
     }
 
     private fun restore() = with(binding) {
-        val (username, email, password, confirmPassword, imageUri, _) = vm.state.value
-
-        imageUser.setImageURI(imageUri)
-        inputUsername.value = username
-        inputEmail.value = email
-        inputPassword.value = password
-        inputConfirmPassword.value = confirmPassword
+        imageUser.setImageURI(vm.imageUri.value)
+        inputUsername.value = vm.username.value
+        inputEmail.value = vm.email.value
+        inputPassword.value = vm.password.value
+        inputConfirmPassword.value = vm.confirmPassword.value
     }
 
     override fun validate(): Boolean = with(binding) {

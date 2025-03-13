@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.repository.auth.AuthRepository
 import com.avcialper.lemur.data.repository.storage.StorageRepository
-import com.avcialper.lemur.data.state.LoginState
 import com.avcialper.lemur.util.constant.Resource
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,52 +20,52 @@ class LoginViewModel @Inject constructor(
     private val storageRepository: StorageRepository
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(LoginState())
+    private val _state = MutableStateFlow<Resource<FirebaseUser>?>(null)
     val state = _state.asStateFlow()
 
+    private val _email = MutableStateFlow("")
+    val email = _email.asStateFlow()
+
+    private val _password = MutableStateFlow("")
+    val password = _password.asStateFlow()
+
     fun onEmailChanged(email: String) {
-        _state.update { it.copy(email = email) }
+        _email.value = email
     }
 
     fun onPasswordChanged(password: String) {
-        _state.update { it.copy(password = password) }
+        _password.value = password
     }
 
+    // Handle login click action
     fun onLoginClicked() = viewModelScope.launch {
-        val (email, password, _) = _state.value
-
-        auth.login(email, password).collect { resource ->
+        _state.value = Resource.Loading()
+        auth.login(_email.value, _password.value).collect { resource ->
             if (resource is Resource.Success)
                 getUser()
             else if (resource is Resource.Error)
-                _state.update { it.copy(resource = Resource.Error(resource.throwable)) }
+                _state.value = Resource.Error(resource.throwable)
 
         }
     }
 
+    // If user is logged in successfully get user data from storage
     private suspend fun getUser() {
         val currentUser = auth.currentUser
-        storageRepository.getUser(currentUser!!.uid).collect { userResource ->
-            when (userResource) {
+        storageRepository.getUser(currentUser!!.uid).collect { resource ->
+            when (resource) {
+                is Resource.Error -> _state.update { Resource.Error(resource.throwable) }
+                is Resource.Loading -> _state.update { Resource.Loading() }
                 is Resource.Success -> {
-                    val (_, username, imageUrl) = userResource.data!!
+                    val (_, username, imageUrl) = resource.data!!
                     UserManager.updateUser(
                         currentUser,
                         username,
                         imageUrl,
                     )
-                    _state.update { it.copy(resource = Resource.Success(true)) }
+                    _state.value = Resource.Success(currentUser)
                 }
-
-                is Resource.Error ->
-                    _state.update { it.copy(resource = Resource.Error(userResource.throwable)) }
-
-                else -> Unit
             }
         }
-    }
-
-    fun clearError() {
-        _state.update { it.copy(resource = null) }
     }
 }

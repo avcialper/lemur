@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.repository.auth.AuthRepository
 import com.avcialper.lemur.data.repository.storage.StorageRepository
-import com.avcialper.lemur.data.state.MainState
 import com.avcialper.lemur.helper.ThemeManager
 import com.avcialper.lemur.util.constant.ResourceStatus
 import com.google.firebase.auth.FirebaseUser
@@ -23,8 +22,14 @@ class MainViewModel @Inject constructor(
     private val themeManager: ThemeManager,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(MainState())
-    val state = _state.asStateFlow()
+    private val _user = MutableStateFlow(auth.currentUser)
+    val user = _user.asStateFlow()
+
+    private val _isCurrentUserChecked = MutableStateFlow(false)
+    val isCurrentUserChecked = _isCurrentUserChecked.asStateFlow()
+
+    private val _isThemeChecked = MutableStateFlow(false)
+    val isThemeChecked = _isThemeChecked.asStateFlow()
 
     init {
         loadTheme()
@@ -33,7 +38,7 @@ class MainViewModel @Inject constructor(
 
     private fun loadTheme() = viewModelScope.launch {
         themeManager.loadTheme()
-        _state.update { it.copy(isThemeChecked = true) }
+        _isThemeChecked.update { true }
     }
 
     private fun getUser() {
@@ -41,7 +46,7 @@ class MainViewModel @Inject constructor(
         if (user != null)
             reload()
         else
-            _state.update { it.copy(isCurrentUserChecked = true) }
+            _isCurrentUserChecked.update { true }
     }
 
     private fun reload() = viewModelScope.launch {
@@ -49,7 +54,7 @@ class MainViewModel @Inject constructor(
             if (resignedUser != null)
                 getUserFromRepository(resignedUser)
             else
-                _state.update { it.copy(isCurrentUserChecked = true) }
+                _isCurrentUserChecked.update { true }
         }
     }
 
@@ -58,10 +63,11 @@ class MainViewModel @Inject constructor(
             if (resource.status == ResourceStatus.SUCCESS) {
                 resource.data?.let { (_, username, imageUrl) ->
                     UserManager.updateUser(user, username, imageUrl)
-                    _state.update { it.copy(user = user, isCurrentUserChecked = true) }
+                    _isCurrentUserChecked.update { true }
+                    _user.update { user }
                 }
             } else if (resource.status == ResourceStatus.ERROR)
-                _state.update { it.copy(isCurrentUserChecked = true) }
+                _isCurrentUserChecked.update { true }
         }
     }
 

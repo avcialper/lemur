@@ -4,10 +4,10 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.UserManager
+import com.avcialper.lemur.data.model.ImgBBData
 import com.avcialper.lemur.data.model.UserProfile
 import com.avcialper.lemur.data.repository.auth.AuthRepository
 import com.avcialper.lemur.data.repository.storage.StorageRepository
-import com.avcialper.lemur.data.state.SignupState
 import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,35 +23,52 @@ class SignupViewModel @Inject constructor(
     private val storageRepository: StorageRepository
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(SignupState())
+    private val _state = MutableStateFlow<Resource<Boolean>?>(null)
     val state = _state.asStateFlow()
 
+    private val _username = MutableStateFlow("")
+    val username = _username.asStateFlow()
+
+    private val _email = MutableStateFlow("")
+    val email = _email.asStateFlow()
+
+    private val _password = MutableStateFlow("")
+    val password = _password.asStateFlow()
+
+    private val _confirmPassword = MutableStateFlow("")
+    val confirmPassword = _confirmPassword.asStateFlow()
+
+    private val _imageUri = MutableStateFlow<Uri?>(null)
+    val imageUri = _imageUri.asStateFlow()
+
+    private val _imageBB = MutableStateFlow<ImgBBData?>(null)
+
     fun onUsernameChanged(username: String) {
-        _state.update { it.copy(username = username) }
+        _username.update { username }
     }
 
     fun onEmailChanged(email: String) {
-        _state.update { it.copy(email = email) }
+        _email.update { email }
     }
 
     fun onPasswordChanged(password: String) {
-        _state.update { it.copy(password = password) }
+        _password.update { password }
     }
 
     fun onConfirmPasswordChanged(confirmPassword: String) {
-        _state.update { it.copy(confirmPassword = confirmPassword) }
+        _confirmPassword.update { confirmPassword }
     }
 
     fun onImageChanged(imageUri: Uri) {
-        _state.update { it.copy(imageUri = imageUri) }
+        _imageUri.update { imageUri }
     }
 
+    // Handle signup click action
     fun onSignupClicked(convert: () -> File) = viewModelScope.launch {
-        val (_, email, password, _, _, _, _) = _state.value
-
-        auth.signup(email, password).collect { resource ->
+        _state.update { Resource.Loading() }
+        auth.signup(_email.value, _password.value).collect { resource ->
             if (resource is Resource.Success) {
-                if (_state.value.imageUri != null)
+                if (_imageUri.value != null)
                     uploadImage(convert) {
                         val id = resource.data?.uid!!
                         createUser(id)
@@ -64,24 +81,24 @@ class SignupViewModel @Inject constructor(
         }
     }
 
+    // Upload image to ImgBB
     private fun uploadImage(convert: () -> File, onSuccess: () -> Unit) = viewModelScope.launch {
         val file = convert()
-        _state.update { it.copy(resource = Resource.Loading()) }
         storageRepository.uploadImage(file).collect { resource ->
             if (resource is Resource.Success) {
-                _state.update { it.copy(imgBB = resource.data?.data) }
+                _imageBB.update { resource.data?.data }
                 onSuccess()
             } else if (resource is Resource.Error)
                 handleError(resource.throwable!!)
         }
     }
 
+    // Create user in firebase storage
     private fun createUser(id: String) = viewModelScope.launch {
-        val (username, _, _, _, _, imgBB, _) = _state.value
-        val userProfile = UserProfile(id, username, imgBB?.url)
+        val userProfile = UserProfile(id, _username.value, _imageBB.value?.url)
 
         storageRepository.createUser(userProfile).collect { resource ->
-            _state.update { it.copy(resource = resource) }
+            _state.update { resource }
         }
         auth.logout().collect {
             if (it is Resource.Success)
@@ -89,12 +106,9 @@ class SignupViewModel @Inject constructor(
         }
     }
 
-    fun clearError() {
-        _state.update { it.copy(resource = null) }
-    }
-
+    // Convert exception to resource error
     private fun handleError(e: Exception) {
-        _state.update { it.copy(resource = Resource.Error(e)) }
+        _state.update { Resource.Error(e) }
     }
 
 }
