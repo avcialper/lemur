@@ -15,8 +15,8 @@ import com.avcialper.lemur.ui.auth.AuthBaseFragment
 import com.avcialper.lemur.util.constant.Resource
 import com.avcialper.lemur.util.extension.exceptionConverter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import java.io.File
 
 @AndroidEntryPoint
@@ -60,9 +60,7 @@ class SignupFragment : AuthBaseFragment<FragmentSignupBinding>(FragmentSignupBin
     }
 
     private fun observer() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            vm.state.collectLatest(::handleResource)
-        }
+        vm.state.onEach(::handleResource).launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun handleResource(resource: Resource<Boolean>?) {

@@ -12,7 +12,8 @@ import com.avcialper.lemur.util.constant.Resource
 import com.avcialper.lemur.util.extension.exceptionConverter
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class LoginFragment : AuthBaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
@@ -40,12 +41,10 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>(FragmentLoginBindin
     }
 
     private fun observer() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            vm.state.collect(::handleResource)
-        }
+        vm.state.onEach(::handleResource).launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    // Handle resource state and update UI accordingly
+    // Handle resource state and updateAll UI accordingly
     private fun handleResource(resource: Resource<FirebaseUser>?) {
         when (resource) {
             is Resource.Error -> handleError(resource.throwable!!)

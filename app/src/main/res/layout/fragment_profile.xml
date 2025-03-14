@@ -10,6 +10,8 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageProfilePicture"
             style="@style/AppLogo"
+            android:layout_width="@dimen/profile_picture_size"
+            android:layout_height="@dimen/profile_picture_size"
             android:contentDescription="@string/user_profile_picture"
             android:scaleType="centerCrop"
             android:src="@drawable/logo"
@@ -31,33 +33,47 @@
             android:textSize="@dimen/text_size_medium"
             tools:text="info.lemurapp@gmail.com" />
 
-        <include
+        <com.avcialper.lemur.ui.component.IconLabel
             android:id="@+id/componentUpdateProfile"
-            layout="@layout/component_icon_label" />
+            style="@style/FillHorizontal"
+            android:label="@string/update_profile"
+            app:left_icon="@drawable/ic_edit" />
 
-        <include
+        <com.avcialper.lemur.ui.component.IconLabel
             android:id="@+id/componentUpdatePassword"
-            layout="@layout/component_icon_label" />
+            style="@style/FillHorizontal"
+            android:label="@string/change_password"
+            app:left_icon="@drawable/ic_change_password" />
 
-        <include
+        <com.avcialper.lemur.ui.component.IconLabel
             android:id="@+id/componentNotification"
-            layout="@layout/component_icon_label" />
+            style="@style/FillHorizontal"
+            android:label="@string/notifications"
+            app:left_icon="@drawable/ic_notifications_active" />
 
-        <include
+        <com.avcialper.lemur.ui.component.IconLabel
             android:id="@+id/componentTheme"
-            layout="@layout/component_icon_label" />
+            style="@style/FillHorizontal"
+            android:label="@string/theme"
+            app:left_icon="@drawable/ic_light_mode" />
 
-        <include
+        <com.avcialper.lemur.ui.component.IconLabel
             android:id="@+id/componentGitHub"
-            layout="@layout/component_icon_label" />
+            style="@style/FillHorizontal"
+            android:label="@string/github"
+            app:left_icon="@drawable/ic_github" />
 
-        <include
+        <com.avcialper.lemur.ui.component.IconLabel
             android:id="@+id/componentEmailVerify"
-            layout="@layout/component_icon_label" />
+            style="@style/FillHorizontal"
+            android:label="@string/email_verify"
+            app:left_icon="@drawable/ic_email" />
 
-        <include
+        <com.avcialper.lemur.ui.component.IconLabel
             android:id="@+id/componentLogout"
-            layout="@layout/component_icon_label" />
+            style="@style/FillHorizontal"
+            android:label="@string/logout"
+            app:left_icon="@drawable/ic_logout" />
 
     </LinearLayout>
 

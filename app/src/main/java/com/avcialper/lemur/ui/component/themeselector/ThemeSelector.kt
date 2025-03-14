@@ -10,7 +10,8 @@ import com.avcialper.lemur.databinding.FragmentThemeSelectorBinding
 import com.avcialper.lemur.util.constant.Theme
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class ThemeSelector : BottomSheetDialogFragment() {
@@ -48,16 +49,14 @@ class ThemeSelector : BottomSheetDialogFragment() {
     }
 
     private fun observeTheme() = with(binding) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            vm.theme.collect {
-                val theme = when (it) {
-                    Theme.LIGHT -> light.id
-                    Theme.DARK -> dark.id
-                    Theme.SYSTEM_DEFAULT -> systemDefault.id
-                }
-                themeGroup.check(theme)
+        vm.theme.onEach {
+            val id = when (it) {
+                Theme.LIGHT -> light.id
+                Theme.DARK -> dark.id
+                Theme.SYSTEM_DEFAULT -> systemDefault.id
             }
-        }
+            themeGroup.check(id)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     override fun onDestroyView() {
