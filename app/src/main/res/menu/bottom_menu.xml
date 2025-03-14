@@ -7,7 +7,7 @@
     <item
         android:id="@+id/teamFragment"
         android:icon="@drawable/ic_team"
-        android:title="@string/team" />
+        android:title="@string/teams" />
     <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_profile"

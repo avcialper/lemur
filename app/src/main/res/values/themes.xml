@@ -3,6 +3,7 @@
     <style name="Base.Theme.Lemur" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="backgroundColor">@color/white</item>
         <item name="primaryColor">@color/black</item>
+        <item name="bottomMenuColor">@color/seashell</item>
     </style>
 
     <style name="Theme.Lemur" parent="Base.Theme.Lemur">
@@ -154,6 +155,11 @@
     <style name="FillHorizontal" parent="Theme.Lemur">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <!-- Bottom Navigation Bar Active Item -->
+    <style name="ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/chardonnay</item>
     </style>
 
 </resources>

@@ -2,6 +2,7 @@
 <resources>
     <attr name="backgroundColor" format="color" />
     <attr name="primaryColor" format="color" />
+    <attr name="bottomMenuColor" format="color" />
     <declare-styleable name="TextInput">
         <attr name="android:autofillHints" />
         <attr name="android:hint" />

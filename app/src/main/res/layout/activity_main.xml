@@ -22,8 +22,9 @@
         android:id="@+id/bottomMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/backgroundColor"
+        android:background="?attr/bottomMenuColor"
         android:visibility="gone"
-        app:labelVisibilityMode="unlabeled"
+        app:itemActiveIndicatorStyle="@style/ActiveIndicator"
+        app:itemIconTint="@color/menu_item_selector"
         app:menu="@menu/bottom_menu" />
 </LinearLayout>
