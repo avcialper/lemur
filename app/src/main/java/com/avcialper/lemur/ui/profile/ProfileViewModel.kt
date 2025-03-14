@@ -6,6 +6,7 @@ import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.User
 import com.avcialper.lemur.data.repository.auth.AuthRepository
 import com.avcialper.lemur.data.repository.storage.StorageRepository
+import com.avcialper.lemur.helper.ThemeManager
 import com.avcialper.lemur.util.constant.ResourceStatus
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,10 +19,13 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val auth: AuthRepository,
     private val storageRepository: StorageRepository,
+    private val themeManager: ThemeManager
 ) : ViewModel() {
 
     private val _user = MutableStateFlow<User?>(null)
     val user = _user.asStateFlow()
+
+    val theme = themeManager.theme
 
     init {
         reloadData()

@@ -48,4 +48,6 @@
     <string name="home">Anasayfa</string>
     <string name="team">Takım</string>
     <string name="profile">Profil</string>
+    <string name="button_icon">Buton resmi.</string>
+    <string name="button_go_icon">Buton ilerle resmi.</string>
 </resources>

@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/textLabel"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingVertical="@dimen/padding_medium"
-    android:drawablePadding="@dimen/padding_medium"
-    android:gravity="center_vertical"
-    android:textColor="?attr/primaryColor"
-    android:textSize="@dimen/text_size_medium"
-    android:textStyle="bold"
-    app:drawableLeftCompat="@drawable/ic_edit"
-    tools:text="Label" />
+    style="@style/FillHorizontal"
+    android:gravity="center"
+    android:orientation="horizontal"
+    tools:ignore="UseCompoundDrawables">
 
+    <ImageView
+        android:id="@+id/imageIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/button_icon"
+        android:src="@drawable/ic_edit" />
+
+    <TextView
+        android:id="@+id/textLabel"
+        style="@style/FillHorizontal"
+        android:padding="@dimen/padding_medium"
+        android:textColor="?attr/primaryColor"
+        android:textSize="@dimen/text_size_medium"
+        android:textStyle="bold"
+        tools:text="Label" />
+
+</LinearLayout>

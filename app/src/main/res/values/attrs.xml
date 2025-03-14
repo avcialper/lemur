@@ -11,8 +11,7 @@
         <attr name="endIconMode" />
     </declare-styleable>
     <declare-styleable name="IconLabel">
-        <attr name="label" format="string" />
-        <attr name="sub_text" format="string" />
-        <attr name="left_icon" format="integer" />
+        <attr name="android:label" format="string" />
+        <attr name="left_icon" format="reference" />
     </declare-styleable>
 </resources>
