@@ -2,6 +2,7 @@ package com.avcialper.lemur.data.repository.datastore
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.avcialper.lemur.util.constant.Theme
@@ -17,6 +18,7 @@ class DataStoreRepositoryImpl @Inject constructor(
 
     companion object {
         val THEME_KEY = stringPreferencesKey("theme")
+        val NOTIFICATION_PERMISSION_KEY = booleanPreferencesKey("notification_permission")
     }
 
     override fun getTheme(): Flow<Theme> {
@@ -32,4 +34,15 @@ class DataStoreRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getNotificationPermission(): Flow<Boolean> {
+        return datastore.data.map { preferences ->
+            preferences[NOTIFICATION_PERMISSION_KEY] ?: false
+        }
+    }
+
+    override suspend fun setNotificationPermission(isGranted: Boolean) {
+        datastore.edit { preferences ->
+            preferences[NOTIFICATION_PERMISSION_KEY] = isGranted
+        }
+    }
 }

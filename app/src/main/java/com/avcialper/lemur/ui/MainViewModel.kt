@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.repository.auth.AuthRepository
 import com.avcialper.lemur.data.repository.storage.StorageRepository
-import com.avcialper.lemur.helper.ThemeManager
+import com.avcialper.lemur.helper.DataStoreManager
 import com.avcialper.lemur.util.constant.ResourceStatus
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val auth: AuthRepository,
     private val storageRepository: StorageRepository,
-    private val themeManager: ThemeManager,
+    private val dataStoreManager: DataStoreManager,
 ) : ViewModel() {
 
     private val _user = MutableStateFlow(auth.currentUser)
@@ -37,7 +37,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun loadTheme() = viewModelScope.launch {
-        themeManager.loadTheme()
+        dataStoreManager.loadTheme()
         _isThemeChecked.update { true }
     }
 

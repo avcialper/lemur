@@ -47,7 +47,10 @@ class IconLabel @JvmOverloads constructor(
             textLabel.text = context.getString(label)
             imageIcon.setImageResource(icon)
         }
-        setOnClickListener { onClick?.invoke() }
+        if (onClick != null)
+            setOnClickListener { onClick.invoke() }
+        else
+            setOnClickListener(null)
     }
 
     fun updateIcon(icon: Int) = with(binding.imageIcon) {

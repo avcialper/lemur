@@ -9,11 +9,12 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ThemeManager @Inject constructor(
+class DataStoreManager @Inject constructor(
     private val dataStoreRepository: DataStoreRepository
 ) {
 
     val theme = dataStoreRepository.getTheme()
+    val notificationPermission = dataStoreRepository.getNotificationPermission()
 
     suspend fun loadTheme() {
         val theme = dataStoreRepository.getTheme().first()
@@ -33,5 +34,9 @@ class ThemeManager @Inject constructor(
             Theme.SYSTEM_DEFAULT -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
         }
         AppCompatDelegate.setDefaultNightMode(mode)
+    }
+
+    suspend fun changeNotificationPermission(isGranted: Boolean) {
+        dataStoreRepository.setNotificationPermission(isGranted)
     }
 }

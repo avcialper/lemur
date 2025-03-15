@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.onEach
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
 
     private val vm: ProfileViewModel by viewModels()
+    private var isNotificationGranted = false
 
     override fun FragmentProfileBinding.initialize() {
         observer()
@@ -25,6 +26,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
     private fun initUI() = with(binding) {
+        componentNotification.setOnClickListener {
+            vm.changeNotificationPermission(
+                isNotificationGranted.not()
+            )
+        }
         componentTheme.setOnClickListener { openThemeSelector() }
         componentLogout.setOnClickListener { logout() }
     }
@@ -32,6 +38,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     private fun observer() = with(vm) {
         user.onEach(::collectUser).launchIn(viewLifecycleOwner.lifecycleScope)
         theme.onEach(::collectTheme).launchIn(viewLifecycleOwner.lifecycleScope)
+        notificationPermission.onEach(::collectNotification)
+            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun collectUser(user: User?) = with(binding) {
@@ -43,6 +51,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             error(R.drawable.logo)
         }
         handleEmailVerification(user?.firebaseUser?.isEmailVerified ?: false)
+    }
+
+    private fun collectNotification(isGranted: Boolean) = with(binding) {
+        isNotificationGranted = isGranted
+        val iconId =
+            if (isGranted) R.drawable.ic_notifications_active else R.drawable.ic_notifications_off
+        componentNotification.updateIcon(iconId)
     }
 
     private fun collectTheme(theme: Theme) = with(binding) {
