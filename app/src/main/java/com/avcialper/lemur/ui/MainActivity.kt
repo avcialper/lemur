@@ -1,6 +1,7 @@
 package com.avcialper.lemur.ui
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -57,10 +58,21 @@ class MainActivity : AppCompatActivity() {
         bottomMenu.apply {
             visibility = View.VISIBLE
             setupWithNavController(navController)
+            setOnItemSelectedListener(::onItemSelectedListener)
         }
         navController.addOnDestinationChangedListener { _, destination, _ ->
             onDestinationChangedListener(destination)
         }
+    }
+
+    private fun onItemSelectedListener(item: MenuItem): Boolean {
+        val destinationId = item.itemId
+        val currentId = navController.currentDestination?.id
+        return if (destinationId != currentId) {
+            navController.navigate(destinationId)
+            true
+        } else
+            false
     }
 
     private fun onDestinationChangedListener(destination: NavDestination) {
