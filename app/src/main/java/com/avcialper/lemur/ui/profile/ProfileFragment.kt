@@ -4,6 +4,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import coil.load
 import com.avcialper.lemur.R
+import com.avcialper.lemur.data.AppManager
+import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.User
 import com.avcialper.lemur.databinding.FragmentProfileBinding
 import com.avcialper.lemur.ui.BaseFragment
@@ -11,6 +13,7 @@ import com.avcialper.lemur.ui.component.AlertFragment
 import com.avcialper.lemur.ui.component.themeselector.ThemeSelector
 import com.avcialper.lemur.util.constant.Theme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -18,28 +21,31 @@ import kotlinx.coroutines.flow.onEach
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
 
     private val vm: ProfileViewModel by viewModels()
-    private var isNotificationGranted = false
-
     override fun FragmentProfileBinding.initialize() {
         observer()
+        setupListeners()
         initUI()
     }
 
     private fun initUI() = with(binding) {
-        componentNotification.setOnClickListener {
-            vm.changeNotificationPermission(
-                isNotificationGranted.not()
-            )
+        componentNotification.updateIcon(AppManager.notificationIconId())
+        componentTheme.updateIcon(AppManager.themeIconId())
+        componentEmailVerify.apply {
+            val iconAndLabelIds = UserManager.emailIconAndLabelIds()
+            updateIconAndLabel(iconAndLabelIds.labelId, iconAndLabelIds.iconId)
         }
+    }
+
+    private fun setupListeners() = with(binding) {
+        componentNotification.setOnClickListener { vm.changeNotificationPermission() }
         componentTheme.setOnClickListener { openThemeSelector() }
         componentLogout.setOnClickListener { logout() }
     }
 
     private fun observer() = with(vm) {
-        user.onEach(::collectUser).launchIn(viewLifecycleOwner.lifecycleScope)
-        theme.onEach(::collectTheme).launchIn(viewLifecycleOwner.lifecycleScope)
-        notificationPermission.onEach(::collectNotification)
-            .launchIn(viewLifecycleOwner.lifecycleScope)
+        user.createObserver(::collectUser)
+        theme.createObserver(::collectTheme)
+        notificationPermission.createObserver(::collectNotification)
     }
 
     private fun collectUser(user: User?) = with(binding) {
@@ -54,10 +60,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
     private fun collectNotification(isGranted: Boolean) = with(binding) {
-        isNotificationGranted = isGranted
         val iconId =
             if (isGranted) R.drawable.ic_notifications_active else R.drawable.ic_notifications_off
-        componentNotification.updateIcon(iconId)
+        if (isGranted != AppManager.notificationPermission) {
+            componentNotification.animatedIconUpdate(iconId)
+            AppManager.notificationPermission = isGranted
+        }
     }
 
     private fun collectTheme(theme: Theme) = with(binding) {
@@ -66,7 +74,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             Theme.LIGHT -> R.drawable.ic_light_mode
             Theme.DARK -> R.drawable.ic_dark_mode
         }
-        componentTheme.updateIcon(iconId)
+        if (theme != AppManager.theme)
+            componentTheme.animatedIconUpdate(iconId)
     }
 
     private fun openThemeSelector() {
@@ -80,15 +89,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
     }
 
-    private fun handleEmailVerification(isEmailVerified: Boolean) =
-        with(binding.componentEmailVerify) {
-            val icon = if (isEmailVerified) R.drawable.ic_email_verified else R.drawable.ic_email
-            val label = if (isEmailVerified) R.string.email_verified else R.string.email_verify
-            val onClick = if (isEmailVerified) null else ::verifyEmail
+    private fun handleEmailVerification(isEmailVerified: Boolean) {
+        val iconId = if (isEmailVerified) R.drawable.ic_email_verified else R.drawable.ic_email
+        val labelId = if (isEmailVerified) R.string.email_verified else R.string.email_verify
+        val onClick = if (isEmailVerified) null else ::verifyEmail
 
-            if (isDifferent(label))
-                updateAll(label, icon, onClick)
-        }
+        if (isEmailVerified != UserManager.user?.firebaseUser?.isEmailVerified)
+            binding.componentEmailVerify.animatedUpdate(labelId, iconId, onClick)
+    }
 
     private fun logout() {
         AlertFragment(R.string.logout_message) {
@@ -97,6 +105,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                 destination.navigate()
             }
         }.show(childFragmentManager, "alert")
+    }
+
+    private fun <T> Flow<T>.createObserver(action: (T) -> Unit) {
+        onEach(action).launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     override fun onResume() {

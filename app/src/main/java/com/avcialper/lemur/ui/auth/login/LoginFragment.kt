@@ -44,7 +44,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>(FragmentLoginBindin
         vm.state.onEach(::handleResource).launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    // Handle resource state and updateAll UI accordingly
+    // Handle resource state and animatedUpdate UI accordingly
     private fun handleResource(resource: Resource<FirebaseUser>?) {
         when (resource) {
             is Resource.Error -> handleError(resource.throwable!!)

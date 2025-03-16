@@ -1,6 +1,7 @@
 package com.avcialper.lemur.helper
 
 import androidx.appcompat.app.AppCompatDelegate
+import com.avcialper.lemur.data.AppManager
 import com.avcialper.lemur.data.repository.datastore.DataStoreRepository
 import com.avcialper.lemur.util.constant.Theme
 import kotlinx.coroutines.delay
@@ -19,11 +20,13 @@ class DataStoreManager @Inject constructor(
     suspend fun loadTheme() {
         val theme = dataStoreRepository.getTheme().first()
         applyTheme(theme)
-        delay(100) // wait theme updateAll
+        AppManager.theme = theme
+        delay(100) // wait theme update
     }
 
     suspend fun changeTheme(theme: Theme) {
         dataStoreRepository.setTheme(theme)
+        AppManager.theme = theme
         applyTheme(theme)
     }
 
@@ -36,7 +39,8 @@ class DataStoreManager @Inject constructor(
         AppCompatDelegate.setDefaultNightMode(mode)
     }
 
-    suspend fun changeNotificationPermission(isGranted: Boolean) {
+    suspend fun changeNotificationPermission() {
+        val isGranted = AppManager.notificationPermission.not()
         dataStoreRepository.setNotificationPermission(isGranted)
     }
 }

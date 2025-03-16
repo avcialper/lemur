@@ -3,7 +3,6 @@ package com.avcialper.lemur.ui.profile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.UserManager
-import com.avcialper.lemur.data.model.User
 import com.avcialper.lemur.data.repository.auth.AuthRepository
 import com.avcialper.lemur.data.repository.storage.StorageRepository
 import com.avcialper.lemur.helper.DataStoreManager
@@ -22,7 +21,7 @@ class ProfileViewModel @Inject constructor(
     private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
 
-    private val _user = MutableStateFlow<User?>(null)
+    private val _user = MutableStateFlow(UserManager.user)
     val user = _user.asStateFlow()
 
     val theme = dataStoreManager.theme
@@ -69,7 +68,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun changeNotificationPermission(isGranted: Boolean) = viewModelScope.launch {
-        dataStoreManager.changeNotificationPermission(isGranted)
+    fun changeNotificationPermission() = viewModelScope.launch {
+        dataStoreManager.changeNotificationPermission()
     }
 }

@@ -36,16 +36,10 @@ class IconLabel @JvmOverloads constructor(
         a.recycle()
     }
 
-    // Could not compare icon drawable, just check label
-    fun isDifferent(label: Int): Boolean {
-        val newLabel = context.getString(label)
-        return newLabel != binding.textLabel.text
-    }
-
-    fun updateAll(label: Int, icon: Int, onClick: (() -> Unit)?) = with(binding) {
-        fadeAnimation(root) {
-            textLabel.text = context.getString(label)
-            imageIcon.setImageResource(icon)
+    fun animatedUpdate(labelId: Int, iconId: Int, onClick: (() -> Unit)?) = with(binding) {
+        root.fadeAnimation {
+            textLabel.text = context.getString(labelId)
+            imageIcon.setImageResource(iconId)
         }
         if (onClick != null)
             setOnClickListener { onClick.invoke() }
@@ -53,16 +47,27 @@ class IconLabel @JvmOverloads constructor(
             setOnClickListener(null)
     }
 
-    fun updateIcon(icon: Int) = with(binding.imageIcon) {
-        fadeAnimation(this) {
-            setImageResource(icon)
+    fun animatedIconUpdate(iconId: Int) = with(binding.imageIcon) {
+        fadeAnimation {
+            setImageResource(iconId)
         }
     }
 
-    private fun fadeAnimation(view: View, job: () -> Unit) {
-        view.animate().alpha(0f).setDuration(ANIMATION_DURATION).withEndAction {
+    fun updateIcon(iconId: Int) {
+        binding.imageIcon.setImageResource(iconId)
+    }
+
+    fun updateIconAndLabel(labelId: Int, iconId: Int) {
+        binding.apply {
+            textLabel.text = context.getString(labelId)
+            imageIcon.setImageResource(iconId)
+        }
+    }
+
+    private fun View.fadeAnimation(job: () -> Unit) {
+        animate().alpha(0f).setDuration(ANIMATION_DURATION).withEndAction {
             job()
-            view.animate().alpha(1f).setDuration(ANIMATION_DURATION).start()
+            animate().alpha(1f).setDuration(ANIMATION_DURATION).start()
         }.start()
     }
 
