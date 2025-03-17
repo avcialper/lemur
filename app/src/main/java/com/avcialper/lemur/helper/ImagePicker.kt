@@ -4,7 +4,6 @@ import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.READ_MEDIA_IMAGES
 import android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
 import android.content.ContentUris
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
@@ -22,6 +21,8 @@ class ImagePicker(
     private val fragment: Fragment,
     private val onImageSelected: (Uri) -> Unit
 ) {
+    private val permissionManager = PermissionManager(fragment)
+
     private val options = CropImageOptions(
         activityBackgroundColor = ContextCompat.getColor(fragment.requireContext(), R.color.black),
         activityTitle = ContextCompat.getString(fragment.requireContext(), R.string.crop_image),
@@ -39,24 +40,6 @@ class ImagePicker(
             uri?.let { cropImage(uri) }
         }
 
-    private val permissionLauncher =
-        fragment.registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
-            val grantedPermissions = results.filterValues { it }.keys
-            val deniedPermissions = results.filterValues { !it }.keys
-
-            // return if permissions denied
-            if (grantedPermissions.isEmpty()) return@registerForActivityResult
-
-            val isPartialAccess =
-                grantedPermissions.contains("android.permission.READ_MEDIA_VISUAL_USER_SELECTED") &&
-                        deniedPermissions.contains("android.permission.READ_MEDIA_IMAGES")
-
-            if (isPartialAccess)
-                selectFromPartialImage()
-            else
-                openGallery()
-        }
-
     private val imageCropLauncher =
         fragment.registerForActivityResult(CropImageContract()) { result ->
             if (result.isSuccessful) {
@@ -72,28 +55,21 @@ class ImagePicker(
     }
 
     fun pickImage() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-            checkPermission(READ_MEDIA_IMAGES)
-        ) {
+        if (permissionManager.isUpperTiramisu && permissionManager.checkPermission(READ_MEDIA_IMAGES)) {
             // Full access on Android 13 (API level 33) or higher
             openGallery()
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE &&
-            checkPermission(READ_MEDIA_VISUAL_USER_SELECTED)
+        } else if (permissionManager.isUpperUpsideDownCake &&
+            permissionManager.checkPermission(READ_MEDIA_VISUAL_USER_SELECTED)
         ) {
             // Partial access on Android 14 (API level 34) or higher
             selectFromPartialImage()
-        } else if (checkPermission(READ_EXTERNAL_STORAGE)) {
+        } else if (permissionManager.checkPermission(READ_EXTERNAL_STORAGE)) {
             // Full access up to Android 12 (API level 32)
             openGallery()
         } else {
             // Request permission
             requestPermission()
         }
-    }
-
-    private fun checkPermission(permission: String): Boolean {
-        val statusCode = ContextCompat.checkSelfPermission(fragment.requireContext(), permission)
-        return statusCode == PackageManager.PERMISSION_GRANTED
     }
 
     private fun requestPermission() {
@@ -106,7 +82,24 @@ class ImagePicker(
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> arrayOf(READ_MEDIA_IMAGES)
             else -> arrayOf(READ_EXTERNAL_STORAGE)
         }
-        permissionLauncher.launch(permissions)
+        permissionManager.requestMultiplePermission(permissions, ::handlePermissionResult)
+    }
+
+    private fun handlePermissionResult(results: Map<String, Boolean>) {
+        val grantedPermissions = results.filterValues { it }.keys
+        val deniedPermissions = results.filterValues { !it }.keys
+
+        // return if permissions denied
+        if (grantedPermissions.isEmpty()) return
+
+        val isPartialAccess =
+            grantedPermissions.contains("android.permission.READ_MEDIA_VISUAL_USER_SELECTED") &&
+                    deniedPermissions.contains("android.permission.READ_MEDIA_IMAGES")
+
+        if (isPartialAccess)
+            selectFromPartialImage()
+        else
+            openGallery()
     }
 
     private fun openGallery() {
