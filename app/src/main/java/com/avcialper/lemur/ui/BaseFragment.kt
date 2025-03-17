@@ -52,4 +52,9 @@ abstract class BaseFragment<VB : ViewBinding>(
         val context = requireContext()
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
+
+    fun toast(messageId: Int) {
+        val message = getString(messageId)
+        toast(message)
+    }
 }

@@ -1,7 +1,6 @@
 package com.avcialper.lemur.ui.home
 
 import android.Manifest.permission.POST_NOTIFICATIONS
-import androidx.fragment.app.viewModels
 import com.avcialper.lemur.data.AppManager
 import com.avcialper.lemur.databinding.FragmentHomeBinding
 import com.avcialper.lemur.helper.PermissionManager

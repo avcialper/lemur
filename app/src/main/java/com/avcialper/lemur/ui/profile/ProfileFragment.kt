@@ -37,7 +37,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
     private fun setupListeners() = with(binding) {
-        componentNotification.setOnClickListener { vm.changeNotificationPermission() }
+        componentNotification.setOnClickListener { changeNotificationPermission() }
         componentTheme.setOnClickListener { openThemeSelector() }
         componentLogout.setOnClickListener { logout() }
     }
@@ -76,6 +76,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
         if (theme != AppManager.theme)
             componentTheme.animatedIconUpdate(iconId)
+    }
+
+    private fun changeNotificationPermission() {
+        val isGranted = AppManager.notificationPermission.not()
+        if (isGranted && AppManager.deviceNotificationPermission.not())
+            toast(R.string.device_notification_permission_denied)
+
+        vm.changeNotificationPermission()
     }
 
     private fun openThemeSelector() {
