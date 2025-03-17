@@ -5,6 +5,7 @@ import com.avcialper.lemur.util.constant.Theme
 
 object AppManager {
 
+    var deviceNotificationPermission = false
     var notificationPermission = false
     var theme = Theme.SYSTEM_DEFAULT
 
