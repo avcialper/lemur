@@ -52,5 +52,13 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/nav_main"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/toChangePassword"
+            app:destination="@id/changePasswordFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.avcialper.lemur.ui.profile.updatepassword.UpdatePasswordFragment"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_update_password" />
 </navigation>

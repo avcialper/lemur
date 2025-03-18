@@ -87,6 +87,9 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <!-- Button -->
+    <style name="Button" parent="AuthButton" />
+
     <!-- PressableText -->
     <style name="Base.PressableText" parent="Theme.Lemur">
         <item name="android:textSize">@dimen/text_size_medium</item>

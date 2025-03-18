@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lemur</string>
+    <string name="app_name">lemur</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_logo">App logo</string>
     <string name="email">E-posta</string>
@@ -12,6 +12,7 @@
     <string name="invalid_length">Şifre en az 8 karakter en fazla 16 karakter olmalıdır.</string>
     <string name="invalid_password">Şifre en az bir büyük harf, bir küçük harf ve bir rakam içermelidir.</string>
     <string name="invalid_confirm_password">Şifreler eşleşmiyor.</string>
+    <string name="is_same_password">Yeni şifreniz, mevcut şifreniz ile aynı olmamalı.</string>
     <string name="username">Kullanıcı adı</string>
     <string name="confirm_password">Şifre tekrarı</string>
     <string name="signup">Kaydol</string>
@@ -37,6 +38,7 @@
     <string name="error_email_already_exists">E-posta zaten kayıtlı.</string>
     <string name="error_to_many_request">Çok fazla istek gönderildi. Lütfen biraz bekleyin.</string>
     <string name="error_invalid_credential">E-posta veya şifre hatalı.</string>
+    <string name="error_wrong_password">Şifre hatalı.</string>
     <string name="error_user_not_found">Kullanıcı bulunamadı veya şifre hatalı.</string>
     <string name="error_login_user_disabled">Kullanıcı hesabı askıya alınmış.</string>
     <string name="error_login_password_is_weak">Geçersiz şifre.</string>
@@ -52,4 +54,8 @@
     <string name="button_go_icon">Buton ilerle resmi.</string>
     <string name="device_notification_permission_denied">Bildirim izineleri reddedildi Özellikleri açmak ister misniz?</string>
     <string name="gallery_permission_denied">Fotoğraflara erişim için gereken özelliklere izin vermediniz. Özelikleri açmak ister misiniz?</string>
+    <string name="current_password">Mevcut şifre</string>
+    <string name="new_password">Yeni şifre</string>
+    <string name="new_password_confirm">Yeni şifre tekrar</string>
+    <string name="update">Güncelle</string>
 </resources>

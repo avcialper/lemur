@@ -40,6 +40,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
     private fun setupListeners() = with(binding) {
+        componentChangePassword.setOnClickListener {
+            ProfileFragmentDirections.toChangePassword().navigate()
+        }
         componentNotification.setOnClickListener { changeNotificationPermission() }
         componentTheme.setOnClickListener { openThemeSelector() }
         componentLogout.setOnClickListener { logout() }

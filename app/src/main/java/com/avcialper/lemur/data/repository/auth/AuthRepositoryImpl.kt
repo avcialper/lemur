@@ -1,6 +1,7 @@
 package com.avcialper.lemur.data.repository.auth
 
 import com.avcialper.lemur.util.constant.Resource
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
@@ -84,4 +85,20 @@ class AuthRepositoryImpl @Inject constructor(
             emit(Resource.Error(e))
         }
     }
+
+    override fun updatePassword(password: String, newPassword: String): Flow<Resource<Boolean>> =
+        flow {
+            emit(Resource.Loading())
+            try {
+                auth.currentUser?.let { user ->
+                    val credential = EmailAuthProvider.getCredential(user.email!!, password)
+                    user.reauthenticate(credential).await()
+                    user.updatePassword(newPassword).await()
+                }
+                emit(Resource.Success(true))
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(Resource.Error(e))
+            }
+        }
 }
