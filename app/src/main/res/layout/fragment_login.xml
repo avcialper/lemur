@@ -14,16 +14,14 @@
 
         <com.avcialper.lemur.ui.component.TextInput
             android:id="@+id/input_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/FillHorizontal"
             android:autofillHints="emailAddress"
             android:hint="@string/email"
             android:inputType="textEmailAddress" />
 
         <com.avcialper.lemur.ui.component.TextInput
             android:id="@+id/input_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/FillHorizontal"
             android:autofillHints="password"
             android:hint="@string/password"
             android:inputType="textPassword"

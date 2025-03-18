@@ -9,7 +9,7 @@
     tools:context=".ui.component.AlertFragment">
 
     <TextView
-        android:id="@+id/textLabel"
+        android:id="@+id/text_label"
         style="@style/FillHorizontal"
         android:fontFamily="@font/poppins"
         android:text="@string/logout_message"
@@ -20,17 +20,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textPositive"
+        android:id="@+id/text_positive"
         style="@style/AlertTextButton"
         android:text="@string/yes"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textLabel" />
+        app:layout_constraintTop_toBottomOf="@id/text_label" />
 
     <TextView
-        android:id="@+id/textNegative"
+        android:id="@+id/text_negative"
         style="@style/AlertTextButton"
         android:text="@string/no"
-        app:layout_constraintEnd_toStartOf="@id/textPositive"
-        app:layout_constraintTop_toBottomOf="@id/textLabel" />
+        app:layout_constraintEnd_toStartOf="@id/text_positive"
+        app:layout_constraintTop_toBottomOf="@id/text_label" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

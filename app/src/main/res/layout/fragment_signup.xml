@@ -18,23 +18,20 @@
 
         <com.avcialper.lemur.ui.component.TextInput
             android:id="@+id/input_username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/FillHorizontal"
             android:hint="@string/username"
             android:inputType="text" />
 
         <com.avcialper.lemur.ui.component.TextInput
             android:id="@+id/input_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/FillHorizontal"
             android:autofillHints="emailAddress"
             android:hint="@string/email"
             android:inputType="textEmailAddress" />
 
         <com.avcialper.lemur.ui.component.TextInput
             android:id="@+id/input_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/FillHorizontal"
             android:hint="@string/password"
             android:inputType="textPassword"
             app:endIconMode="password_toggle"
@@ -43,8 +40,7 @@
 
         <com.avcialper.lemur.ui.component.TextInput
             android:id="@+id/input_confirm_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/FillHorizontal"
             android:hint="@string/confirm_password"
             android:inputType="textPassword"
             app:endIconMode="password_toggle"
