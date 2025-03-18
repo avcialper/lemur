@@ -1,5 +1,8 @@
 package com.avcialper.lemur.ui.profile
 
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import coil.load
@@ -62,9 +65,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     private fun collectNotification(isGranted: Boolean) = with(binding) {
         val iconId =
             if (isGranted) R.drawable.ic_notifications_active else R.drawable.ic_notifications_off
-        if (isGranted != AppManager.notificationPermission) {
+        if (isGranted != AppManager.isNotificationPermissionGranted) {
             componentNotification.animatedIconUpdate(iconId)
-            AppManager.notificationPermission = isGranted
+            AppManager.isNotificationPermissionGranted = isGranted
         }
     }
 
@@ -79,9 +82,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
     private fun changeNotificationPermission() {
-        val isGranted = AppManager.notificationPermission.not()
-        if (isGranted && AppManager.deviceNotificationPermission.not())
-            toast(R.string.device_notification_permission_denied)
+        val isGranted = AppManager.isNotificationPermissionGranted.not()
+        if (isGranted && AppManager.isDeviceNotificationPermissionGranted.not())
+            AlertFragment(R.string.device_notification_permission_denied) {
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                intent.data = Uri.fromParts("package", context?.packageName, null)
+                startActivity(intent)
+            }.show(childFragmentManager, "alert")
 
         vm.changeNotificationPermission()
     }

@@ -40,7 +40,7 @@ class DataStoreManager @Inject constructor(
     }
 
     suspend fun changeNotificationPermission() {
-        val isGranted = AppManager.notificationPermission.not()
+        val isGranted = AppManager.isNotificationPermissionGranted.not()
         dataStoreRepository.setNotificationPermission(isGranted)
     }
 }

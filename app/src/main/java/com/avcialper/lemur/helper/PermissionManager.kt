@@ -42,4 +42,8 @@ class PermissionManager(private val fragment: Fragment) {
         multiplePermissionLauncher.launch(permissions)
     }
 
+    fun haveAnyRights(permission: String): Boolean {
+        return fragment.shouldShowRequestPermissionRationale(permission)
+    }
+
 }

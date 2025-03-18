@@ -4,13 +4,16 @@ import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.READ_MEDIA_IMAGES
 import android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
 import android.content.ContentUris
+import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.avcialper.lemur.R
+import com.avcialper.lemur.ui.component.AlertFragment
 import com.avcialper.lemur.ui.component.imageselector.PartialImageViewer
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
@@ -89,6 +92,9 @@ class ImagePicker(
         val grantedPermissions = results.filterValues { it }.keys
         val deniedPermissions = results.filterValues { !it }.keys
 
+        // If permissions are denied, open settings.
+        checkHaveAnyRights()
+
         // return if permissions denied
         if (grantedPermissions.isEmpty()) return
 
@@ -100,6 +106,23 @@ class ImagePicker(
             selectFromPartialImage()
         else
             openGallery()
+    }
+
+    private fun checkHaveAnyRights() {
+        val haveAnyRights = if (permissionManager.isUpperTiramisu)
+            permissionManager.haveAnyRights(READ_MEDIA_IMAGES)
+        else if (permissionManager.isUpperUpsideDownCake)
+            permissionManager.haveAnyRights(READ_MEDIA_VISUAL_USER_SELECTED)
+        else
+            permissionManager.haveAnyRights(READ_EXTERNAL_STORAGE)
+
+        if (haveAnyRights.not()) {
+            AlertFragment(R.string.gallery_permission_denied) {
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                intent.data = Uri.fromParts("package", fragment.requireContext().packageName, null)
+                fragment.startActivity(intent)
+            }.show(fragment.childFragmentManager, "alert")
+        }
     }
 
     private fun openGallery() {

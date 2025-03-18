@@ -5,12 +5,12 @@ import com.avcialper.lemur.util.constant.Theme
 
 object AppManager {
 
-    var deviceNotificationPermission = false
-    var notificationPermission = false
+    var isDeviceNotificationPermissionGranted = false
+    var isNotificationPermissionGranted = false
     var theme = Theme.SYSTEM_DEFAULT
 
     fun notificationIconId(): Int {
-        return if (notificationPermission)
+        return if (isNotificationPermissionGranted)
             R.drawable.ic_notifications_active
         else
             R.drawable.ic_notifications_off

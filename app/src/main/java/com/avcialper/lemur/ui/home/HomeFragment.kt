@@ -22,13 +22,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         val permissionManager = PermissionManager(this@HomeFragment)
         if (permissionManager.isUpperTiramisu) {
             val isGranted = permissionManager.checkPermission(POST_NOTIFICATIONS)
-            if (!isGranted)
-                permissionManager.requestPermission(POST_NOTIFICATIONS, ::handlePermissionResult)
-        }
-    }
+            AppManager.isDeviceNotificationPermissionGranted = isGranted
 
-    private fun handlePermissionResult(isGranted: Boolean) {
-        AppManager.deviceNotificationPermission = isGranted
+            if (!isGranted)
+                permissionManager.requestPermission(POST_NOTIFICATIONS) {
+                    AppManager.isDeviceNotificationPermissionGranted = it
+                }
+        }
     }
 
 }
