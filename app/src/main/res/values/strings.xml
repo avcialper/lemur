@@ -50,6 +50,6 @@
     <string name="profile">Profil</string>
     <string name="button_icon">Buton resmi.</string>
     <string name="button_go_icon">Buton ilerle resmi.</string>
-    <string name="device_notification_permission_denied">Bildirim izineleri reddedildi Özellikleri açmak ister misniz?.</string>
+    <string name="device_notification_permission_denied">Bildirim izineleri reddedildi Özellikleri açmak ister misniz?</string>
     <string name="gallery_permission_denied">Fotoğraflara erişim için gereken özelliklere izin vermediniz. Özelikleri açmak ister misiniz?</string>
 </resources>
