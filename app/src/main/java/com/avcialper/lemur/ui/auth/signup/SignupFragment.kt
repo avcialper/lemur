@@ -34,10 +34,10 @@ class SignupFragment : AuthBaseFragment<FragmentSignupBinding>(FragmentSignupBin
 
         observer()
         restore()
-        setupListeners()
+        setListeners()
     }
 
-    private fun setupListeners() = with(binding) {
+    private fun setListeners() = with(binding) {
 
         inputUsername.onTextChanged(vm::onUsernameChanged)
         inputEmail.onTextChanged(vm::onEmailChanged)

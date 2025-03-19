@@ -58,6 +58,9 @@
         <action
             android:id="@+id/toUpdateProfile"
             app:destination="@id/updateProfileFragment" />
+        <action
+            android:id="@+id/toUpdateEmail"
+            app:destination="@id/updateEmailFragment" />
     </fragment>
     <fragment
         android:id="@+id/updatePasswordFragment"
@@ -69,4 +72,8 @@
         android:name="com.avcialper.lemur.ui.profile.updateprofile.UpdateProfileFragment"
         android:label="fragment_update_profile"
         tools:layout="@layout/fragment_update_profile" />
+    <fragment
+        android:id="@+id/updateEmailFragment"
+        android:name="com.avcialper.lemur.ui.profile.updateemail.UpdateEmailFragment"
+        android:label="UpdateEmailFragment" />
 </navigation>

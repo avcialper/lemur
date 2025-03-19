@@ -14,4 +14,5 @@ interface AuthRepository {
     fun isLoggedIn(): Flow<Boolean>
     fun sendEmailVerification(): Flow<Resource<Boolean>>
     fun updatePassword(password: String, newPassword: String): Flow<Resource<Boolean>>
+    fun updateEmail(email: String, password: String): Flow<Resource<Boolean>>
 }

@@ -26,7 +26,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     private val vm: ProfileViewModel by viewModels()
     override fun FragmentProfileBinding.initialize() {
         observer()
-        setupListeners()
+        setListeners()
         initUI()
     }
 
@@ -39,12 +39,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
     }
 
-    private fun setupListeners() = with(binding) {
+    private fun setListeners() = with(binding) {
         componentUpdateProfile.setOnClickListener {
             ProfileFragmentDirections.toUpdateProfile().navigate()
         }
         componentUpdateEmail.setOnClickListener {
-
+            ProfileFragmentDirections.toUpdateEmail().navigate()
         }
         componentUpdatePassword.setOnClickListener {
             ProfileFragmentDirections.toChangePassword().navigate()

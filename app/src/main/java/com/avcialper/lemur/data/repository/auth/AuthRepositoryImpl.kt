@@ -1,5 +1,6 @@
 package com.avcialper.lemur.data.repository.auth
 
+import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.util.constant.Resource
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -101,4 +102,19 @@ class AuthRepositoryImpl @Inject constructor(
                 emit(Resource.Error(e))
             }
         }
+
+    override fun updateEmail(email: String, password: String): Flow<Resource<Boolean>> = flow {
+        emit(Resource.Loading())
+        try {
+            auth.currentUser?.let {
+                val credential = EmailAuthProvider.getCredential(UserManager.user!!.email, password)
+                it.reauthenticate(credential).await()
+                it.verifyBeforeUpdateEmail(email).await()
+            }
+            emit(Resource.Success(true))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(Resource.Error(e))
+        }
+    }
 }

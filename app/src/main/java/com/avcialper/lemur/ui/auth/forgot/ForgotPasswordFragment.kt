@@ -22,7 +22,7 @@ class ForgotPasswordFragment : AuthBaseFragment<FragmentForgotPasswordBinding>(
     private val vm: ForgotPasswordViewModel by viewModels()
 
     override fun FragmentForgotPasswordBinding.initialize() {
-        setupListeners()
+        setListeners()
         restore()
         observer()
     }
@@ -63,7 +63,7 @@ class ForgotPasswordFragment : AuthBaseFragment<FragmentForgotPasswordBinding>(
         toast(errorMessage)
     }
 
-    private fun setupListeners() = with(binding) {
+    private fun setListeners() = with(binding) {
         inputEmail.onTextChanged(vm::onEmailChanged)
         buttonSend.setOnClickListener {
             val isValid = validate()

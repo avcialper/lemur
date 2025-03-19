@@ -39,7 +39,7 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding>(
         }
 
         initUI()
-        setupListeners()
+        setListeners()
         observer()
     }
 
@@ -50,7 +50,7 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding>(
         inputAbout.value = vm.email.value!!
     }
 
-    private fun setupListeners() = with(binding) {
+    private fun setListeners() = with(binding) {
         imageProfilePicture.setOnClickListener {
             ProfilePictureUpdateSheet(::deleteImage, imagePicker::pickImage)
                 .show(parentFragmentManager, "selector")

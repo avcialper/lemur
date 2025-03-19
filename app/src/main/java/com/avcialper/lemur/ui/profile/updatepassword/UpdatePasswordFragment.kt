@@ -27,7 +27,7 @@ class UpdatePasswordFragment : BaseFragment<FragmentUpdatePasswordBinding>(
 
     override fun FragmentUpdatePasswordBinding.initialize() {
         initUI()
-        setupListener()
+        setListeners()
         observer()
     }
 
@@ -37,7 +37,7 @@ class UpdatePasswordFragment : BaseFragment<FragmentUpdatePasswordBinding>(
         inputNewPasswordConfirm.value = vm.newPasswordConfirm.value
     }
 
-    private fun setupListener() = with(binding) {
+    private fun setListeners() = with(binding) {
         inputCurrentPassword.onTextChanged(vm::onCurrentPasswordChanged)
         inputNewPassword.onTextChanged(vm::onNewPasswordChanged)
         inputNewPasswordConfirm.onTextChanged(vm::onNewPasswordConfirmChanged)

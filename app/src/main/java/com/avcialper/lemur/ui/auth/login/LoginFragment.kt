@@ -23,10 +23,10 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>(FragmentLoginBindin
     override fun FragmentLoginBinding.initialize() {
         observer()
         restore()
-        setupListeners()
+        setListeners()
     }
 
-    private fun setupListeners() = with(binding) {
+    private fun setListeners() = with(binding) {
         inputEmail.onTextChanged(vm::onEmailChanged)
         inputPassword.onTextChanged(vm::onPasswordChanged)
 

@@ -63,4 +63,5 @@
     <string name="delete">Sil</string>
     <string name="update_email">E-posta Güncelle</string>
     <string name="about">Hakkında</string>
+    <string name="check_email">Lütfen e-postanızı kontrol edin.</string>
 </resources>
