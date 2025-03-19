@@ -68,33 +68,30 @@ class SignupViewModel @Inject constructor(
         _state.update { Resource.Loading() }
         auth.signup(_email.value, _password.value).collect { resource ->
             if (resource is Resource.Success) {
-                if (_imageUri.value != null)
-                    uploadImage(convert) {
-                        val id = resource.data?.uid!!
-                        createUser(id)
-                    }
-                else
+                if (_imageUri.value != null) {
+                    uploadImage(convert)
+                    val id = resource.data?.uid!!
+                    createUser(id)
+                } else
                     createUser(resource.data?.uid!!)
-
             } else if (resource is Resource.Error)
                 handleError(resource.throwable!!)
         }
     }
 
     // Upload image to ImgBB
-    private fun uploadImage(convert: () -> File, onSuccess: () -> Unit) = viewModelScope.launch {
+    private suspend fun uploadImage(convert: () -> File) {
         val file = convert()
         storageRepository.uploadImage(file).collect { resource ->
-            if (resource is Resource.Success) {
+            if (resource is Resource.Success)
                 _imageBB.update { resource.data?.data }
-                onSuccess()
-            } else if (resource is Resource.Error)
+            else if (resource is Resource.Error)
                 handleError(resource.throwable!!)
         }
     }
 
-    // Create user in firebase storage
-    private fun createUser(id: String) = viewModelScope.launch {
+    // Create user in Firebase storage
+    private suspend fun createUser(id: String) {
         val userProfile = UserProfile(id, _username.value, _imageBB.value?.url)
 
         storageRepository.createUser(userProfile).collect { resource ->
