@@ -9,9 +9,11 @@
     <string name="do_not_have_account">Hesabın yok mu? Kaydol</string>
     <string name="is_required">Bu alan boş bırakılamaz.</string>
     <string name="invalid_email">Geçersiz e-posta adresi.</string>"
-    <string name="invalid_length">Şifre en az 8 karakter en fazla 16 karakter olmalıdır.</string>
+    <string name="invalid_length">Şifre en az 8 karakter en fazla 24 karakter olmalıdır.</string>
     <string name="invalid_password">Şifre en az bir büyük harf, bir küçük harf ve bir rakam içermelidir.</string>
     <string name="invalid_confirm_password">Şifreler eşleşmiyor.</string>
+    <string name="invalid_username">Kullanıcıadı en az 4 karakter en fazla 16 karakter olmalıdır.</string>
+    <string name="invalid_max_length">50 karakterden fazla girilemez.</string>
     <string name="is_same_password">Yeni şifreniz, mevcut şifreniz ile aynı olmamalı.</string>
     <string name="username">Kullanıcı adı</string>
     <string name="confirm_password">Şifre tekrarı</string>
@@ -58,4 +60,7 @@
     <string name="new_password">Yeni şifre</string>
     <string name="new_password_confirm">Yeni şifre tekrar</string>
     <string name="update">Güncelle</string>
+    <string name="delete">Sil</string>
+    <string name="update_email">E-posta Güncelle</string>
+    <string name="about">Hakkında</string>
 </resources>

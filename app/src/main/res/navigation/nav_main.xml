@@ -54,11 +54,19 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/toChangePassword"
-            app:destination="@id/changePasswordFragment" />
+            app:destination="@id/updatePasswordFragment" />
+        <action
+            android:id="@+id/toUpdateProfile"
+            app:destination="@id/updateProfileFragment" />
     </fragment>
     <fragment
-        android:id="@+id/changePasswordFragment"
+        android:id="@+id/updatePasswordFragment"
         android:name="com.avcialper.lemur.ui.profile.updatepassword.UpdatePasswordFragment"
         android:label="fragment_change_password"
         tools:layout="@layout/fragment_update_password" />
+    <fragment
+        android:id="@+id/updateProfileFragment"
+        android:name="com.avcialper.lemur.ui.profile.updateprofile.UpdateProfileFragment"
+        android:label="fragment_update_profile"
+        tools:layout="@layout/fragment_update_profile" />
 </navigation>

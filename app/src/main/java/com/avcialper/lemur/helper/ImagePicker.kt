@@ -92,11 +92,11 @@ class ImagePicker(
         val grantedPermissions = results.filterValues { it }.keys
         val deniedPermissions = results.filterValues { !it }.keys
 
-        // If permissions are denied, open settings.
-        checkHaveAnyRights()
-
         // return if permissions denied
-        if (grantedPermissions.isEmpty()) return
+        if (grantedPermissions.isEmpty()) {
+            checkHaveAnyRights()
+            return
+        }
 
         val isPartialAccess =
             grantedPermissions.contains("android.permission.READ_MEDIA_VISUAL_USER_SELECTED") &&

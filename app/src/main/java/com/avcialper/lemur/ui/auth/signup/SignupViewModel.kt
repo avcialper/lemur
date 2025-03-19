@@ -92,7 +92,7 @@ class SignupViewModel @Inject constructor(
 
     // Create user in Firebase storage
     private suspend fun createUser(id: String) {
-        val userProfile = UserProfile(id, _username.value, _imageBB.value?.url)
+        val userProfile = UserProfile(id, _username.value, "", _imageBB.value?.url)
 
         storageRepository.createUser(userProfile).collect { resource ->
             _state.update { resource }

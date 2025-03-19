@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView style="@style/ScrollView">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        style="@style/LinearPage"
+        tools:context=".ui.profile.updateprofile.UpdateProfileFragment">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_profile_picture"
+            style="@style/AppLogo"
+            android:contentDescription="@string/user_profile_picture"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logo"
+            app:shapeAppearanceOverlay="@style/RoundedImage" />
+
+        <com.avcialper.lemur.ui.component.TextInput
+            android:id="@+id/input_username"
+            style="@style/FillHorizontal"
+            android:hint="@string/username"
+            android:inputType="text" />
+
+        <com.avcialper.lemur.ui.component.TextInput
+            android:id="@+id/input_about"
+            style="@style/FillHorizontal"
+            android:hint="@string/about"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/button_update"
+            style="@style/Button"
+            android:text="@string/update" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -57,10 +57,11 @@ class LoginViewModel @Inject constructor(
                 is Resource.Error -> _state.update { Resource.Error(resource.throwable) }
                 is Resource.Loading -> _state.update { Resource.Loading() }
                 is Resource.Success -> {
-                    val (_, username, imageUrl) = resource.data!!
+                    val (_, username, about, imageUrl) = resource.data!!
                     UserManager.updateUser(
                         currentUser,
                         username,
+                        about,
                         imageUrl,
                     )
                     _state.value = Resource.Success(currentUser)

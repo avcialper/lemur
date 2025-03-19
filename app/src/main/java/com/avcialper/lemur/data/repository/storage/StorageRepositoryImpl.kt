@@ -44,11 +44,12 @@ class StorageRepositoryImpl @Inject constructor(
     override fun createUser(userProfile: UserProfile): Flow<Resource<Boolean>> = flow {
         emit(Resource.Loading())
 
-        val (id, username, imageUrl) = userProfile
+        val (id, username, about, imageUrl) = userProfile
 
         val user = hashMapOf(
             "id" to id,
             "username" to username,
+            "about" to about,
             "imageUrl" to imageUrl,
         )
 
@@ -67,6 +68,17 @@ class StorageRepositoryImpl @Inject constructor(
             val response = collection.document(id).get().await()
             val user = response.toObject(UserProfile::class.java)
             emit(Resource.Success(user))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(Resource.Error(e))
+        }
+    }
+
+    override fun updateUser(userProfile: UserProfile): Flow<Resource<Boolean>> = flow {
+        emit(Resource.Loading())
+        try {
+            collection.document(userProfile.id).set(userProfile)
+            emit(Resource.Success(true))
         } catch (e: Exception) {
             e.printStackTrace()
             emit(Resource.Error(e))

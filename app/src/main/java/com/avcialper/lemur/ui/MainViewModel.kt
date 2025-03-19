@@ -62,7 +62,7 @@ class MainViewModel @Inject constructor(
         storageRepository.getUser(user.uid).collect { resource ->
             if (resource.status == ResourceStatus.SUCCESS) {
                 resource.data?.let { (_, username, imageUrl) ->
-                    UserManager.updateUser(user, username, imageUrl)
+                    UserManager.updateUser(user, username, "", imageUrl)
                     _isCurrentUserChecked.update { true }
                     _user.update { user }
                 }

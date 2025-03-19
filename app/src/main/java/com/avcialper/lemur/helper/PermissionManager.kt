@@ -43,7 +43,8 @@ class PermissionManager(private val fragment: Fragment) {
     }
 
     fun haveAnyRights(permission: String): Boolean {
-        return fragment.shouldShowRequestPermissionRationale(permission)
+        return fragment.shouldShowRequestPermissionRationale(permission) &&
+                checkPermission(permission)
     }
 
 }

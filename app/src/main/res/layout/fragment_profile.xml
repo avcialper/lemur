@@ -26,12 +26,13 @@
             tools:text="developerlemur" />
 
         <TextView
-            android:id="@+id/text_email"
+            android:id="@+id/text_about"
             style="@style/Text"
             android:layout_marginBottom="@dimen/margin_large"
+            android:textAlignment="center"
             android:textColor="?attr/primaryColor"
             android:textSize="@dimen/text_size_medium"
-            tools:text="info.lemurapp@gmail.com" />
+            tools:text="kafana şapkadan başka bir şey takma" />
 
         <com.avcialper.lemur.ui.component.IconLabel
             android:id="@+id/component_update_profile"
@@ -40,10 +41,16 @@
             app:left_icon="@drawable/ic_edit" />
 
         <com.avcialper.lemur.ui.component.IconLabel
-            android:id="@+id/component_change_password"
+            android:id="@+id/component_update_email"
+            style="@style/FillHorizontal"
+            android:label="@string/update_email"
+            app:left_icon="@drawable/ic_email" />
+
+        <com.avcialper.lemur.ui.component.IconLabel
+            android:id="@+id/component_update_password"
             style="@style/FillHorizontal"
             android:label="@string/change_password"
-            app:left_icon="@drawable/ic_change_password" />
+            app:left_icon="@drawable/ic_update_password" />
 
         <com.avcialper.lemur.ui.component.IconLabel
             android:id="@+id/component_notification"

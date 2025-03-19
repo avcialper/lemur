@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/FillHorizontal"
+    android:background="@drawable/bottom_sheet_background"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_medium"
+    tools:context=".ui.component.ProfilePictureUpdateSheet">
+
+    <com.avcialper.lemur.ui.component.IconLabel
+        android:id="@+id/component_update"
+        style="@style/FillHorizontal"
+        android:label="@string/update"
+        app:left_icon="@drawable/ic_edit" />
+
+    <com.avcialper.lemur.ui.component.IconLabel
+        android:id="@+id/component_delete"
+        style="@style/FillHorizontal"
+        android:label="@string/delete"
+        app:left_icon="@drawable/ic_delete" />
+
+</LinearLayout>

@@ -10,4 +10,5 @@ interface StorageRepository {
     fun uploadImage(file: File): Flow<Resource<ImgBBResponse>>
     fun createUser(userProfile: UserProfile): Flow<Resource<Boolean>>
     fun getUser(id: String): Flow<Resource<UserProfile>>
+    fun updateUser(userProfile: UserProfile): Flow<Resource<Boolean>>
 }

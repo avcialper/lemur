@@ -12,12 +12,14 @@ object UserManager {
     fun updateUser(
         firebaseUser: FirebaseUser,
         username: String,
+        about: String?,
         imageUrl: String?,
     ) {
         val newUser = User(
             firebaseUser = firebaseUser,
             id = firebaseUser.uid,
             username = username,
+            about = about,
             imageUrl = imageUrl,
             email = firebaseUser.email!!,
         )

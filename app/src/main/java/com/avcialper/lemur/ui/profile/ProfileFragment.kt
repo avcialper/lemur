@@ -40,7 +40,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
     private fun setupListeners() = with(binding) {
-        componentChangePassword.setOnClickListener {
+        componentUpdateProfile.setOnClickListener {
+            ProfileFragmentDirections.toUpdateProfile().navigate()
+        }
+        componentUpdateEmail.setOnClickListener {
+
+        }
+        componentUpdatePassword.setOnClickListener {
             ProfileFragmentDirections.toChangePassword().navigate()
         }
         componentNotification.setOnClickListener { changeNotificationPermission() }
@@ -56,7 +62,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
     private fun collectUser(user: User?) = with(binding) {
         textUsername.text = user?.username
-        textEmail.text = user?.email
+        textAbout.text = user?.about
         imageProfilePicture.load(user?.imageUrl) {
             crossfade(true)
             placeholder(R.drawable.logo)
