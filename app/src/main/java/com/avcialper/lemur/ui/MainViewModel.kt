@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.repository.auth.AuthRepository
 import com.avcialper.lemur.data.repository.storage.StorageRepository
+import com.avcialper.lemur.helper.ConnectivityObserver
 import com.avcialper.lemur.helper.DataStoreManager
 import com.avcialper.lemur.util.constant.ResourceStatus
 import com.google.firebase.auth.FirebaseUser
@@ -20,6 +21,7 @@ class MainViewModel @Inject constructor(
     private val auth: AuthRepository,
     private val storageRepository: StorageRepository,
     private val dataStoreManager: DataStoreManager,
+    connectivityObserver: ConnectivityObserver
 ) : ViewModel() {
 
     private val _user = MutableStateFlow(auth.currentUser)
@@ -30,6 +32,8 @@ class MainViewModel @Inject constructor(
 
     private val _isThemeChecked = MutableStateFlow(false)
     val isThemeChecked = _isThemeChecked.asStateFlow()
+
+    val isConnected = connectivityObserver.isConnected
 
     init {
         loadTheme()

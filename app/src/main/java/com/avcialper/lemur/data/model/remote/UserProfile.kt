@@ -1,4 +1,4 @@
-package com.avcialper.lemur.data.model
+package com.avcialper.lemur.data.model.remote
 
 data class UserProfile(
     val id: String,

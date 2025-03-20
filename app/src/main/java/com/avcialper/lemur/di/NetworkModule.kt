@@ -1,12 +1,15 @@
 package com.avcialper.lemur.di
 
+import android.content.Context
 import com.avcialper.lemur.data.repository.remote.StorageApi
+import com.avcialper.lemur.helper.ConnectivityObserver
 import com.avcialper.lemur.util.constant.Constant
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -58,5 +61,11 @@ object NetworkModule {
         return retrofit
             .build()
             .create(StorageApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideConnectivityObserver(@ApplicationContext context: Context): ConnectivityObserver {
+        return ConnectivityObserver(context)
     }
 }

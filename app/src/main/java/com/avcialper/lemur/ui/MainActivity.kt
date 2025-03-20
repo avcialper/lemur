@@ -3,18 +3,24 @@ package com.avcialper.lemur.ui
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.avcialper.lemur.R
 import com.avcialper.lemur.databinding.ActivityMainBinding
+import com.avcialper.lemur.helper.SimplifiedAnimationListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -45,6 +51,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         createNavigation()
+        observeInternetConnection()
     }
 
     private fun handleFlow() {
@@ -86,5 +93,27 @@ class MainActivity : AppCompatActivity() {
             listOf(R.id.homeFragment, R.id.teamFragment, R.id.profileFragment)
         val index = bottomViewDestinations.indexOf(destination.id)
         return index == -1
+    }
+
+    private fun observeInternetConnection() = with(binding) {
+        vm.isConnected.onEach { isConnected ->
+            val currentVisibility = internetStatus.visibility
+            if (isConnected && currentVisibility == View.VISIBLE) {
+                val slideOut = AnimationUtils.loadAnimation(this@MainActivity, R.anim.slide_out)
+                internetStatus.startAnimation(slideOut)
+
+                slideOut.setAnimationListener(object : SimplifiedAnimationListener {
+                    override fun onAnimationEnd(animation: Animation?) {
+                        internetStatus.visibility = View.GONE
+                    }
+                })
+
+            } else if (!isConnected && currentVisibility == View.GONE) {
+                internetStatus.visibility = View.VISIBLE
+
+                val slideIn = AnimationUtils.loadAnimation(this@MainActivity, R.anim.slide_in)
+                internetStatus.startAnimation(slideIn)
+            }
+        }.launchIn(lifecycleScope)
     }
 }

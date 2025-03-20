@@ -1,4 +1,4 @@
-package com.avcialper.lemur.data.model
+package com.avcialper.lemur.data.model.remote
 
 import com.google.gson.annotations.SerializedName
 
