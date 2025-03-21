@@ -81,8 +81,9 @@ class UpdateEmailFragment :
 
     private fun handleIsUpdate(isUpdated: Boolean?) {
         // If email was updated, navigate back
-        if (isUpdated == true)
-            findNavController().navigateUp()
+        if (isUpdated == true) {
+            findNavController().popBackStack()
+        }
     }
 
     private fun validate(): Boolean = with(binding) {

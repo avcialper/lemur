@@ -18,6 +18,12 @@ class ConnectivityObserver(context: Context) {
 
     val isConnected: Flow<Boolean>
         get() = callbackFlow {
+            val initialState = connectivityManager.activeNetwork?.let { network ->
+                connectivityManager.getNetworkCapabilities(network)
+                    ?.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+            } ?: false
+            trySend(initialState)
+
             val callback = object : NetworkCallback() {
                 override fun onCapabilitiesChanged(
                     network: Network,

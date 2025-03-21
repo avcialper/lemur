@@ -3,6 +3,7 @@ package com.avcialper.lemur.ui.auth.signup
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.avcialper.lemur.data.AppManager
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.remote.ImgBBData
 import com.avcialper.lemur.data.model.remote.UserProfile
@@ -65,6 +66,11 @@ class SignupViewModel @Inject constructor(
 
     // Handle signup click action
     fun onSignupClicked(convert: () -> File) = viewModelScope.launch {
+        if (AppManager.isConnected.not()) {
+            _state.value = null
+            return@launch
+        }
+
         _state.update { Resource.Loading() }
         auth.signup(_email.value, _password.value).collect { resource ->
             if (resource is Resource.Success) {

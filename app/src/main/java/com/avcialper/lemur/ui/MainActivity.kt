@@ -16,6 +16,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.avcialper.lemur.R
+import com.avcialper.lemur.data.AppManager
 import com.avcialper.lemur.databinding.ActivityMainBinding
 import com.avcialper.lemur.helper.SimplifiedAnimationListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -99,6 +100,8 @@ class MainActivity : AppCompatActivity() {
         vm.isConnected.onEach { isConnected ->
             val currentVisibility = internetStatus.visibility
             if (isConnected && currentVisibility == View.VISIBLE) {
+                AppManager.isConnected = true
+
                 val slideOut = AnimationUtils.loadAnimation(this@MainActivity, R.anim.slide_out)
                 internetStatus.startAnimation(slideOut)
 
@@ -109,6 +112,8 @@ class MainActivity : AppCompatActivity() {
                 })
 
             } else if (!isConnected && currentVisibility == View.GONE) {
+                AppManager.isConnected = false
+
                 internetStatus.visibility = View.VISIBLE
 
                 val slideIn = AnimationUtils.loadAnimation(this@MainActivity, R.anim.slide_in)

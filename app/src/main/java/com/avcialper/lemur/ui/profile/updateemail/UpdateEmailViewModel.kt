@@ -2,6 +2,7 @@ package com.avcialper.lemur.ui.profile.updateemail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.avcialper.lemur.data.AppManager
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.repository.auth.AuthRepository
 import com.avcialper.lemur.util.constant.Resource
@@ -42,6 +43,11 @@ class UpdateEmailViewModel @Inject constructor(
     }
 
     fun updateEmail() = viewModelScope.launch {
+        if (AppManager.isConnected.not()) {
+            _state.value = null
+            return@launch
+        }
+
         authRepository.updateEmail(email.value, password.value).collect { resource ->
             _state.value = resource
             if (resource is Resource.Success)

@@ -56,7 +56,7 @@ class UpdatePasswordFragment : BaseFragment<FragmentUpdatePasswordBinding>(
             is Resource.Error -> handleError(resource.throwable!!)
             is Resource.Loading -> loadingState(true)
             is Resource.Success -> handleSuccess()
-            null -> Unit
+            null -> loadingState(false)
         }
     }
 

@@ -2,6 +2,7 @@ package com.avcialper.lemur.ui.auth.forgot
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.avcialper.lemur.data.AppManager
 import com.avcialper.lemur.data.repository.auth.AuthRepository
 import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,8 +27,14 @@ class ForgotPasswordViewModel @Inject constructor(
         _email.update { email }
     }
 
-    // Send password reset email
+    // Send password reset about
     fun sendPasswordResetEmail() = viewModelScope.launch {
+
+        if (AppManager.isConnected.not()) {
+            _state.value = null
+            return@launch
+        }
+
         auth.forgotPassword(_email.value).collect { resource ->
             _state.update { resource }
         }

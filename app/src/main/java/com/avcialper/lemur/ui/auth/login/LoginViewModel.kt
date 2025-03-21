@@ -2,6 +2,7 @@ package com.avcialper.lemur.ui.auth.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.avcialper.lemur.data.AppManager
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.repository.auth.AuthRepository
 import com.avcialper.lemur.data.repository.storage.StorageRepository
@@ -40,6 +41,12 @@ class LoginViewModel @Inject constructor(
     // Handle login click action
     fun onLoginClicked() = viewModelScope.launch {
         _state.value = Resource.Loading()
+
+        if (AppManager.isConnected.not()) {
+            _state.value = null
+            return@launch
+        }
+
         auth.login(_email.value, _password.value).collect { resource ->
             if (resource is Resource.Success)
                 getUser()

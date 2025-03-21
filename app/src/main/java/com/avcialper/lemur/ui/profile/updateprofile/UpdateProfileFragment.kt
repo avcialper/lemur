@@ -47,7 +47,7 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding>(
         val image = vm.imageUri.value ?: vm.imageUrl.value
         loadImage(image)
         inputUsername.value = vm.username.value!!
-        inputAbout.value = vm.email.value!!
+        inputAbout.value = vm.about.value!!
     }
 
     private fun setListeners() = with(binding) {

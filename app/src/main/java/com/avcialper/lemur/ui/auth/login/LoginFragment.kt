@@ -50,7 +50,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>(FragmentLoginBindin
             is Resource.Error -> handleError(resource.throwable!!)
             is Resource.Loading -> loadingState(true)
             is Resource.Success -> handleSuccess()
-            null -> Unit
+            null -> loadingState(false)
         }
     }
 

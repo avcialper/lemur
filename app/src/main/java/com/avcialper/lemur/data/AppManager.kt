@@ -8,6 +8,7 @@ object AppManager {
     var isDeviceNotificationPermissionGranted = false
     var isNotificationPermissionGranted = false
     var theme = Theme.SYSTEM_DEFAULT
+    var isConnected = false
 
     fun notificationIconId(): Int {
         return if (isNotificationPermissionGranted)

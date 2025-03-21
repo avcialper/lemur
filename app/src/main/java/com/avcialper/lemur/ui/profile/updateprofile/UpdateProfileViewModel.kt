@@ -3,6 +3,7 @@ package com.avcialper.lemur.ui.profile.updateprofile
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.avcialper.lemur.data.AppManager
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.remote.UserProfile
 import com.avcialper.lemur.data.repository.storage.StorageRepository
@@ -32,7 +33,7 @@ class UpdateProfileViewModel @Inject constructor(
     val username = _username.asStateFlow()
 
     private val _about = MutableStateFlow(UserManager.user?.about)
-    val email = _about.asStateFlow()
+    val about = _about.asStateFlow()
 
     fun onUsernameChanged(username: String) {
         _username.value = username
@@ -52,6 +53,11 @@ class UpdateProfileViewModel @Inject constructor(
     }
 
     fun update(convert: () -> File) = viewModelScope.launch {
+        if (AppManager.isConnected.not()) {
+            _state.value = null
+            return@launch
+        }
+
         _state.value = Resource.Loading()
         if (_imageUri.value != null) {
             val file = convert()
