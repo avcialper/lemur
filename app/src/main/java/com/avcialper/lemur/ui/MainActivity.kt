@@ -99,9 +99,9 @@ class MainActivity : AppCompatActivity() {
     private fun observeInternetConnection() = with(binding) {
         vm.isConnected.onEach { isConnected ->
             val currentVisibility = internetStatus.visibility
-            if (isConnected && currentVisibility == View.VISIBLE) {
-                AppManager.isConnected = true
+            AppManager.isConnected = isConnected
 
+            if (isConnected && currentVisibility == View.VISIBLE) {
                 val slideOut = AnimationUtils.loadAnimation(this@MainActivity, R.anim.slide_out)
                 internetStatus.startAnimation(slideOut)
 
@@ -112,8 +112,6 @@ class MainActivity : AppCompatActivity() {
                 })
 
             } else if (!isConnected && currentVisibility == View.GONE) {
-                AppManager.isConnected = false
-
                 internetStatus.visibility = View.VISIBLE
 
                 val slideIn = AnimationUtils.loadAnimation(this@MainActivity, R.anim.slide_in)
