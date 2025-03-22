@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/TaskArea.Wrapper"
+    tools:context=".ui.component.tasksarea.TasksArea">
+
+    <LinearLayout style="@style/TaskArea.Header">
+
+        <TextView
+            android:id="@+id/text_title"
+            style="@style/TaskArea.Title"
+            tools:text="@string/app_name" />
+
+        <TextView style="@style/TaskArea.SeeAll" />
+
+        <ImageView
+            style="@style/TaskArea.Icon"
+            android:contentDescription="@string/button_go_icon" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_tasks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>

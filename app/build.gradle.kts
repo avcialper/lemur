@@ -109,6 +109,9 @@ dependencies {
 
     // Room
     implementation(libs.androidx.room.runtime)
+
+    // Owl Calendar
+    implementation(libs.owlcalendar)
 }
 
 kapt {

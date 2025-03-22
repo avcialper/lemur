@@ -32,7 +32,7 @@
     </style>
 
     <!-- LinearPage -->
-    <style name="Base.LinearPage" parent="Theme.Lemur">
+    <style name="LinearPage" parent="Theme.Lemur">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:gravity">center</item>
@@ -43,11 +43,6 @@
         <item name="android:paddingTop">@dimen/padding_large</item>
         <item name="android:paddingBottom">@dimen/padding_large</item>
         <item name="android:paddingHorizontal" tools:targetApi="o">@dimen/padding_large</item>
-    </style>
-
-    <!-- LinearPage Light Mode -->
-    <style name="LinearPage" parent="Base.LinearPage">
-        <item name="android:background">@color/white</item>
     </style>
 
 
@@ -61,7 +56,7 @@
     </style>
 
     <!-- TextInput -->
-    <style name="Base.TextInput" parent="Theme.Lemur">
+    <style name="TextInput" parent="Theme.Lemur">
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:background">@drawable/text_input_bg</item>
         <item name="android:textColor">@color/black</item>
@@ -70,11 +65,9 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
-    <!-- TextInput Light Mode -->
-    <style name="TextInput" parent="Base.TextInput" />
 
     <!-- Button -->
-    <style name="Base.AuthButton" parent="Theme.Lemur">
+    <style name="AuthButton" parent="Theme.Lemur">
         <item name="android:layout_marginTop">@dimen/margin_small</item>
         <item name="android:layout_marginBottom">@dimen/margin_small</item>
         <item name="android:layout_marginVertical" tools:targetApi="o">@dimen/margin_small</item>
@@ -84,28 +77,18 @@
         <item name="android:paddingVertical" tools:targetApi="o">@dimen/padding_medium</item>
         <item name="cornerRadius">@dimen/corner_radius</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:layout_width">match_parent</item>
         <item name="backgroundTint">@color/orange</item>
-    </style>
-
-    <!-- AuthButton Light Mode -->
-    <style name="AuthButton" parent="Base.AuthButton">
-        <item name="android:textColor">@color/black</item>
     </style>
 
     <!-- Button -->
     <style name="Button" parent="AuthButton" />
 
     <!-- PressableText -->
-    <style name="Base.PressableText" parent="Theme.Lemur">
+    <style name="PressableText" parent="Theme.Lemur">
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textStyle">bold</item>
-    </style>
-
-    <!-- PressableText Light Mode -->
-    <style name="PressableText" parent="Base.PressableText">
-        <item name="android:textColor">@color/black</item>
-
     </style>
 
     <!-- Image -->
@@ -132,15 +115,10 @@
     </style>
 
     <!-- Radio Button -->
-    <style name="Base.RadioButton" parent="Theme.Lemur">
+    <style name="RadioButton" parent="Theme.Lemur">
         <item name="android:layout_width">match_parent</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="buttonTint">@color/radio_button</item>
-    </style>
-
-    <!-- Radio Button Light Mode -->
-    <style name="RadioButton" parent="Base.RadioButton">
-        <item name="android:textColor">@color/black</item>
     </style>
 
     <!-- Fill Horizontal -->
@@ -178,6 +156,72 @@
         <item name="android:padding">@dimen/padding_medium</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Task Area Wrapper -->
+    <style name="TaskArea.Wrapper" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingTop">@dimen/padding_small</item>
+        <item name="android:paddingBottom">@dimen/padding_small</item>
+    </style>
+
+    <!-- Task Area Header -->
+    <style name="TaskArea.Header" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <!-- Task Area Title -->
+    <style name="TaskArea.Title" parent="Theme.Lemur">
+        <item name="android:layout_width">@dimen/zero_dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Task Area SeeAll -->
+    <style name="TaskArea.SeeAll" parent="Theme.Lemur">
+        <item name="android:text">@string/see_all</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+    <!-- Task Area Icon-->
+    <style name="TaskArea.Icon" parent="Theme.Lemur">
+        <item name="android:src">@drawable/ic_right_arrow</item>"
+    </style>
+
+    <!-- Task Wrapper -->
+    <style name="Task.Wrapper" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingTop">@dimen/padding_small</item>
+        <item name="android:paddingBottom">@dimen/padding_small</item>
+    </style>
+
+    <!-- Task Title -->
+    <style name="Task.Title" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:drawablePadding">@dimen/padding_small</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Task Description -->
+    <style name="Task.Description" parent="Theme.Lemur">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">3</item>
+    </style>
+
+    <!-- Task Date Time -->
+    <style name="Task.DateTime" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:titleMarginEnd">@dimen/margin_medium</item>
+        <item name="android:drawablePadding">@dimen/padding_small</item>
     </style>
 
     <!-- Alert Fragment -->

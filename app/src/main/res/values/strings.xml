@@ -53,6 +53,7 @@
     <string name="teams">Takımlar</string>
     <string name="profile">Profil</string>
     <string name="button_icon">Buton resmi.</string>
+    <string name="icon">İkon</string>
     <string name="button_go_icon">Buton ilerle resmi.</string>
     <string name="device_notification_permission_denied">Bildirim izineleri reddedildi Özellikleri açmak ister misniz?</string>
     <string name="gallery_permission_denied">Fotoğraflara erişim için gereken özelliklere izin vermediniz. Özelikleri açmak ister misiniz?</string>
@@ -65,4 +66,10 @@
     <string name="about">Hakkında</string>
     <string name="check_email">Lütfen e-postanızı kontrol edin.</string>
     <string name="no_internet_connection">İnternet bağlantısı yok!</string>
+    <string name="see_all">Tümünü Gör</string>
+    <string name="confirm">Onayla</string>
+    <string name="today">Bugün</string>
+    <string name="continues">Devam Edenler</string>
+    <string name="completed">Tamamlananlar</string>
+    <string name="canceled">İptal Edilenler</string>
 </resources>

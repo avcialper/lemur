@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/TaskArea.Wrapper">
+
+    <TextView
+        android:id="@+id/text_task_name"
+        style="@style/Task.Title"
+        app:drawableRightCompat="@drawable/ic_profile"
+        tools:text="task name" />
+
+    <TextView
+        android:id="@+id/text_description"
+        style="@style/Task.Description"
+        tools:text="description" />
+
+    <TextView
+        android:id="@+id/text_date_time"
+        style="@style/Task.DateTime"
+        app:drawableRightCompat="@drawable/oval_background"
+        tools:text="date time" />
+
+</LinearLayout>
