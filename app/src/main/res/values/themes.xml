@@ -192,6 +192,16 @@
         <item name="android:src">@drawable/ic_right_arrow</item>"
     </style>
 
+    <!-- Task Area Empty Text -->
+    <style name="TaskArea.EmptyText" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:paddingTop">@dimen/margin_large</item>
+        <item name="android:paddingBottom">@dimen/margin_large</item>
+    </style>
+
     <!-- Task Wrapper -->
     <style name="Task.Wrapper" parent="Theme.Lemur">
         <item name="android:layout_width">match_parent</item>

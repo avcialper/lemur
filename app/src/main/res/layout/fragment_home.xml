@@ -18,23 +18,28 @@
 
         <com.avcialper.lemur.ui.component.tasksarea.TasksArea
             android:id="@+id/component_selected_date"
-            style="@style/FillHorizontal" />
+            style="@style/FillHorizontal"
+            app:empty_text="@string/empty_task_selected_date" />
 
         <com.avcialper.lemur.ui.component.tasksarea.TasksArea
             android:id="@+id/component_today"
-            style="@style/FillHorizontal" />
+            style="@style/FillHorizontal"
+            app:empty_text="@string/empty_task_today" />
 
         <com.avcialper.lemur.ui.component.tasksarea.TasksArea
             android:id="@+id/component_continues"
-            style="@style/FillHorizontal" />
+            style="@style/FillHorizontal"
+            app:empty_text="@string/empty_task_continues" />
 
         <com.avcialper.lemur.ui.component.tasksarea.TasksArea
             android:id="@+id/component_completed"
-            style="@style/FillHorizontal" />
+            style="@style/FillHorizontal"
+            app:empty_text="@string/empty_task_competed" />
 
         <com.avcialper.lemur.ui.component.tasksarea.TasksArea
             android:id="@+id/component_canceled"
-            style="@style/FillHorizontal" />
+            style="@style/FillHorizontal"
+            app:empty_text="@string/empty_task_canceled" />
 
     </LinearLayout>
 

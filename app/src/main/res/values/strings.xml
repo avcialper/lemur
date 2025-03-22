@@ -72,4 +72,9 @@
     <string name="continues">Devam Edenler</string>
     <string name="completed">Tamamlananlar</string>
     <string name="canceled">İptal Edilenler</string>
+    <string name="empty_task_today">Bugün için herhangi bir görev bulunmuyor.</string>
+    <string name="empty_task_continues">Şu an devam eden bir görev bulunmuyor.</string>
+    <string name="empty_task_competed">Henüz tamamlanan bir görev bulunmuyor.</string>
+    <string name="empty_task_canceled">İptal edilen bir görev bulunmuyor.</string>
+    <string name="empty_task_selected_date">Bu tarihte herhangi bir görev bulunmuyor.</string>
 </resources>

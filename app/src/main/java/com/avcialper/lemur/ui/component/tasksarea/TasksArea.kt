@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import com.avcialper.lemur.R
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.databinding.ComponentTasksAreaBinding
 import com.avcialper.lemur.helper.NonScrollableLinerLayoutManager
@@ -23,9 +24,19 @@ class TasksArea @JvmOverloads constructor(
     private val layoutInflater = LayoutInflater.from(context)
     private val binding = ComponentTasksAreaBinding.inflate(layoutInflater, this, true)
 
-    val tasks: MutableList<Task> = mutableListOf()
+    private val tasks: MutableList<Task> = mutableListOf()
 
     init {
+        val a = context.obtainStyledAttributes(attrs, R.styleable.TasksArea)
+
+        val emptyText = a.getString(R.styleable.TasksArea_empty_text)
+        with(binding) {
+            textEmpty.text = emptyText
+            rvTasks.visibility = GONE
+        }
+
+        a.recycle()
+
         initRecyclerView()
     }
 
@@ -62,7 +73,18 @@ class TasksArea @JvmOverloads constructor(
     fun setTasks(tasks: List<Task>) {
         this.tasks.clear()
         this.tasks.addAll(tasks)
-        binding.rvTasks.adapter?.notifyItemInserted(0)
+
+        with(binding) {
+            if (tasks.isEmpty()) {
+                rvTasks.visibility = GONE
+                textEmpty.visibility = VISIBLE
+            } else {
+                rvTasks.visibility = VISIBLE
+                textEmpty.visibility = GONE
+            }
+
+            rvTasks.adapter?.notifyItemInserted(0)
+        }
     }
 
 }

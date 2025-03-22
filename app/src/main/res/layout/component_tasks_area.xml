@@ -19,6 +19,13 @@
 
     </LinearLayout>
 
+    <com.google.android.material.divider.MaterialDivider style="@style/FillHorizontal" />
+
+    <TextView
+        android:id="@+id/text_empty"
+        style="@style/TaskArea.EmptyText"
+        tools:text="@string/empty_task_selected_date" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_tasks"
         android:layout_width="match_parent"

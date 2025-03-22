@@ -15,4 +15,7 @@
         <attr name="android:label" format="string" />
         <attr name="left_icon" format="reference" />
     </declare-styleable>
+    <declare-styleable name="TasksArea">
+        <attr name="empty_text" format="string" />
+    </declare-styleable>
 </resources>
