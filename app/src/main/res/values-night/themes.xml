@@ -6,32 +6,4 @@
         <item name="bottomMenuColor">@color/nero</item>
     </style>
 
-    <!-- LinearPage Night Mode -->
-    <style name="LinearPage" parent="Base.LinearPage">
-        <item name="android:background">@color/soft_black</item>
-    </style>
-
-    <!-- TextInput Night Mode -->
-    <style name="TextInput" parent="Base.TextInput" />
-
-    <!-- AuthButton Night Mode -->
-    <style name="AuthButton" parent="Base.AuthButton">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <!-- PressableText Night Mode -->
-    <style name="PressableText" parent="Base.PressableText">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <!-- Alert Text Button Night Model-->
-    <style name="AlertTextButton" parent="Base.AlertTextButton">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <!-- Radio Button Night Mode -->
-    <style name="RadioButton" parent="Base.RadioButton">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
 </resources>

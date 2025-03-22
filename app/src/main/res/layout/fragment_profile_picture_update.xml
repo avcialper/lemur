@@ -2,10 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/FillHorizontal"
-    android:background="@drawable/bottom_sheet_background"
-    android:orientation="vertical"
-    android:padding="@dimen/padding_medium"
+    style="@style/BottomSheetWrapper"
     tools:context=".ui.component.ProfilePictureUpdateSheet">
 
     <com.avcialper.lemur.ui.component.IconLabel

@@ -11,15 +11,7 @@
 
     <TextView
         android:id="@+id/internet_status"
-        style="@style/FillHorizontal"
-        android:background="@color/red"
-        android:paddingVertical="@dimen/padding_small"
-        android:text="@string/no_internet_connection"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_size_medium"
-        android:textStyle="bold"
-        android:visibility="gone" />
+        style="@style/InternetConnection" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_graph"

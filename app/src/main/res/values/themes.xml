@@ -8,6 +8,14 @@
 
     <style name="Theme.Lemur" parent="Base.Theme.Lemur">
         <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textColor">?attr/primaryColor</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="Fill" parent="Theme.Lemur">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
     </style>
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
@@ -29,6 +37,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:gravity">center</item>
         <item name="android:orientation">vertical</item>
+        <item name="android:backgroundTint">?attr/backgroundColor</item>
         <item name="android:paddingLeft">@dimen/padding_large</item>
         <item name="android:paddingRight">@dimen/padding_large</item>
         <item name="android:paddingTop">@dimen/padding_large</item>
@@ -49,7 +58,6 @@
         <item name="hintEnabled">false</item>
         <item name="errorEnabled">true</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <!-- TextInput -->
@@ -70,7 +78,6 @@
         <item name="android:layout_marginTop">@dimen/margin_small</item>
         <item name="android:layout_marginBottom">@dimen/margin_small</item>
         <item name="android:layout_marginVertical" tools:targetApi="o">@dimen/margin_small</item>
-        <item name="android:fontFamily">@font/poppins</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:paddingTop">@dimen/padding_medium</item>
         <item name="android:paddingBottom">@dimen/padding_medium</item>
@@ -78,7 +85,6 @@
         <item name="cornerRadius">@dimen/corner_radius</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
         <item name="backgroundTint">@color/orange</item>
     </style>
 
@@ -94,8 +100,6 @@
     <style name="Base.PressableText" parent="Theme.Lemur">
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <!-- PressableText Light Mode -->
@@ -118,33 +122,18 @@
 
     <!-- Text -->
     <style name="Text" parent="Theme.Lemur">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:fontFamily">@font/poppins</item>
         <item name="android:layout_marginEnd">@dimen/margin_small</item>
         <item name="android:layout_marginStart">@dimen/margin_small</item>
     </style>
 
-    <!-- Alert Text Button -->
-    <style name="Base.AlertTextButton" parent="Theme.Lemur">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:fontFamily">@font/poppins</item>
-        <item name="android:layout_marginTop">@dimen/margin_medium</item>
-        <item name="android:paddingLeft">@dimen/margin_medium</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <!-- Alert Text Button Light Mode-->
-    <style name="AlertTextButton" parent="Base.AlertTextButton">
-        <item name="android:textColor">@color/black</item>
+    <style name="Text.Normal" parent="Text">
+        <item name="android:layout_marginEnd">@dimen/zero_dp</item>
+        <item name="android:layout_marginStart">@dimen/zero_dp</item>
     </style>
 
     <!-- Radio Button -->
     <style name="Base.RadioButton" parent="Theme.Lemur">
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:fontFamily">@font/poppins</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="buttonTint">@color/radio_button</item>
     </style>
@@ -156,13 +145,133 @@
 
     <!-- Fill Horizontal -->
     <style name="FillHorizontal" parent="Theme.Lemur">
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
     </style>
 
     <!-- Bottom Navigation Bar Active Item -->
     <style name="ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/chardonnay</item>
+    </style>
+
+    <!-- Internet Connection -->
+    <style name="InternetConnection" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/red</item>
+        <item name="android:paddingTop">@dimen/padding_small</item>
+        <item name="android:paddingBottom">@dimen/padding_small</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:text">@string/no_internet_connection</item>
+    </style>
+
+    <!-- IconLabel Icon -->
+    <style name="IconLabel.Icon" parent="Theme.Lemur">
+        <item name="android:src">@drawable/ic_edit</item>
+    </style>
+
+    <!-- IconLabel Label -->
+    <style name="IconLabel.Label" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:padding">@dimen/padding_medium</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Alert Fragment -->
+    <style name="Alert.Wrapper" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_margin">@dimen/margin_small</item>
+        <item name="android:background">?attr/backgroundColor</item>
+        <item name="android:padding">@dimen/padding_large</item>
+    </style>
+
+    <!-- Alert Content -->
+    <style name="Alert.Content" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:text">@string/logout_message</item>
+    </style>
+
+    <!-- Alert Text Button -->
+    <style name="Alert.TextButton" parent="Theme.Lemur">
+        <item name="android:layout_marginTop">@dimen/margin_medium</item>
+        <item name="android:paddingLeft">@dimen/margin_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Image Selector Wrapper -->
+    <style name="ImageSelector.Wrapper" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@drawable/bottom_sheet_background</item>
+    </style>
+
+    <!-- Image Selector Title -->
+    <style name="ImageSelector.Header" parent="Theme.Lemur">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:text">@string/select_one_image</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+    <!-- Image Selector Icon -->
+    <style name="ImageSelector.Icon" parent="Theme.Lemur">
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:src">@drawable/ic_close</item>
+        <item name="android:paddingStart">@dimen/padding_small</item>
+        <item name="android:paddingEnd">@dimen/padding_small</item>
+    </style>
+
+    <!-- Image Selector Content -->
+    <style name="ImageSelector.Content" parent="Theme.Lemur">
+        <item name="android:layout_height">@dimen/zero_dp</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <!-- Profile Image -->
+    <style name="Profile.Image" parent="Theme.Lemur">
+        <item name="android:layout_width">@dimen/profile_picture_size</item>
+        <item name="android:layout_height">@dimen/profile_picture_size</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:src">@drawable/logo</item>
+    </style>
+
+    <!-- Profile Username -->
+    <style name="Profile.Username" parent="Theme.Lemur">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Profile About -->
+    <style name="Profile.About" parent="Theme.Lemur">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_marginBottom">@dimen/margin_large</item>
+    </style>
+
+    <!-- Bottom Sheet Wrapper-->
+    <style name="BottomSheetWrapper" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/bottom_sheet_background</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">@dimen/padding_medium</item>
+    </style>
+
+    <!-- Theme Selector Title -->
+    <style name="ThemeSelectorTitle" parent="Theme.Lemur">
+        <item name="android:text">@string/theme</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Profile Update Image -->
+    <style name="ProfileUpdateImage" parent="AppLogo">
+        <item name="android:scaleType">centerCrop</item>
     </style>
 
 </resources>

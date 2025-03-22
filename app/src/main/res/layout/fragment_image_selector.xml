@@ -1,39 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/LinearPage"
-    android:background="@drawable/bottom_sheet_background"
-    android:padding="@dimen/zero_dp"
+    style="@style/ImageSelector.Wrapper"
     tools:context=".ui.component.imageselector.PartialImageViewer">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/FillHorizontal"
         android:layout_margin="@dimen/margin_medium">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="@string/select_one_image"
-            android:textColor="?attr/primaryColor"
-            android:textSize="@dimen/text_size_medium"
+            style="@style/ImageSelector.Header"
             tools:ignore="RelativeOverlap" />
 
         <ImageView
             android:id="@+id/image_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:contentDescription="@string/close"
-            android:paddingStart="@dimen/padding_small"
-            android:paddingEnd="@dimen/padding_small"
-            android:src="@drawable/ic_close" />
+            style="@style/ImageSelector.Icon"
+            android:contentDescription="@string/close" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        style="@style/Fill" />
 </LinearLayout>

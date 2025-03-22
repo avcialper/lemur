@@ -9,29 +9,18 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_profile_picture"
-            style="@style/AppLogo"
-            android:layout_width="@dimen/profile_picture_size"
-            android:layout_height="@dimen/profile_picture_size"
+            style="@style/Profile.Image"
             android:contentDescription="@string/user_profile_picture"
-            android:scaleType="centerCrop"
-            android:src="@drawable/logo"
             app:shapeAppearanceOverlay="@style/RoundedImage" />
 
         <TextView
             android:id="@+id/text_username"
-            style="@style/Text"
-            android:textColor="?attr/primaryColor"
-            android:textSize="@dimen/text_size_large"
-            android:textStyle="bold"
+            style="@style/Profile.Username"
             tools:text="developerlemur" />
 
         <TextView
             android:id="@+id/text_about"
-            style="@style/Text"
-            android:layout_marginBottom="@dimen/margin_large"
-            android:textAlignment="center"
-            android:textColor="?attr/primaryColor"
-            android:textSize="@dimen/text_size_medium"
+            style="@style/Profile.About"
             tools:text="kafana şapkadan başka bir şey takma" />
 
         <com.avcialper.lemur.ui.component.IconLabel

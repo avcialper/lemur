@@ -8,18 +8,12 @@
 
     <ImageView
         android:id="@+id/image_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/button_icon"
-        android:src="@drawable/ic_edit" />
+        style="@style/IconLabel.Icon"
+        android:contentDescription="@string/button_icon" />
 
     <TextView
         android:id="@+id/text_label"
-        style="@style/FillHorizontal"
-        android:padding="@dimen/padding_medium"
-        android:textColor="?attr/primaryColor"
-        android:textSize="@dimen/text_size_medium"
-        android:textStyle="bold"
+        style="@style/IconLabel.Label"
         tools:text="Label" />
 
 </LinearLayout>

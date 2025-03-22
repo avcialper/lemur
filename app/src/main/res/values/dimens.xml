@@ -18,7 +18,7 @@
     <dimen name="profile_picture_size">150dp</dimen>
 
     <dimen name="icon_of_icon_label">64dp</dimen>
-    <dimen name="icon_size">32dp</dimen>
+    <dimen name="icon_size">28dp</dimen>
 
     <dimen name="zero_dp">0dp</dimen>
 </resources>

@@ -9,10 +9,8 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_profile_picture"
-            style="@style/AppLogo"
+            style="@style/ProfileUpdateImage"
             android:contentDescription="@string/user_profile_picture"
-            android:scaleType="centerCrop"
-            android:src="@drawable/logo"
             app:shapeAppearanceOverlay="@style/RoundedImage" />
 
         <com.avcialper.lemur.ui.component.TextInput
