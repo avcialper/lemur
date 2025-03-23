@@ -36,12 +36,14 @@ class MainActivity : AppCompatActivity() {
         navHostFragment.navController
     }
 
+    private var isSplashOnScreen = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen().setKeepOnScreenCondition {
-            val isSplashCompleted = vm.isThemeChecked.value && vm.isCurrentUserChecked.value
-            if (isSplashCompleted) handleFlow()
-            isSplashCompleted.not()
+            val isCheckCompleted = vm.isThemeChecked.value && vm.isCurrentUserChecked.value
+            if (isCheckCompleted) handleFlow()
+            isSplashOnScreen
         }
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -60,6 +62,8 @@ class MainActivity : AppCompatActivity() {
         val isLoggedIn = vm.user.value != null
         if (isLoginPage && isLoggedIn)
             navController.navigate(R.id.toMenu)
+        else
+            isSplashOnScreen = false
     }
 
     private fun createNavigation() = with(binding) {
