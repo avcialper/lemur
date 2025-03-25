@@ -56,7 +56,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>(FragmentLoginBindin
 
     private fun handleSuccess() {
         loadingState(false)
-        val direction = LoginFragmentDirections.toMenu()
+        val direction = LoginFragmentDirections.toHome()
         direction.navigate()
     }
 

@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -54,25 +55,23 @@ class MainViewModel @Inject constructor(
     }
 
     private fun reload() = viewModelScope.launch {
-        auth.reload().collect { resignedUser ->
-            if (resignedUser != null)
-                getUserFromRepository(resignedUser)
+        auth.reload().collect { reloadedUser ->
+            if (reloadedUser != null)
+                getUserFromRepository(reloadedUser)
             else
                 _isCurrentUserChecked.update { true }
         }
     }
 
     private suspend fun getUserFromRepository(user: FirebaseUser) {
-        storageRepository.getUser(user.uid).collect { resource ->
-            if (resource.status == ResourceStatus.SUCCESS) {
-                resource.data?.let { (_, username, imageUrl) ->
-                    UserManager.updateUser(user, username, "", imageUrl)
-                    _isCurrentUserChecked.update { true }
-                    _user.update { user }
-                }
-            } else if (resource.status == ResourceStatus.ERROR)
-                _isCurrentUserChecked.update { true }
+        val resource = storageRepository.getUser(user.uid).firstOrNull()
+        if (resource?.status == ResourceStatus.SUCCESS) {
+            resource.data?.let { (_, username, about, imageUrl) ->
+                UserManager.updateUser(user, username, about, imageUrl)
+                _user.update { user }
+            }
         }
+        _isCurrentUserChecked.update { true }
     }
 
 }

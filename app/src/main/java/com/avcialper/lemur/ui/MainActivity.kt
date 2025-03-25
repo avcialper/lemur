@@ -12,6 +12,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -30,23 +31,22 @@ class MainActivity : AppCompatActivity() {
 
     private val vm: MainViewModel by viewModels()
 
-    private val navController by lazy {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(binding.navGraph.id) as NavHostFragment
-        navHostFragment.navController
-    }
-
-    private var isSplashOnScreen = true
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen().setKeepOnScreenCondition {
-            val isCheckCompleted = vm.isThemeChecked.value && vm.isCurrentUserChecked.value
-            if (isCheckCompleted) handleFlow()
-            isSplashOnScreen
+            handleFlow()
+            val isCompleted = (vm.isThemeChecked.value && vm.isCurrentUserChecked.value).not()
+            isCompleted
         }
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+        val fragmentManager =
+            supportFragmentManager.findFragmentById(binding.navGraph.id) as NavHostFragment
+        navController = fragmentManager.navController
+
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -61,9 +61,7 @@ class MainActivity : AppCompatActivity() {
         val isLoginPage = navController.currentDestination?.id == R.id.loginFragment
         val isLoggedIn = vm.user.value != null
         if (isLoginPage && isLoggedIn)
-            navController.navigate(R.id.toMenu)
-        else
-            isSplashOnScreen = false
+            navController.navigate(R.id.toHome)
     }
 
     private fun createNavigation() = with(binding) {
