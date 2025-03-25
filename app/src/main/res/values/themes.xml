@@ -355,4 +355,22 @@
         <item name="android:paddingBottom">@dimen/padding_large</item>
     </style>
 
+    <!-- Filter Type RecyclerView -->
+    <style name="Filter.RV" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginTop">@dimen/margin_medium</item>
+        <item name="android:layout_marginBottom">@dimen/margin_medium</item>
+    </style>
+
+    <!-- Filter Type -->
+    <style name="Filter.Type" parent="Theme.Lemur">
+        <item name="android:background">@drawable/filter_type_background</item>
+        <item name="android:paddingTop">@dimen/padding_small</item>
+        <item name="android:paddingBottom">@dimen/padding_small</item>
+        <item name="android:paddingStart">@dimen/padding_medium</item>
+        <item name="android:paddingEnd">@dimen/padding_medium</item>
+        <item name="android:layout_marginStart">@dimen/margin_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

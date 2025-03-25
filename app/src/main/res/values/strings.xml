@@ -69,6 +69,10 @@
     <string name="see_all">Tümünü Gör</string>
     <string name="confirm">Onayla</string>
     <string name="today">Bugün</string>
+    <string name="all">Tümü</string>
+    <string name="personal">Kişisel</string>
+    <string name="team">Takım</string>
+    <string name="meet">Toplantı</string>
     <string name="continues">Devam Edenler</string>
     <string name="completed">Tamamlananlar</string>
     <string name="canceled">İptal Edilenler</string>

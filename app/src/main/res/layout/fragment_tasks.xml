@@ -10,4 +10,8 @@
         android:hint="@string/search_task"
         android:importantForAutofill="no" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_filter"
+        style="@style/Filter.RV" />
+
 </LinearLayout>
