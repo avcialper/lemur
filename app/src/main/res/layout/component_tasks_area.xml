@@ -4,7 +4,9 @@
     style="@style/TaskArea.Wrapper"
     tools:context=".ui.component.tasksarea.TasksArea">
 
-    <LinearLayout style="@style/TaskArea.Header">
+    <LinearLayout
+        android:id="@+id/header"
+        style="@style/TaskArea.Header">
 
         <TextView
             android:id="@+id/text_title"

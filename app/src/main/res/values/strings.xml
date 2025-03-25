@@ -77,4 +77,5 @@
     <string name="empty_task_competed">Henüz tamamlanan bir görev bulunmuyor.</string>
     <string name="empty_task_canceled">İptal edilen bir görev bulunmuyor.</string>
     <string name="empty_task_selected_date">Bu tarihte herhangi bir görev bulunmuyor.</string>
+    <string name="search_task">Görev ara</string>
 </resources>

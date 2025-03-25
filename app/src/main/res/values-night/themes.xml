@@ -3,7 +3,9 @@
     <style name="Base.Theme.Lemur" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="backgroundColor">@color/soft_black</item>
         <item name="primaryColor">@color/white</item>
+        <item name="secondaryColor">@color/papaya_whip</item>
         <item name="bottomMenuColor">@color/nero</item>
+        <item name="searchBackgroundColor">@color/eclipse</item>
     </style>
 
 </resources>

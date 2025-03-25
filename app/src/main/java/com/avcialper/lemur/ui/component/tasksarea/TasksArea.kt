@@ -54,7 +54,7 @@ class TasksArea @JvmOverloads constructor(
         }
     }
 
-    fun setDateTitle(date: StartDate) {
+    fun setTitle(date: StartDate) {
         val (year, month, day) = date
         val monthTitle = if (month + 1 < 10) "0${month + 1}" else "${month + 1}"
         val dayTitle = if (day < 10) "0$day" else "$day"
@@ -66,7 +66,7 @@ class TasksArea @JvmOverloads constructor(
         binding.textTitle.text = context.getString(titleId)
     }
 
-    fun setDateTitle(date: Date) {
+    fun setTitle(date: Date) {
         binding.textTitle.text = date.date
     }
 
@@ -84,6 +84,12 @@ class TasksArea @JvmOverloads constructor(
             }
 
             rvTasks.adapter?.notifyItemInserted(0)
+        }
+    }
+
+    fun setOnSeeAllClickListener(listener: () -> Unit) {
+        binding.header.setOnClickListener {
+            listener.invoke()
         }
     }
 

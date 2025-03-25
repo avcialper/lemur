@@ -3,7 +3,9 @@
     <style name="Base.Theme.Lemur" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="backgroundColor">@color/white</item>
         <item name="primaryColor">@color/black</item>
+        <item name="secondaryColor">@color/grey</item>
         <item name="bottomMenuColor">@color/seashell</item>
+        <item name="searchBackgroundColor">@color/white_smoke</item>
     </style>
 
     <style name="Theme.Lemur" parent="Base.Theme.Lemur">
@@ -326,6 +328,31 @@
     <!-- Profile Update Image -->
     <style name="ProfileUpdateImage" parent="AppLogo">
         <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <!-- Search Bar -->
+    <style name="SearchBar" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:drawableStart">@drawable/ic_search</item>
+        <item name="android:drawablePadding">@dimen/padding_small</item>
+        <item name="android:inputType">text</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:padding">@dimen/padding_small</item>
+        <item name="android:textColorHint">?attr/secondaryColor</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:background">@drawable/search_bar_background</item>
+        <item name="android:layout_marginEnd">@dimen/margin_medium</item>
+        <item name="android:layout_marginStart">@dimen/margin_medium</item>
+    </style>
+
+    <!-- Filter Wrapper -->
+    <style name="Filter.Wrapper" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:backgroundTint">?attr/backgroundColor</item>
+        <item name="android:paddingTop">@dimen/padding_large</item>
+        <item name="android:paddingBottom">@dimen/padding_large</item>
     </style>
 
 </resources>

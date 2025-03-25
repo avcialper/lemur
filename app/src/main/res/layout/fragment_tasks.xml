@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Filter.Wrapper"
+    tools:context=".ui.tasks.TasksFragment">
+
+    <EditText
+        android:id="@+id/editText"
+        style="@style/SearchBar"
+        android:hint="@string/search_task"
+        android:importantForAutofill="no" />
+
+</LinearLayout>

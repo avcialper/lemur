@@ -13,4 +13,7 @@
     <color name="seashell">#FFFCFA</color>
     <color name="nero">#232323</color>
     <color name="chateau_green">#45BB4F</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="white_smoke">#EDEDED</color>
+    <color name="eclipse">#3B3B3B</color>
 </resources>
