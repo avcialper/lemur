@@ -207,9 +207,8 @@
     <!-- Task Wrapper -->
     <style name="Task.Wrapper" parent="Theme.Lemur">
         <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:paddingTop">@dimen/padding_small</item>
-        <item name="android:paddingBottom">@dimen/padding_small</item>
     </style>
 
     <!-- Task Title -->
@@ -371,6 +370,12 @@
         <item name="android:paddingEnd">@dimen/padding_medium</item>
         <item name="android:layout_marginStart">@dimen/margin_medium</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Divider -->
+    <style name="Divider" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginBottom">@dimen/margin_small</item>
     </style>
 
 </resources>

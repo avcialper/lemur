@@ -1,4 +1,4 @@
-package com.avcialper.lemur.ui.component.tasksarea
+package com.avcialper.lemur.ui.component.tasks
 
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -10,11 +10,12 @@ import com.avcialper.lemur.util.constant.TaskStatus
 import com.avcialper.lemur.util.constant.TaskType
 import java.util.Locale
 
-class TaskViewHolder(private val binding: ComponentTaskBinding) :
-    RecyclerView.ViewHolder(binding.root) {
+class TasksViewHolder(
+    private val binding: ComponentTaskBinding
+) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: Task) = with(binding) {
-        val (name, description, startDate, endDate, startTime, endTime, type, status) = item
+    fun bind(task: Task) = with(binding) {
+        val (_, name, description, startDate, endDate, startTime, endTime, type, status) = task
         textTaskName.text = name
         textDescription.text = description
 

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/TaskArea.Wrapper"
-    tools:context=".ui.component.tasksarea.TasksArea">
+    tools:context=".ui.component.TasksArea">
 
     <LinearLayout
         android:id="@+id/header"
@@ -21,17 +22,11 @@
 
     </LinearLayout>
 
-    <com.google.android.material.divider.MaterialDivider style="@style/FillHorizontal" />
+    <com.google.android.material.divider.MaterialDivider style="@style/Divider" />
 
-    <TextView
-        android:id="@+id/text_empty"
-        style="@style/TaskArea.EmptyText"
-        tools:text="@string/empty_task_selected_date" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_tasks"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+    <com.avcialper.lemur.ui.component.tasks.Tasks
+        android:id="@+id/component_tasks"
+        style="@style/FillHorizontal"
+        app:is_short="true" />
 
 </LinearLayout>

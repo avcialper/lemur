@@ -7,10 +7,11 @@ import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.databinding.FragmentHomeBinding
 import com.avcialper.lemur.helper.PermissionManager
 import com.avcialper.lemur.ui.BaseFragment
-import com.avcialper.lemur.ui.component.tasksarea.TasksArea
+import com.avcialper.lemur.ui.component.TasksArea
 import com.avcialper.lemur.util.constant.TaskStatus
 import com.avcialper.lemur.util.constant.TaskType
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.UUID
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
@@ -40,11 +41,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 "meeeee, iş başlattın mı iş pü",
                 endTime = "15:00",
                 status = TaskStatus.CANCELED
+            ), createTask(
+                "ehehehehehe",
+                "meeeee, iş başlattın mı iş pü",
+                endTime = "15:00",
+                status = TaskStatus.CANCELED
             )
         )
         componentSelectedDate.apply {
             setTitle(owlCalendar.startDate)
-            setTasks(tasks)
+            changeList(tasks)
             setOnSeeAllClickListener(::navigateTasksPage)
         }
         componentToday.create(title = R.string.today)
@@ -78,7 +84,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private fun TasksArea.create(tasks: List<Task> = emptyList(), title: Int) {
         setTitle(title)
-        setTasks(tasks)
+        changeList(tasks)
         setOnSeeAllClickListener(::navigateTasksPage)
     }
 
@@ -91,6 +97,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         status: TaskStatus = TaskStatus.CONTINUES
     ): Task {
         return Task(
+            UUID.randomUUID().toString(),
             name,
             description,
             "22.03.2025",

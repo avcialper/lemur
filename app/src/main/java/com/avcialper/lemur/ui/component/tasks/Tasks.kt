@@ -1,0 +1,69 @@
+package com.avcialper.lemur.ui.component.tasks
+
+import android.content.Context
+import android.util.AttributeSet
+import android.view.LayoutInflater
+import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.avcialper.lemur.R
+import com.avcialper.lemur.data.model.local.Task
+import com.avcialper.lemur.databinding.ComponentTasksBinding
+import com.avcialper.lemur.helper.NonScrollableLinerLayoutManager
+import com.google.android.material.divider.MaterialDividerItemDecoration
+
+class Tasks @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : LinearLayout(context, attrs, defStyleAttr) {
+
+    private val layoutInflater = LayoutInflater.from(context)
+    private val binding = ComponentTasksBinding.inflate(layoutInflater, this, true)
+
+    init {
+        val a = context.obtainStyledAttributes(attrs, R.styleable.Tasks)
+        val emptyText =
+            a.getString(R.styleable.Tasks_empty_text) ?: context.getString(R.string.def_empty_task)
+        val isShort = a.getBoolean(R.styleable.Tasks_is_short, false)
+
+        binding.textEmpty.text = emptyText
+
+        a.recycle()
+
+        initRecyclerView(isShort)
+    }
+
+    private fun initRecyclerView(isShort: Boolean) {
+        val adapter = TasksAdapter(emptyList(), isShort)
+        val layoutManager =
+            if (isShort) NonScrollableLinerLayoutManager(context) else LinearLayoutManager(context)
+        val itemDecoration = MaterialDividerItemDecoration(context, VERTICAL).apply {
+            isLastItemDecorated = false
+        }
+
+        binding.rvTasks.apply {
+            this.adapter = adapter
+            this.layoutManager = layoutManager
+            addItemDecoration(itemDecoration)
+        }
+    }
+
+    fun changeEmptyText(text: String?) {
+        if (text == null) return    // if text is null, do nothing
+        binding.textEmpty.text = text
+    }
+
+    fun changeList(tasks: List<Task>) {
+        val adapter = binding.rvTasks.adapter as TasksAdapter
+        adapter.changeList(tasks)
+
+        if (tasks.isEmpty()) {
+            binding.rvTasks.visibility = GONE
+            binding.textEmpty.visibility = VISIBLE
+        } else {
+            binding.rvTasks.visibility = VISIBLE
+            binding.textEmpty.visibility = GONE
+        }
+    }
+
+}

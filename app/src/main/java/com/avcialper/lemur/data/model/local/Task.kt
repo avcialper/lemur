@@ -4,6 +4,7 @@ import com.avcialper.lemur.util.constant.TaskStatus
 import com.avcialper.lemur.util.constant.TaskType
 
 data class Task(
+    val id: String,
     val name: String,
     val description: String,
     val startDate: String,

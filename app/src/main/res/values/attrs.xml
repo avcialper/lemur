@@ -20,4 +20,8 @@
     <declare-styleable name="TasksArea">
         <attr name="empty_text" format="string" />
     </declare-styleable>
+    <declare-styleable name="Tasks">
+        <attr name="empty_text" />
+        <attr name="is_short" format="boolean" />
+    </declare-styleable>
 </resources>
