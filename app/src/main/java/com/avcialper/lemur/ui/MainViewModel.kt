@@ -12,7 +12,6 @@ import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -64,11 +63,12 @@ class MainViewModel @Inject constructor(
     }
 
     private suspend fun getUserFromRepository(user: FirebaseUser) {
-        val resource = storageRepository.getUser(user.uid).firstOrNull()
-        if (resource?.status == ResourceStatus.SUCCESS) {
-            resource.data?.let { (_, username, about, imageUrl) ->
-                UserManager.updateUser(user, username, about, imageUrl)
-                _user.update { user }
+        storageRepository.getUser(user.uid).collect { resource ->
+            if (resource.status == ResourceStatus.SUCCESS) {
+                resource.data?.let { (_, username, about, imageUrl) ->
+                    UserManager.updateUser(user, username, about, imageUrl)
+                    _user.update { user }
+                }
             }
         }
         _isCurrentUserChecked.update { true }
