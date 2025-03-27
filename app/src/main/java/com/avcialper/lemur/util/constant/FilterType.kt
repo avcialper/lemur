@@ -4,6 +4,8 @@ import com.avcialper.lemur.R
 
 enum class FilterType(val value: Int) {
     ALL(R.string.all),
+    DATE(R.string.date),
+    TODAY(R.string.today),
     PERSONAL(R.string.personal),
     TEAM(R.string.team),
     MEET(R.string.meet),

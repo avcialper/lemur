@@ -8,6 +8,7 @@ import com.avcialper.lemur.databinding.FragmentHomeBinding
 import com.avcialper.lemur.helper.PermissionManager
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.component.TasksArea
+import com.avcialper.lemur.util.constant.FilterType
 import com.avcialper.lemur.util.constant.TaskStatus
 import com.avcialper.lemur.util.constant.TaskType
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,10 +54,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             changeList(tasks)
             setOnSeeAllClickListener(::navigateTasksPage)
         }
-        componentToday.create(title = R.string.today)
-        componentContinues.create(title = R.string.continues)
-        componentCompleted.create(title = R.string.completed)
-        componentCanceled.create(title = R.string.canceled)
+        componentToday.create(title = R.string.today, filterType = FilterType.TODAY)
+        componentContinues.create(title = R.string.continues, filterType = FilterType.CONTINUES)
+        componentCompleted.create(title = R.string.completed, filterType = FilterType.COMPLETED)
+        componentCanceled.create(title = R.string.canceled, filterType = FilterType.CANCELED)
     }
 
     private fun setListeners() = with(binding) {
@@ -78,14 +79,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
-    private fun navigateTasksPage() {
-        HomeFragmentDirections.toTasks().navigate()
+    private fun navigateTasksPage(type: FilterType = FilterType.ALL) {
+        HomeFragmentDirections.toTasks().apply {
+            filterType = type
+        }.navigate()
     }
 
-    private fun TasksArea.create(tasks: List<Task> = emptyList(), title: Int) {
+    private fun TasksArea.create(
+        tasks: List<Task> = emptyList(),
+        title: Int,
+        filterType: FilterType = FilterType.ALL
+    ) {
         setTitle(title)
         changeList(tasks)
-        setOnSeeAllClickListener(::navigateTasksPage)
+        setOnSeeAllClickListener { navigateTasksPage(filterType) }
     }
 
     private fun createTask(

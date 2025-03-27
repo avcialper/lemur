@@ -27,8 +27,6 @@ class FilterAdapter(
     override fun getItemCount(): Int = FilterType.size
 
     private fun changeSelectedPosition(position: Int) {
-        if (position == selectedPosition) return    // Already selected
-
         val oldPosition = selectedPosition
         selectedPosition = position
 

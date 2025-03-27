@@ -199,9 +199,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:paddingTop">@dimen/margin_large</item>
-        <item name="android:paddingBottom">@dimen/margin_large</item>
+        <item name="android:paddingTop">@dimen/margin_medium</item>
+        <item name="android:paddingBottom">@dimen/margin_medium</item>
     </style>
 
     <!-- Task Wrapper -->
