@@ -67,6 +67,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>(FragmentLoginBindin
     }
 
     private fun loadingState(isLoading: Boolean) = with(binding) {
+        imageAppLogo.alpha = if (isLoading) 0.5f else 1f
         inputEmail.setLoadingState(isLoading)
         inputPassword.setLoadingState(isLoading)
         buttonLogin.updateLoadingState(isLoading)

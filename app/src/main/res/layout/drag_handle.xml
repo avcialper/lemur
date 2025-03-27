@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/FillHorizontal"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_medium">
+
+    <View
+        android:layout_width="32dp"
+        android:layout_height="4dp"
+        android:background="@drawable/drag_handle_background" />
+
+</LinearLayout>

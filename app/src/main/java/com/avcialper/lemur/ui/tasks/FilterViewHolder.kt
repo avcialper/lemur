@@ -27,7 +27,7 @@ class FilterViewHolder(
 
             textType.apply {
                 // If the title is null, use the text instead (date filter)
-                this.text = title ?: text
+                this.text = if (type == FilterType.DATE) title ?: text else text
                 setOnClickListener { onClickListener(position) }
                 setMargins(isLastItem)
                 setBackgroundColor(isSelected)

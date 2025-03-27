@@ -5,6 +5,8 @@
     style="@style/BottomSheetWrapper"
     tools:context=".ui.component.ProfilePictureUpdateSheet">
 
+    <include layout="@layout/drag_handle" />
+
     <com.avcialper.lemur.ui.component.IconLabel
         android:id="@+id/component_update"
         style="@style/FillHorizontal"

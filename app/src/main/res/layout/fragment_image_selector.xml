@@ -4,19 +4,11 @@
     style="@style/ImageSelector.Wrapper"
     tools:context=".ui.component.imageselector.PartialImageViewer">
 
-    <RelativeLayout
-        style="@style/FillHorizontal"
-        android:layout_margin="@dimen/margin_medium">
+    <include layout="@layout/drag_handle" />
 
-        <TextView
-            style="@style/ImageSelector.Header"
-            tools:ignore="RelativeOverlap" />
-
-        <ImageView
-            android:id="@+id/image_close"
-            style="@style/ImageSelector.Icon"
-            android:contentDescription="@string/close" />
-    </RelativeLayout>
+    <TextView
+        style="@style/ImageSelector.Header"
+        tools:ignore="RelativeOverlap" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_image"

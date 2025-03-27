@@ -4,6 +4,8 @@
     style="@style/BottomSheetWrapper"
     tools:context=".ui.component.themeselector.ThemeSelector">
 
+    <include layout="@layout/drag_handle" />
+
     <TextView style="@style/ThemeSelectorTitle" />
 
     <RadioGroup

@@ -36,15 +36,9 @@ class PartialImageViewer(
 
         val layoutManager = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
 
-        binding.apply {
-            imageClose.setOnClickListener {
-                dismiss()
-            }
-
-            rvImage.apply {
-                this.adapter = adapter
-                this.layoutManager = layoutManager
-            }
+        binding.rvImage.apply {
+            this.adapter = adapter
+            this.layoutManager = layoutManager
         }
     }
 

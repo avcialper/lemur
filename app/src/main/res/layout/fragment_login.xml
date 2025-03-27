@@ -9,6 +9,7 @@
     <LinearLayout style="@style/LinearPage">
 
         <ImageView
+            android:id="@+id/image_app_logo"
             style="@style/AppLogo"
             android:contentDescription="@string/app_name" />
 
