@@ -80,9 +80,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun navigateTasksPage(type: FilterType = FilterType.ALL) {
-        HomeFragmentDirections.toTasks().apply {
-            filterType = type
-        }.navigate()
+        HomeFragmentDirections.toTasks(type).navigate()
     }
 
     private fun TasksArea.create(
