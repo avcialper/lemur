@@ -19,19 +19,21 @@ class FilterViewHolder(
         ContextCompat.getDrawable(context, R.drawable.filter_type_background)
             ?.mutate() as GradientDrawable
 
-    fun bind(position: Int, isSelected: Boolean, onClickListener: (Int) -> Unit) = with(binding) {
-        val type = FilterType.fromIndex(position)
-        val text = context.getString(type.value)
-        val isLastItem = position == FilterType.size - 1
+    fun bind(position: Int, title: String?, isSelected: Boolean, onClickListener: (Int) -> Unit) =
+        with(binding) {
+            val type = FilterType.fromIndex(position)
+            val text = context.getString(type.value)
+            val isLastItem = position == FilterType.size - 1
 
-        textType.apply {
-            this.text = text
-            setOnClickListener { onClickListener(position) }
-            setMargins(isLastItem)
-            setBackgroundColor(isSelected)
-            setTypeTextColor(isSelected)
+            textType.apply {
+                // If the title is null, use the text instead (date filter)
+                this.text = title ?: text
+                setOnClickListener { onClickListener(position) }
+                setMargins(isLastItem)
+                setBackgroundColor(isSelected)
+                setTypeTextColor(isSelected)
+            }
         }
-    }
 
     private fun TextView.setMargins(isLastItem: Boolean) {
         val layoutParams = layoutParams as ViewGroup.MarginLayoutParams

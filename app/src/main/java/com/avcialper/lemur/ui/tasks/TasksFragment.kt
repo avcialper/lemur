@@ -17,6 +17,7 @@ class TasksFragment : BaseFragment<FragmentTasksBinding>(FragmentTasksBinding::i
 
     override fun FragmentTasksBinding.initialize() {
         vm.filterType = args.filterType
+        vm.filterDate = args.filterDate
         initUI()
     }
 
@@ -25,16 +26,14 @@ class TasksFragment : BaseFragment<FragmentTasksBinding>(FragmentTasksBinding::i
     }
 
     private fun initFilterRecyclerView() {
-        val adapter = FilterAdapter(vm.filterType) { type -> vm.filterType = type }
+        val adapter = FilterAdapter(vm.filterType, vm.filterDate) { type -> vm.filterType = type }
         val layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvFilter.apply {
             this.adapter = adapter
             this.layoutManager = layoutManager
             post {
-                val scroller = SmoothScroller(context).apply {
-                    targetPosition = vm.filterType.ordinal
-                }
+                val scroller = SmoothScroller(context, vm.filterType.ordinal)
                 layoutManager.startSmoothScroll(scroller)
             }
         }

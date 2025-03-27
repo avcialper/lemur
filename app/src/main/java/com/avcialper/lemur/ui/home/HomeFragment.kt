@@ -1,6 +1,7 @@
 package com.avcialper.lemur.ui.home
 
 import android.Manifest.permission.POST_NOTIFICATIONS
+import androidx.fragment.app.viewModels
 import com.avcialper.lemur.R
 import com.avcialper.lemur.data.AppManager
 import com.avcialper.lemur.data.model.local.Task
@@ -11,11 +12,15 @@ import com.avcialper.lemur.ui.component.TasksArea
 import com.avcialper.lemur.util.constant.FilterType
 import com.avcialper.lemur.util.constant.TaskStatus
 import com.avcialper.lemur.util.constant.TaskType
+import com.avcialper.owlcalendar.data.models.StartDate
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 import java.util.UUID
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
+
+    private val vm: HomeViewModel by viewModels()
 
     override fun FragmentHomeBinding.initialize() {
         checkNotificationPermission()
@@ -49,10 +54,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 status = TaskStatus.CANCELED
             )
         )
+
+        // If the view model has a date value, update the calendar
+        if (vm.date == null) {
+            vm.date = owlCalendar.startDate
+        } else {
+            val (year, month, dayOfMonth) = vm.date!!
+            owlCalendar.setStartDate(year, month, dayOfMonth)
+        }
+
         componentSelectedDate.apply {
-            setTitle(owlCalendar.startDate)
+            setTitle(vm.date!!)
             changeList(tasks)
-            setOnSeeAllClickListener(::navigateTasksPage)
         }
         componentToday.create(title = R.string.today, filterType = FilterType.TODAY)
         componentContinues.create(title = R.string.continues, filterType = FilterType.CONTINUES)
@@ -62,7 +75,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private fun setListeners() = with(binding) {
         owlCalendar.setOnDayClickListener { date ->
+            vm.date = StartDate(date.year, date.month, date.dayOfMonth)
             componentSelectedDate.setTitle(date)
+        }
+        componentSelectedDate.setOnClickListener {
+            val (year, month, dayOfMonth) = vm.date!!
+            val convertedDayOfMonth = convertString(dayOfMonth)
+            val convertedMonth = convertString(month + 1)
+            val date =
+                String.format(
+                    Locale.getDefault(),
+                    "%s.%s.%s",
+                    convertedDayOfMonth,
+                    convertedMonth,
+                    year
+                )
+            navigateTasksPage(FilterType.DATE, date)
         }
     }
 
@@ -79,18 +107,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
-    private fun navigateTasksPage(type: FilterType = FilterType.ALL) {
-        HomeFragmentDirections.toTasks(type).navigate()
+    private fun navigateTasksPage(type: FilterType = FilterType.ALL, filterDate: String? = null) {
+        HomeFragmentDirections.toTasks(filterDate, type).navigate()
     }
 
     private fun TasksArea.create(
         tasks: List<Task> = emptyList(),
         title: Int,
-        filterType: FilterType = FilterType.ALL
+        filterType: FilterType = FilterType.ALL,
+        filterDate: String? = null
     ) {
         setTitle(title)
         changeList(tasks)
-        setOnSeeAllClickListener { navigateTasksPage(filterType) }
+        setOnSeeAllClickListener { navigateTasksPage(filterType, filterDate) }
+    }
+
+    private fun convertString(value: Int): String {
+        return if (value < 10) "0$value" else value.toString()
     }
 
     private fun createTask(

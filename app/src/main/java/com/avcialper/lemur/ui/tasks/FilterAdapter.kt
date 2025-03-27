@@ -8,6 +8,7 @@ import com.avcialper.lemur.util.constant.FilterType
 
 class FilterAdapter(
     startType: FilterType,
+    private val title: String?,
     private val onFilterChangeListener: (FilterType) -> Unit
 ) : RecyclerView.Adapter<FilterViewHolder>() {
 
@@ -21,7 +22,7 @@ class FilterAdapter(
 
     override fun onBindViewHolder(holder: FilterViewHolder, position: Int) {
         val isSelected = position == selectedPosition
-        holder.bind(position, isSelected, ::changeSelectedPosition)
+        holder.bind(position, title, isSelected, ::changeSelectedPosition)
     }
 
     override fun getItemCount(): Int = FilterType.size

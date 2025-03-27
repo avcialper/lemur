@@ -88,5 +88,9 @@
         <argument android:name="filterType"
             app:argType="com.avcialper.lemur.util.constant.FilterType"
             android:defaultValue="ALL" />
+        <argument
+            android:name="filterDate"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>

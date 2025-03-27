@@ -9,5 +9,6 @@ import javax.inject.Inject
 class TasksViewModel @Inject constructor() : ViewModel() {
 
     var filterType = FilterType.ALL
+    var filterDate: String? = null
 
 }

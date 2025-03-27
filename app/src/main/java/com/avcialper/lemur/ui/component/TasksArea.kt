@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import androidx.core.content.withStyledAttributes
 import com.avcialper.lemur.R
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.databinding.ComponentTasksAreaBinding
@@ -23,12 +24,10 @@ class TasksArea @JvmOverloads constructor(
     private val binding = ComponentTasksAreaBinding.inflate(layoutInflater, this, true)
 
     init {
-        val a = context.obtainStyledAttributes(attrs, R.styleable.TasksArea)
-
-        val emptyText = a.getString(R.styleable.TasksArea_empty_text)
-        binding.componentTasks.changeEmptyText(emptyText)
-
-        a.recycle()
+        context.withStyledAttributes(attrs, R.styleable.TasksArea) {
+            val emptyText = getString(R.styleable.TasksArea_empty_text)
+            binding.componentTasks.changeEmptyText(emptyText)
+        }
     }
 
     fun setTitle(date: StartDate) {
