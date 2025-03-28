@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.avcialper.lemur.databinding.FragmentTasksBinding
 import com.avcialper.lemur.helper.SmoothScroller
 import com.avcialper.lemur.ui.BaseFragment
+import com.avcialper.lemur.util.constant.FilterType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,8 +17,10 @@ class TasksFragment : BaseFragment<FragmentTasksBinding>(FragmentTasksBinding::i
     private val args: TasksFragmentArgs by navArgs()
 
     override fun FragmentTasksBinding.initialize() {
-        vm.filterType = args.filterType
-        vm.filterDate = args.filterDate
+        if (vm.filterType == null)
+            vm.filterType = args.filterType
+        if (vm.filterDate == null)
+            vm.filterDate = args.filterDate
         initUI()
     }
 
@@ -26,16 +29,23 @@ class TasksFragment : BaseFragment<FragmentTasksBinding>(FragmentTasksBinding::i
     }
 
     private fun initFilterRecyclerView() {
-        val adapter = FilterAdapter(vm.filterType, vm.filterDate) { type -> vm.filterType = type }
+        val adapter = FilterAdapter(vm.filterType, vm.filterDate, ::onFilterChangeListener)
         val layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvFilter.apply {
             this.adapter = adapter
             this.layoutManager = layoutManager
             post {
-                val scroller = SmoothScroller(context, vm.filterType.ordinal)
+                val scroller = SmoothScroller(context, vm.filterType?.ordinal ?: 0)
                 layoutManager.startSmoothScroll(scroller)
             }
+        }
+    }
+
+    private fun onFilterChangeListener(type: FilterType, data: String?) {
+        vm.filterType = type
+        if (type == FilterType.DATE) {
+            vm.filterDate = data
         }
     }
 

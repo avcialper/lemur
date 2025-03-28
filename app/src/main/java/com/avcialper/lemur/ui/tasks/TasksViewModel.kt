@@ -8,7 +8,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TasksViewModel @Inject constructor() : ViewModel() {
 
-    var filterType = FilterType.ALL
+    var filterType: FilterType? = null
     var filterDate: String? = null
 
 }

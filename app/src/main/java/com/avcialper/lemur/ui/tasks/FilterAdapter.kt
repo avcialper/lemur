@@ -1,5 +1,6 @@
 package com.avcialper.lemur.ui.tasks
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,14 +8,16 @@ import com.avcialper.lemur.databinding.ItemFilterTypeBinding
 import com.avcialper.lemur.util.constant.FilterType
 
 class FilterAdapter(
-    startType: FilterType,
-    private val title: String?,
-    private val onFilterChangeListener: (FilterType) -> Unit
+    startType: FilterType?,
+    private var title: String?,
+    private val onFilterChangeListener: (FilterType, String?) -> Unit
 ) : RecyclerView.Adapter<FilterViewHolder>() {
 
-    private var selectedPosition = startType.ordinal
+    private var selectedPosition = startType?.ordinal ?: FilterType.ALL.ordinal
+    private var context: Context? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilterViewHolder {
+        context = parent.context
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemFilterTypeBinding.inflate(layoutInflater, parent, false)
         return FilterViewHolder(binding)
@@ -35,6 +38,8 @@ class FilterAdapter(
         notifyItemChanged(position)
 
         val type = FilterType.fromIndex(position)
-        onFilterChangeListener.invoke(type)
+        val titleId = type.value
+        title = context?.getString(titleId)
+        onFilterChangeListener.invoke(type, title)
     }
 }
