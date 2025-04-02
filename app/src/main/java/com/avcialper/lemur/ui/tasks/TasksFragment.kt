@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.avcialper.lemur.databinding.FragmentTasksBinding
 import com.avcialper.lemur.helper.SmoothScroller
 import com.avcialper.lemur.ui.BaseFragment
+import com.avcialper.lemur.ui.component.DateSelector
 import com.avcialper.lemur.util.constant.FilterType
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,9 +45,15 @@ class TasksFragment : BaseFragment<FragmentTasksBinding>(FragmentTasksBinding::i
 
     private fun onFilterChangeListener(type: FilterType, data: String?) {
         vm.filterType = type
-        if (type == FilterType.DATE) {
-            vm.filterDate = data
-        }
+        if (type == FilterType.DATE)
+            DateSelector(data, ::onDateSelected).show(childFragmentManager, "date_selector")
+    }
+
+    private fun onDateSelected(date: String) {
+        val adapter = binding.rvFilter.adapter as FilterAdapter
+        vm.filterDate = date
+        adapter.title = date
+        adapter.notifyItemChanged(FilterType.DATE.ordinal)
     }
 
 }

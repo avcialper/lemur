@@ -376,4 +376,11 @@
         <item name="android:layout_marginBottom">@dimen/margin_small</item>
     </style>
 
+    <!-- Date Selector Wrapper -->
+    <style name="DateSelector.Wrapper" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/bottom_sheet_background</item>
+        <item name="android:paddingBottom">@dimen/padding_large</item>
+    </style>
+
 </resources>
