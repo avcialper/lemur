@@ -80,14 +80,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
         componentSelectedDate.setOnClickListener {
             val (year, month, dayOfMonth) = vm.date!!
-            val convertedDayOfMonth = convertString(dayOfMonth)
-            val convertedMonth = convertString(month + 1)
             val date =
                 String.format(
                     Locale.getDefault(),
-                    "%s.%s.%s",
-                    convertedDayOfMonth,
-                    convertedMonth,
+                    "%02d.%02d.%04d",
+                    dayOfMonth,
+                    month + 1,
                     year
                 )
             navigateTasksPage(FilterType.DATE, date)
@@ -120,10 +118,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setTitle(title)
         changeList(tasks)
         setOnSeeAllClickListener { navigateTasksPage(filterType, filterDate) }
-    }
-
-    private fun convertString(value: Int): String {
-        return if (value < 10) "0$value" else value.toString()
     }
 
     private fun createTask(

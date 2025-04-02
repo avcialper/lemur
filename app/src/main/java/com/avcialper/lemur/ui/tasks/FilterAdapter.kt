@@ -9,7 +9,7 @@ import com.avcialper.lemur.util.constant.FilterType
 
 class FilterAdapter(
     startType: FilterType?,
-    private var title: String?,
+    var title: String?,
     private val onFilterChangeListener: (FilterType, String?) -> Unit
 ) : RecyclerView.Adapter<FilterViewHolder>() {
 
@@ -39,7 +39,8 @@ class FilterAdapter(
 
         val type = FilterType.fromIndex(position)
         val titleId = type.value
-        title = context?.getString(titleId)
+        if (type != FilterType.DATE || title?.contains(".") == false)
+            title = context?.getString(titleId)
         onFilterChangeListener.invoke(type, title)
     }
 }

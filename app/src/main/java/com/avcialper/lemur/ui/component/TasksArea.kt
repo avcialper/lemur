@@ -32,10 +32,8 @@ class TasksArea @JvmOverloads constructor(
 
     fun setTitle(date: StartDate) {
         val (year, month, day) = date
-        val monthTitle = if (month + 1 < 10) "0${month + 1}" else "${month + 1}"
-        val dayTitle = if (day < 10) "0$day" else "$day"
         binding.textTitle.text =
-            String.format(Locale.getDefault(), "%s.%s.%d", dayTitle, monthTitle, year)
+            String.format(Locale.getDefault(), "%02d.%02d.%04d", day, month + 1, year)
     }
 
     fun setTitle(titleId: Int) {
