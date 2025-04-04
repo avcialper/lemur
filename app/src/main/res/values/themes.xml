@@ -77,7 +77,7 @@
         <item name="android:paddingTop">@dimen/padding_medium</item>
         <item name="android:paddingBottom">@dimen/padding_medium</item>
         <item name="android:paddingVertical" tools:targetApi="o">@dimen/padding_medium</item>
-        <item name="cornerRadius">@dimen/corner_radius</item>
+        <item name="cornerRadius">@dimen/full_corner_radius</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:layout_width">match_parent</item>

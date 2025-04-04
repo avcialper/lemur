@@ -13,6 +13,7 @@
     <dimen name="text_size_large">24sp</dimen>
 
     <dimen name="corner_radius">32dp</dimen>
+    <dimen name="full_corner_radius">100dp</dimen>
     <dimen name="image_size">200dp</dimen>
     <dimen name="bottom_sheet_corner_radius">32dp</dimen>
     <dimen name="profile_picture_size">150dp</dimen>
