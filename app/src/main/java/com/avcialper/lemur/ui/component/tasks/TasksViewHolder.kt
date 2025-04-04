@@ -7,7 +7,6 @@ import com.avcialper.lemur.R
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.databinding.ComponentTaskBinding
 import com.avcialper.lemur.util.constant.TaskStatus
-import com.avcialper.lemur.util.constant.TaskType
 import java.util.Locale
 
 class TasksViewHolder(
@@ -15,9 +14,15 @@ class TasksViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(task: Task) = with(binding) {
-        val (_, name, description, startDate, endDate, startTime, endTime, type, status) = task
-        textTaskName.text = name
-        textDescription.text = description
+        textTaskName.text = task.name
+        textDescription.text = task.description
+
+        handleDateFormat(task)
+        handleTaskStatus(task.status)
+    }
+
+    private fun handleDateFormat(task: Task) = with(binding) {
+        val (_, _, _, startDate, endDate, startTime, endTime, _, _) = task
 
         if (endDate != null)
             textDateTime.text = String.format(Locale.getDefault(), "%s - %s", startDate, endDate)
@@ -26,7 +31,9 @@ class TasksViewHolder(
                 String.format(Locale.getDefault(), "%s / %s - %s", startDate, startTime, endTime)
         else
             textDateTime.text = String.format(Locale.getDefault(), "%s - %s", startDate, startTime)
+    }
 
+    private fun handleTaskStatus(status: TaskStatus) = with(binding) {
         val colorId = when (status) {
             TaskStatus.CONTINUES -> R.color.orange
             TaskStatus.COMPLETED -> R.color.chateau_green
@@ -38,14 +45,7 @@ class TasksViewHolder(
             val color = ContextCompat.getColor(root.context, colorId)
             DrawableCompat.setTint(it, color)
         }
-        textDateTime.setCompoundDrawablesWithIntrinsicBounds(null, null, statusDrawable, null)
-
-        val drawableId = when (type) {
-            TaskType.PERSONAL -> R.drawable.ic_profile
-            TaskType.MEET -> R.drawable.ic_video_call
-            TaskType.TEAM -> R.drawable.ic_team
-        }
-        textTaskName.setCompoundDrawablesWithIntrinsicBounds(0, 0, drawableId, 0)
+        textTaskName.setCompoundDrawablesWithIntrinsicBounds(null, null, statusDrawable, null)
     }
 
 }

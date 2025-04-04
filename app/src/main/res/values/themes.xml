@@ -168,30 +168,11 @@
         <item name="android:paddingBottom">@dimen/padding_small</item>
     </style>
 
-    <!-- Task Area Header -->
-    <style name="TaskArea.Header" parent="Theme.Lemur">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:gravity">center</item>
-        <item name="android:orientation">horizontal</item>
-    </style>
-
     <!-- Task Area Title -->
     <style name="TaskArea.Title" parent="Theme.Lemur">
-        <item name="android:layout_width">@dimen/zero_dp</item>
-        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textStyle">bold</item>
-    </style>
-
-    <!-- Task Area SeeAll -->
-    <style name="TaskArea.SeeAll" parent="Theme.Lemur">
-        <item name="android:text">@string/see_all</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
-    </style>
-
-    <!-- Task Area Icon-->
-    <style name="TaskArea.Icon" parent="Theme.Lemur">
-        <item name="android:src">@drawable/ic_right_arrow</item>"
     </style>
 
     <!-- Task Area Empty Text -->
@@ -225,13 +206,6 @@
     <style name="Task.Description" parent="Theme.Lemur">
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">3</item>
-    </style>
-
-    <!-- Task Date Time -->
-    <style name="Task.DateTime" parent="Theme.Lemur">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:titleMarginEnd">@dimen/margin_medium</item>
-        <item name="android:drawablePadding">@dimen/padding_small</item>
     </style>
 
     <!-- Alert Fragment -->

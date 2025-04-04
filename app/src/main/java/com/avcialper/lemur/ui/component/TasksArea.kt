@@ -45,7 +45,7 @@ class TasksArea @JvmOverloads constructor(
     }
 
     fun setOnSeeAllClickListener(listener: () -> Unit) {
-        binding.header.setOnClickListener {
+        binding.textTitle.setOnClickListener {
             listener.invoke()
         }
     }

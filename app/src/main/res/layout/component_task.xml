@@ -7,7 +7,7 @@
     <TextView
         android:id="@+id/text_task_name"
         style="@style/Task.Title"
-        app:drawableRightCompat="@drawable/ic_profile"
+        app:drawableRightCompat="@drawable/oval_background"
         tools:text="task name" />
 
     <TextView
@@ -17,8 +17,7 @@
 
     <TextView
         android:id="@+id/text_date_time"
-        style="@style/Task.DateTime"
-        app:drawableRightCompat="@drawable/oval_background"
+        style="@style/Theme.Lemur"
         tools:text="date time" />
 
 </LinearLayout>
