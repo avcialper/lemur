@@ -47,6 +47,17 @@
         <item name="android:paddingHorizontal" tools:targetApi="o">@dimen/padding_large</item>
     </style>
 
+    <style name="HomeWrapper" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:backgroundTint">?attr/backgroundColor</item>
+        <item name="android:paddingLeft">@dimen/padding_large</item>
+        <item name="android:paddingRight">@dimen/padding_large</item>
+        <item name="android:paddingTop">@dimen/padding_large</item>
+        <item name="android:paddingBottom">@dimen/padding_large</item>
+        <item name="android:paddingHorizontal" tools:targetApi="o">@dimen/padding_large</item>
+    </style>
+
 
     <!-- TextInputLayout -->
     <style name="TextInputLayout" parent="Theme.Lemur">
@@ -173,7 +184,15 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textStyle">bold</item>
+        <item name="drawableRightCompat">@drawable/ic_right_arrow</item>
     </style>
+
+    <!-- Task Area Tasks Wrapper -->
+    <style name="TaskArea.TasksWrapper" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="is_short">true</item>
+    </style>
+
 
     <!-- Task Area Empty Text -->
     <style name="TaskArea.EmptyText" parent="Theme.Lemur">
@@ -182,6 +201,12 @@
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:paddingTop">@dimen/margin_medium</item>
         <item name="android:paddingBottom">@dimen/margin_medium</item>
+    </style>
+
+    <!-- Task Area Recycler View -->
+    <style name="TaskArea.RecyclerView" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:visibility">gone</item>
     </style>
 
     <!-- Task Wrapper -->
@@ -200,6 +225,7 @@
         <item name="android:maxLines">1</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textStyle">bold</item>
+        <item name="drawableRightCompat">@drawable/oval_background</item>
     </style>
 
     <!-- Task Description -->
@@ -247,6 +273,11 @@
         <item name="android:layout_marginStart">@dimen/margin_medium</item>
         <item name="android:layout_marginEnd">@dimen/margin_medium</item>
         <item name="android:layout_marginBottom">@dimen/margin_medium</item>
+    </style>
+
+    <!-- Image Selector Content Wrapper -->
+    <style name="ImageSelector.ContentWrapper" parent="FillHorizontal">
+        <item name="android:padding">@dimen/image_selector_content</item>
     </style>
 
     <!-- Image Selector Content -->
@@ -299,6 +330,7 @@
     <!-- Profile Update Image -->
     <style name="ProfileUpdateImage" parent="AppLogo">
         <item name="android:scaleType">centerCrop</item>
+        <item name="shapeAppearanceOverlay">@style/RoundedImage</item>
     </style>
 
     <!-- Search Bar -->
@@ -355,6 +387,44 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@drawable/bottom_sheet_background</item>
         <item name="android:paddingBottom">@dimen/padding_large</item>
+    </style>
+
+    <!-- Date Selector Picker -->
+    <style name="DateSelector.Picker" parent="Theme.Lemur">
+        <item name="android:layout_marginEnd">@dimen/margin_medium</item>
+        <item name="android:layout_marginStart">@dimen/margin_medium</item>
+    </style>
+
+    <!-- Date Selector Button -->
+    <style name="DateSelector.Button" parent="Button">
+        <item name="android:layout_marginEnd">@dimen/margin_medium</item>
+        <item name="android:layout_marginStart">@dimen/margin_medium</item>
+        <item name="android:text">@string/confirm</item>
+    </style>
+
+    <!-- Owl Calendar -->
+    <style name="OwlCalendar" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="day_text_color">?attr/primaryColor</item>
+        <item name="day_name_text_color">?attr/primaryColor</item>
+        <item name="date_text_color">?attr/primaryColor</item>
+        <item name="picker_background_color">?attr/backgroundColor</item>
+        <item name="picker_button_text">@string/confirm</item>
+    </style>
+
+    <!-- Drag Handle Wrapper -->
+    <style name="DragHandle.Wrapper" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingBottom">@dimen/padding_medium</item>
+    </style>
+
+    <!-- Drag Handle Drag -->
+    <style name="DragHandle.Drag" parent="Theme.Lemur">
+        <item name="android:layout_width">@dimen/drag_handle_width</item>
+        <item name="android:layout_height">@dimen/drag_handle_height</item>
+        <item name="android:background">@drawable/drag_handle_background</item>
     </style>
 
 </resources>

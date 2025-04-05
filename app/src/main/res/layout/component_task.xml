@@ -7,7 +7,6 @@
     <TextView
         android:id="@+id/text_task_name"
         style="@style/Task.Title"
-        app:drawableRightCompat="@drawable/oval_background"
         tools:text="task name" />
 
     <TextView

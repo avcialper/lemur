@@ -15,9 +15,7 @@
 
     <NumberPicker
         android:id="@+id/np_day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_large"
+        style="@style/DateSelector.Picker"
         app:layout_constraintEnd_toStartOf="@id/np_month"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,26 +23,21 @@
 
     <NumberPicker
         android:id="@+id/np_month"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_large"
+        style="@style/DateSelector.Picker"
         app:layout_constraintEnd_toStartOf="@id/np_year"
         app:layout_constraintStart_toEndOf="@id/np_day"
         app:layout_constraintTop_toTopOf="@id/np_day" />
 
     <NumberPicker
         android:id="@+id/np_year"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/DateSelector.Picker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/np_month"
         app:layout_constraintTop_toTopOf="@id/np_month" />
 
     <Button
         android:id="@+id/button_complete"
-        style="@style/Button"
-        android:layout_marginHorizontal="@dimen/margin_medium"
-        android:text="@string/confirm"
+        style="@style/DateSelector.Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/np_month" />
