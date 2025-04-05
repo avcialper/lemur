@@ -64,6 +64,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
 
         owlCalendar.changeLocale(Locale("tr", "TR"))
+        scrollView.scrollY = vm.scrollPosition
 
         componentSelectedDate.apply {
             setTitle(vm.date!!)
@@ -76,6 +77,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun setListeners() = with(binding) {
+        scrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            vm.scrollPosition = scrollY
+        }
         owlCalendar.setOnDayClickListener { date ->
             vm.date = StartDate(date.year, date.month, date.dayOfMonth)
             componentSelectedDate.setTitle(date)
