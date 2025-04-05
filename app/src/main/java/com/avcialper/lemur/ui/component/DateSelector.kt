@@ -121,7 +121,8 @@ class DateSelector(
     }
 
     private fun getLocalizedMonthNames(): Array<String> {
-        val symbols = DateFormatSymbols(Locale.getDefault())
+        val locale = Locale("tr", "TR")
+        val symbols = DateFormatSymbols(locale)
         val monthNames = symbols.months.filter { it.isNotEmpty() }
         return monthNames.toTypedArray()
     }

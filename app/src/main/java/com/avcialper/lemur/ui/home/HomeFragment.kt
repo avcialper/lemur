@@ -63,6 +63,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             owlCalendar.setStartDate(year, month, dayOfMonth)
         }
 
+        owlCalendar.changeLocale(Locale("tr", "TR"))
+
         componentSelectedDate.apply {
             setTitle(vm.date!!)
             changeList(tasks)
