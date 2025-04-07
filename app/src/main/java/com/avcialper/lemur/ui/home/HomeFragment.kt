@@ -77,6 +77,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun setListeners() = with(binding) {
+        fab.setOnClickListener {
+            HomeFragmentDirections.toTasksCreate().navigate()
+        }
         scrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
             vm.scrollPosition = scrollY
         }
@@ -112,7 +115,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun navigateTasksPage(type: FilterType = FilterType.ALL, filterDate: String? = null) {
-        HomeFragmentDirections.toTasks(filterDate, type).navigate()
+        HomeFragmentDirections.toTasksFilter(filterDate, type).navigate()
     }
 
     private fun TasksArea.create(

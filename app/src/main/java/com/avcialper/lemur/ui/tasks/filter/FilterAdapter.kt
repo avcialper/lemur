@@ -1,4 +1,4 @@
-package com.avcialper.lemur.ui.tasks
+package com.avcialper.lemur.ui.tasks.filter
 
 import android.content.Context
 import android.view.LayoutInflater

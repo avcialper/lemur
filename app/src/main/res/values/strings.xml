@@ -84,4 +84,5 @@
     <string name="empty_task_selected_date">Bu tarihte herhangi bir görev bulunmuyor.</string>
     <string name="search_task">Görev ara</string>
     <string name="date">Tarih</string>
+    <string name="create_task_button">Görev oluşturma butonu.</string>
 </resources>

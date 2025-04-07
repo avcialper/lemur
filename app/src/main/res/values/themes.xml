@@ -427,4 +427,13 @@
         <item name="android:background">@drawable/drag_handle_background</item>
     </style>
 
+    <!-- FAB -->
+    <style name="FAB" parent="Theme.Lemur">
+        <item name="android:layout_gravity">bottom|end</item>
+        <item name="android:layout_margin">@dimen/margin_medium</item>
+        <item name="android:backgroundTint">@color/orange</item>
+        <item name="srcCompat">@drawable/ic_add</item>
+        <item name="tint">@color/black</item>
+    </style>
+
 </resources>

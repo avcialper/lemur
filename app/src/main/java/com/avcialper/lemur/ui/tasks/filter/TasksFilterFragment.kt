@@ -1,9 +1,9 @@
-package com.avcialper.lemur.ui.tasks
+package com.avcialper.lemur.ui.tasks.filter
 
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.avcialper.lemur.databinding.FragmentTasksBinding
+import com.avcialper.lemur.databinding.FragmentTasksFilterBinding
 import com.avcialper.lemur.helper.SmoothScroller
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.component.DateSelector
@@ -11,13 +11,14 @@ import com.avcialper.lemur.util.constant.FilterType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TasksFragment : BaseFragment<FragmentTasksBinding>(FragmentTasksBinding::inflate) {
+class TasksFilterFragment :
+    BaseFragment<FragmentTasksFilterBinding>(FragmentTasksFilterBinding::inflate) {
 
-    private val vm: TasksViewModel by viewModels()
+    private val vm: TasksFilterViewModel by viewModels()
 
-    private val args: TasksFragmentArgs by navArgs()
+    private val args: TasksFilterFragmentArgs by navArgs()
 
-    override fun FragmentTasksBinding.initialize() {
+    override fun FragmentTasksFilterBinding.initialize() {
         if (vm.filterType == null)
             vm.filterType = args.filterType
         if (vm.filterDate == null)

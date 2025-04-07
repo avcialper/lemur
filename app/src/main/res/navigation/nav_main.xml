@@ -38,8 +38,11 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/toTasks"
-            app:destination="@id/tasksFragment" />
+            android:id="@+id/toTasksFilter"
+            app:destination="@id/tasksFilterFragment" />
+        <action
+            android:id="@+id/toTasksCreate"
+            app:destination="@id/tasksCreateFragment" />
     </fragment>
     <fragment
         android:id="@+id/teamFragment"
@@ -81,16 +84,22 @@
         android:name="com.avcialper.lemur.ui.profile.updateemail.UpdateEmailFragment"
         android:label="UpdateEmailFragment" />
     <fragment
-        android:id="@+id/tasksFragment"
-        android:name="com.avcialper.lemur.ui.tasks.TasksFragment"
+        android:id="@+id/tasksFilterFragment"
+        android:name="com.avcialper.lemur.ui.tasks.filter.TasksFilterFragment"
         android:label="fragment_tasks"
-        tools:layout="@layout/fragment_tasks" >
-        <argument android:name="filterType"
-            app:argType="com.avcialper.lemur.util.constant.FilterType"
-            android:defaultValue="ALL" />
+        tools:layout="@layout/fragment_tasks_filter">
+        <argument
+            android:name="filterType"
+            android:defaultValue="ALL"
+            app:argType="com.avcialper.lemur.util.constant.FilterType" />
         <argument
             android:name="filterDate"
             app:argType="string"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/tasksCreateFragment"
+        android:name="com.avcialper.lemur.ui.tasks.create.TasksCreateFragment"
+        android:label="fragment_tasks_create"
+        tools:layout="@layout/fragment_tasks_create" />
 </navigation>

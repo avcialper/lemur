@@ -1,36 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView style="@style/ScrollView">
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeFragment">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        style="@style/LinearPage"
-        android:gravity="top"
-        tools:context=".ui.home.HomeFragment">
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
+        style="@style/ScrollView">
 
-        <com.avcialper.owlcalendar.OwlCalendar
-            android:id="@+id/owl_calendar"
-            style="@style/OwlCalendar" />
+        <LinearLayout
+            style="@style/LinearPage"
+            android:gravity="top">
 
-        <com.avcialper.lemur.ui.component.TasksArea
-            android:id="@+id/component_selected_date"
-            style="@style/FillHorizontal" />
+            <com.avcialper.owlcalendar.OwlCalendar
+                android:id="@+id/owl_calendar"
+                style="@style/OwlCalendar" />
 
-        <com.avcialper.lemur.ui.component.TasksArea
-            android:id="@+id/component_today"
-            style="@style/FillHorizontal" />
+            <com.avcialper.lemur.ui.component.TasksArea
+                android:id="@+id/component_selected_date"
+                style="@style/FillHorizontal" />
 
-        <com.avcialper.lemur.ui.component.TasksArea
-            android:id="@+id/component_continues"
-            style="@style/FillHorizontal" />
+            <com.avcialper.lemur.ui.component.TasksArea
+                android:id="@+id/component_today"
+                style="@style/FillHorizontal" />
 
-        <com.avcialper.lemur.ui.component.TasksArea
-            android:id="@+id/component_completed"
-            style="@style/FillHorizontal" />
+            <com.avcialper.lemur.ui.component.TasksArea
+                android:id="@+id/component_continues"
+                style="@style/FillHorizontal" />
 
-        <com.avcialper.lemur.ui.component.TasksArea
-            android:id="@+id/component_canceled"
-            style="@style/FillHorizontal" />
+            <com.avcialper.lemur.ui.component.TasksArea
+                android:id="@+id/component_completed"
+                style="@style/FillHorizontal" />
 
-    </LinearLayout>
+            <com.avcialper.lemur.ui.component.TasksArea
+                android:id="@+id/component_canceled"
+                style="@style/FillHorizontal" />
 
-</androidx.core.widget.NestedScrollView>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        style="@style/FAB"
+        android:contentDescription="@string/create_task_button" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

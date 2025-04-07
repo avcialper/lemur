@@ -1,4 +1,4 @@
-package com.avcialper.lemur.ui.tasks
+package com.avcialper.lemur.ui.tasks.filter
 
 import android.graphics.drawable.GradientDrawable
 import android.util.TypedValue
