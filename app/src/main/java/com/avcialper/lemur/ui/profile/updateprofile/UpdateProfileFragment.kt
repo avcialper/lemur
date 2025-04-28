@@ -125,7 +125,7 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding>(
 
         val isValidAbout = inputAbout.validate(
             rules = listOf(
-                MaxLengthRule(50)
+                MaxLengthRule(100)
             )
         )
 

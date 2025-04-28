@@ -23,7 +23,7 @@
             style="@style/FillHorizontal"
             android:hint="@string/about"
             android:inputType="textMultiLine"
-            app:counter_max_length="50"
+            app:counter_max_length="100"
             app:have_counter="true" />
 
         <Button
