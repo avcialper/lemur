@@ -18,6 +18,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.avcialper.lemur.R
 import com.avcialper.lemur.data.AppManager
+import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.databinding.ActivityMainBinding
 import com.avcialper.lemur.helper.SimplifiedAnimationListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleFlow() {
         val isLoginPage = navController.currentDestination?.id == R.id.loginFragment
-        val isLoggedIn = vm.user.value != null
+        val isLoggedIn = UserManager.user != null
         if (isLoginPage && isLoggedIn)
             navController.navigate(R.id.toHome)
     }

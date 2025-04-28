@@ -19,11 +19,15 @@ object UserManager {
             firebaseUser = firebaseUser,
             id = firebaseUser.uid,
             username = username,
-            about = about,
-            imageUrl = imageUrl,
-            email = firebaseUser.email!!,
+            about = about ?: "",
+            imageUrl = imageUrl ?: "",
+            email = firebaseUser.email ?: "",
         )
         user = newUser
+    }
+
+    fun updateUser(firebaseUser: FirebaseUser) {
+        updateUser(firebaseUser, "", "", "")
     }
 
     fun logout() {
