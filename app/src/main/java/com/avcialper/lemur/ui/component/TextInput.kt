@@ -5,6 +5,7 @@ import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
+import androidx.core.content.withStyledAttributes
 import androidx.core.widget.addTextChangedListener
 import com.avcialper.lemur.R
 import com.avcialper.lemur.databinding.ComponentTextInputBinding
@@ -44,32 +45,39 @@ class TextInput @JvmOverloads constructor(
     }
 
     init {
-        val a = context.obtainStyledAttributes(attrs, R.styleable.TextInput, defStyleAttr, 0)
+        context.withStyledAttributes(attrs, R.styleable.TextInput, defStyleAttr, 0) {
 
-        // TextInputLayout attrs
-        val aErrorIconDrawable = a.getDrawable(R.styleable.TextInput_errorIconDrawable)
-        val aEndIconTint = a.getColorStateList(R.styleable.TextInput_endIconTint)
-        val aEndIconMode = a.getInt(R.styleable.TextInput_endIconMode, 0)
+            // TextInputLayout attrs
+            val aErrorIconDrawable = getDrawable(R.styleable.TextInput_errorIconDrawable)
+            val aEndIconTint = getColorStateList(R.styleable.TextInput_endIconTint)
+            val aEndIconMode = getInt(R.styleable.TextInput_endIconMode, 0)
+            val isHaveCounter = getBoolean(R.styleable.TextInput_have_counter, false)
+            val counterMaxLength = getInt(R.styleable.TextInput_counter_max_length, 0)
 
-        // TextInputEditText attrs
-        val aAutofillHints = a.getString(R.styleable.TextInput_android_autofillHints)
-        val aHint = a.getString(R.styleable.TextInput_android_hint)
-        val aInputType =
-            a.getInt(R.styleable.TextInput_android_inputType, EditorInfo.TYPE_TEXT_VARIATION_NORMAL)
+            // TextInputEditText attrs
+            val aAutofillHints = getString(R.styleable.TextInput_android_autofillHints)
+            val aHint = getString(R.styleable.TextInput_android_hint)
+            val aInputType =
+                getInt(
+                    R.styleable.TextInput_android_inputType,
+                    EditorInfo.TYPE_TEXT_VARIATION_NORMAL
+                )
 
-        binding.provider.apply {
-            errorIconDrawable = aErrorIconDrawable
-            setEndIconTintList(aEndIconTint)
-            endIconMode = aEndIconMode
+            binding.provider.apply {
+                errorIconDrawable = aErrorIconDrawable
+                setEndIconTintList(aEndIconTint)
+                endIconMode = aEndIconMode
+                isCounterEnabled = isHaveCounter
+                this.counterMaxLength = counterMaxLength
+            }
+
+            input.apply {
+                endIconMode = END_ICON_NONE
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) setAutofillHints(aAutofillHints)
+                hint = aHint
+                inputType = aInputType
+            }
+
         }
-
-        input.apply {
-            endIconMode = END_ICON_NONE
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) setAutofillHints(aAutofillHints)
-            hint = aHint
-            inputType = aInputType
-        }
-
-        a.recycle()
     }
 }

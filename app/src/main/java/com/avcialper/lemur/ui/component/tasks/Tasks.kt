@@ -25,8 +25,17 @@ class Tasks @JvmOverloads constructor(
         val emptyText =
             a.getString(R.styleable.Tasks_empty_text) ?: context.getString(R.string.def_empty_task)
         val isShort = a.getBoolean(R.styleable.Tasks_is_short, false)
+        val haveMargin = a.getBoolean(R.styleable.Tasks_have_margin, false)
 
-        binding.textEmpty.text = emptyText
+        binding.apply {
+            textEmpty.text = emptyText
+            val margin =
+                if (haveMargin) context.resources.getDimensionPixelSize(R.dimen.margin_large) else 0
+
+            val layoutParams = root.layoutParams as? MarginLayoutParams
+            layoutParams?.setMargins(margin, 0, margin, 0)
+            root.layoutParams = layoutParams
+        }
 
         a.recycle()
 

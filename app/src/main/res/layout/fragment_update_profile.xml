@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView style="@style/ScrollView">
+<androidx.core.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/ScrollView">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -21,7 +22,9 @@
             android:id="@+id/input_about"
             style="@style/FillHorizontal"
             android:hint="@string/about"
-            android:inputType="text" />
+            android:inputType="textMultiLine"
+            app:counter_max_length="50"
+            app:have_counter="true" />
 
         <Button
             android:id="@+id/button_update"

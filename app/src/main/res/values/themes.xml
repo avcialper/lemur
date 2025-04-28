@@ -66,6 +66,7 @@
         <item name="hintEnabled">false</item>
         <item name="errorEnabled">true</item>
         <item name="android:layout_width">match_parent</item>
+        <item name="counterTextColor">?attr/primaryColor</item>
     </style>
 
     <!-- TextInput -->

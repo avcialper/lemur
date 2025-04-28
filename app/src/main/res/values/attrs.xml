@@ -12,6 +12,8 @@
         <attr name="errorIconDrawable" />
         <attr name="endIconTint" />
         <attr name="endIconMode" />
+        <attr name="have_counter" format="boolean" />
+        <attr name="counter_max_length" format="integer" />
     </declare-styleable>
     <declare-styleable name="IconLabel">
         <attr name="android:label" format="string" />
@@ -23,5 +25,6 @@
     <declare-styleable name="Tasks">
         <attr name="empty_text" />
         <attr name="is_short" format="boolean" />
+        <attr name="have_margin" format="boolean" />
     </declare-styleable>
 </resources>
