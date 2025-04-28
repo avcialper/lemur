@@ -8,6 +8,7 @@ import com.avcialper.lemur.databinding.FragmentUpdateEmailBinding
 import com.avcialper.lemur.helper.validator.EmailRule
 import com.avcialper.lemur.helper.validator.EmptyRule
 import com.avcialper.lemur.helper.validator.LengthRule
+import com.avcialper.lemur.helper.validator.NotSameRule
 import com.avcialper.lemur.helper.validator.PasswordRule
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.component.AlertFragment
@@ -90,7 +91,8 @@ class UpdateEmailFragment :
         val isValidEmail = componentEmail.validate(
             rules = listOf(
                 EmptyRule(),
-                EmailRule()
+                EmailRule(),
+                NotSameRule(vm.email.value, R.string.is_same_email)
             )
         )
 

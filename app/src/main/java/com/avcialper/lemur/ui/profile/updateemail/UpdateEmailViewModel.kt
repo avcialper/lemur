@@ -3,7 +3,6 @@ package com.avcialper.lemur.ui.profile.updateemail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.AppManager
-import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.repository.auth.AuthRepository
 import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,7 +27,7 @@ class UpdateEmailViewModel @Inject constructor(
     private val _state = MutableStateFlow<Resource<Boolean>?>(null)
     val state = _state.asStateFlow()
 
-    private val _email = MutableStateFlow(UserManager.user?.email!!)
+    private val _email = MutableStateFlow("")
     val email = _email.asStateFlow()
 
     private val _password = MutableStateFlow("")

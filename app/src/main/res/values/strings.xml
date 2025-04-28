@@ -15,6 +15,7 @@
     <string name="invalid_username">Kullanıcıadı en az 4 karakter en fazla 16 karakter olmalıdır.</string>
     <string name="invalid_max_length">50 karakterden fazla girilemez.</string>
     <string name="is_same_password">Yeni şifreniz, mevcut şifreniz ile aynı olmamalı.</string>
+    <string name="is_same_email">Yeni e-posta adresiniz, mevcut e-posta adresiniz ile aynı olmamalı.</string>
     <string name="username">Kullanıcı adı</string>
     <string name="confirm_password">Şifre tekrarı</string>
     <string name="signup">Kaydol</string>
