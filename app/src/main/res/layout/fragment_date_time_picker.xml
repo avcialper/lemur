@@ -3,44 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Picker.Wrapper"
-    tools:context=".ui.component.DatePicker">
+    tools:context=".ui.component.DateTimePicker">
 
     <include
         android:id="@+id/drag_handle"
         layout="@layout/drag_handle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/np_day"
+        app:layout_constraintTop_toBottomOf="@id/first_picker"
         app:layout_constraintTop_toTopOf="parent" />
 
     <NumberPicker
-        android:id="@+id/np_day"
+        android:id="@+id/first_picker"
         style="@style/Picker.Swiper"
-        app:layout_constraintEnd_toStartOf="@id/np_month"
+        app:layout_constraintEnd_toStartOf="@id/second_picker"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/drag_handle" />
 
     <NumberPicker
-        android:id="@+id/np_month"
+        android:id="@+id/second_picker"
         style="@style/Picker.Swiper"
-        app:layout_constraintEnd_toStartOf="@id/np_year"
-        app:layout_constraintStart_toEndOf="@id/np_day"
-        app:layout_constraintTop_toTopOf="@id/np_day" />
+        app:layout_constraintEnd_toStartOf="@id/third_picker"
+        app:layout_constraintStart_toEndOf="@id/first_picker"
+        app:layout_constraintTop_toTopOf="@id/first_picker" />
 
     <NumberPicker
-        android:id="@+id/np_year"
+        android:id="@+id/third_picker"
         style="@style/Picker.Swiper"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/np_month"
-        app:layout_constraintTop_toTopOf="@id/np_month" />
+        app:layout_constraintStart_toEndOf="@id/second_picker"
+        app:layout_constraintTop_toTopOf="@id/second_picker" />
 
     <Button
         android:id="@+id/button_complete"
         style="@style/Picker.Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/np_month" />
+        app:layout_constraintTop_toBottomOf="@id/third_picker" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

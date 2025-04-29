@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.avcialper.lemur.databinding.FragmentTasksFilterBinding
 import com.avcialper.lemur.helper.SmoothScroller
 import com.avcialper.lemur.ui.BaseFragment
-import com.avcialper.lemur.ui.component.DatePicker
+import com.avcialper.lemur.ui.component.DateTimePicker
+import com.avcialper.lemur.util.constant.DateTimePickerType
 import com.avcialper.lemur.util.constant.FilterType
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,7 +48,14 @@ class TasksFilterFragment :
     private fun onFilterChangeListener(type: FilterType, data: String?) {
         vm.filterType = type
         if (type == FilterType.DATE)
-            DatePicker(data, ::onDateSelected).show(childFragmentManager, "date_selector")
+            DateTimePicker(
+                type = DateTimePickerType.DATE,
+                date = data,
+                onCompleted = ::onDateSelected
+            ).show(
+                childFragmentManager,
+                "date_selector"
+            )
     }
 
     private fun onDateSelected(date: String) {
