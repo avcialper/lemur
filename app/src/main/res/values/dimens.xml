@@ -14,15 +14,20 @@
 
     <dimen name="corner_radius">32dp</dimen>
     <dimen name="full_corner_radius">100dp</dimen>
-    <dimen name="image_size">200dp</dimen>
     <dimen name="bottom_sheet_corner_radius">32dp</dimen>
-    <dimen name="profile_picture_size">150dp</dimen>
+
     <dimen name="drag_handle_width">32dp</dimen>
     <dimen name="drag_handle_height">4dp</dimen>
+
+    <dimen name="image_size">200dp</dimen>
+    <dimen name="profile_picture_size">150dp</dimen>
     <dimen name="image_selector_content">1dp</dimen>
 
     <dimen name="icon_of_icon_label">64dp</dimen>
     <dimen name="icon_size">28dp</dimen>
 
     <dimen name="zero_dp">0dp</dimen>
+
+    <integer name="navigation_anim_duration">250</integer>
+    <integer name="connectivity_anim_duration">500</integer>
 </resources>
