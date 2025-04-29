@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/DateSelector.Wrapper"
-    tools:context=".ui.component.DateSelector">
+    style="@style/Picker.Wrapper"
+    tools:context=".ui.component.DatePicker">
 
     <include
         android:id="@+id/drag_handle"
@@ -15,7 +15,7 @@
 
     <NumberPicker
         android:id="@+id/np_day"
-        style="@style/DateSelector.Picker"
+        style="@style/Picker.Swiper"
         app:layout_constraintEnd_toStartOf="@id/np_month"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,21 +23,21 @@
 
     <NumberPicker
         android:id="@+id/np_month"
-        style="@style/DateSelector.Picker"
+        style="@style/Picker.Swiper"
         app:layout_constraintEnd_toStartOf="@id/np_year"
         app:layout_constraintStart_toEndOf="@id/np_day"
         app:layout_constraintTop_toTopOf="@id/np_day" />
 
     <NumberPicker
         android:id="@+id/np_year"
-        style="@style/DateSelector.Picker"
+        style="@style/Picker.Swiper"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/np_month"
         app:layout_constraintTop_toTopOf="@id/np_month" />
 
     <Button
         android:id="@+id/button_complete"
-        style="@style/DateSelector.Button"
+        style="@style/Picker.Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/np_month" />

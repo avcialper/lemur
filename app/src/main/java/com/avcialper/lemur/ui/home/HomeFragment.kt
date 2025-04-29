@@ -78,7 +78,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private fun setListeners() = with(binding) {
         fab.setOnClickListener {
-            HomeFragmentDirections.toTasksCreate().navigate()
+            HomeFragmentDirections.toTaskCreate().navigate()
         }
         scrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
             vm.scrollPosition = scrollY
@@ -148,6 +148,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             type,
             status
         )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.owlCalendar.restore()
     }
 
 }

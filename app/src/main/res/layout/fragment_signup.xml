@@ -31,21 +31,14 @@
 
         <com.avcialper.lemur.ui.component.TextInput
             android:id="@+id/input_password"
-            style="@style/FillHorizontal"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            app:endIconMode="password_toggle"
-            app:endIconTint="@color/black"
-            app:errorIconDrawable="@null" />
+            style="@style/Password"
+            android:autofillHints="password"
+            android:hint="@string/password" />
 
         <com.avcialper.lemur.ui.component.TextInput
             android:id="@+id/input_confirm_password"
-            style="@style/FillHorizontal"
-            android:hint="@string/confirm_password"
-            android:inputType="textPassword"
-            app:endIconMode="password_toggle"
-            app:endIconTint="@color/black"
-            app:errorIconDrawable="@null" />
+            style="@style/Password"
+            android:hint="@string/confirm_password" />
 
         <Button
             android:id="@+id/button_signup"

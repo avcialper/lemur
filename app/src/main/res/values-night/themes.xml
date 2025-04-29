@@ -5,7 +5,7 @@
         <item name="primaryColor">@color/white</item>
         <item name="secondaryColor">@color/papaya_whip</item>
         <item name="bottomMenuColor">@color/nero</item>
-        <item name="searchBackgroundColor">@color/eclipse</item>
+        <item name="inputAreaBackgroundColor">@color/eclipse</item>
     </style>
 
 </resources>

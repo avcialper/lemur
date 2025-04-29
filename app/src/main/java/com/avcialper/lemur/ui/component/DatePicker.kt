@@ -12,7 +12,7 @@ import com.avcialper.lemur.databinding.FragmentDateSelectorBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.util.Locale
 
-class DateSelector(
+class DatePicker(
     private val date: String?,
     private val onDateSelected: (String) -> Unit
 ) : BottomSheetDialogFragment() {

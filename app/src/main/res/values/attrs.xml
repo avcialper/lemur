@@ -4,7 +4,7 @@
     <attr name="primaryColor" format="color" />
     <attr name="secondaryColor" format="color" />
     <attr name="bottomMenuColor" format="color" />
-    <attr name="searchBackgroundColor" format="color" />
+    <attr name="inputAreaBackgroundColor" format="color" />
     <declare-styleable name="TextInput">
         <attr name="android:autofillHints" />
         <attr name="android:hint" />

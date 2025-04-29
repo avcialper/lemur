@@ -22,13 +22,9 @@
 
         <com.avcialper.lemur.ui.component.TextInput
             android:id="@+id/input_password"
-            style="@style/FillHorizontal"
+            style="@style/Password"
             android:autofillHints="password"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            app:endIconMode="password_toggle"
-            app:endIconTint="@color/black"
-            app:errorIconDrawable="@null" />
+            android:hint="@string/password" />
 
         <TextView
             android:id="@+id/text_forgot_password"
