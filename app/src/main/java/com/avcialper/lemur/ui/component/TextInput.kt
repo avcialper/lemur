@@ -62,6 +62,8 @@ class TextInput @JvmOverloads constructor(
                     R.styleable.TextInput_android_inputType,
                     EditorInfo.TYPE_TEXT_VARIATION_NORMAL
                 )
+            val aImeOptions =
+                getInt(R.styleable.TextInput_android_imeOptions, EditorInfo.IME_ACTION_NEXT)
 
             binding.provider.apply {
                 errorIconDrawable = aErrorIconDrawable
@@ -76,6 +78,7 @@ class TextInput @JvmOverloads constructor(
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) setAutofillHints(aAutofillHints)
                 hint = aHint
                 inputType = aInputType
+                imeOptions = aImeOptions
             }
 
         }

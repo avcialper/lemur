@@ -38,7 +38,8 @@
         <com.avcialper.lemur.ui.component.TextInput
             android:id="@+id/input_confirm_password"
             style="@style/Password"
-            android:hint="@string/confirm_password" />
+            android:hint="@string/confirm_password"
+            android:imeOptions="actionDone" />
 
         <Button
             android:id="@+id/button_signup"

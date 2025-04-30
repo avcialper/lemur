@@ -16,7 +16,8 @@
         <com.avcialper.lemur.ui.component.TextInput
             android:id="@+id/component_password"
             style="@style/Password"
-            android:hint="@string/password" />
+            android:hint="@string/password"
+            android:imeOptions="actionDone" />
 
         <Button
             android:id="@+id/button_update"

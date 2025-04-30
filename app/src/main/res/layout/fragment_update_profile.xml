@@ -22,6 +22,7 @@
             android:id="@+id/input_about"
             style="@style/FillHorizontal"
             android:hint="@string/about"
+            android:imeOptions="actionDone"
             android:inputType="textMultiLine"
             app:counter_max_length="100"
             app:have_counter="true" />
