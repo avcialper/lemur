@@ -9,10 +9,6 @@
     android:orientation="vertical"
     tools:context=".ui.MainActivity">
 
-    <TextView
-        android:id="@+id/internet_status"
-        style="@style/InternetConnection" />
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_graph"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -31,4 +27,9 @@
         app:itemActiveIndicatorStyle="@style/ActiveIndicator"
         app:itemIconTint="@color/menu_item_selector"
         app:menu="@menu/bottom_menu" />
+
+    <TextView
+        android:id="@+id/internet_status"
+        android:visibility="visible"
+        style="@style/InternetConnection" />
 </LinearLayout>

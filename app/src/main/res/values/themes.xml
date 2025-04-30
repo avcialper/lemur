@@ -148,8 +148,8 @@
     <style name="InternetConnection" parent="Theme.Lemur">
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@color/red</item>
-        <item name="android:paddingTop">@dimen/padding_small</item>
-        <item name="android:paddingBottom">@dimen/padding_small</item>
+        <item name="android:paddingTop">@dimen/padding_extra_small</item>
+        <item name="android:paddingBottom">@dimen/padding_extra_small</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
@@ -436,7 +436,7 @@
     </style>
 
     <!-- Password -->
-    <style name="Password" parent="Theme.Lemur" >
+    <style name="Password" parent="Theme.Lemur">
         <item name="android:layout_width">match_parent</item>
         <item name="android:inputType">textPassword</item>
         <item name="endIconMode">password_toggle</item>
