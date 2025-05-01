@@ -3,20 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/BottomSheetWrapper"
-    tools:context=".ui.component.ImageUpdateSheet">
+    tools:context=".ui.component.TaskTypeSheet">
 
     <include layout="@layout/drag_handle" />
 
     <com.avcialper.lemur.ui.component.IconLabel
-        android:id="@+id/component_update"
+        android:id="@+id/component_task"
         style="@style/FillHorizontal"
-        android:label="@string/update"
-        app:left_icon="@drawable/ic_edit" />
+        app:left_icon="@drawable/ic_task"
+        android:label="@string/task" />
 
     <com.avcialper.lemur.ui.component.IconLabel
-        android:id="@+id/component_delete"
+        android:id="@+id/component_meet"
         style="@style/FillHorizontal"
-        android:label="@string/delete"
-        app:left_icon="@drawable/ic_delete" />
+        app:left_icon="@drawable/ic_video_call"
+        android:label="@string/meet" />
 
 </LinearLayout>

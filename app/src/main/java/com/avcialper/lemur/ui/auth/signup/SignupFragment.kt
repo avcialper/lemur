@@ -3,6 +3,7 @@ package com.avcialper.lemur.ui.auth.signup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.avcialper.lemur.R
 import com.avcialper.lemur.databinding.FragmentSignupBinding
 import com.avcialper.lemur.helper.ImagePicker
 import com.avcialper.lemur.helper.UriToFile
@@ -104,7 +105,7 @@ class SignupFragment : AuthBaseFragment<FragmentSignupBinding>(FragmentSignupBin
         val isValidUsername = inputUsername.validate(
             rules = listOf(
                 EmptyRule(),
-                LengthRule(4, 16)
+                LengthRule(4, 16, R.string.invalid_username)
             )
         )
 

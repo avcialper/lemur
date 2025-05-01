@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.avcialper.lemur.databinding.FragmentProfilePictureUpdateBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class ProfilePictureUpdateSheet(
+class ImageUpdateSheet(
     private val onDelete: () -> Unit,
     private val onUpdate: () -> Unit
 ) : BottomSheetDialogFragment() {

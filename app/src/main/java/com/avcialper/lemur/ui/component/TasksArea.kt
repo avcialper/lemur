@@ -8,10 +8,10 @@ import androidx.core.content.withStyledAttributes
 import com.avcialper.lemur.R
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.databinding.ComponentTasksAreaBinding
+import com.avcialper.lemur.util.formatDate
 import com.avcialper.owlcalendar.data.models.Date
 import com.avcialper.owlcalendar.data.models.StartDate
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Locale
 
 @AndroidEntryPoint
 class TasksArea @JvmOverloads constructor(
@@ -31,9 +31,7 @@ class TasksArea @JvmOverloads constructor(
     }
 
     fun setTitle(date: StartDate) {
-        val (year, month, day) = date
-        binding.textTitle.text =
-            String.format(Locale.getDefault(), "%02d.%02d.%04d", day, month + 1, year)
+        binding.textTitle.text = formatDate(date)
     }
 
     fun setTitle(titleId: Int) {

@@ -20,7 +20,9 @@
             android:id="@+id/input_username"
             style="@style/FillHorizontal"
             android:hint="@string/username"
-            android:inputType="text" />
+            android:inputType="text"
+            app:counter_max_length="16"
+            app:have_counter="true" />
 
         <com.avcialper.lemur.ui.component.TextInput
             android:id="@+id/input_email"

@@ -14,7 +14,7 @@ import com.avcialper.lemur.helper.validator.EmptyRule
 import com.avcialper.lemur.helper.validator.LengthRule
 import com.avcialper.lemur.helper.validator.MaxLengthRule
 import com.avcialper.lemur.ui.BaseFragment
-import com.avcialper.lemur.ui.component.ProfilePictureUpdateSheet
+import com.avcialper.lemur.ui.component.ImageUpdateSheet
 import com.avcialper.lemur.util.constant.Resource
 import com.avcialper.lemur.util.extension.exceptionConverter
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,7 +52,7 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding>(
 
     private fun setListeners() = with(binding) {
         imageProfilePicture.setOnClickListener {
-            ProfilePictureUpdateSheet(::deleteImage, imagePicker::pickImage)
+            ImageUpdateSheet(::deleteImage, imagePicker::pickImage)
                 .show(parentFragmentManager, "selector")
         }
         inputUsername.onTextChanged(vm::onUsernameChanged)

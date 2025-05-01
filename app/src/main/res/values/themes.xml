@@ -34,6 +34,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:fillViewport">true</item>
+        <item name="android:scrollbars">none</item>
     </style>
 
     <!-- LinearPage -->
@@ -335,6 +336,21 @@
         <item name="shapeAppearanceOverlay">@style/RoundedImage</item>
     </style>
 
+    <!-- Task Image -->
+    <style name="TaskImage" parent="AppLogo">
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:layout_marginTop">@dimen/margin_medium</item>
+        <item name="android:layout_marginBottom">@dimen/margin_medium</item>
+        <item name="shapeAppearanceOverlay">@style/TaskImage.Round</item>
+    </style>
+
+    <!-- Task Image Round -->
+    <style name="TaskImage.Round" parent="TaskImage">
+        <item name="cornerSize">5%</item>
+    </style>
+
     <!-- Search Bar -->
     <style name="SearchBar" parent="Theme.Lemur">
         <item name="android:layout_width">match_parent</item>
@@ -389,6 +405,14 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@drawable/bottom_sheet_background</item>
         <item name="android:paddingBottom">@dimen/padding_large</item>
+    </style>
+
+    <!-- Picker Title -->
+    <style name="Picker.Title" parent="Theme.Lemur">
+        <item name="android:color">?attr/primaryColor</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:layout_marginTop">@dimen/margin_small</item>
+        <item name="android:layout_marginBottom">@dimen/margin_small</item>
     </style>
 
     <!-- Picker Swiper -->
@@ -447,4 +471,11 @@
         <item name="errorIconDrawable">@null</item>
     </style>
 
+    <style name="TaskDateAndTime" parent="Theme.Lemur">
+        <item name="android:layout_gravity">start</item>
+        <item name="android:drawablePadding">@dimen/padding_small</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">@dimen/margin_medium</item>
+    </style>
 </resources>

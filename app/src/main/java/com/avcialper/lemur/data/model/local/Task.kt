@@ -5,12 +5,13 @@ import com.avcialper.lemur.util.constant.TaskType
 
 data class Task(
     val id: String,
+    val ownerId: String,
     val name: String,
     val description: String,
     val startDate: String,
     val endDate: String?,
     val startTime: String,
-    val endTime: String?,
+    val endTime: String,
     val type: TaskType,
     val status: TaskStatus
 )

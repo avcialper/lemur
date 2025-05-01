@@ -1,5 +1,6 @@
 package com.avcialper.lemur.ui.component
 
+import android.content.DialogInterface
 import android.icu.text.DateFormatSymbols
 import android.icu.util.Calendar
 import android.os.Bundle
@@ -10,6 +11,8 @@ import android.widget.NumberPicker
 import com.avcialper.lemur.R
 import com.avcialper.lemur.databinding.FragmentDateTimePickerBinding
 import com.avcialper.lemur.util.constant.DateTimePickerType
+import com.avcialper.lemur.util.formatDate
+import com.avcialper.lemur.util.formatTime
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.util.Locale
 
@@ -18,7 +21,9 @@ class DateTimePicker(
     private val date: String? = null,
     private val hour: Int = 0,
     private val minute: Int = 0,
-    private val onCompleted: (String) -> Unit
+    private val title: String = "",
+    private val onCompleted: (String) -> Unit,
+    private val onDismiss: () -> Unit = {}
 ) : BottomSheetDialogFragment() {
 
     private var _binding: FragmentDateTimePickerBinding? = null
@@ -39,6 +44,15 @@ class DateTimePicker(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.tvTitle.apply {
+            visibility = if (title.isEmpty())
+                View.GONE
+            else {
+                text = title
+                View.VISIBLE
+            }
+        }
+
         if (type == DateTimePickerType.DATE)
             handleDatePicker()
         else
@@ -46,20 +60,9 @@ class DateTimePicker(
 
         binding.buttonComplete.setOnClickListener {
             val data = if (type == DateTimePickerType.DATE)
-                String.format(
-                    Locale.getDefault(),
-                    "%02d.%02d.%04d",
-                    firstPickerValue,
-                    secondPickerValue,
-                    thirdPickerValue
-                )
+                formatDate(firstPickerValue, secondPickerValue - 1, thirdPickerValue)
             else
-                String.format(
-                    Locale.getDefault(),
-                    "%02d:%02d",
-                    firstPickerValue,
-                    thirdPickerValue
-                )
+                formatTime(firstPickerValue, thirdPickerValue)
             onCompleted(data)
             dismiss()
         }
@@ -161,6 +164,11 @@ class DateTimePicker(
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        onDismiss()
     }
 
 }

@@ -12,6 +12,7 @@ import com.avcialper.lemur.ui.component.TasksArea
 import com.avcialper.lemur.util.constant.FilterType
 import com.avcialper.lemur.util.constant.TaskStatus
 import com.avcialper.lemur.util.constant.TaskType
+import com.avcialper.lemur.util.formatDate
 import com.avcialper.owlcalendar.data.models.StartDate
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
@@ -88,15 +89,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             componentSelectedDate.setTitle(date)
         }
         componentSelectedDate.setOnClickListener {
-            val (year, month, dayOfMonth) = vm.date!!
-            val date =
-                String.format(
-                    Locale.getDefault(),
-                    "%02d.%02d.%04d",
-                    dayOfMonth,
-                    month + 1,
-                    year
-                )
+            val date = formatDate(vm.date!!)
             navigateTasksPage(FilterType.DATE, date)
         }
     }
@@ -133,11 +126,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         name: String,
         description: String,
         endDate: String? = null,
-        endTime: String? = null,
+        endTime: String = "12:00",
         type: TaskType = TaskType.PERSONAL,
         status: TaskStatus = TaskStatus.CONTINUES
     ): Task {
         return Task(
+            "",
             UUID.randomUUID().toString(),
             name,
             description,

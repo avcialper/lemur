@@ -74,6 +74,7 @@
     <string name="personal">Kişisel</string>
     <string name="team">Takım</string>
     <string name="meet">Toplantı</string>
+    <string name="team_task">Takım Görevi</string>
     <string name="continues">Devam Edenler</string>
     <string name="completed">Tamamlananlar</string>
     <string name="canceled">İptal Edilenler</string>
@@ -86,4 +87,16 @@
     <string name="search_task">Görev ara</string>
     <string name="date">Tarih</string>
     <string name="create_task_button">Görev oluşturma butonu.</string>
+    <string name="select_time">Lütfen bir zaman seçin</string>
+    <string name="select_start_time">Başlangıç saati</string>
+    <string name="select_end_time">Bitiş saati</string>
+    <string name="create">Oluştur</string>
+    <string name="add_image">Resim ekle</string>
+    <string name="subject">Konu</string>
+    <string name="content">Açıklama</string>
+    <string name="subject_length_error">Konu en az 1 karakter en fazla 50 karakter olmalıdır.</string>
+    "
+    <string name="content_length_error">İçerik en az 1 karakter en fazla 250 karakter olmalıdır.</string>
+    <string name="select_task_type">Lütfen bir görev tipi seçiniz</string>
+    <string name="task">Kişisel Görev</string>"
 </resources>

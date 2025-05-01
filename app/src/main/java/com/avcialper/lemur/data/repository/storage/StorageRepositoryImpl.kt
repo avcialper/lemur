@@ -1,6 +1,7 @@
 package com.avcialper.lemur.data.repository.storage
 
 import com.avcialper.lemur.BuildConfig
+import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.data.model.remote.ImgBBResponse
 import com.avcialper.lemur.data.model.remote.UserProfile
 import com.avcialper.lemur.data.repository.remote.StorageApi
@@ -23,7 +24,8 @@ class StorageRepositoryImpl @Inject constructor(
     db: FirebaseFirestore
 ) : StorageRepository {
 
-    private val collection = db.collection("users")
+    private val userCollection = db.collection("users")
+    private val taskCollection = db.collection("tasks")
 
     override fun uploadImage(file: File): Flow<Resource<ImgBBResponse>> = flow {
         emit(Resource.Loading())
@@ -54,7 +56,7 @@ class StorageRepositoryImpl @Inject constructor(
         )
 
         try {
-            collection.document(userProfile.id).set(user).await()
+            userCollection.document(userProfile.id).set(user).await()
             emit(Resource.Success(true))
         } catch (e: Exception) {
             e.printStackTrace()
@@ -65,7 +67,7 @@ class StorageRepositoryImpl @Inject constructor(
     override fun getUser(id: String): Flow<Resource<UserProfile>> = flow {
         emit(Resource.Loading())
         try {
-            val response = collection.document(id).get().await()
+            val response = userCollection.document(id).get().await()
             val user = response.toObject(UserProfile::class.java)
             emit(Resource.Success(user))
         } catch (e: Exception) {
@@ -77,7 +79,33 @@ class StorageRepositoryImpl @Inject constructor(
     override fun updateUser(userProfile: UserProfile): Flow<Resource<Boolean>> = flow {
         emit(Resource.Loading())
         try {
-            collection.document(userProfile.id).set(userProfile)
+            userCollection.document(userProfile.id).set(userProfile)
+            emit(Resource.Success(true))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(Resource.Error(e))
+        }
+    }
+
+    override fun createTask(task: Task): Flow<Resource<Boolean>> = flow {
+        emit(Resource.Loading())
+
+        val (_, ownerId, name, description, startDate, endDate, startTime, endTime, type, status) = task
+
+        val data = hashMapOf(
+            "ownerId" to ownerId,
+            "name" to name,
+            "description" to description,
+            "startDate" to startDate,
+            "endDate" to endDate,
+            "startTime" to startTime,
+            "endTime" to endTime,
+            "type" to type.name,
+            "status" to status.name
+        )
+
+        try {
+            taskCollection.document().set(data)
             emit(Resource.Success(true))
         } catch (e: Exception) {
             e.printStackTrace()

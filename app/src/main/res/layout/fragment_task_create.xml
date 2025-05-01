@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/ScrollView">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        style="@style/LinearPage"
+        android:gravity="top"
+        tools:context=".ui.tasks.create.TaskCreateFragment">
+
+        <com.avcialper.owlcalendar.OwlCalendar
+            android:id="@+id/owl_calendar"
+            style="@style/OwlCalendar"
+            android:nestedScrollingEnabled="false"
+            app:mode="range_selectable" />
+
+        <TextView
+            android:id="@+id/tv_selected_date"
+            style="@style/TaskDateAndTime"
+            app:drawableStartCompat="@drawable/ic_calendar" />
+
+        <TextView
+            android:id="@+id/tv_selected_time"
+            style="@style/TaskDateAndTime"
+            android:text="@string/select_time"
+            app:drawableStartCompat="@drawable/ic_clock" />
+
+        <TextView
+            android:id="@+id/tv_type"
+            style="@style/TaskDateAndTime"
+            android:text="@string/select_task_type"
+            app:drawableStartCompat="@drawable/ic_task" />
+
+        <TextView
+            android:id="@+id/add_image"
+            style="@style/TaskDateAndTime"
+            android:layout_marginBottom="@dimen/margin_medium"
+            android:text="@string/add_image"
+            app:drawableStartCompat="@drawable/ic_add_image" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/task_image"
+            style="@style/TaskImage"
+            android:contentDescription="@string/user_profile_picture" />
+
+        <com.avcialper.lemur.ui.component.TextInput
+            android:id="@+id/input_subject"
+            style="@style/FillHorizontal"
+            android:hint="@string/subject"
+            android:imeOptions="actionNext"
+            android:inputType="textMultiLine"
+            app:counter_max_length="50"
+            app:have_counter="true" />
+
+        <com.avcialper.lemur.ui.component.TextInput
+            android:id="@+id/input_content"
+            style="@style/FillHorizontal"
+            android:hint="@string/content"
+            android:imeOptions="actionDone"
+            android:inputType="textMultiLine"
+            app:counter_max_length="250"
+            app:have_counter="true" />
+
+        <Button
+            android:id="@+id/button_create"
+            style="@style/Button"
+            android:text="@string/create" />
+
+    </LinearLayout>
+</ScrollView>

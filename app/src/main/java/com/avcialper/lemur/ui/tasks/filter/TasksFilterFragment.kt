@@ -51,7 +51,7 @@ class TasksFilterFragment :
             DateTimePicker(
                 type = DateTimePickerType.DATE,
                 date = data,
-                onCompleted = ::onDateSelected
+                onCompleted = ::onDateSelected,
             ).show(
                 childFragmentManager,
                 "date_selector"
