@@ -23,65 +23,45 @@ class UpdateProfileViewModel @Inject constructor(
     private val _state = MutableStateFlow<Resource<Boolean>?>(null)
     val state = _state.asStateFlow()
 
-    private val _imageUrl = MutableStateFlow(UserManager.user?.imageUrl)
-    val imageUrl = _imageUrl.asStateFlow()
+    private val newImageUrl = MutableStateFlow<String?>(null)
 
-    private val _imageUri = MutableStateFlow<Uri?>(null)
-    val imageUri = _imageUri.asStateFlow()
+    fun update(
+        username: String,
+        about: String,
+        imageUrl: String?,
+        imageUri: Uri?,
+        convert: () -> File
+    ) =
+        viewModelScope.launch {
+            if (AppManager.isConnected.not()) {
+                _state.value = null
+                return@launch
+            }
 
-    private val _username = MutableStateFlow(UserManager.user?.username)
-    val username = _username.asStateFlow()
+            _state.value = Resource.Loading()
+            if (imageUri != null) {
+                val file = convert()
+                uploadImage(file)
+            }
+            updateUser(username, about, imageUrl)
 
-    private val _about = MutableStateFlow(UserManager.user?.about)
-    val about = _about.asStateFlow()
-
-    fun onUsernameChanged(username: String) {
-        _username.value = username
-    }
-
-    fun onAboutChanged(about: String) {
-        _about.value = about
-    }
-
-    fun onImageChanged(uri: Uri) {
-        _imageUri.value = uri
-    }
-
-    fun deleteImage() {
-        _imageUri.value = null
-        _imageUrl.value = null
-    }
-
-    fun update(convert: () -> File) = viewModelScope.launch {
-        if (AppManager.isConnected.not()) {
-            _state.value = null
-            return@launch
         }
-
-        _state.value = Resource.Loading()
-        if (_imageUri.value != null) {
-            val file = convert()
-            uploadImage(file)
-        }
-        updateUser()
-
-    }
 
     private suspend fun uploadImage(file: File) {
         storageRepository.uploadImage(file).collect { resource ->
             if (resource is Resource.Success)
-                _imageUrl.value = resource.data?.data?.url
+                newImageUrl.value = resource.data?.data?.url
             else if (resource is Resource.Error)
                 _state.value = Resource.Error(resource.throwable!!)
         }
     }
 
-    private suspend fun updateUser() {
+    private suspend fun updateUser(username: String, about: String, imageUrl: String?) {
         val user = UserProfile(
             UserManager.user?.id!!,
-            _username.value!!,
-            _about.value,
-            _imageUrl.value
+            username,
+            about,
+            newImageUrl.value ?: imageUrl
         )
         storageRepository.updateUser(user).collect { resource ->
             _state.value = resource

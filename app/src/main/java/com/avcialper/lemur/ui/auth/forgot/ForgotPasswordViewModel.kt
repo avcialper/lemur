@@ -20,22 +20,14 @@ class ForgotPasswordViewModel @Inject constructor(
     private val _state = MutableStateFlow<Resource<Boolean>?>(null)
     val state = _state.asStateFlow()
 
-    private val _email = MutableStateFlow("")
-    val email = _email.asStateFlow()
-
-    fun onEmailChanged(email: String) {
-        _email.update { email }
-    }
-
-    // Send password reset about
-    fun sendPasswordResetEmail() = viewModelScope.launch {
+    fun sendPasswordResetEmail(email: String) = viewModelScope.launch {
 
         if (AppManager.isConnected.not()) {
             _state.value = null
             return@launch
         }
 
-        auth.forgotPassword(_email.value).collect { resource ->
+        auth.forgotPassword(email).collect { resource ->
             _state.update { resource }
         }
     }

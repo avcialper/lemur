@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.content.withStyledAttributes
 import com.avcialper.lemur.R
 import com.avcialper.lemur.databinding.ComponentIconLabelBinding
 
@@ -23,17 +24,17 @@ class IconLabel @JvmOverloads constructor(
     private val binding = ComponentIconLabelBinding.inflate(layoutInflater, this, true)
 
     init {
-        val a = context.obtainStyledAttributes(attrs, R.styleable.IconLabel, defStyleAttr, 0)
+        context.withStyledAttributes(attrs, R.styleable.IconLabel, defStyleAttr, 0) {
 
-        val label = a.getString(R.styleable.IconLabel_android_label)
-        val icon = a.getDrawable(R.styleable.IconLabel_left_icon)
+            val label = getString(R.styleable.IconLabel_android_label)
+            val icon = getDrawable(R.styleable.IconLabel_left_icon)
 
-        binding.apply {
-            textLabel.text = label
-            imageIcon.setImageDrawable(icon)
+            binding.apply {
+                textLabel.text = label
+                imageIcon.setImageDrawable(icon)
+            }
+
         }
-
-        a.recycle()
     }
 
     fun animatedUpdate(labelId: Int, iconId: Int, onClick: (() -> Unit)?) = with(binding) {
@@ -69,6 +70,11 @@ class IconLabel @JvmOverloads constructor(
             job()
             animate().alpha(1f).setDuration(ANIMATION_DURATION).start()
         }.start()
+    }
+
+    fun isSameLabel(labelId: Int): Boolean {
+        val label = context.getString(labelId)
+        return binding.textLabel.text.toString() == label
     }
 
 }

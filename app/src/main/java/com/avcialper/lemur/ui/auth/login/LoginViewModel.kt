@@ -24,22 +24,8 @@ class LoginViewModel @Inject constructor(
     private val _state = MutableStateFlow<Resource<FirebaseUser>?>(null)
     val state = _state.asStateFlow()
 
-    private val _email = MutableStateFlow("")
-    val email = _email.asStateFlow()
-
-    private val _password = MutableStateFlow("")
-    val password = _password.asStateFlow()
-
-    fun onEmailChanged(email: String) {
-        _email.value = email
-    }
-
-    fun onPasswordChanged(password: String) {
-        _password.value = password
-    }
-
     // Handle login click action
-    fun onLoginClicked() = viewModelScope.launch {
+    fun onLoginClicked(email: String, password: String) = viewModelScope.launch {
         _state.value = Resource.Loading()
 
         if (AppManager.isConnected.not()) {
@@ -47,7 +33,7 @@ class LoginViewModel @Inject constructor(
             return@launch
         }
 
-        auth.login(_email.value, _password.value).collect { resource ->
+        auth.login(email, password).collect { resource ->
             if (resource is Resource.Success)
                 getUser()
             else if (resource is Resource.Error)

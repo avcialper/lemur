@@ -1,8 +1,6 @@
 package com.avcialper.lemur.ui.profile.updatepassword
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.avcialper.lemur.R
 import com.avcialper.lemur.databinding.FragmentUpdatePasswordBinding
 import com.avcialper.lemur.helper.validator.ConfirmPasswordRule
@@ -11,12 +9,9 @@ import com.avcialper.lemur.helper.validator.LengthRule
 import com.avcialper.lemur.helper.validator.NotSameRule
 import com.avcialper.lemur.helper.validator.PasswordRule
 import com.avcialper.lemur.ui.BaseFragment
-import com.avcialper.lemur.util.constant.Resource
 import com.avcialper.lemur.util.extension.exceptionConverter
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class UpdatePasswordFragment : BaseFragment<FragmentUpdatePasswordBinding>(
@@ -26,39 +21,25 @@ class UpdatePasswordFragment : BaseFragment<FragmentUpdatePasswordBinding>(
     private val vm: UpdatePasswordViewModel by viewModels()
 
     override fun FragmentUpdatePasswordBinding.initialize() {
-        initUI()
         setListeners()
         observer()
     }
 
-    private fun initUI() = with(binding) {
-        inputCurrentPassword.value = vm.currentPassword.value
-        inputNewPassword.value = vm.newPassword.value
-        inputNewPasswordConfirm.value = vm.newPasswordConfirm.value
-    }
-
     private fun setListeners() = with(binding) {
-        inputCurrentPassword.onTextChanged(vm::onCurrentPasswordChanged)
-        inputNewPassword.onTextChanged(vm::onNewPasswordChanged)
-        inputNewPasswordConfirm.onTextChanged(vm::onNewPasswordConfirmChanged)
         buttonUpdate.setOnClickListener {
             if (validate())
-                vm.updatePassword()
+                vm.updatePassword(inputCurrentPassword.value, inputNewPassword.value)
         }
     }
 
     private fun observer() {
-        vm.state.onEach(::handleResource).launchIn(viewLifecycleOwner.lifecycleScope)
+        vm.state.createResourceObserver(
+            ::handleSuccess,
+            ::loadingState,
+            handleException = ::handleError
+        )
     }
 
-    private fun handleResource(resource: Resource<Boolean>?) {
-        when (resource) {
-            is Resource.Error -> handleError(resource.throwable!!)
-            is Resource.Loading -> loadingState(true)
-            is Resource.Success -> handleSuccess()
-            null -> loadingState(false)
-        }
-    }
 
     private fun handleError(e: Exception) {
         val errorMessage = if (e is FirebaseAuthInvalidCredentialsException)
@@ -66,7 +47,6 @@ class UpdatePasswordFragment : BaseFragment<FragmentUpdatePasswordBinding>(
         else
             requireContext().exceptionConverter(e)
         toast(errorMessage)
-        loadingState(false)
     }
 
     private fun loadingState(isLoading: Boolean) = with(binding) {
@@ -77,8 +57,7 @@ class UpdatePasswordFragment : BaseFragment<FragmentUpdatePasswordBinding>(
     }
 
     private fun handleSuccess() {
-        loadingState(false)
-        findNavController().popBackStack()
+        goBack()
     }
 
     private fun validate(): Boolean = with(binding) {

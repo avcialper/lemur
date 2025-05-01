@@ -139,6 +139,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             endDate,
             "12:00",
             endTime,
+            null,
             type,
             status
         )

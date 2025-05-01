@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import coil.load
 import com.avcialper.lemur.R
 import com.avcialper.lemur.data.AppManager
@@ -16,14 +15,12 @@ import com.avcialper.lemur.ui.component.AlertFragment
 import com.avcialper.lemur.ui.component.themeselector.ThemeSelector
 import com.avcialper.lemur.util.constant.Theme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
 
     private val vm: ProfileViewModel by viewModels()
+
     override fun FragmentProfileBinding.initialize() {
         observer()
         setListeners()
@@ -51,6 +48,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
         componentNotification.setOnClickListener { changeNotificationPermission() }
         componentTheme.setOnClickListener { openThemeSelector() }
+        componentEmailVerify.setOnClickListener { verifyEmail() }
         componentLogout.setOnClickListener { logout() }
     }
 
@@ -107,6 +105,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
     private fun verifyEmail() {
+        val isEmailVerified = UserManager.user?.firebaseUser?.isEmailVerified ?: false
+        if (isEmailVerified) return
+
         vm.sendEmailVerification {
             val message = getString(R.string.email_sent)
             toast(message)
@@ -116,10 +117,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     private fun handleEmailVerification(isEmailVerified: Boolean) {
         val iconId = if (isEmailVerified) R.drawable.ic_email_verified else R.drawable.ic_email
         val labelId = if (isEmailVerified) R.string.email_verified else R.string.email_verify
-        val onClick = if (isEmailVerified) null else ::verifyEmail
-
-        if (isEmailVerified != UserManager.user?.firebaseUser?.isEmailVerified)
-            binding.componentEmailVerify.animatedUpdate(labelId, iconId, onClick)
+        if (binding.componentEmailVerify.isSameLabel(labelId).not())
+            binding.componentEmailVerify.updateIconAndLabel(labelId, iconId)
     }
 
     private fun logout() {
@@ -129,10 +128,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                 destination.navigate()
             }
         }.show(childFragmentManager, "alert")
-    }
-
-    private fun <T> Flow<T>.createObserver(action: (T) -> Unit) {
-        onEach(action).launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     override fun onResume() {

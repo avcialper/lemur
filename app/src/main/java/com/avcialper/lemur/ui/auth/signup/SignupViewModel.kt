@@ -27,59 +27,30 @@ class SignupViewModel @Inject constructor(
     private val _state = MutableStateFlow<Resource<Boolean>?>(null)
     val state = _state.asStateFlow()
 
-    private val _username = MutableStateFlow("")
-    val username = _username.asStateFlow()
-
-    private val _email = MutableStateFlow("")
-    val email = _email.asStateFlow()
-
-    private val _password = MutableStateFlow("")
-    val password = _password.asStateFlow()
-
-    private val _confirmPassword = MutableStateFlow("")
-    val confirmPassword = _confirmPassword.asStateFlow()
-
-    private val _imageUri = MutableStateFlow<Uri?>(null)
-    val imageUri = _imageUri.asStateFlow()
-
     private val _imageBB = MutableStateFlow<ImgBBData?>(null)
 
-    fun onUsernameChanged(username: String) {
-        _username.update { username }
-    }
-
-    fun onEmailChanged(email: String) {
-        _email.update { email }
-    }
-
-    fun onPasswordChanged(password: String) {
-        _password.update { password }
-    }
-
-    fun onConfirmPasswordChanged(confirmPassword: String) {
-        _confirmPassword.update { confirmPassword }
-    }
-
-    fun onImageChanged(imageUri: Uri) {
-        _imageUri.update { imageUri }
-    }
-
     // Handle signup click action
-    fun onSignupClicked(convert: () -> File) = viewModelScope.launch {
+    fun onSignupClicked(
+        username: String,
+        email: String,
+        password: String,
+        imageUri: Uri?,
+        convert: () -> File
+    ) = viewModelScope.launch {
         if (AppManager.isConnected.not()) {
             _state.value = null
             return@launch
         }
 
         _state.update { Resource.Loading() }
-        auth.signup(_email.value, _password.value).collect { resource ->
+        auth.signup(email, password).collect { resource ->
             if (resource is Resource.Success) {
-                if (_imageUri.value != null) {
+                if (imageUri != null) {
                     uploadImage(convert)
                     val id = resource.data?.uid!!
-                    createUser(id)
+                    createUser(id, username)
                 } else
-                    createUser(resource.data?.uid!!)
+                    createUser(resource.data?.uid!!, username)
             } else if (resource is Resource.Error)
                 handleError(resource.throwable!!)
         }
@@ -97,8 +68,8 @@ class SignupViewModel @Inject constructor(
     }
 
     // Create user in Firebase storage
-    private suspend fun createUser(id: String) {
-        val userProfile = UserProfile(id, _username.value, "", _imageBB.value?.url)
+    private suspend fun createUser(id: String, username: String) {
+        val userProfile = UserProfile(id, username, "", _imageBB.value?.url)
 
         storageRepository.createUser(userProfile).collect { resource ->
             _state.update { resource }

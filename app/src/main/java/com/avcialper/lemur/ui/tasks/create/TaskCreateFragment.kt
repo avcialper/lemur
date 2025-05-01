@@ -3,7 +3,6 @@ package com.avcialper.lemur.ui.tasks.create
 import android.net.Uri
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.avcialper.lemur.R
 import com.avcialper.lemur.databinding.FragmentTaskCreateBinding
@@ -22,8 +21,6 @@ import com.avcialper.lemur.util.extension.exceptionConverter
 import com.avcialper.lemur.util.formatDate
 import com.avcialper.lemur.util.formatTime
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import java.io.File
 import java.util.UUID
 
@@ -160,19 +157,21 @@ class TaskCreateFragment :
     }
 
     private fun observer() {
-        vm.state.onEach { resource ->
-            when (resource) {
-                is Resource.Error -> {
-                    loadingState(false)
-                    val errorMessage = requireContext().exceptionConverter(resource.throwable!!)
-                    toast(errorMessage)
-                }
+        vm.state.createObserver(::handleResource)
+    }
 
-                is Resource.Loading -> loadingState(true)
-                is Resource.Success -> handleSuccess()
-                null -> loadingState(false)
+    private fun handleResource(resource: Resource<Boolean>?) {
+        when (resource) {
+            is Resource.Error -> {
+                loadingState(false)
+                val errorMessage = requireContext().exceptionConverter(resource.throwable!!)
+                toast(errorMessage)
             }
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+            is Resource.Loading -> loadingState(true)
+            is Resource.Success -> handleSuccess()
+            null -> loadingState(false)
+        }
     }
 
     private fun loadingState(isLoading: Boolean) = with(binding) {

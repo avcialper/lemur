@@ -12,6 +12,7 @@ data class Task(
     val endDate: String?,
     val startTime: String,
     val endTime: String,
+    val imageUrl: String?,
     val type: TaskType,
     val status: TaskStatus
 )

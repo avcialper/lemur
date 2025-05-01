@@ -1,6 +1,7 @@
 package com.avcialper.lemur.helper.validator
 
 import androidx.core.widget.doAfterTextChanged
+import com.avcialper.lemur.util.extension.toFixedString
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -14,7 +15,7 @@ fun TextInputEditText.validate(
         layout.error = null
     }
 
-    val input = this.text.toString().trim()
+    val input = this.toFixedString()
     for (i in rules.indices) {
         val rule = rules[i]
         val isNotValid = rule.predicate.test(input).not()

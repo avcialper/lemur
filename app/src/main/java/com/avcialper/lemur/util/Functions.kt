@@ -1,11 +1,7 @@
 package com.avcialper.lemur.util
 
-import android.content.Context
-import android.net.Uri
-import com.avcialper.lemur.helper.UriToFile
 import com.avcialper.owlcalendar.data.models.LineSelectedDate
 import com.avcialper.owlcalendar.data.models.StartDate
-import java.io.File
 import java.util.Locale
 
 private val LOCALE = Locale("tr", "TR")

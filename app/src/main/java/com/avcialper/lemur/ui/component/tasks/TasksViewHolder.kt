@@ -22,15 +22,20 @@ class TasksViewHolder(
     }
 
     private fun handleDateFormat(task: Task) = with(binding) {
-        val (_, _, _, startDate, endDate, startTime, endTime, _, _) = task
+        val (_, _, _, _, startDate, endDate, startTime, endTime, _, _, _) = task
 
-        if (endDate != null)
-            textDateTime.text = String.format(Locale.getDefault(), "%s - %s", startDate, endDate)
-        else if (endTime != null)
+        if (endDate == null)
             textDateTime.text =
                 String.format(Locale.getDefault(), "%s / %s - %s", startDate, startTime, endTime)
         else
-            textDateTime.text = String.format(Locale.getDefault(), "%s - %s", startDate, startTime)
+            textDateTime.text = String.format(
+                Locale.getDefault(),
+                "%s - %s / %s - %s",
+                startDate,
+                endDate,
+                startTime,
+                endTime
+            )
     }
 
     private fun handleTaskStatus(status: TaskStatus) = with(binding) {

@@ -19,11 +19,14 @@ class TasksFilterFragment :
 
     private val args: TasksFilterFragmentArgs by navArgs()
 
+    private var filterType: FilterType? = null
+    private var filterDate: String? = null
+
     override fun FragmentTasksFilterBinding.initialize() {
-        if (vm.filterType == null)
-            vm.filterType = args.filterType
-        if (vm.filterDate == null)
-            vm.filterDate = args.filterDate
+        if (filterType == null)
+            filterType = args.filterType
+        if (filterDate == null)
+            filterDate = args.filterDate
         initUI()
     }
 
@@ -32,21 +35,21 @@ class TasksFilterFragment :
     }
 
     private fun initFilterRecyclerView() {
-        val adapter = FilterAdapter(vm.filterType, vm.filterDate, ::onFilterChangeListener)
+        val adapter = FilterAdapter(filterType, filterDate, ::onFilterChangeListener)
         val layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvFilter.apply {
             this.adapter = adapter
             this.layoutManager = layoutManager
             post {
-                val scroller = SmoothScroller(context, vm.filterType?.ordinal ?: 0)
+                val scroller = SmoothScroller(context, filterType?.ordinal ?: 0)
                 layoutManager.startSmoothScroll(scroller)
             }
         }
     }
 
     private fun onFilterChangeListener(type: FilterType, data: String?) {
-        vm.filterType = type
+        filterType = type
         if (type == FilterType.DATE)
             DateTimePicker(
                 type = DateTimePickerType.DATE,
@@ -60,7 +63,7 @@ class TasksFilterFragment :
 
     private fun onDateSelected(date: String) {
         val adapter = binding.rvFilter.adapter as FilterAdapter
-        vm.filterDate = date
+        filterDate = date
         adapter.title = date
         adapter.notifyItemChanged(FilterType.DATE.ordinal)
     }

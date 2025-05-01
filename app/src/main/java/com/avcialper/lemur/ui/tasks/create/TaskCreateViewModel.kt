@@ -23,7 +23,7 @@ class TaskCreateViewModel @Inject constructor(
     private val _state = MutableStateFlow<Resource<Boolean>?>(null)
     val state = _state.asStateFlow()
 
-    private val _imageUrl = MutableStateFlow<String?>(null)
+    private val imageUrl = MutableStateFlow<String?>(null)
 
     fun createTask(
         date: String,
@@ -42,7 +42,7 @@ class TaskCreateViewModel @Inject constructor(
     private suspend fun uploadImage(file: File) {
         storageRepository.uploadImage(file).collect { resource ->
             if (resource is Resource.Success)
-                _imageUrl.value = resource.data?.data?.url
+                imageUrl.value = resource.data?.data?.url
             else if (resource is Resource.Error)
                 _state.value = Resource.Error(resource.throwable!!)
         }
@@ -73,6 +73,7 @@ class TaskCreateViewModel @Inject constructor(
             endDate,
             startTime,
             endTime,
+            imageUrl.value,
             type,
             TaskStatus.CONTINUES
         )

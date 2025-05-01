@@ -11,6 +11,7 @@ import com.avcialper.lemur.R
 import com.avcialper.lemur.databinding.ComponentTextInputBinding
 import com.avcialper.lemur.helper.validator.ValidationRule
 import com.avcialper.lemur.helper.validator.validate
+import com.avcialper.lemur.util.extension.toFixedString
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -26,7 +27,7 @@ class TextInput @JvmOverloads constructor(
     private val input: TextInputEditText
         get() = binding.provider.editText as TextInputEditText
     var value
-        get() = input.text.toString().trim()
+        get() = input.toFixedString()
         set(value) = input.setText(value)
 
     fun validate(rules: List<ValidationRule>): Boolean = input.validate(rules)

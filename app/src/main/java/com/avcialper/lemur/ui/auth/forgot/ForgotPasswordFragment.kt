@@ -1,18 +1,12 @@
 package com.avcialper.lemur.ui.auth.forgot
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.avcialper.lemur.R
 import com.avcialper.lemur.databinding.FragmentForgotPasswordBinding
 import com.avcialper.lemur.helper.validator.EmailRule
 import com.avcialper.lemur.helper.validator.EmptyRule
 import com.avcialper.lemur.ui.auth.AuthBaseFragment
-import com.avcialper.lemur.util.constant.Resource
-import com.avcialper.lemur.util.extension.exceptionConverter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class ForgotPasswordFragment : AuthBaseFragment<FragmentForgotPasswordBinding>(
@@ -23,7 +17,6 @@ class ForgotPasswordFragment : AuthBaseFragment<FragmentForgotPasswordBinding>(
 
     override fun FragmentForgotPasswordBinding.initialize() {
         setListeners()
-        restore()
         observer()
     }
 
@@ -38,42 +31,21 @@ class ForgotPasswordFragment : AuthBaseFragment<FragmentForgotPasswordBinding>(
     }
 
     private fun observer() {
-        vm.state.onEach(::handleResource).launchIn(viewLifecycleOwner.lifecycleScope)
-    }
-
-    private fun handleResource(resource: Resource<Boolean>?) {
-        when (resource) {
-            is Resource.Error -> handleError(resource.throwable!!)
-            is Resource.Loading -> loadingState(true)
-            is Resource.Success -> handleSuccess()
-            null -> Unit
-        }
+        vm.state.createResourceObserver(::handleSuccess, ::loadingState)
     }
 
     private fun handleSuccess() {
-        loadingState(false)
         val message = getString(R.string.email_sent)
         toast(message)
-        findNavController().popBackStack()
-    }
-
-    private fun handleError(e: Exception) {
-        loadingState(false)
-        val errorMessage = requireContext().exceptionConverter(e)
-        toast(errorMessage)
+        goBack()
     }
 
     private fun setListeners() = with(binding) {
-        inputEmail.onTextChanged(vm::onEmailChanged)
         buttonSend.setOnClickListener {
             val isValid = validate()
             if (isValid)
-                vm.sendPasswordResetEmail()
+                vm.sendPasswordResetEmail(inputEmail.value)
         }
-    }
-
-    private fun restore() {
-        binding.inputEmail.value = vm.email.value
     }
 
     private fun loadingState(isLoading: Boolean) = with(binding) {

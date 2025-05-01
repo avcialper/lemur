@@ -19,34 +19,13 @@ class UpdatePasswordViewModel @Inject constructor(
     private val _state = MutableStateFlow<Resource<Boolean>?>(null)
     val state = _state.asStateFlow()
 
-    private val _currentPassword = MutableStateFlow("")
-    val currentPassword = _currentPassword.asStateFlow()
-
-    private val _newPassword = MutableStateFlow("")
-    val newPassword = _newPassword.asStateFlow()
-
-    private val _newPasswordConfirm = MutableStateFlow("")
-    val newPasswordConfirm = _newPasswordConfirm.asStateFlow()
-
-    fun onCurrentPasswordChanged(value: String) {
-        _currentPassword.value = value
-    }
-
-    fun onNewPasswordChanged(value: String) {
-        _newPassword.value = value
-    }
-
-    fun onNewPasswordConfirmChanged(value: String) {
-        _newPasswordConfirm.value = value
-    }
-
-    fun updatePassword() = viewModelScope.launch {
+    fun updatePassword(currentPassword: String, newPassword: String) = viewModelScope.launch {
         if (AppManager.isConnected.not()) {
             _state.value = null
             return@launch
         }
 
-        authRepository.updatePassword(currentPassword.value, newPassword.value).collect {
+        authRepository.updatePassword(currentPassword, newPassword).collect {
             _state.value = it
         }
     }

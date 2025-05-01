@@ -2,25 +2,17 @@ package com.avcialper.lemur.ui.profile.updateprofile
 
 import android.net.Uri
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import coil.load
 import com.avcialper.lemur.R
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.databinding.FragmentUpdateProfileBinding
 import com.avcialper.lemur.helper.ImagePicker
-import com.avcialper.lemur.helper.UriToFile
 import com.avcialper.lemur.helper.validator.EmptyRule
 import com.avcialper.lemur.helper.validator.LengthRule
 import com.avcialper.lemur.helper.validator.MaxLengthRule
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.component.ImageUpdateSheet
-import com.avcialper.lemur.util.constant.Resource
-import com.avcialper.lemur.util.extension.exceptionConverter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import java.io.File
 
 @AndroidEntryPoint
@@ -31,11 +23,13 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding>(
     private lateinit var imagePicker: ImagePicker
 
     private val vm: UpdateProfileViewModel by viewModels()
+    private var imageUrl = UserManager.user?.imageUrl
+    private var imageUri: Uri? = null
 
     override fun FragmentUpdateProfileBinding.initialize() {
         imagePicker = ImagePicker(this@UpdateProfileFragment) { uri ->
             binding.imageProfilePicture.setImageURI(uri)
-            vm.onImageChanged(uri)
+            imageUri = uri
         }
 
         initUI()
@@ -44,55 +38,37 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding>(
     }
 
     private fun initUI() = with(binding) {
-        val image = vm.imageUri.value ?: vm.imageUrl.value
+        val image = UserManager.user?.imageUrl
         loadImage(image)
-        inputUsername.value = vm.username.value!!
-        inputAbout.value = vm.about.value!!
+        inputUsername.value = UserManager.user?.username ?: ""
+        inputAbout.value = UserManager.user?.about ?: ""
     }
 
     private fun setListeners() = with(binding) {
         imageProfilePicture.setOnClickListener {
-            ImageUpdateSheet(::deleteImage, imagePicker::pickImage)
-                .show(parentFragmentManager, "selector")
+            ImageUpdateSheet(::deleteImage, imagePicker::pickImage).show(
+                parentFragmentManager,
+                "selector"
+            )
         }
-        inputUsername.onTextChanged(vm::onUsernameChanged)
-        inputAbout.onTextChanged(vm::onAboutChanged)
         buttonUpdate.setOnClickListener {
             val isValid = validate()
-            if (isValid)
-                vm.update(::convert)
+            if (isValid) vm.update(
+                inputUsername.value,
+                inputAbout.value,
+                imageUrl,
+                imageUri,
+                ::convert
+            )
         }
     }
 
     private fun observer() = with(vm) {
-        state.createObserver(::handleResource)
-        imageUri.createObserver(::imageObserver)
-    }
-
-    private fun handleResource(resource: Resource<Boolean>?) {
-        when (resource) {
-            is Resource.Error -> handleError(resource.throwable!!)
-            is Resource.Loading -> loadingState(true)
-            is Resource.Success -> handleSuccess()
-            null -> Unit
-        }
-    }
-
-    private fun handleError(e: Exception) {
-        val message = requireContext().exceptionConverter(e)
-        toast(message)
-        loadingState(false)
+        state.createResourceObserver(::handleSuccess, ::loadingState)
     }
 
     private fun handleSuccess() {
-        loadingState(false)
-        findNavController().popBackStack()
-    }
-
-    private fun imageObserver(uri: Uri?) {
-        uri?.let {
-            loadImage(it)
-        }
+        goBack()
     }
 
     private fun loadImage(image: Any?) {
@@ -112,7 +88,8 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding>(
 
     private fun deleteImage() {
         loadImage(null)
-        vm.deleteImage()
+        imageUri = null
+        imageUrl = null
     }
 
     private fun validate(): Boolean = with(binding) {
@@ -132,12 +109,6 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding>(
         return isValidUsername && isValidAbout
     }
 
-    private fun convert(): File {
-        return UriToFile(requireContext()).convert(UserManager.user!!.username, vm.imageUri.value!!)
-    }
-
-    private fun <T> Flow<T>.createObserver(action: (T) -> Unit) {
-        onEach(action).launchIn(viewLifecycleOwner.lifecycleScope)
-    }
+    private fun convert(): File = imageUri!!.convertFile()
 
 }
