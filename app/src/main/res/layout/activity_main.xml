@@ -30,6 +30,5 @@
 
     <TextView
         android:id="@+id/internet_status"
-        android:visibility="visible"
         style="@style/InternetConnection" />
 </LinearLayout>

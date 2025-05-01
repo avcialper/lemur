@@ -6,6 +6,9 @@
         <item name="secondaryColor">@color/papaya_whip</item>
         <item name="bottomMenuColor">@color/nero</item>
         <item name="inputAreaBackgroundColor">@color/eclipse</item>
+        <item name="android:textColorHighlight">@color/orange</item>
+        <item name="android:colorControlActivated">@color/orange</item>
+        <item name="cursorColor">@color/orange</item>
     </style>
 
 </resources>
