@@ -9,6 +9,10 @@
         style="@style/TaskArea.Title"
         tools:text="@string/app_name" />
 
+    <ProgressBar
+        android:id="@+id/progress"
+        style="@style/TaskArea.Progress" />
+
     <com.avcialper.lemur.ui.component.tasks.Tasks
         android:id="@+id/component_tasks"
         style="@style/TaskArea.TasksWrapper" />

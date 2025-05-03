@@ -197,6 +197,14 @@
         <item name="is_short">true</item>
     </style>
 
+    <!-- Task Area Loading -->
+    <style name="TaskArea.Progress" parent="Theme.Lemur">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/margin_medium</item>
+        <item name="android:layout_marginBottom">@dimen/margin_medium</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
     <!-- Task Area Empty Text -->
     <style name="TaskArea.EmptyText" parent="Theme.Lemur">
         <item name="android:layout_width">match_parent</item>

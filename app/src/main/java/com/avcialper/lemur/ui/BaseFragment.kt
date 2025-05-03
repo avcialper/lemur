@@ -102,6 +102,40 @@ abstract class BaseFragment<VB : ViewBinding>(
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
+    fun <T> StateFlow<Resource<T>?>.createResourceObserver(
+        handleSuccess: (T?) -> Unit,
+        handleLoading: (Boolean) -> Unit,
+        handleError: ((String) -> Unit)? = null,
+        handleException: ((Exception) -> Unit)? = null
+    ) {
+        onEach { resource ->
+            when (resource) {
+                is Resource.Loading -> handleLoading(true)
+                is Resource.Success -> {
+                    handleLoading(false)
+                    handleSuccess(resource.data)
+                }
+
+                is Resource.Error -> {
+                    handleLoading(false)
+
+                    if (handleException != null) {
+                        handleException(resource.throwable!!)
+                        return@onEach
+                    }
+
+                    val errorMessage = requireContext().exceptionConverter(resource.throwable!!)
+                    if (handleError != null)
+                        handleError(errorMessage)
+                    else
+                        toast(errorMessage)
+                }
+
+                null -> Unit
+            }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
     fun Uri.convertFile(): File =
         UriToFile(requireContext()).convert(UUID.randomUUID().toString(), this)
 

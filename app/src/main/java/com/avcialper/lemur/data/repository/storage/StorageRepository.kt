@@ -13,4 +13,13 @@ interface StorageRepository {
     fun getUser(id: String): Flow<Resource<UserProfile>>
     fun updateUser(userProfile: UserProfile): Flow<Resource<Boolean>>
     fun createTask(task: Task): Flow<Resource<Boolean>>
+    fun getSelectedDateTasks(date: String): Flow<Resource<List<Task>>>
+    fun getContinuesTasks(): Flow<Resource<List<Task>>>
+    fun getCompletedTasks(): Flow<Resource<List<Task>>>
+    fun getCanceledTasks(): Flow<Resource<List<Task>>>
+    fun getSelectedDateTasksWithLimit(date: String): Flow<Resource<List<Task>>>
+    fun getContinuesTasksWithLimit(): Flow<Resource<List<Task>>>
+    fun getCompletedTasksWithLimit(): Flow<Resource<List<Task>>>
+    fun getCanceledTasksWithLimit(): Flow<Resource<List<Task>>>
+    fun getUserTasks(): Flow<Resource<List<Task>>>
 }

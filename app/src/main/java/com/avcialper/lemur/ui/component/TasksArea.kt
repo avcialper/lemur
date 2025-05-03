@@ -8,6 +8,7 @@ import androidx.core.content.withStyledAttributes
 import com.avcialper.lemur.R
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.databinding.ComponentTasksAreaBinding
+import com.avcialper.lemur.util.constant.FilterType
 import com.avcialper.lemur.util.formatDate
 import com.avcialper.owlcalendar.data.models.Date
 import com.avcialper.owlcalendar.data.models.StartDate
@@ -34,21 +35,35 @@ class TasksArea @JvmOverloads constructor(
         binding.textTitle.text = formatDate(date)
     }
 
-    fun setTitle(titleId: Int) {
-        binding.textTitle.text = context.getString(titleId)
-    }
-
     fun setTitle(date: Date) {
         binding.textTitle.text = date.date
     }
 
-    fun setOnSeeAllClickListener(listener: () -> Unit) {
+    private fun setOnSeeAllClickListener(listener: () -> Unit) {
         binding.textTitle.setOnClickListener {
             listener.invoke()
         }
     }
 
-    fun changeList(tasks: List<Task>) {
+    fun create(
+        tasks: List<Task> = emptyList(),
+        title: Int,
+        filterType: FilterType = FilterType.ALL,
+        filterDate: String? = null,
+        onSeeAllClickListener: (filterType: FilterType, filterDate: String?) -> Unit
+    ) {
+        binding.textTitle.text = context.getString(title)
+        binding.componentTasks.changeList(tasks)
+        setOnSeeAllClickListener { onSeeAllClickListener(filterType, filterDate) }
+    }
+
+    fun handleLoading(isLoading: Boolean) {
+        binding.progress.visibility = if (isLoading) VISIBLE else GONE
+        binding.componentTasks.visibility = if (isLoading) GONE else VISIBLE
+    }
+
+    fun handleSuccess(data: List<Task>?) {
+        val tasks = data ?: emptyList()
         binding.componentTasks.changeList(tasks)
     }
 

@@ -15,4 +15,18 @@ data class Task(
     val imageUrl: String?,
     val type: TaskType,
     val status: TaskStatus
-)
+) {
+    constructor() : this(
+        "",
+        "",
+        "",
+        "",
+        "",
+        null,
+        "",
+        "",
+        null,
+        TaskType.PERSONAL,
+        TaskStatus.CONTINUES
+    )
+}
