@@ -11,7 +11,7 @@ import com.avcialper.lemur.data.repository.datastore.DataStoreRepositoryImpl
 import com.avcialper.lemur.data.repository.remote.StorageApi
 import com.avcialper.lemur.data.repository.storage.StorageRepository
 import com.avcialper.lemur.data.repository.storage.StorageRepositoryImpl
-import com.avcialper.lemur.util.constant.Constant.DATASTORE_NAME
+import com.avcialper.lemur.util.constant.Constants.DATASTORE_NAME
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module

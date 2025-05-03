@@ -2,6 +2,10 @@ package com.avcialper.lemur.util.constant
 
 import com.avcialper.lemur.R
 
+enum class DateTimePickerType {
+    DATE, TIME
+}
+
 enum class FilterType(val value: Int) {
     ALL(R.string.all),
     DATE(R.string.date),
@@ -22,4 +26,26 @@ enum class FilterType(val value: Int) {
 
     }
 
+}
+
+enum class ResourceStatus {
+    LOADING, SUCCESS, ERROR
+}
+
+enum class TaskStatus {
+    CONTINUES, COMPLETED, CANCELED
+}
+
+enum class TaskType(val messageId: Int) {
+    PERSONAL(R.string.task), TEAM(R.string.team_task), MEET(R.string.meet)
+}
+
+enum class Theme(val value: String) {
+    SYSTEM_DEFAULT("system_default"),
+    LIGHT("light"),
+    DARK("dark");
+
+    companion object {
+        fun fromString(theme: String?): Theme = entries.find { it.value == theme } ?: SYSTEM_DEFAULT
+    }
 }

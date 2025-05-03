@@ -6,6 +6,7 @@ import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.data.model.remote.ImgBBResponse
 import com.avcialper.lemur.data.model.remote.UserProfile
 import com.avcialper.lemur.data.repository.remote.StorageApi
+import com.avcialper.lemur.util.constant.Constants
 import com.avcialper.lemur.util.constant.Resource
 import com.avcialper.lemur.util.constant.TaskStatus
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,8 +27,8 @@ class StorageRepositoryImpl @Inject constructor(
     db: FirebaseFirestore
 ) : StorageRepository {
 
-    private val userCollection = db.collection("users")
-    private val taskCollection = db.collection("tasks")
+    private val userCollection = db.collection(Constants.USERS_COLLECTION)
+    private val taskCollection = db.collection(Constants.TASKS_COLLECTION)
 
     override fun uploadImage(file: File): Flow<Resource<ImgBBResponse>> = flowWithResource {
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
@@ -41,10 +42,10 @@ class StorageRepositoryImpl @Inject constructor(
         val (id, username, about, imageUrl) = userProfile
 
         val user = hashMapOf(
-            "id" to id,
-            "username" to username,
-            "about" to about,
-            "imageUrl" to imageUrl,
+            Constants.USER_ID to id,
+            Constants.USERNAME to username,
+            Constants.ABOUT to about,
+            Constants.IMAGE_URL to imageUrl,
         )
 
         userCollection.document(userProfile.id).set(user).await()
@@ -65,16 +66,16 @@ class StorageRepositoryImpl @Inject constructor(
         val (_, ownerId, name, description, startDate, endDate, startTime, endTime, imageUrl, type, status) = task
 
         val data = hashMapOf(
-            "ownerId" to ownerId,
-            "name" to name,
-            "description" to description,
-            "startDate" to startDate,
-            "endDate" to endDate,
-            "startTime" to startTime,
-            "endTime" to endTime,
-            "imageUrl" to imageUrl,
-            "type" to type.name,
-            "status" to status.name
+            Constants.OWNER_ID to ownerId,
+            Constants.NAME to name,
+            Constants.DESCRIPTION to description,
+            Constants.START_DATE to startDate,
+            Constants.END_DATE to endDate,
+            Constants.START_TIME to startTime,
+            Constants.END_TIME to endTime,
+            Constants.IMAGE_URL to imageUrl,
+            Constants.TYPE to type.name,
+            Constants.STATUS to status.name
         )
 
         taskCollection.document().set(data).await()
@@ -82,32 +83,32 @@ class StorageRepositoryImpl @Inject constructor(
     }
 
     override fun getSelectedDateTasks(date: String): Flow<Resource<List<Task>>> =
-        getTasksByField("startDate", date)
+        getTasksByField(Constants.START_DATE, date)
 
     override fun getContinuesTasks(): Flow<Resource<List<Task>>> =
-        getTasksByField("status", TaskStatus.CONTINUES.name)
+        getTasksByField(Constants.STATUS, TaskStatus.CONTINUES.name)
 
     override fun getCompletedTasks(): Flow<Resource<List<Task>>> =
-        getTasksByField("status", TaskStatus.COMPLETED.name)
+        getTasksByField(Constants.STATUS, TaskStatus.COMPLETED.name)
 
     override fun getCanceledTasks(): Flow<Resource<List<Task>>> =
-        getTasksByField("status", TaskStatus.CANCELED.name)
+        getTasksByField(Constants.STATUS, TaskStatus.CANCELED.name)
 
     override fun getSelectedDateTasksWithLimit(date: String): Flow<Resource<List<Task>>> =
-        getTasksByFieldWithLimit("startDate", date)
+        getTasksByFieldWithLimit(Constants.START_DATE, date)
 
     override fun getContinuesTasksWithLimit(): Flow<Resource<List<Task>>> =
-        getTasksByFieldWithLimit("status", TaskStatus.CONTINUES.name)
+        getTasksByFieldWithLimit(Constants.STATUS, TaskStatus.CONTINUES.name)
 
     override fun getCompletedTasksWithLimit(): Flow<Resource<List<Task>>> =
-        getTasksByFieldWithLimit("status", TaskStatus.COMPLETED.name)
+        getTasksByFieldWithLimit(Constants.STATUS, TaskStatus.COMPLETED.name)
 
     override fun getCanceledTasksWithLimit(): Flow<Resource<List<Task>>> =
-        getTasksByFieldWithLimit("status", TaskStatus.CANCELED.name)
+        getTasksByFieldWithLimit(Constants.STATUS, TaskStatus.CANCELED.name)
 
     override fun getUserTasks(): Flow<Resource<List<Task>>> = flowWithResource {
         val ownerId = UserManager.user!!.id
-        val documents = taskCollection.whereEqualTo("ownerId", ownerId).get().await()
+        val documents = taskCollection.whereEqualTo(Constants.OWNER_ID, ownerId).get().await()
         documents.toObjects(Task::class.java)
     }
 
@@ -127,7 +128,8 @@ class StorageRepositoryImpl @Inject constructor(
         flowWithResource {
             val ownerId = UserManager.user!!.id
             val documents =
-                taskCollection.whereEqualTo("ownerId", ownerId).whereEqualTo(filed, value).get()
+                taskCollection.whereEqualTo(Constants.OWNER_ID, ownerId).whereEqualTo(filed, value)
+                    .get()
                     .await()
             documents.toObjects(Task::class.java)
         }
@@ -136,7 +138,8 @@ class StorageRepositoryImpl @Inject constructor(
         flowWithResource {
             val ownerId = UserManager.user!!.id
             val documents =
-                taskCollection.whereEqualTo("ownerId", ownerId).whereEqualTo(filed, value).limit(3)
+                taskCollection.whereEqualTo(Constants.OWNER_ID, ownerId).whereEqualTo(filed, value)
+                    .limit(3)
                     .get()
                     .await()
             documents.toObjects(Task::class.java)

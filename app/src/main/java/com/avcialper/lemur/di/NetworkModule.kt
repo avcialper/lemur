@@ -3,7 +3,7 @@ package com.avcialper.lemur.di
 import android.content.Context
 import com.avcialper.lemur.data.repository.remote.StorageApi
 import com.avcialper.lemur.helper.ConnectivityObserver
-import com.avcialper.lemur.util.constant.Constant
+import com.avcialper.lemur.util.constant.Constants
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -50,7 +50,7 @@ object NetworkModule {
         val client = provideOkHttpClient()
         val convertorFactory = GsonConverterFactory.create()
         return Retrofit.Builder()
-            .baseUrl(Constant.IMG_BB_URL)
+            .baseUrl(Constants.IMG_BB_URL)
             .client(client)
             .addConverterFactory(convertorFactory)
     }
