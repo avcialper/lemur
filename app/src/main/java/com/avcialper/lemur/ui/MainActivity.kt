@@ -89,7 +89,11 @@ class MainActivity : AppCompatActivity() {
     private fun onDestinationChangedListener(destination: NavDestination) {
         val visibility =
             if (isNotBottomNavigationDestinations(destination)) View.GONE else View.VISIBLE
-        binding.bottomMenu.visibility = visibility
+
+        val delay = this.resources.getInteger(R.integer.navigation_anim_duration).toLong()
+        binding.bottomMenu.postDelayed({
+            binding.bottomMenu.visibility = visibility
+        }, delay)
     }
 
     private fun isNotBottomNavigationDestinations(destination: NavDestination): Boolean {

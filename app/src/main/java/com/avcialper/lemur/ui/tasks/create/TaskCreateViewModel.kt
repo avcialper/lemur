@@ -58,7 +58,7 @@ class TaskCreateViewModel @Inject constructor(
     ) {
         val splitDate = date.split("-")
         val startDate = splitDate[0].trim()
-        val endDate = if (date.contains("-")) splitDate[1].trim() else ""
+        val endDate = if (date.contains("-")) splitDate[1].trim() else null
 
         val splitTime = time.split("-")
         val startTime = splitTime[0].trim()

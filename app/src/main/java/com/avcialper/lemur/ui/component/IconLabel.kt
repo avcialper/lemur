@@ -37,17 +37,6 @@ class IconLabel @JvmOverloads constructor(
         }
     }
 
-    fun animatedUpdate(labelId: Int, iconId: Int, onClick: (() -> Unit)?) = with(binding) {
-        root.fadeAnimation {
-            textLabel.text = context.getString(labelId)
-            imageIcon.setImageResource(iconId)
-        }
-        if (onClick != null)
-            setOnClickListener { onClick.invoke() }
-        else
-            setOnClickListener(null)
-    }
-
     fun animatedIconUpdate(iconId: Int) = with(binding.imageIcon) {
         fadeAnimation {
             setImageResource(iconId)

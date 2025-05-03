@@ -6,7 +6,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
 import androidx.core.content.withStyledAttributes
-import androidx.core.widget.addTextChangedListener
 import com.avcialper.lemur.R
 import com.avcialper.lemur.databinding.ComponentTextInputBinding
 import com.avcialper.lemur.helper.validator.ValidationRule
@@ -36,12 +35,6 @@ class TextInput @JvmOverloads constructor(
         input.apply {
             isEnabled = !isLoading
             alpha = if (isLoading) 0.5f else 1f
-        }
-    }
-
-    fun onTextChanged(listener: (String) -> Unit) {
-        input.addTextChangedListener { text ->
-            listener.invoke(text.toString().trim())
         }
     }
 

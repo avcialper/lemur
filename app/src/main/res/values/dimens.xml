@@ -29,6 +29,6 @@
 
     <dimen name="zero_dp">0dp</dimen>
 
-    <integer name="navigation_anim_duration">250</integer>
-    <integer name="connectivity_anim_duration">250</integer>
+    <integer name="navigation_anim_duration">200</integer>
+    <integer name="connectivity_anim_duration">200</integer>
 </resources>
