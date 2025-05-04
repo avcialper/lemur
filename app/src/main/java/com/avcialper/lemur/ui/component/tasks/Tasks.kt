@@ -62,17 +62,22 @@ class Tasks @JvmOverloads constructor(
         binding.textEmpty.text = text
     }
 
-    fun changeList(tasks: List<Task>) {
-        val adapter = binding.rvTasks.adapter as TasksAdapter
+    fun changeList(tasks: List<Task>) = with(binding) {
+        val adapter = rvTasks.adapter as TasksAdapter
         adapter.changeList(tasks)
-
         if (tasks.isEmpty()) {
-            binding.rvTasks.visibility = GONE
-            binding.textEmpty.visibility = VISIBLE
+            rvTasks.visibility = GONE
+            textEmpty.visibility = VISIBLE
         } else {
-            binding.rvTasks.visibility = VISIBLE
-            binding.textEmpty.visibility = GONE
+            rvTasks.visibility = VISIBLE
+            textEmpty.visibility = GONE
         }
+    }
+
+    fun handleLoading(isLoading: Boolean) = with(binding) {
+        if (isLoading)
+            textEmpty.visibility = GONE
+        skeleton.root.visibility = if (isLoading) VISIBLE else GONE
     }
 
 }

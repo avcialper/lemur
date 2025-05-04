@@ -31,4 +31,7 @@
 
     <integer name="navigation_anim_duration">200</integer>
     <integer name="connectivity_anim_duration">200</integer>
+
+    <dimen name="skeleton_height">14dp</dimen>
+    <dimen name="skeleton_corner_radius">4dp</dimen>
 </resources>

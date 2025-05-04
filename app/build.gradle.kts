@@ -112,6 +112,9 @@ dependencies {
 
     // Owl Calendar
     implementation(libs.owlcalendar)
+
+    // Shimmer
+    implementation(libs.shimmer)
 }
 
 kapt {

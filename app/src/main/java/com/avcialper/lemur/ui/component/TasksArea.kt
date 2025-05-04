@@ -58,8 +58,7 @@ class TasksArea @JvmOverloads constructor(
     }
 
     fun handleLoading(isLoading: Boolean) {
-        binding.progress.visibility = if (isLoading) VISIBLE else GONE
-        binding.componentTasks.visibility = if (isLoading) GONE else VISIBLE
+        binding.componentTasks.handleLoading(isLoading)
     }
 
     fun handleSuccess(data: List<Task>?) {

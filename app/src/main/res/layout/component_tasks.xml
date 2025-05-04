@@ -9,6 +9,10 @@
         style="@style/TaskArea.EmptyText"
         tools:text="@string/def_empty_task" />
 
+    <include
+        android:id="@+id/skeleton"
+        layout="@layout/component_task_skeleton" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_tasks"
         style="@style/TaskArea.RecyclerView" />
