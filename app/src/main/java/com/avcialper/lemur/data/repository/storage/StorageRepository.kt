@@ -17,6 +17,9 @@ interface StorageRepository {
     fun getContinuesTasks(): Flow<Resource<List<Task>>>
     fun getCompletedTasks(): Flow<Resource<List<Task>>>
     fun getCanceledTasks(): Flow<Resource<List<Task>>>
+    fun getPersonalTasks(): Flow<Resource<List<Task>>>
+    fun getTeamTasks(): Flow<Resource<List<Task>>>
+    fun getMeets(): Flow<Resource<List<Task>>>
     fun getSelectedDateTasksWithLimit(date: String): Flow<Resource<List<Task>>>
     fun getContinuesTasksWithLimit(): Flow<Resource<List<Task>>>
     fun getCompletedTasksWithLimit(): Flow<Resource<List<Task>>>

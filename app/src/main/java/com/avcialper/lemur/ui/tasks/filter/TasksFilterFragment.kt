@@ -3,10 +3,12 @@ package com.avcialper.lemur.ui.tasks.filter
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.databinding.FragmentTasksFilterBinding
 import com.avcialper.lemur.helper.SmoothScroller
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.component.DateTimePicker
+import com.avcialper.lemur.ui.tasks.filter.adapter.FilterAdapter
 import com.avcialper.lemur.util.constant.DateTimePickerType
 import com.avcialper.lemur.util.constant.FilterType
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,15 +25,15 @@ class TasksFilterFragment :
     private var filterDate: String? = null
 
     override fun FragmentTasksFilterBinding.initialize() {
-        if (filterType == null)
-            filterType = args.filterType
-        if (filterDate == null)
-            filterDate = args.filterDate
+        filterType = args.filterType
+        filterDate = args.filterDate
         initUI()
+        observer()
     }
 
     private fun initUI() {
         initFilterRecyclerView()
+        handleFilterType()
     }
 
     private fun initFilterRecyclerView() {
@@ -59,6 +61,8 @@ class TasksFilterFragment :
                 childFragmentManager,
                 "date_selector"
             )
+        else
+            handleFilterType()
     }
 
     private fun onDateSelected(date: String) {
@@ -66,6 +70,35 @@ class TasksFilterFragment :
         filterDate = date
         adapter.title = date
         adapter.notifyItemChanged(FilterType.DATE.ordinal)
+        handleFilterType()
+    }
+
+    private fun observer() {
+        vm.state.createResourceObserver(::handleSuccess, ::handleLoading)
+    }
+
+    private fun handleSuccess(data: List<Task>?) {
+        binding.componentTasks.changeList(data ?: emptyList())
+    }
+
+    private fun handleLoading(isLoading: Boolean) {
+        binding.componentTasks.handleLoading(isLoading)
+    }
+
+    private fun handleFilterType() {
+        binding.componentTasks.changeList(emptyList())
+        when (filterType) {
+            FilterType.ALL -> vm.getAllTasks()
+            FilterType.DATE -> vm.getTasksByDate(filterDate!!)
+            FilterType.TODAY -> vm.getTodayTasks()
+            FilterType.PERSONAL -> vm.getPersonalTasks()
+            FilterType.TEAM -> vm.getTeamTasks()
+            FilterType.MEET -> vm.getMeets()
+            FilterType.CONTINUES -> vm.getContinuesTasks()
+            FilterType.COMPLETED -> vm.getCompletedTasks()
+            FilterType.CANCELED -> vm.getCanceledTasks()
+            else -> Unit
+        }
     }
 
 }

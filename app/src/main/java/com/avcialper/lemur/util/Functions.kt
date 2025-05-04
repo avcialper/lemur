@@ -2,6 +2,7 @@ package com.avcialper.lemur.util
 
 import com.avcialper.owlcalendar.data.models.LineSelectedDate
 import com.avcialper.owlcalendar.data.models.StartDate
+import java.util.Calendar
 import java.util.Locale
 
 private val LOCALE = Locale("tr", "TR")
@@ -35,3 +36,11 @@ fun formatTime(hour: Int, minute: Int): String =
 
 fun formatTime(startTime: String, endTime: String): String =
     String.format(LOCALE, "%s - %s", startTime, endTime)
+
+fun getCurrentDate(): String {
+    val calendar = Calendar.getInstance()
+    val year = calendar.get(Calendar.YEAR)
+    val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+    val month = calendar.get(Calendar.MONTH) + 1
+    return formatDate(dayOfMonth, month, year)
+}

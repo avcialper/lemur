@@ -1,4 +1,4 @@
-package com.avcialper.lemur.ui.tasks.filter
+package com.avcialper.lemur.ui.tasks.filter.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -31,6 +31,9 @@ class FilterAdapter(
     override fun getItemCount(): Int = FilterType.size
 
     private fun changeSelectedPosition(position: Int) {
+        if (position == selectedPosition && FilterType.fromIndex(position) != FilterType.DATE)
+            return
+
         val oldPosition = selectedPosition
         selectedPosition = position
 

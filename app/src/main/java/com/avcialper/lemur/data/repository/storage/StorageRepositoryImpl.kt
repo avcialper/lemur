@@ -10,6 +10,7 @@ import com.avcialper.lemur.data.repository.remote.StorageApi
 import com.avcialper.lemur.util.constant.Constants
 import com.avcialper.lemur.util.constant.Resource
 import com.avcialper.lemur.util.constant.TaskStatus
+import com.avcialper.lemur.util.constant.TaskType
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
@@ -93,6 +94,15 @@ class StorageRepositoryImpl @Inject constructor(
 
     override fun getCanceledTasks(): Flow<Resource<List<Task>>> =
         getTasksByField(Constants.STATUS, TaskStatus.CANCELED.name)
+
+    override fun getPersonalTasks(): Flow<Resource<List<Task>>> =
+        getTasksByField(Constants.TYPE, TaskType.PERSONAL.name)
+
+    override fun getTeamTasks(): Flow<Resource<List<Task>>> =
+        getTasksByField(Constants.TYPE, TaskType.TEAM.name)
+
+    override fun getMeets(): Flow<Resource<List<Task>>> =
+        getTasksByField(Constants.TYPE, TaskType.MEET.name)
 
     override fun getSelectedDateTasksWithLimit(date: String): Flow<Resource<List<Task>>> =
         getTasksByFieldWithLimit(Constants.START_DATE, date)
