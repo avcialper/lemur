@@ -1,6 +1,7 @@
 package com.avcialper.lemur.data.repository.auth
 
 import com.avcialper.lemur.data.UserManager
+import com.avcialper.lemur.data.repository.flowWithResource
 import com.avcialper.lemur.util.constant.Resource
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -29,46 +30,24 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override fun signup(email: String, password: String): Flow<Resource<FirebaseUser>> =
-        flow {
-            emit(Resource.Loading())
-            try {
-                val result = auth.createUserWithEmailAndPassword(email, password).await()
-                val user = result.user
-                emit(Resource.Success(user))
-            } catch (e: Exception) {
-                e.printStackTrace()
-                emit(Resource.Error(e))
-            }
+        flowWithResource {
+            auth.createUserWithEmailAndPassword(email, password).await().user!!
         }
 
     override fun login(email: String, password: String): Flow<Resource<FirebaseUser>> =
-        flow {
-            emit(Resource.Loading())
-            try {
-                val result = auth.signInWithEmailAndPassword(email, password).await()
-                val user = result.user
-                emit(Resource.Success(user))
-            } catch (e: Exception) {
-                e.printStackTrace()
-                emit(Resource.Error(e))
-            }
+        flowWithResource {
+            auth.signInWithEmailAndPassword(email, password).await().user!!
         }
 
-    override fun logout(): Flow<Resource<Boolean>> = flow {
-        emit(Resource.Loading())
+    override fun logout(): Flow<Resource<Boolean>> = flowWithResource {
         auth.signOut()
-        emit(Resource.Success(true))
+        true
     }
 
-    override fun forgotPassword(email: String): Flow<Resource<Boolean>> = flow {
-        emit(Resource.Loading())
-        try {
-            auth.sendPasswordResetEmail(email).await()
-            emit(Resource.Success(true))
-        } catch (e: Exception) {
-            e.printStackTrace()
-            emit(Resource.Error(e))
-        }
+
+    override fun forgotPassword(email: String): Flow<Resource<Boolean>> = flowWithResource {
+        auth.sendPasswordResetEmail(email).await()
+        true
     }
 
     override fun isLoggedIn(): Flow<Boolean> = flow {
@@ -76,45 +55,28 @@ class AuthRepositoryImpl @Inject constructor(
         emit(isLogged)
     }
 
-    override fun sendEmailVerification(): Flow<Resource<Boolean>> = flow {
-        emit(Resource.Loading())
-        try {
-            auth.currentUser!!.sendEmailVerification().await()
-            emit(Resource.Success(true))
-        } catch (e: Exception) {
-            e.printStackTrace()
-            emit(Resource.Error(e))
-        }
+    override fun sendEmailVerification(): Flow<Resource<Boolean>> = flowWithResource {
+        auth.currentUser!!.sendEmailVerification().await()
+        true
     }
 
     override fun updatePassword(password: String, newPassword: String): Flow<Resource<Boolean>> =
-        flow {
-            emit(Resource.Loading())
-            try {
-                auth.currentUser?.let { user ->
-                    val credential = EmailAuthProvider.getCredential(user.email!!, password)
-                    user.reauthenticate(credential).await()
-                    user.updatePassword(newPassword).await()
-                }
-                emit(Resource.Success(true))
-            } catch (e: Exception) {
-                e.printStackTrace()
-                emit(Resource.Error(e))
+        flowWithResource {
+            auth.currentUser?.let { user ->
+                val credential = EmailAuthProvider.getCredential(user.email!!, password)
+                user.reauthenticate(credential).await()
+                user.updatePassword(newPassword).await()
             }
+            true
         }
 
-    override fun updateEmail(email: String, password: String): Flow<Resource<Boolean>> = flow {
-        emit(Resource.Loading())
-        try {
+    override fun updateEmail(email: String, password: String): Flow<Resource<Boolean>> =
+        flowWithResource {
             auth.currentUser?.let {
                 val credential = EmailAuthProvider.getCredential(UserManager.user!!.email, password)
                 it.reauthenticate(credential).await()
                 it.verifyBeforeUpdateEmail(email).await()
             }
-            emit(Resource.Success(true))
-        } catch (e: Exception) {
-            e.printStackTrace()
-            emit(Resource.Error(e))
+            true
         }
-    }
 }

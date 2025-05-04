@@ -5,13 +5,13 @@ import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.data.model.remote.ImgBBResponse
 import com.avcialper.lemur.data.model.remote.UserProfile
+import com.avcialper.lemur.data.repository.flowWithResource
 import com.avcialper.lemur.data.repository.remote.StorageApi
 import com.avcialper.lemur.util.constant.Constants
 import com.avcialper.lemur.util.constant.Resource
 import com.avcialper.lemur.util.constant.TaskStatus
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -111,18 +111,6 @@ class StorageRepositoryImpl @Inject constructor(
         val documents = taskCollection.whereEqualTo(Constants.OWNER_ID, ownerId).get().await()
         documents.toObjects(Task::class.java)
     }
-
-    private inline fun <T> flowWithResource(crossinline action: suspend () -> T): Flow<Resource<T>> =
-        flow {
-            emit(Resource.Loading())
-            try {
-                val result = action()
-                emit(Resource.Success(result))
-            } catch (e: Exception) {
-                e.printStackTrace()
-                emit(Resource.Error(e))
-            }
-        }
 
     private fun <T> getTasksByField(filed: String, value: T): Flow<Resource<List<Task>>> =
         flowWithResource {
