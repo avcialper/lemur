@@ -65,9 +65,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             vm.scrollPosition = scrollY
         }
         owlCalendar.setOnDayClickListener { date ->
-            vm.date = StartDate(date.year, date.month, date.dayOfMonth)
-            componentSelectedDate.setTitle(date)
-            vm.getSelectedDateTasks()
+            val selectedDate = StartDate(date.year, date.month, date.dayOfMonth)
+            if (vm.date != selectedDate) {
+                vm.date = selectedDate
+                componentSelectedDate.setTitle(date)
+                vm.getSelectedDateTasks()
+            }
         }
         componentSelectedDate.setOnClickListener {
             val date = formatDate(vm.date!!)
