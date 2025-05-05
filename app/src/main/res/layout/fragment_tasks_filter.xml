@@ -6,7 +6,7 @@
     tools:context=".ui.tasks.filter.TasksFilterFragment">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/search_bar"
         style="@style/SearchBar"
         android:hint="@string/search_task"
         android:importantForAutofill="no" />

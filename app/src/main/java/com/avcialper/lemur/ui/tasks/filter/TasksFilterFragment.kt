@@ -1,16 +1,19 @@
 package com.avcialper.lemur.ui.tasks.filter
 
+import android.text.Editable
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.databinding.FragmentTasksFilterBinding
+import com.avcialper.lemur.helper.SimplifiedTextWatcher
 import com.avcialper.lemur.helper.SmoothScroller
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.component.DateTimePicker
 import com.avcialper.lemur.ui.tasks.filter.adapter.FilterAdapter
 import com.avcialper.lemur.util.constant.DateTimePickerType
 import com.avcialper.lemur.util.constant.FilterType
+import com.avcialper.lemur.util.extension.toFixedString
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,6 +32,7 @@ class TasksFilterFragment :
         filterDate = args.filterDate
         initUI()
         observer()
+        setListeners()
     }
 
     private fun initUI() {
@@ -99,6 +103,26 @@ class TasksFilterFragment :
             FilterType.CANCELED -> vm.getCanceledTasks()
             else -> Unit
         }
+    }
+
+    private fun setListeners() = with(binding) {
+        searchBar.addTextChangedListener(object : SimplifiedTextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val filterText = s?.toFixedString()?.lowercase() ?: ""
+                val tasks = vm.state.value.data ?: emptyList()
+                val filteredTasks = tasks.filter { task ->
+                    task.name.lowercase().contains(filterText)
+                            || task.description.lowercase().contains(filterText)
+                }
+
+                val data = if (filterText.isNotEmpty())
+                    filteredTasks
+                else
+                    tasks
+
+                componentTasks.changeList(data)
+            }
+        })
     }
 
 }
