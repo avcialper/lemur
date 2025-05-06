@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.io.File
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -64,8 +65,10 @@ class TaskCreateViewModel @Inject constructor(
         val startTime = splitTime[0].trim()
         val endTime = splitTime[1].trim()
 
+        val id = UUID.randomUUID().toString()
+
         val task = Task(
-            "",
+            id,
             UserManager.user!!.id,
             subject,
             content,

@@ -64,9 +64,10 @@ class StorageRepositoryImpl @Inject constructor(
     }
 
     override fun createTask(task: Task): Flow<Resource<Boolean>> = flowWithResource {
-        val (_, ownerId, name, description, startDate, endDate, startTime, endTime, imageUrl, type, status) = task
+        val (id, ownerId, name, description, startDate, endDate, startTime, endTime, imageUrl, type, status) = task
 
         val data = hashMapOf(
+            Constants.TASK_ID to id,
             Constants.OWNER_ID to ownerId,
             Constants.NAME to name,
             Constants.DESCRIPTION to description,
