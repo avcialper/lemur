@@ -1,5 +1,7 @@
 package com.avcialper.lemur.ui.component.tasks
 
+import android.graphics.drawable.Drawable
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -7,6 +9,7 @@ import com.avcialper.lemur.R
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.databinding.ComponentTaskBinding
 import com.avcialper.lemur.util.constant.TaskStatus
+import com.avcialper.lemur.util.constant.TaskType
 import java.util.Locale
 
 class TasksViewHolder(
@@ -19,6 +22,7 @@ class TasksViewHolder(
 
         handleDateFormat(task)
         handleTaskStatus(task.status)
+        handleTaskType(task.type)
     }
 
     private fun handleDateFormat(task: Task) = with(binding) {
@@ -44,13 +48,29 @@ class TasksViewHolder(
             TaskStatus.COMPLETED -> R.color.chateau_green
             TaskStatus.CANCELED -> R.color.red
         }
-        val statusDrawable =
-            ContextCompat.getDrawable(root.context, R.drawable.oval_background)?.mutate()
+        val statusDrawable = getDrawable(R.drawable.oval_background)
         statusDrawable?.let {
             val color = ContextCompat.getColor(root.context, colorId)
             DrawableCompat.setTint(it, color)
         }
-        textTaskName.setCompoundDrawablesWithIntrinsicBounds(null, null, statusDrawable, null)
+        textTaskName.setRightDrawable(statusDrawable)
     }
 
+    private fun handleTaskType(type: TaskType) = with(binding) {
+        val iconId = when (type) {
+            TaskType.PERSONAL -> R.drawable.ic_profile
+            TaskType.TEAM -> R.drawable.ic_team
+            TaskType.MEET -> R.drawable.ic_video_call
+        }
+
+        val drawable = getDrawable(iconId)
+        textDateTime.setRightDrawable(drawable)
+    }
+
+    private fun getDrawable(id: Int): Drawable? =
+        ContextCompat.getDrawable(binding.root.context, id)?.mutate()
+
+    private fun TextView.setRightDrawable(drawable: Drawable?) {
+        this.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
+    }
 }

@@ -15,7 +15,7 @@
 
     <TextView
         android:id="@+id/text_date_time"
-        style="@style/Theme.Lemur"
+        style="@style/Task.DateTime"
         tools:text="date time" />
 
 </LinearLayout>

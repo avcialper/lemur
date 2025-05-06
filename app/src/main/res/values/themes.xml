@@ -237,12 +237,20 @@
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textStyle">bold</item>
         <item name="drawableRightCompat">@drawable/oval_background</item>
+        <item name="android:paddingEnd">@dimen/padding_small</item>
     </style>
 
     <!-- Task Description -->
     <style name="Task.Description" parent="Theme.Lemur">
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">3</item>
+    </style>
+
+    <!-- Task Date Time -->
+    <style name="Task.DateTime" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="drawableRightCompat">@drawable/ic_profile</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 
     <!-- Alert Fragment -->
