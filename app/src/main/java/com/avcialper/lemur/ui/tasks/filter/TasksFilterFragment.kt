@@ -56,7 +56,8 @@ class TasksFilterFragment :
 
     private fun onFilterChangeListener(type: FilterType, data: String?) {
         filterType = type
-        if (type == FilterType.DATE)
+        if (type == FilterType.DATE) {
+            binding.componentTasks.changeList(emptyList())
             DateTimePicker(
                 type = DateTimePickerType.DATE,
                 date = data,
@@ -65,8 +66,10 @@ class TasksFilterFragment :
                 childFragmentManager,
                 "date_selector"
             )
-        else
+        } else {
+            filterDate = ""
             handleFilterType()
+        }
     }
 
     private fun onDateSelected(date: String) {
