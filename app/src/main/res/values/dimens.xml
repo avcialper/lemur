@@ -25,7 +25,7 @@
     <dimen name="image_selector_content">1dp</dimen>
 
     <dimen name="icon_of_icon_label">64dp</dimen>
-    <dimen name="icon_size">28dp</dimen>
+    <dimen name="icon_size">32dp</dimen>
 
     <dimen name="zero_dp">0dp</dimen>
 
@@ -33,5 +33,6 @@
     <integer name="connectivity_anim_duration">200</integer>
 
     <dimen name="skeleton_height">14dp</dimen>
+    <dimen name="skeleton_height_big">20dp</dimen>
     <dimen name="skeleton_corner_radius">4dp</dimen>
 </resources>

@@ -66,4 +66,9 @@ class IconLabel @JvmOverloads constructor(
         return binding.textLabel.text.toString() == label
     }
 
+    fun handleLoading(isLoading: Boolean) = with(binding) {
+        root.alpha = if (isLoading) 0.5f else 1f
+        root.isClickable = isLoading
+    }
+
 }

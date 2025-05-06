@@ -3,6 +3,7 @@ package com.avcialper.lemur.ui.profile
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
+import android.view.View
 import androidx.fragment.app.viewModels
 import coil.load
 import com.avcialper.lemur.R
@@ -59,6 +60,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
     private fun collectUser(user: User?) = with(binding) {
+        val isLoading = user?.username?.isEmpty() ?: true
+        handleLoading(isLoading)
+        if (isLoading) return@with
+
         textUsername.text = user?.username
         textAbout.text = user?.about
         imageProfilePicture.load(user?.imageUrl) {
@@ -67,6 +72,23 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             error(R.drawable.logo)
         }
         handleEmailVerification(user?.firebaseUser?.isEmailVerified ?: false)
+    }
+
+    private fun handleLoading(isLoading: Boolean) = with(binding) {
+        skeleton.root.visibility = if (isLoading) View.VISIBLE else View.GONE
+
+        val informationVisibility = if (isLoading) View.GONE else View.VISIBLE
+        imageProfilePicture.visibility = informationVisibility
+        textUsername.visibility = informationVisibility
+        textAbout.visibility = informationVisibility
+
+        componentUpdateProfile.handleLoading(isLoading)
+        componentUpdateEmail.handleLoading(isLoading)
+        componentUpdatePassword.handleLoading(isLoading)
+        componentNotification.handleLoading(isLoading)
+        componentTheme.handleLoading(isLoading)
+        componentGitHub.handleLoading(isLoading)
+        componentEmailVerify.handleLoading(isLoading)
     }
 
     private fun collectNotification(isGranted: Boolean) = with(binding) {

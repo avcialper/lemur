@@ -310,6 +310,8 @@
     <style name="Profile.Username" parent="Theme.Lemur">
         <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">@dimen/margin_medium</item>
+        <item name="android:layout_marginBottom">@dimen/margin_small</item>
     </style>
 
     <!-- Profile About -->
@@ -496,6 +498,28 @@
     <style name="Task.Skeleton.Section" parent="Theme.Lemur">
         <item name="android:layout_width">@dimen/zero_dp</item>
         <item name="android:layout_height">@dimen/skeleton_height</item>
-        <item name="android:background">@drawable/skeleton_bg</item>
+        <item name="android:background">@drawable/skeleton_background</item>
+    </style>
+
+    <style name="Profile.Skeleton.Wrapper" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:padding">@dimen/padding_medium</item>
+    </style>
+
+    <style name="Profile.Skeleton.Picture" parent="Theme.Lemur">
+        <item name="android:layout_width">@dimen/profile_picture_size</item>
+        <item name="android:layout_height">@dimen/profile_picture_size</item>
+        <item name="android:background">@drawable/skeleton_rounded_background</item>
+    </style>
+
+    <style name="Profile.Skeleton.Section.Small" parent="Theme.Lemur">
+        <item name="android:layout_width">@dimen/zero_dp</item>
+        <item name="android:layout_height">@dimen/skeleton_height</item>
+        <item name="android:background">@drawable/skeleton_background</item>
+        <item name="android:layout_marginTop">@dimen/margin_medium</item>
+    </style>
+
+    <style name="Profile.Skeleton.Section.Big" parent="Profile.Skeleton.Section.Small">
+        <item name="android:layout_height">@dimen/skeleton_height_big</item>
     </style>
 </resources>

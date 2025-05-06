@@ -7,6 +7,11 @@
 
     <LinearLayout style="@style/LinearPage">
 
+        <include
+            android:id="@+id/skeleton"
+            style="@style/FillHorizontal"
+            layout="@layout/user_information_skeleton" />
+
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_profile_picture"
             style="@style/Profile.Image"

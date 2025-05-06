@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/shimmer_layout"
+    style="@style/FillHorizontal">
+
+    <androidx.constraintlayout.widget.ConstraintLayout style="@style/Profile.Skeleton.Wrapper">
+
+        <View
+            android:id="@+id/section_one"
+            style="@style/Profile.Skeleton.Picture"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/section_two"
+            style="@style/Profile.Skeleton.Section.Big"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/section_one"
+            app:layout_constraintWidth_percent="0.6" />
+
+        <View
+            android:id="@+id/section_three"
+            style="@style/Profile.Skeleton.Section.Small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/section_two"
+            app:layout_constraintWidth_percent="0.8" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.facebook.shimmer.ShimmerFrameLayout>
