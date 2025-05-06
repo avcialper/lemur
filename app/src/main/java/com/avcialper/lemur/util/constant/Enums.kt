@@ -32,12 +32,16 @@ enum class ResourceStatus {
     LOADING, SUCCESS, ERROR
 }
 
-enum class TaskStatus {
-    CONTINUES, COMPLETED, CANCELED
+enum class TaskStatus(val colorId: Int) {
+    CONTINUES(R.color.orange), COMPLETED(R.color.chateau_green), CANCELED(R.color.red)
 }
 
-enum class TaskType(val messageId: Int) {
-    PERSONAL(R.string.task), TEAM(R.string.team_task), MEET(R.string.meet)
+enum class TaskType(val messageId: Int, val drawableId: Int) {
+    PERSONAL(R.string.task, R.drawable.ic_profile), TEAM(
+        R.string.team_task,
+        R.drawable.ic_team
+    ),
+    MEET(R.string.meet, R.drawable.ic_video_call)
 }
 
 enum class Theme(val value: String) {

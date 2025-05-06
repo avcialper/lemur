@@ -43,27 +43,16 @@ class TasksViewHolder(
     }
 
     private fun handleTaskStatus(status: TaskStatus) = with(binding) {
-        val colorId = when (status) {
-            TaskStatus.CONTINUES -> R.color.orange
-            TaskStatus.COMPLETED -> R.color.chateau_green
-            TaskStatus.CANCELED -> R.color.red
-        }
         val statusDrawable = getDrawable(R.drawable.oval_background)
         statusDrawable?.let {
-            val color = ContextCompat.getColor(root.context, colorId)
+            val color = ContextCompat.getColor(root.context, status.colorId)
             DrawableCompat.setTint(it, color)
         }
         textTaskName.setRightDrawable(statusDrawable)
     }
 
     private fun handleTaskType(type: TaskType) = with(binding) {
-        val iconId = when (type) {
-            TaskType.PERSONAL -> R.drawable.ic_profile
-            TaskType.TEAM -> R.drawable.ic_team
-            TaskType.MEET -> R.drawable.ic_video_call
-        }
-
-        val drawable = getDrawable(iconId)
+        val drawable = getDrawable(type.drawableId)
         textDateTime.setRightDrawable(drawable)
     }
 
