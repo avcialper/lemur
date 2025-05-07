@@ -29,7 +29,10 @@ class TextInput @JvmOverloads constructor(
         get() = input.toFixedString()
         set(value) = input.setText(value)
 
-    fun validate(rules: List<ValidationRule>): Boolean = input.validate(rules)
+    fun validate(
+        rules: List<ValidationRule>,
+        formatErrorMessage: ((String) -> String)? = null
+    ): Boolean = input.validate(rules, formatErrorMessage)
 
     fun setLoadingState(isLoading: Boolean) {
         input.apply {

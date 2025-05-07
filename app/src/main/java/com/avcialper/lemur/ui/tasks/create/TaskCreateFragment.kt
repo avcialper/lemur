@@ -9,7 +9,7 @@ import com.avcialper.lemur.databinding.FragmentTaskCreateBinding
 import com.avcialper.lemur.helper.ImagePicker
 import com.avcialper.lemur.helper.UriToFile
 import com.avcialper.lemur.helper.validator.EmptyRule
-import com.avcialper.lemur.helper.validator.LengthRule
+import com.avcialper.lemur.helper.validator.MaxLengthRule
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.component.DateTimePicker
 import com.avcialper.lemur.ui.component.ImageUpdateSheet
@@ -18,6 +18,7 @@ import com.avcialper.lemur.util.constant.DateTimePickerType
 import com.avcialper.lemur.util.constant.Resource
 import com.avcialper.lemur.util.constant.TaskType
 import com.avcialper.lemur.util.extension.exceptionConverter
+import com.avcialper.lemur.util.extension.formatInvalidLengthError
 import com.avcialper.lemur.util.formatDate
 import com.avcialper.lemur.util.formatTime
 import dagger.hilt.android.AndroidEntryPoint
@@ -105,7 +106,7 @@ class TaskCreateFragment :
                         tvSelectedTime.text.toString().trim(),
                         imageFile,
                         inputSubject.value,
-                        inputContent.value,
+                        inputDescription.value,
                         type!!
                     )
                 }
@@ -182,7 +183,7 @@ class TaskCreateFragment :
         addImage.updateLoadingState(isLoading)
         taskImage.updateLoadingState(isLoading)
         inputSubject.setLoadingState(isLoading)
-        inputContent.setLoadingState(isLoading)
+        inputDescription.setLoadingState(isLoading)
         buttonCreate.updateLoadingState(isLoading)
     }
 
@@ -203,15 +204,21 @@ class TaskCreateFragment :
         val isValidSubject = inputSubject.validate(
             rules = listOf(
                 EmptyRule(),
-                LengthRule(1, 50, R.string.subject_length_error)
-            )
+                MaxLengthRule(50)
+            ),
+            formatErrorMessage = { errorMessage ->
+                errorMessage.formatInvalidLengthError(requireContext(), R.string.subject, 50)
+            }
         )
 
-        val isValidContent = inputContent.validate(
+        val isValidContent = inputDescription.validate(
             rules = listOf(
                 EmptyRule(),
-                LengthRule(1, 250, R.string.subject_length_error)
-            )
+                MaxLengthRule(250)
+            ),
+            formatErrorMessage = { errorMessage ->
+                errorMessage.formatInvalidLengthError(requireContext(), R.string.description, 250)
+            }
         )
 
         return isTimeEmpty.not() && isTypeEmpty.not() && isValidSubject && isValidContent

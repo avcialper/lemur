@@ -9,11 +9,10 @@
     <string name="do_not_have_account">Hesabın yok mu? Kaydol</string>
     <string name="is_required">Bu alan boş bırakılamaz.</string>
     <string name="invalid_email">Geçersiz e-posta adresi.</string>"
-    <string name="invalid_length">Şifre en az 8 karakter en fazla 24 karakter olmalıdır.</string>
     <string name="invalid_password">Şifre en az bir büyük harf, bir küçük harf ve bir rakam içermelidir.</string>
     <string name="invalid_confirm_password">Şifreler eşleşmiyor.</string>
     <string name="invalid_username">Kullanıcıadı en az 4 karakter en fazla 16 karakter olmalıdır.</string>
-    <string name="invalid_max_length">100 karakterden fazla girilemez.</string>
+    <string name="invalid_max_length">{0} en fazla {1} karakter olabilir.</string>
     <string name="is_same_password">Yeni şifreniz, mevcut şifreniz ile aynı olmamalı.</string>
     <string name="is_same_email">Yeni e-posta adresiniz, mevcut e-posta adresiniz ile aynı olmamalı.</string>
     <string name="username">Kullanıcı adı</string>
@@ -93,9 +92,8 @@
     <string name="create">Oluştur</string>
     <string name="add_image">Resim ekle</string>
     <string name="subject">Konu</string>
-    <string name="content">Açıklama</string>
-    <string name="subject_length_error">Konu en az 1 karakter en fazla 50 karakter olmalıdır.</string>
-    <string name="content_length_error">İçerik en az 1 karakter en fazla 250 karakter olmalıdır.</string>
+    <string name="description">Açıklama</string>
+    <string name="invalid_length_error">{0} en az {1} karakter en fazla {2} karakter olmalıdır.</string>
     <string name="select_task_type">Lütfen bir görev tipi seçiniz</string>
     <string name="task">Kişisel Görev</string>"
 </resources>

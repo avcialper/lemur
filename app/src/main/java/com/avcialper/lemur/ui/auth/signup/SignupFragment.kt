@@ -11,6 +11,8 @@ import com.avcialper.lemur.helper.validator.EmptyRule
 import com.avcialper.lemur.helper.validator.LengthRule
 import com.avcialper.lemur.helper.validator.PasswordRule
 import com.avcialper.lemur.ui.auth.AuthBaseFragment
+import com.avcialper.lemur.util.constant.Constants
+import com.avcialper.lemur.util.extension.formatInvalidLengthError
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
@@ -73,8 +75,16 @@ class SignupFragment : AuthBaseFragment<FragmentSignupBinding>(FragmentSignupBin
         val isValidUsername = inputUsername.validate(
             rules = listOf(
                 EmptyRule(),
-                LengthRule(4, 16, R.string.invalid_username)
-            )
+                LengthRule(Constants.MIN_USERNAME_LENGTH, Constants.MAX_USERNAME_LENGTH)
+            ),
+            formatErrorMessage = { errorMessage ->
+                errorMessage.formatInvalidLengthError(
+                    requireContext(),
+                    R.string.username,
+                    Constants.MIN_USERNAME_LENGTH,
+                    Constants.MAX_USERNAME_LENGTH
+                )
+            }
         )
 
         val isValidEmail = inputEmail.validate(
@@ -87,18 +97,34 @@ class SignupFragment : AuthBaseFragment<FragmentSignupBinding>(FragmentSignupBin
         val isValidPassword = inputPassword.validate(
             rules = listOf(
                 EmptyRule(),
-                LengthRule(),
+                LengthRule(Constants.MIN_PASSWORD_LENGTH, Constants.MAX_PASSWORD_LENGTH),
                 PasswordRule()
-            )
+            ),
+            formatErrorMessage = { errorMessage ->
+                errorMessage.formatInvalidLengthError(
+                    requireContext(),
+                    R.string.password,
+                    Constants.MIN_PASSWORD_LENGTH,
+                    Constants.MAX_PASSWORD_LENGTH
+                )
+            }
         )
 
         val isValidConfirmPassword = inputConfirmPassword.validate(
             rules = listOf(
                 EmptyRule(),
-                LengthRule(),
+                LengthRule(Constants.MIN_PASSWORD_LENGTH, Constants.MAX_PASSWORD_LENGTH),
                 PasswordRule(),
                 ConfirmPasswordRule(inputPassword.value)
-            )
+            ),
+            formatErrorMessage = { errorMessage ->
+                errorMessage.formatInvalidLengthError(
+                    requireContext(),
+                    R.string.password,
+                    Constants.MIN_PASSWORD_LENGTH,
+                    Constants.MAX_PASSWORD_LENGTH
+                )
+            }
         )
 
         return isValidUsername && isValidEmail && isValidPassword && isValidConfirmPassword

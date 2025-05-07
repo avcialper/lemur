@@ -9,7 +9,9 @@ import com.avcialper.lemur.helper.validator.LengthRule
 import com.avcialper.lemur.helper.validator.NotSameRule
 import com.avcialper.lemur.helper.validator.PasswordRule
 import com.avcialper.lemur.ui.BaseFragment
+import com.avcialper.lemur.util.constant.Constants
 import com.avcialper.lemur.util.extension.exceptionConverter
+import com.avcialper.lemur.util.extension.formatInvalidLengthError
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -64,30 +66,41 @@ class UpdatePasswordFragment : BaseFragment<FragmentUpdatePasswordBinding>(
         val isValidCurrentPassword = inputCurrentPassword.validate(
             rules = listOf(
                 EmptyRule(),
-                LengthRule(),
+                LengthRule(Constants.MIN_PASSWORD_LENGTH, Constants.MAX_PASSWORD_LENGTH),
                 PasswordRule()
-            )
+            ),
+            formatErrorMessage = ::formatErrorMessage
         )
 
         val isValidNewPassword = inputNewPassword.validate(
             rules = listOf(
                 EmptyRule(),
-                LengthRule(),
+                LengthRule(Constants.MIN_PASSWORD_LENGTH, Constants.MAX_PASSWORD_LENGTH),
                 PasswordRule(),
-                NotSameRule(inputCurrentPassword.value),
-            )
+                NotSameRule(inputCurrentPassword.value)
+            ),
+            formatErrorMessage = ::formatErrorMessage
         )
 
         val isValidNewPasswordConfirm = inputNewPasswordConfirm.validate(
             rules = listOf(
                 EmptyRule(),
-                LengthRule(),
+                LengthRule(Constants.MIN_PASSWORD_LENGTH, Constants.MAX_PASSWORD_LENGTH),
                 PasswordRule(),
-                ConfirmPasswordRule(inputNewPassword.value),
-            )
+                ConfirmPasswordRule(inputNewPassword.value)
+            ),
+            formatErrorMessage = ::formatErrorMessage
         )
 
         return isValidCurrentPassword && isValidNewPassword && isValidNewPasswordConfirm
     }
+
+    private fun formatErrorMessage(errorMessage: String): String =
+        errorMessage.formatInvalidLengthError(
+            requireContext(),
+            R.string.password,
+            Constants.MIN_PASSWORD_LENGTH,
+            Constants.MAX_PASSWORD_LENGTH
+        )
 
 }

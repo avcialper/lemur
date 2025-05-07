@@ -7,6 +7,7 @@ import com.google.android.material.textfield.TextInputLayout
 
 fun TextInputEditText.validate(
     rules: List<ValidationRule>,
+    formatErrorMessage: ((String) -> String)? = null
 ): Boolean {
 
     val layout = this.parent.parent as TextInputLayout
@@ -22,7 +23,8 @@ fun TextInputEditText.validate(
         val message = rule.errorMessage
 
         if (isNotValid) {
-            layout.error = context.resources.getString(message)
+            val errorMessage = context.resources.getString(message)
+            layout.error = formatErrorMessage?.invoke(errorMessage) ?: errorMessage
             return false
         }
     }

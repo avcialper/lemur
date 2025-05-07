@@ -1,12 +1,15 @@
 package com.avcialper.lemur.ui.auth.login
 
 import androidx.fragment.app.viewModels
+import com.avcialper.lemur.R
 import com.avcialper.lemur.databinding.FragmentLoginBinding
 import com.avcialper.lemur.helper.validator.EmailRule
 import com.avcialper.lemur.helper.validator.EmptyRule
 import com.avcialper.lemur.helper.validator.LengthRule
 import com.avcialper.lemur.helper.validator.PasswordRule
 import com.avcialper.lemur.ui.auth.AuthBaseFragment
+import com.avcialper.lemur.util.constant.Constants
+import com.avcialper.lemur.util.extension.formatInvalidLengthError
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -59,9 +62,17 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>(FragmentLoginBindin
         val isValidPassword = inputPassword.validate(
             rules = listOf(
                 EmptyRule(),
-                LengthRule(),
+                LengthRule(Constants.MIN_PASSWORD_LENGTH, Constants.MAX_PASSWORD_LENGTH),
                 PasswordRule()
-            )
+            ),
+            formatErrorMessage = { errorMessage ->
+                errorMessage.formatInvalidLengthError(
+                    requireContext(),
+                    R.string.password,
+                    Constants.MIN_PASSWORD_LENGTH,
+                    Constants.MAX_PASSWORD_LENGTH
+                )
+            }
         )
 
         return isValidEmail && isValidPassword

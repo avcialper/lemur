@@ -10,6 +10,8 @@ import com.avcialper.lemur.helper.validator.NotSameRule
 import com.avcialper.lemur.helper.validator.PasswordRule
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.component.AlertFragment
+import com.avcialper.lemur.util.constant.Constants
+import com.avcialper.lemur.util.extension.formatInvalidLengthError
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -71,9 +73,17 @@ class UpdateEmailFragment :
         val isValidPassword = componentPassword.validate(
             rules = listOf(
                 EmptyRule(),
-                LengthRule(),
+                LengthRule(Constants.MIN_PASSWORD_LENGTH, Constants.MAX_PASSWORD_LENGTH),
                 PasswordRule()
-            )
+            ),
+            formatErrorMessage = { errorMessage ->
+                errorMessage.formatInvalidLengthError(
+                    requireContext(),
+                    R.string.password,
+                    Constants.MIN_PASSWORD_LENGTH,
+                    Constants.MAX_PASSWORD_LENGTH
+                )
+            }
         )
 
         return isValidEmail && isValidPassword
