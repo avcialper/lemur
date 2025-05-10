@@ -478,7 +478,7 @@
     <!-- FAB -->
     <style name="FAB" parent="Theme.Lemur">
         <item name="android:layout_gravity">bottom|end</item>
-        <item name="android:layout_margin">@dimen/margin_medium</item>
+        <item name="android:layout_margin">@dimen/margin_large</item>
         <item name="android:backgroundTint">@color/orange</item>
         <item name="srcCompat">@drawable/ic_add</item>
         <item name="tint">@color/black</item>
@@ -559,4 +559,28 @@
         <item name="android:layout_width">match_parent</item>
     </style>
 
+    <style name="FABComponent" parent="Theme.Lemur">
+        <item name="android:layout_marginTop">@dimen/margin_medium</item>
+        <item name="tint">@color/black</item>
+        <item name="android:backgroundTint">@color/orange</item>
+    </style>
+
+    <style name="HeaderAndDivider.Wrapper" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="HeaderAndDivider.Label" parent="Theme.Lemur">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginEnd">@dimen/margin_small</item>
+    </style>
+
+    <style name="HeaderAndDivider.Divider" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:background">?attr/primaryColor</item>
+    </style>
 </resources>

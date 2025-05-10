@@ -28,4 +28,18 @@
         <attr name="is_short" format="boolean" />
         <attr name="have_margin" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="CustomFAB">
+        <attr name="fab_count" format="enum">
+            <enum name="two" value="2" />
+            <enum name="four" value="4" />
+        </attr>
+        <attr name="fab_icon" format="reference" />
+        <attr name="first_fab_text" format="string" />
+        <attr name="second_fab_text" format="string" />
+        <attr name="third_fab_text" format="string" />
+        <attr name="fourth_fab_text" format="string" />
+    </declare-styleable>
+    <declare-styleable name="HeaderAndDivider">
+        <attr name="label" format="string" />
+    </declare-styleable>
 </resources>

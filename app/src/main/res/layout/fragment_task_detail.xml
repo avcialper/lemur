@@ -50,4 +50,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
+
+    <com.avcialper.lemur.ui.component.TaskDetailFAB
+        android:id="@+id/fab"
+        style="@style/FAB"
+        app:fab_count="two"
+        app:fab_icon="@drawable/ic_edit"
+        app:first_fab_text="@string/update"
+        app:second_fab_text="@string/add_note" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

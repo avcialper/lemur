@@ -26,6 +26,7 @@ class TaskDetailFragment :
     override fun FragmentTaskDetailBinding.initialize() {
         vm.getTaskDetail(args.taskId)
         observe()
+        setListeners()
     }
 
     private fun observe() {
@@ -69,6 +70,18 @@ class TaskDetailFragment :
     private fun handleLoading(isLoading: Boolean) = with(binding) {
         progress.visibility = if (isLoading) View.VISIBLE else View.GONE
         wrapper.visibility = if (isLoading) View.GONE else View.VISIBLE
+        fab.handleLoading(isLoading)
+    }
+
+    private fun setListeners() {
+        binding.fab.apply {
+            setFirstFabClickListener {
+                toast("GÜNCELLE")
+            }
+            setSecondFabClickListener {
+                toast("YORUM EKLE")
+            }
+        }
     }
 
     private fun getDrawable(id: Int): Drawable? =
