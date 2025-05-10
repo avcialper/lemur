@@ -110,12 +110,14 @@ class DateTimePicker(
 
     private fun setupTimePicker() = with(binding) {
         secondPicker.visibility = View.GONE
+        hourSuffix.visibility = View.VISIBLE
+        minuteSuffix.visibility = View.VISIBLE
 
-        firstPicker.create(0, 23, hour, null) {
+        firstPicker.create(0, 23, hour, fixedLabel(24)) {
             firstPickerValue = it
         }
 
-        thirdPicker.create(0, 59, minute, null) {
+        thirdPicker.create(0, 59, minute, fixedLabel(59)) {
             thirdPickerValue = it
         }
     }
@@ -159,6 +161,16 @@ class DateTimePicker(
         val symbols = DateFormatSymbols(locale)
         val monthNames = symbols.months.filter { it.isNotEmpty() }
         return monthNames.toTypedArray()
+    }
+
+    private fun fixedLabel(max: Int): Array<String> {
+        val response = mutableListOf<String>()
+        val locale = Locale("tr", "TR")
+        (0..max).forEach {
+            val value = String.format(locale, "%02d", it)
+            response.add(value)
+        }
+        return response.toTypedArray()
     }
 
     override fun onDestroyView() {

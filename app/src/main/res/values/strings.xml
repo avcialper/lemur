@@ -95,5 +95,7 @@
     <string name="description">Açıklama</string>
     <string name="invalid_length_error">{0} en az {1} karakter en fazla {2} karakter olmalıdır.</string>
     <string name="select_task_type">Lütfen bir görev tipi seçiniz</string>
-    <string name="task">Kişisel Görev</string>"
+    <string name="task">Kişisel Görev</string>
+    <string name="fixed_hour">sa.</string>
+    <string name="fixed_minute">dk.</string>"
 </resources>

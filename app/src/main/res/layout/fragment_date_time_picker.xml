@@ -42,6 +42,22 @@
         app:layout_constraintStart_toEndOf="@id/second_picker"
         app:layout_constraintTop_toTopOf="@id/second_picker" />
 
+    <TextView
+        android:id="@+id/hour_suffix"
+        style="@style/Picker.Suffix"
+        android:text="@string/fixed_hour"
+        app:layout_constraintBottom_toBottomOf="@id/first_picker"
+        app:layout_constraintStart_toEndOf="@id/first_picker"
+        app:layout_constraintTop_toTopOf="@id/first_picker" />
+
+    <TextView
+        android:id="@+id/minute_suffix"
+        style="@style/Picker.Suffix"
+        android:text="@string/fixed_minute"
+        app:layout_constraintBottom_toBottomOf="@id/third_picker"
+        app:layout_constraintStart_toEndOf="@id/third_picker"
+        app:layout_constraintTop_toTopOf="@id/third_picker" />
+
     <Button
         android:id="@+id/button_complete"
         style="@style/Picker.Button"
