@@ -1,7 +1,6 @@
 package com.avcialper.lemur.ui.tasks.detail
 
 import android.graphics.drawable.Drawable
-import android.view.Gravity
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -35,7 +34,7 @@ class TaskDetailFragment :
 
     private fun handleSuccess(task: Task?) = with(binding) {
         task?.let {
-            val (_, _, name, description, startDate, endDate, startTime, endTime, imageUrl, type, status) = task
+            val (_, _, name, description, startDate, endDate, startTime, endTime, imageUrl, type, status, notes) = task
 
             tvTitle.text = name
             tvDate.text =
@@ -69,13 +68,7 @@ class TaskDetailFragment :
 
     private fun handleLoading(isLoading: Boolean) = with(binding) {
         progress.visibility = if (isLoading) View.VISIBLE else View.GONE
-        root.gravity = if (isLoading) Gravity.CENTER else Gravity.START
-
-        val visibility = if (isLoading) View.GONE else View.VISIBLE
-        tvTitle.visibility = visibility
-        tvDate.visibility = visibility
-        tvTime.visibility = visibility
-        tvDescription.visibility = visibility
+        wrapper.visibility = if (isLoading) View.GONE else View.VISIBLE
     }
 
     private fun getDrawable(id: Int): Drawable? =

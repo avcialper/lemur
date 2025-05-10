@@ -14,7 +14,8 @@ data class Task(
     val endTime: String,
     val imageUrl: String?,
     val type: TaskType,
-    val status: TaskStatus
+    val status: TaskStatus,
+    val notes: List<Note>
 ) {
     constructor() : this(
         "",
@@ -27,6 +28,7 @@ data class Task(
         "",
         null,
         TaskType.PERSONAL,
-        TaskStatus.CONTINUES
+        TaskStatus.CONTINUES,
+        emptyList()
     )
 }

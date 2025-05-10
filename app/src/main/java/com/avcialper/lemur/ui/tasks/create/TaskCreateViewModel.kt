@@ -78,7 +78,8 @@ class TaskCreateViewModel @Inject constructor(
             endTime,
             imageUrl.value,
             type,
-            TaskStatus.CONTINUES
+            TaskStatus.CONTINUES,
+            emptyList()
         )
 
         storageRepository.createTask(task)

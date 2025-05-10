@@ -28,6 +28,7 @@ object Constants {
     const val END_TIME = "endTime"
     const val TYPE = "type"
     const val STATUS = "status"
+    const val NOTES = "notes"
 
     const val IMAGE_URL = "imageUrl"
 

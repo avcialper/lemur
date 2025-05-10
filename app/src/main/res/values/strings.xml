@@ -97,5 +97,6 @@
     <string name="select_task_type">Lütfen bir görev tipi seçiniz</string>
     <string name="task">Kişisel Görev</string>
     <string name="fixed_hour">sa.</string>
-    <string name="fixed_minute">dk.</string>"
+    <string name="fixed_minute">dk.</string>
+    <string name="notes">Notlar</string>"
 </resources>

@@ -64,7 +64,7 @@ class StorageRepositoryImpl @Inject constructor(
     }
 
     override fun createTask(task: Task): Flow<Resource<Boolean>> = flowWithResource {
-        val (id, ownerId, name, description, startDate, endDate, startTime, endTime, imageUrl, type, status) = task
+        val (id, ownerId, name, description, startDate, endDate, startTime, endTime, imageUrl, type, status, notes) = task
 
         val data = hashMapOf(
             Constants.TASK_ID to id,
@@ -77,7 +77,8 @@ class StorageRepositoryImpl @Inject constructor(
             Constants.END_TIME to endTime,
             Constants.IMAGE_URL to imageUrl,
             Constants.TYPE to type.name,
-            Constants.STATUS to status.name
+            Constants.STATUS to status.name,
+            Constants.NOTES to notes
         )
 
         taskCollection.document().set(data).await()
