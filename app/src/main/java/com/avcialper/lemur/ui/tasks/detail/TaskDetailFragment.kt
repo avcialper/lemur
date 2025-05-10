@@ -1,6 +1,8 @@
 package com.avcialper.lemur.ui.tasks.detail
 
 import android.graphics.drawable.Drawable
+import android.view.Gravity
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.viewModels
@@ -40,7 +42,12 @@ class TaskDetailFragment :
                 if (endDate != null) concatStartAndEndDate(startDate, endDate) else startDate
             tvTime.text = concatStartAndEntTime(startTime, endTime)
             tvDescription.text = description
-            imageTask.load(imageUrl)
+            imageUrl?.let {
+                imageTask.apply {
+                    load(it)
+                    visibility = View.VISIBLE
+                }
+            }
 
             val statusDrawable = getDrawable(R.drawable.oval_background)
             statusDrawable?.let {
@@ -60,8 +67,15 @@ class TaskDetailFragment :
         }
     }
 
-    private fun handleLoading(isLoading: Boolean) {
+    private fun handleLoading(isLoading: Boolean) = with(binding) {
+        progress.visibility = if (isLoading) View.VISIBLE else View.GONE
+        root.gravity = if (isLoading) Gravity.CENTER else Gravity.START
 
+        val visibility = if (isLoading) View.GONE else View.VISIBLE
+        tvTitle.visibility = visibility
+        tvDate.visibility = visibility
+        tvTime.visibility = visibility
+        tvDescription.visibility = visibility
     }
 
     private fun getDrawable(id: Int): Drawable? =

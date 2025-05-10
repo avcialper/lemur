@@ -545,7 +545,6 @@
         <item name="android:drawablePadding">@dimen/padding_small</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:gravity">center</item>
-        <item name="drawableLeftCompat">@drawable/ic_calendar</item>
         <item name="android:layout_marginBottom">@dimen/margin_small</item>
     </style>
 
@@ -554,10 +553,6 @@
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:layout_marginBottom">@dimen/margin_small</item>
         <item name="android:layout_width">match_parent</item>
-    </style>
-
-    <style name="TaskDetail.Image" parent="TaskImage">
-        <item name="android:visibility">visible</item>
     </style>
 
 </resources>
