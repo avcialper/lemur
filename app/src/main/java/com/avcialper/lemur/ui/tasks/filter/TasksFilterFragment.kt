@@ -28,8 +28,10 @@ class TasksFilterFragment :
     private var filterDate: String? = null
 
     override fun FragmentTasksFilterBinding.initialize() {
-        filterType = args.filterType
-        filterDate = args.filterDate
+        if (filterType == null)
+            filterType = args.filterType
+        if (filterDate == null)
+            filterDate = args.filterDate
         initUI()
         observer()
         setListeners()
@@ -126,6 +128,10 @@ class TasksFilterFragment :
                 componentTasks.changeList(data)
             }
         })
+        componentTasks.setOnTaskClickListener {
+            val destination = TasksFilterFragmentDirections.filterToDetail(it.id)
+            destination.navigate()
+        }
     }
 
 }
