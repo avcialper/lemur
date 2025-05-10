@@ -66,4 +66,12 @@ class TasksArea @JvmOverloads constructor(
         binding.componentTasks.changeList(tasks)
     }
 
+    fun setOnTaskClickListener(onClick: (Task) -> Unit) {
+        binding.componentTasks.setOnTaskClickListener(onClick)
+    }
+
+    fun clearTasks() {
+        binding.componentTasks.changeList(emptyList())
+    }
+
 }

@@ -34,6 +34,22 @@ fun formatTime(hour: Int, minute: Int): String =
         minute
     )
 
+fun concatStartAndEndDate(startDate: String, endDate: String): String =
+    String.format(
+        LOCALE,
+        "%s - %s",
+        startDate,
+        endDate
+    )
+
+fun concatStartAndEntTime(startTime: String, endTime: String): String =
+    String.format(
+        LOCALE,
+        "%s - %s",
+        startTime,
+        endTime
+    )
+
 fun formatTime(startTime: String, endTime: String): String =
     String.format(LOCALE, "%s - %s", startTime, endTime)
 

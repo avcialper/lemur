@@ -16,9 +16,11 @@ class TasksViewHolder(
     private val binding: ComponentTaskBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(task: Task) = with(binding) {
+    fun bind(task: Task, onClick: (Task) -> Unit) = with(binding) {
         textTaskName.text = task.name
         textDescription.text = task.description
+
+        root.setOnClickListener { onClick.invoke(task) }
 
         handleDateFormat(task)
         handleTaskStatus(task.status)

@@ -4,6 +4,7 @@ import android.Manifest.permission.POST_NOTIFICATIONS
 import androidx.fragment.app.viewModels
 import com.avcialper.lemur.R
 import com.avcialper.lemur.data.AppManager
+import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.databinding.FragmentHomeBinding
 import com.avcialper.lemur.helper.PermissionManager
 import com.avcialper.lemur.ui.BaseFragment
@@ -69,6 +70,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             if (vm.date != selectedDate) {
                 vm.date = selectedDate
                 componentSelectedDate.setTitle(date)
+                componentSelectedDate.clearTasks()
                 vm.getSelectedDateTasks()
             }
         }
@@ -76,6 +78,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             val date = formatDate(vm.date!!)
             navigateTasksPage(FilterType.DATE, date)
         }
+
+        componentSelectedDate.setOnTaskClickListener(::onTaskClick)
+        componentToday.setOnTaskClickListener(::onTaskClick)
+        componentContinues.setOnTaskClickListener(::onTaskClick)
+        componentCompleted.setOnTaskClickListener(::onTaskClick)
+        componentCanceled.setOnTaskClickListener(::onTaskClick)
+    }
+
+    private fun onTaskClick(task: Task) {
+        val destination = HomeFragmentDirections.toTaskDetail(task.id)
+        destination.navigate()
     }
 
     private fun checkNotificationPermission() {
@@ -120,6 +133,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     override fun onResume() {
         super.onResume()
+
+        with(binding) {
+            componentSelectedDate.clearTasks()
+            componentToday.clearTasks()
+            componentContinues.clearTasks()
+            componentCompleted.clearTasks()
+            componentCanceled.clearTasks()
+        }
+
         val (year, month, dayOfMonth) = vm.date!!
         binding.owlCalendar.setStartDate(year, month, dayOfMonth)
         vm.getSelectedDateTasks()

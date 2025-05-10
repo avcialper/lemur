@@ -63,6 +63,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/toTaskDetail"
+            app:destination="@id/taskDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/teamFragment"
@@ -138,4 +145,13 @@
         android:name="com.avcialper.lemur.ui.tasks.create.TaskCreateFragment"
         android:label="fragment_tasks_create"
         tools:layout="@layout/fragment_task_create" />
+    <fragment
+        android:id="@+id/taskDetailFragment"
+        android:name="com.avcialper.lemur.ui.tasks.detail.TaskDetailFragment"
+        android:label="fragment_task_detail"
+        tools:layout="@layout/fragment_task_detail">
+        <argument
+            android:name="task_id"
+            app:argType="string" />
+    </fragment>
 </navigation>

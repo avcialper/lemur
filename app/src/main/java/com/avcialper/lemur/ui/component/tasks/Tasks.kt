@@ -20,6 +20,8 @@ class Tasks @JvmOverloads constructor(
     private val layoutInflater = LayoutInflater.from(context)
     private val binding = ComponentTasksBinding.inflate(layoutInflater, this, true)
 
+    private var onClick: (Task) -> Unit = {}
+
     init {
         val a = context.obtainStyledAttributes(attrs, R.styleable.Tasks)
         val emptyText =
@@ -43,7 +45,9 @@ class Tasks @JvmOverloads constructor(
     }
 
     private fun initRecyclerView(isShort: Boolean) {
-        val adapter = TasksAdapter(emptyList(), isShort)
+        val adapter = TasksAdapter(emptyList(), isShort) {
+            onClick(it)
+        }
         val layoutManager =
             if (isShort) NonScrollableLinerLayoutManager(context) else LinearLayoutManager(context)
         val itemDecoration = MaterialDividerItemDecoration(context, VERTICAL).apply {
@@ -78,6 +82,10 @@ class Tasks @JvmOverloads constructor(
         if (isLoading)
             textEmpty.visibility = GONE
         skeleton.root.visibility = if (isLoading) VISIBLE else GONE
+    }
+
+    fun setOnTaskClickListener(onClick: (Task) -> Unit) {
+        this.onClick = onClick
     }
 
 }

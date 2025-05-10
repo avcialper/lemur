@@ -530,4 +530,34 @@
     <style name="Profile.Skeleton.Section.Big" parent="Profile.Skeleton.Section.Small">
         <item name="android:layout_height">@dimen/skeleton_height_big</item>
     </style>
+
+    <style name="TaskDetail.Title" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textStyle">bold</item>
+        <item name="drawableLeftCompat">@drawable/ic_profile</item>
+        <item name="android:drawablePadding">@dimen/padding_small</item>
+        <item name="drawableRightCompat">@drawable/oval_background</item>
+        <item name="android:layout_marginBottom">@dimen/margin_medium</item>
+    </style>
+
+    <style name="TaskDetail.DateAndTime" parent="Theme.Lemur">
+        <item name="android:drawablePadding">@dimen/padding_small</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:gravity">center</item>
+        <item name="drawableLeftCompat">@drawable/ic_calendar</item>
+        <item name="android:layout_marginBottom">@dimen/margin_small</item>
+    </style>
+
+    <style name="TaskDetail.Description" parent="Theme.Lemur">
+        <item name="android:drawablePadding">@dimen/padding_small</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:layout_marginBottom">@dimen/margin_small</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="TaskDetail.Image" parent="TaskImage">
+        <item name="android:visibility">visible</item>
+    </style>
+
 </resources>

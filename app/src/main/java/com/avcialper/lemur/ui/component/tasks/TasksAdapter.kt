@@ -10,7 +10,8 @@ import com.avcialper.lemur.helper.TasksDiffUtil
 
 class TasksAdapter(
     private var tasks: List<Task>,
-    private val isShort: Boolean = false
+    private val isShort: Boolean = false,
+    private val onClick: (Task) -> Unit
 ) : RecyclerView.Adapter<TasksViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TasksViewHolder {
@@ -21,7 +22,7 @@ class TasksAdapter(
 
     override fun onBindViewHolder(holder: TasksViewHolder, position: Int) {
         val task = tasks[position]
-        holder.bind(task)
+        holder.bind(task, onClick)
     }
 
     override fun getItemCount(): Int = if (isShort && tasks.size > 3) 3 else tasks.size

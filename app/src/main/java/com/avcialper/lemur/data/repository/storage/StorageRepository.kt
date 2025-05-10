@@ -25,4 +25,5 @@ interface StorageRepository {
     fun getCompletedTasksWithLimit(): Flow<Resource<List<Task>>>
     fun getCanceledTasksWithLimit(): Flow<Resource<List<Task>>>
     fun getUserTasks(): Flow<Resource<List<Task>>>
+    fun getTaskDetail(taskId: String): Flow<Resource<Task>>
 }
