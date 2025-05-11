@@ -24,6 +24,8 @@ import com.avcialper.lemur.util.constant.DateTimePickerType
 import com.avcialper.lemur.util.extension.formatInvalidLengthError
 import com.avcialper.lemur.util.formatDate
 import com.avcialper.lemur.util.formatTime
+import com.avcialper.lemur.util.splitDateData
+import com.avcialper.lemur.util.splitLineDate
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.util.UUID
@@ -60,8 +62,14 @@ class TaskUpdateFragment :
     }
 
     private fun initUI() = with(binding) {
-        // TODO owlcalendar'ı set et
         val (_, _, name, description, startDate, endDate, startTime, endTime, imageUrl, type, _, _) = task
+
+        val (year, month, dayOfMonth) = splitDateData(startDate)
+        owlCalendar.setStartDate(year, month, dayOfMonth)
+        if (!endDate.isNullOrEmpty()) {
+            val lineDate = splitLineDate(startDate, endDate)
+            owlCalendar.setLineDate(lineDate)
+        }
 
         inputSubject.value = name
         inputDescription.value = description
