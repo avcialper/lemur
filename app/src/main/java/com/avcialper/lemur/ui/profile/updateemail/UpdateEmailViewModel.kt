@@ -8,6 +8,7 @@ import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,14 +30,14 @@ class UpdateEmailViewModel @Inject constructor(
 
     fun updateEmail(email: String, password: String) = viewModelScope.launch {
         if (AppManager.isConnected.not()) {
-            _state.value = null
+            _state.update { null }
             return@launch
         }
 
         authRepository.updateEmail(email, password).collect { resource ->
-            _state.value = resource
+            _state.update { resource }
             if (resource is Resource.Success)
-                _isUpdated.value = false
+                _isUpdated.update { false }
         }
     }
 

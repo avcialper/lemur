@@ -8,6 +8,7 @@ import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,12 +22,12 @@ class UpdatePasswordViewModel @Inject constructor(
 
     fun updatePassword(currentPassword: String, newPassword: String) = viewModelScope.launch {
         if (AppManager.isConnected.not()) {
-            _state.value = null
+            _state.update { null }
             return@launch
         }
 
-        authRepository.updatePassword(currentPassword, newPassword).collect {
-            _state.value = it
+        authRepository.updatePassword(currentPassword, newPassword).collect { resource ->
+            _state.update { resource }
         }
     }
 

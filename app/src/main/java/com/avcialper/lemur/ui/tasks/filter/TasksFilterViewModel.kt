@@ -9,6 +9,7 @@ import com.avcialper.lemur.util.getCurrentDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,58 +22,44 @@ class TasksFilterViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     fun getAllTasks() = viewModelScope.launch {
-        repository.getUserTasks().collect {
-            _state.value = it
-        }
+        repository.getUserTasks().collect(::collector)
     }
 
     fun getTasksByDate(date: String) = viewModelScope.launch {
-        repository.getSelectedDateTasks(date).collect {
-            _state.value = it
-        }
+        repository.getSelectedDateTasks(date).collect(::collector)
     }
 
     fun getTodayTasks() = viewModelScope.launch {
         val today = getCurrentDate()
-        repository.getSelectedDateTasks(today).collect {
-            _state.value = it
-        }
+        repository.getSelectedDateTasks(today).collect(::collector)
     }
 
     fun getPersonalTasks() = viewModelScope.launch {
-        repository.getPersonalTasks().collect {
-            _state.value = it
-        }
+        repository.getPersonalTasks().collect(::collector)
     }
 
     fun getTeamTasks() = viewModelScope.launch {
-        repository.getTeamTasks().collect {
-            _state.value = it
-        }
+        repository.getTeamTasks().collect(::collector)
     }
 
     fun getMeets() = viewModelScope.launch {
-        repository.getMeets().collect {
-            _state.value = it
-        }
+        repository.getMeets().collect(::collector)
     }
 
     fun getContinuesTasks() = viewModelScope.launch {
-        repository.getContinuesTasks().collect {
-            _state.value = it
-        }
+        repository.getContinuesTasks().collect(::collector)
     }
 
     fun getCompletedTasks() = viewModelScope.launch {
-        repository.getCompletedTasks().collect {
-            _state.value = it
-        }
+        repository.getCompletedTasks().collect(::collector)
     }
 
     fun getCanceledTasks() = viewModelScope.launch {
-        repository.getCanceledTasks().collect {
-            _state.value = it
-        }
+        repository.getUserTasks().collect(::collector)
+    }
+
+    private fun collector(resource: Resource<List<Task>>) {
+        _state.update { resource }
     }
 
 }

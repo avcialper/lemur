@@ -8,6 +8,7 @@ import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
@@ -34,21 +35,21 @@ class TaskUpdateViewModel @Inject constructor(
     private suspend fun uploadImage(file: File) {
         storageRepository.uploadImage(file).collect { resource ->
             if (resource is Resource.Success)
-                imageUrl.value = resource.data?.data?.url
+                imageUrl.update { resource.data?.data?.url }
             else if (resource is Resource.Error)
-                _state.value = Resource.Error(resource.throwable!!)
+                _state.update { Resource.Error(resource.throwable!!) }
         }
     }
 
     private suspend fun update(task: Task) {
         storageRepository.updateTask(task).collect { resource ->
-            _state.value = resource
+            _state.update { resource }
         }
     }
 
     fun deleteTask(id: String) = viewModelScope.launch {
         storageRepository.deleteTask(id).collect { resource ->
-            _deleteState.value = resource
+            _deleteState.update { resource }
         }
     }
 

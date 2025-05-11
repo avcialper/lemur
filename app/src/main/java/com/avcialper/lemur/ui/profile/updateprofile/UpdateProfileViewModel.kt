@@ -1,6 +1,5 @@
 package com.avcialper.lemur.ui.profile.updateprofile
 
-import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.AppManager
@@ -11,6 +10,7 @@ import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
@@ -25,29 +25,21 @@ class UpdateProfileViewModel @Inject constructor(
 
     private val newImageUrl = MutableStateFlow<String?>(null)
 
-    fun update(
-        username: String,
-        about: String,
-        imageUrl: String?,
-        imageUri: Uri?,
-        convert: () -> File
-    ) =
+    fun update(username: String, about: String, imageUrl: String?, file: File?) =
         viewModelScope.launch {
             if (AppManager.isConnected.not()) {
-                _state.value = null
+                _state.update { null }
                 return@launch
             }
 
-            _state.value = Resource.Loading()
-            if (imageUri != null) {
-                val file = convert()
-                uploadImage(file)
+            file?.let {
+                uploadImage(it)
             }
             updateUser(username, about, imageUrl)
-
         }
 
     private suspend fun uploadImage(file: File) {
+        _state.update { Resource.Loading() }
         storageRepository.uploadImage(file).collect { resource ->
             if (resource is Resource.Success)
                 newImageUrl.value = resource.data?.data?.url

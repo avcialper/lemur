@@ -8,6 +8,7 @@ import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,8 +21,8 @@ class TaskDetailViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     fun getTaskDetail(taskId: String) = viewModelScope.launch {
-        storageRepository.getTaskDetail(taskId).collect {
-            _state.value = it
+        storageRepository.getTaskDetail(taskId).collect { resource ->
+            _state.update { resource }
         }
     }
 

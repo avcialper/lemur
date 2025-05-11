@@ -562,6 +562,7 @@
     <style name="FABComponent" parent="Theme.Lemur">
         <item name="android:layout_marginTop">@dimen/margin_medium</item>
         <item name="tint">@color/black</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:backgroundTint">@color/orange</item>
     </style>
 

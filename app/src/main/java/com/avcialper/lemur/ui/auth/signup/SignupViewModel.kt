@@ -44,26 +44,31 @@ class SignupViewModel @Inject constructor(
 
         _state.update { Resource.Loading() }
         auth.signup(email, password).collect { resource ->
-            if (resource is Resource.Success) {
-                if (imageUri != null) {
-                    uploadImage(convert)
-                    val id = resource.data?.uid!!
-                    createUser(id, username)
-                } else
-                    createUser(resource.data?.uid!!, username)
-            } else if (resource is Resource.Error)
-                handleError(resource.throwable!!)
+            when (resource) {
+                is Resource.Error -> handleError(resource.throwable!!)
+                is Resource.Loading -> _state.update { Resource.Loading() }
+                is Resource.Success -> {
+                    if (imageUri != null) {
+                        uploadImage(convert)
+                        val id = resource.data?.uid!!
+                        createUser(id, username)
+                    } else
+                        createUser(resource.data?.uid!!, username)
+                }
+            }
         }
     }
 
     // Upload image to ImgBB
     private suspend fun uploadImage(convert: () -> File) {
         val file = convert()
+        _state.value = Resource.Loading()
         storageRepository.uploadImage(file).collect { resource ->
-            if (resource is Resource.Success)
-                _imageBB.update { resource.data?.data }
-            else if (resource is Resource.Error)
-                handleError(resource.throwable!!)
+            when (resource) {
+                is Resource.Success -> _imageBB.update { resource.data?.data }
+                is Resource.Loading -> _state.update { Resource.Loading() }
+                is Resource.Error -> handleError(resource.throwable!!)
+            }
         }
     }
 

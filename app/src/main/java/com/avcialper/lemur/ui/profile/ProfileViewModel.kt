@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -44,7 +45,7 @@ class ProfileViewModel @Inject constructor(
             if (resource.status == ResourceStatus.SUCCESS) {
                 resource.data?.let { (_, username, about, imageUrl) ->
                     UserManager.updateUser(user, username, about, imageUrl)
-                    _user.value = UserManager.user
+                    _user.update { UserManager.user }
                 }
             }
         }

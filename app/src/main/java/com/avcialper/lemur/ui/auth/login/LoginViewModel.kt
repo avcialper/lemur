@@ -57,7 +57,7 @@ class LoginViewModel @Inject constructor(
                         about,
                         imageUrl,
                     )
-                    _state.value = Resource.Success(currentUser)
+                    _state.update { Resource.Success(currentUser) }
                 }
             }
         }

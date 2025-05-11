@@ -42,26 +42,30 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding>(
     private fun initUI() = with(binding) {
         val image = UserManager.user?.imageUrl
         loadImage(image)
+        imageUrl = image
         inputUsername.value = UserManager.user?.username ?: ""
         inputAbout.value = UserManager.user?.about ?: ""
     }
 
     private fun setListeners() = with(binding) {
         imageProfilePicture.setOnClickListener {
-            ImageUpdateSheet(::deleteImage, imagePicker::pickImage).show(
-                parentFragmentManager,
-                "selector"
-            )
+            if (imageUrl.isNullOrEmpty() && imageUri == null)
+                imagePicker.pickImage()
+            else
+                ImageUpdateSheet(::deleteImage, imagePicker::pickImage).show(
+                    parentFragmentManager,
+                    "selector"
+                )
         }
         buttonUpdate.setOnClickListener {
             val isValid = validate()
-            if (isValid) vm.update(
-                inputUsername.value,
-                inputAbout.value,
-                imageUrl,
-                imageUri,
-                ::convert
-            )
+            if (isValid) {
+                var file: File? = null
+                if (imageUri != null)
+                    file = convert()
+
+                vm.update(inputUsername.value, inputAbout.value, imageUrl, file)
+            }
         }
     }
 

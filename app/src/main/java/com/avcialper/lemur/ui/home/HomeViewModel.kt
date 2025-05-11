@@ -10,6 +10,7 @@ import com.avcialper.owlcalendar.data.models.StartDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -42,32 +43,32 @@ class HomeViewModel @Inject constructor(
     fun getSelectedDateTasks() = viewModelScope.launch {
         val formattedDate = formatDate(date!!)
         storageRepository.getSelectedDateTasksWithLimit(formattedDate).collect { resource ->
-            _selectedDateTasks.value = resource
+            _selectedDateTasks.update { resource }
         }
     }
 
     fun getTodayTasks() = viewModelScope.launch {
         val formattedDate = formatDate(todayDate!!)
         storageRepository.getSelectedDateTasksWithLimit(formattedDate).collect { resource ->
-            _todayTasks.value = resource
+            _todayTasks.update { resource }
         }
     }
 
     fun getContinuesTasks() = viewModelScope.launch {
         storageRepository.getContinuesTasksWithLimit().collect { resource ->
-            _continuesTasks.value = resource
+            _continuesTasks.update { resource }
         }
     }
 
     fun getCompletedTasks() = viewModelScope.launch {
         storageRepository.getCompletedTasksWithLimit().collect { resource ->
-            _completedTasks.value = resource
+            _completedTasks.update { resource }
         }
     }
 
     fun getCanceledTasks() = viewModelScope.launch {
         storageRepository.getCanceledTasksWithLimit().collect { resource ->
-            _canceledTasks.value = resource
+            _canceledTasks.update { resource }
         }
     }
 
