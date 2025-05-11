@@ -76,7 +76,9 @@ class TaskDetailFragment :
     private fun setListeners() {
         binding.fab.apply {
             setFirstFabClickListener {
-                toast("GÜNCELLE")
+                val direction =
+                    TaskDetailFragmentDirections.toTaskUpdate(vm.state.value?.data ?: Task())
+                direction.navigate()
             }
             setSecondFabClickListener {
                 toast("YORUM EKLE")

@@ -1,8 +1,7 @@
-package com.avcialper.lemur.ui.tasks.create
+package com.avcialper.lemur.ui.tasks.update
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.data.repository.storage.StorageRepository
 import com.avcialper.lemur.util.constant.Resource
@@ -11,11 +10,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.io.File
-import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
-class TaskCreateViewModel @Inject constructor(
+class TaskUpdateViewModel @Inject constructor(
     private val storageRepository: StorageRepository
 ) : ViewModel() {
 
@@ -24,10 +22,10 @@ class TaskCreateViewModel @Inject constructor(
 
     private val imageUrl = MutableStateFlow<String?>(null)
 
-    fun createTask(task: Task, imageFile: File?) = viewModelScope.launch {
+    fun updateTask(task: Task, imageFile: File?) = viewModelScope.launch {
         if (imageFile != null)
             uploadImage(imageFile)
-        addTask(task)
+        update(task)
     }
 
     private suspend fun uploadImage(file: File) {
@@ -39,13 +37,8 @@ class TaskCreateViewModel @Inject constructor(
         }
     }
 
-    private suspend fun addTask(task: Task) {
-        val id = UUID.randomUUID().toString()
-        task.id = id
-        task.ownerId = UserManager.user!!.id
-        task.imageUrl = imageUrl.value
-
-        storageRepository.createTask(task).collect { resource ->
+    private suspend fun update(task: Task) {
+        storageRepository.updateTask(task).collect { resource ->
             _state.value = resource
         }
     }

@@ -1,12 +1,13 @@
-package com.avcialper.lemur.ui.tasks.create
+package com.avcialper.lemur.ui.tasks.update
 
 import android.net.Uri
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import coil.load
 import com.avcialper.lemur.R
 import com.avcialper.lemur.data.model.local.Task
-import com.avcialper.lemur.databinding.FragmentTaskCreateBinding
+import com.avcialper.lemur.databinding.FragmentTaskUpdateBinding
 import com.avcialper.lemur.helper.ImagePicker
 import com.avcialper.lemur.helper.UriToFile
 import com.avcialper.lemur.helper.validator.EmptyRule
@@ -15,8 +16,9 @@ import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.component.DateTimePicker
 import com.avcialper.lemur.ui.component.ImageUpdateSheet
 import com.avcialper.lemur.ui.component.TaskTypeSheet
+import com.avcialper.lemur.util.concatStartAndEndDate
+import com.avcialper.lemur.util.concatStartAndEntTime
 import com.avcialper.lemur.util.constant.DateTimePickerType
-import com.avcialper.lemur.util.constant.TaskType
 import com.avcialper.lemur.util.extension.formatInvalidLengthError
 import com.avcialper.lemur.util.formatDate
 import com.avcialper.lemur.util.formatTime
@@ -25,44 +27,126 @@ import java.io.File
 import java.util.UUID
 
 @AndroidEntryPoint
-class TaskCreateFragment :
-    BaseFragment<FragmentTaskCreateBinding>(FragmentTaskCreateBinding::inflate) {
+class TaskUpdateFragment :
+    BaseFragment<FragmentTaskUpdateBinding>(FragmentTaskUpdateBinding::inflate) {
 
-    private val vm: TaskCreateViewModel by viewModels()
-    private val task = Task()
+    private val vm: TaskUpdateViewModel by viewModels()
+    private val args: TaskUpdateFragmentArgs by navArgs()
+    private lateinit var task: Task
+    private lateinit var imagePicker: ImagePicker
 
     private var rangeDate = ""
+    private var imageUri: Uri? = null
     private var startTime = ""
     private var endTime = ""
     private var isStartTimeSelectionOpened = false
     private var isEndTimeSelectionOpened = false
-    private var imageUri: Uri? = null
-    private var type: TaskType? = null
-    private lateinit var imagePicker: ImagePicker
 
-    override fun FragmentTaskCreateBinding.initialize() {
-        imagePicker = ImagePicker(this@TaskCreateFragment) { uri ->
-            imageUri = uri
+    override fun FragmentTaskUpdateBinding.initialize() {
+        task = args.task
+        imagePicker = ImagePicker(this@TaskUpdateFragment) {
+            imageUri = it
             binding.apply {
-                taskImage.setImageURI(uri)
+                taskImage.load(it)
                 taskImage.visibility = View.VISIBLE
                 addImage.visibility = View.GONE
             }
         }
         initUI()
-        observer()
         setListeners()
+        observe()
     }
 
     private fun initUI() = with(binding) {
-        tvSelectedDate.text = formatDate(owlCalendar.startDate)
+        val (_, _, name, description, startDate, endDate, startTime, endTime, imageUrl, type, _, _) = task
+
+        inputSubject.value = name
+        inputDescription.value = description
+        tvSelectedDate.text =
+            if (endDate == null) startDate else concatStartAndEndDate(startDate, endDate)
+        tvSelectedTime.text = concatStartAndEntTime(startTime, endTime)
+        imageUrl?.let {
+            addImage.visibility = View.GONE
+            taskImage.apply {
+                load(it)
+                visibility = View.VISIBLE
+            }
+        }
+        tvType.text = type.name
     }
 
-    private fun onTimeSelected(data: String) {
-        if (startTime.isEmpty())
-            startTime = data
-        else
-            endTime = data
+    private fun setListeners() = with(binding) {
+        owlCalendar.apply {
+            setOnDayClickListener {
+                if (rangeDate.isEmpty())
+                    tvSelectedDate.text = it.date
+            }
+
+            setOnLineDateChangeListener { startDate, endDate ->
+                if (startDate == null || endDate == null) {
+                    rangeDate = ""
+                    return@setOnLineDateChangeListener
+                }
+                rangeDate = "${formatDate(startDate)} - ${formatDate(endDate)}"
+                tvSelectedDate.text = rangeDate
+            }
+        }
+
+        addImage.setOnClickListener {
+            imagePicker.pickImage()
+        }
+
+        taskImage.setOnClickListener {
+            ImageUpdateSheet(::deleteImage, imagePicker::pickImage)
+                .show(parentFragmentManager, "selector")
+        }
+
+        tvType.setOnClickListener {
+            TaskTypeSheet {
+                task.type = it
+                tvType.text = getString(it.messageId)
+            }.show(parentFragmentManager, "selector")
+        }
+
+        tvSelectedTime.setOnClickListener {
+            isStartTimeSelectionOpened = true
+            openPicker(R.string.select_start_time)
+        }
+
+        buttonUpdate.setOnClickListener {
+            val isValid = validate()
+            if (isValid) {
+                var imageFile: File? = null
+                if (imageUri != null)
+                    imageFile = convertToFile(imageUri!!)
+
+                val selectedDate = binding.tvSelectedDate.text.trim()
+                val splitDate = selectedDate.split("-")
+                val startDate = splitDate[0].trim()
+                val endDate = if (selectedDate.contains("-")) splitDate[1].trim() else null
+
+                val selectedTime = binding.tvSelectedTime.text.trim()
+                val splitTime = selectedTime.split("-")
+                startTime = splitTime[0].trim()
+                endTime = splitTime[1].trim()
+
+                task.name = inputSubject.value
+                task.description = inputDescription.value
+                task.startDate = startDate
+                task.endDate = endDate
+                task.startTime = startTime
+                task.endTime = endTime
+
+                vm.updateTask(task, imageFile)
+            }
+        }
+    }
+
+    private fun deleteImage() = with(binding) {
+        imageUri = null
+        task.imageUrl = null
+        addImage.visibility = View.VISIBLE
+        taskImage.visibility = View.GONE
     }
 
     private fun onDismiss() {
@@ -94,99 +178,11 @@ class TaskCreateFragment :
         ).show(childFragmentManager, "time_picker")
     }
 
-    private fun deleteImage() = with(binding) {
-        imageUri = null
-        addImage.visibility = View.VISIBLE
-        taskImage.visibility = View.GONE
-    }
-
-    private fun observer() {
-        vm.state.createResourceObserver(::handleSuccess, ::loadingState)
-    }
-
-    private fun loadingState(isLoading: Boolean) = with(binding) {
-        owlCalendar.updateLoadingState(isLoading)
-        tvSelectedDate.updateLoadingState(isLoading)
-        tvSelectedTime.updateLoadingState(isLoading)
-        tvType.updateLoadingState(isLoading)
-        addImage.updateLoadingState(isLoading)
-        taskImage.updateLoadingState(isLoading)
-        inputSubject.setLoadingState(isLoading)
-        inputDescription.setLoadingState(isLoading)
-        buttonCreate.updateLoadingState(isLoading)
-    }
-
-    private fun handleSuccess() {
-        loadingState(false)
-        findNavController().popBackStack()
-    }
-
-    private fun setListeners() = with(binding) {
-        owlCalendar.apply {
-            setOnDayClickListener {
-                if (rangeDate.isEmpty())
-                    tvSelectedDate.text = it.date
-            }
-
-            setOnLineDateChangeListener { startDate, endDate ->
-                if (startDate == null || endDate == null) {
-                    rangeDate = ""
-                    return@setOnLineDateChangeListener
-                }
-                rangeDate = "${formatDate(startDate)} - ${formatDate(endDate)}"
-                tvSelectedDate.text = rangeDate
-            }
-        }
-
-        tvSelectedTime.setOnClickListener {
-            isStartTimeSelectionOpened = true
-            openPicker(R.string.select_start_time)
-        }
-
-        tvType.setOnClickListener {
-            TaskTypeSheet {
-                type = it
-                tvType.text = getString(it.messageId)
-            }.show(this@TaskCreateFragment.childFragmentManager, "selector")
-        }
-
-        addImage.setOnClickListener {
-            imagePicker.pickImage()
-        }
-
-        taskImage.setOnClickListener {
-            ImageUpdateSheet(::deleteImage, imagePicker::pickImage)
-                .show(parentFragmentManager, "selector")
-        }
-
-        buttonCreate.setOnClickListener {
-            val isValid = validate()
-            if (isValid) {
-                var imageFile: File? = null
-                if (imageUri != null)
-                    imageFile = convertToFile(imageUri!!)
-
-                val selectedDate = binding.tvSelectedDate.text.trim()
-                val splitDate = selectedDate.split("-")
-                val startDate = splitDate[0].trim()
-                val endDate = if (selectedDate.contains("-")) splitDate[1].trim() else null
-
-                val selectedTime = binding.tvSelectedTime.text.trim()
-                val splitTime = selectedTime.split("-")
-                startTime = splitTime[0].trim()
-                endTime = splitTime[1].trim()
-
-                task.name = inputSubject.value
-                task.description = inputDescription.value
-                task.startDate = startDate
-                task.endDate = endDate
-                task.startTime = startTime
-                task.endTime = endTime
-                task.type = type!!
-
-                vm.createTask(task, imageFile)
-            }
-        }
+    private fun onTimeSelected(data: String) {
+        if (startTime.isEmpty())
+            startTime = data
+        else
+            endTime = data
     }
 
     private fun validate(): Boolean = with(binding) {
@@ -224,4 +220,23 @@ class TaskCreateFragment :
     private fun convertToFile(uri: Uri): File =
         UriToFile(requireContext()).convert(UUID.randomUUID().toString(), uri)
 
+    private fun observe() {
+        vm.state.createResourceObserver(::handleSuccess, ::handleLoading)
+    }
+
+    private fun handleSuccess() {
+        goBack()
+    }
+
+    private fun handleLoading(isLoading: Boolean) = with(binding) {
+        owlCalendar.updateLoadingState(isLoading)
+        tvSelectedDate.updateLoadingState(isLoading)
+        tvSelectedTime.updateLoadingState(isLoading)
+        tvType.updateLoadingState(isLoading)
+        addImage.updateLoadingState(isLoading)
+        taskImage.updateLoadingState(isLoading)
+        inputSubject.setLoadingState(isLoading)
+        inputDescription.setLoadingState(isLoading)
+        buttonUpdate.updateLoadingState(isLoading)
+    }
 }

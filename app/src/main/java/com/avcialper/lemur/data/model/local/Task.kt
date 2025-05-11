@@ -1,22 +1,26 @@
 package com.avcialper.lemur.data.model.local
 
+import android.os.Parcelable
+import com.avcialper.lemur.util.constant.Constants
 import com.avcialper.lemur.util.constant.TaskStatus
 import com.avcialper.lemur.util.constant.TaskType
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Task(
-    val id: String,
-    val ownerId: String,
-    val name: String,
-    val description: String,
-    val startDate: String,
-    val endDate: String?,
-    val startTime: String,
-    val endTime: String,
-    val imageUrl: String?,
-    val type: TaskType,
-    val status: TaskStatus,
-    val notes: List<Note>
-) {
+    var id: String,
+    var ownerId: String,
+    var name: String,
+    var description: String,
+    var startDate: String,
+    var endDate: String?,
+    var startTime: String,
+    var endTime: String,
+    var imageUrl: String?,
+    var type: TaskType,
+    var status: TaskStatus,
+    var notes: List<Note>
+) : Parcelable {
     constructor() : this(
         "",
         "",
@@ -31,4 +35,20 @@ data class Task(
         TaskStatus.CONTINUES,
         emptyList()
     )
+
+    fun toMap(): HashMap<String, Any?> =
+        hashMapOf(
+            Constants.TASK_ID to id,
+            Constants.OWNER_ID to ownerId,
+            Constants.NAME to name,
+            Constants.DESCRIPTION to description,
+            Constants.START_DATE to startDate,
+            Constants.END_DATE to endDate,
+            Constants.START_TIME to startTime,
+            Constants.END_TIME to endTime,
+            Constants.IMAGE_URL to imageUrl,
+            Constants.TYPE to type.name,
+            Constants.STATUS to status.name,
+            Constants.NOTES to notes
+        )
 }

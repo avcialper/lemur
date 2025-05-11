@@ -64,24 +64,7 @@ class StorageRepositoryImpl @Inject constructor(
     }
 
     override fun createTask(task: Task): Flow<Resource<Boolean>> = flowWithResource {
-        val (id, ownerId, name, description, startDate, endDate, startTime, endTime, imageUrl, type, status, notes) = task
-
-        val data = hashMapOf(
-            Constants.TASK_ID to id,
-            Constants.OWNER_ID to ownerId,
-            Constants.NAME to name,
-            Constants.DESCRIPTION to description,
-            Constants.START_DATE to startDate,
-            Constants.END_DATE to endDate,
-            Constants.START_TIME to startTime,
-            Constants.END_TIME to endTime,
-            Constants.IMAGE_URL to imageUrl,
-            Constants.TYPE to type.name,
-            Constants.STATUS to status.name,
-            Constants.NOTES to notes
-        )
-
-        taskCollection.document().set(data).await()
+        taskCollection.document().set(task.toMap()).await()
         true
     }
 
@@ -127,6 +110,17 @@ class StorageRepositoryImpl @Inject constructor(
     override fun getTaskDetail(taskId: String): Flow<Resource<Task>> = flowWithResource {
         val taskDocument = taskCollection.whereEqualTo(Constants.TASK_ID, taskId).get().await()
         taskDocument.toObjects(Task::class.java).first()
+    }
+
+    override fun updateTask(task: Task): Flow<Resource<Boolean>> = flowWithResource {
+        val querySnapshot = taskCollection.whereEqualTo(Constants.TASK_ID, task.id).get().await()
+        if (!querySnapshot.isEmpty) {
+            val document = querySnapshot.documents.first()
+            taskCollection.document(document.id).update(task.toMap()).await()
+            true
+        } else {
+            throw Exception("Task not found")
+        }
     }
 
     private fun <T> getTasksByField(filed: String, value: T): Flow<Resource<List<Task>>> =

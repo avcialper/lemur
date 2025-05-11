@@ -87,8 +87,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun onTaskClick(task: Task) {
-        val destination = HomeFragmentDirections.toTaskDetail(task.id)
-        destination.navigate()
+        val direction = HomeFragmentDirections.toTaskDetail(task.id)
+        direction.navigate()
     }
 
     private fun checkNotificationPermission() {

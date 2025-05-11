@@ -160,5 +160,20 @@
         <argument
             android:name="task_id"
             app:argType="string" />
+        <action
+            android:id="@+id/toTaskUpdate"
+            app:destination="@id/taskUpdateFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskUpdateFragment"
+        android:name="com.avcialper.lemur.ui.tasks.update.TaskUpdateFragment"
+        android:label="TaskUpdateFragment">
+        <argument
+            android:name="task"
+            app:argType="com.avcialper.lemur.data.model.local.Task" />
     </fragment>
 </navigation>

@@ -129,8 +129,8 @@ class TasksFilterFragment :
             }
         })
         componentTasks.setOnTaskClickListener {
-            val destination = TasksFilterFragmentDirections.filterToDetail(it.id)
-            destination.navigate()
+            val direction = TasksFilterFragmentDirections.filterToDetail(it.id)
+            direction.navigate()
         }
     }
 
