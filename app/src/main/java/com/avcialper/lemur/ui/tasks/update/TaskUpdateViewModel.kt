@@ -20,6 +20,9 @@ class TaskUpdateViewModel @Inject constructor(
     private val _state = MutableStateFlow<Resource<Boolean>?>(null)
     val state = _state.asStateFlow()
 
+    private val _deleteState = MutableStateFlow<Resource<Boolean>?>(null)
+    val deleteState = _deleteState.asStateFlow()
+
     private val imageUrl = MutableStateFlow<String?>(null)
 
     fun updateTask(task: Task, imageFile: File?) = viewModelScope.launch {
@@ -40,6 +43,12 @@ class TaskUpdateViewModel @Inject constructor(
     private suspend fun update(task: Task) {
         storageRepository.updateTask(task).collect { resource ->
             _state.value = resource
+        }
+    }
+
+    fun deleteTask(id: String) = viewModelScope.launch {
+        storageRepository.deleteTask(id).collect { resource ->
+            _deleteState.value = resource
         }
     }
 

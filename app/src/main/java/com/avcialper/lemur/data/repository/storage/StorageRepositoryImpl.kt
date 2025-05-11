@@ -117,6 +117,11 @@ class StorageRepositoryImpl @Inject constructor(
         true
     }
 
+    override fun deleteTask(id: String): Flow<Resource<Boolean>> = flowWithResource {
+        taskCollection.document(id).delete().await()
+        true
+    }
+
     private fun <T> getTasksByField(filed: String, value: T): Flow<Resource<List<Task>>> =
         flowWithResource {
             val ownerId = UserManager.user!!.id

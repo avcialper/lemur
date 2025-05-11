@@ -27,4 +27,5 @@ interface StorageRepository {
     fun getUserTasks(): Flow<Resource<List<Task>>>
     fun getTaskDetail(taskId: String): Flow<Resource<Task>>
     fun updateTask(task: Task): Flow<Resource<Boolean>>
+    fun deleteTask(id: String): Flow<Resource<Boolean>>
 }

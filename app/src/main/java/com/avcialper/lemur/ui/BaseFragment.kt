@@ -64,6 +64,11 @@ abstract class BaseFragment<VB : ViewBinding>(
         navController.popBackStack()
     }
 
+    fun goBack(fragmentId: Int) {
+        val navController = findNavController()
+        navController.popBackStack(fragmentId, false)
+    }
+
     fun <T> Flow<T>.createObserver(action: (T) -> Unit) {
         onEach(action).launchIn(viewLifecycleOwner.lifecycleScope)
     }

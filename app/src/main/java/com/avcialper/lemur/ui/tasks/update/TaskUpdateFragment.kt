@@ -13,6 +13,7 @@ import com.avcialper.lemur.helper.UriToFile
 import com.avcialper.lemur.helper.validator.EmptyRule
 import com.avcialper.lemur.helper.validator.MaxLengthRule
 import com.avcialper.lemur.ui.BaseFragment
+import com.avcialper.lemur.ui.component.AlertFragment
 import com.avcialper.lemur.ui.component.DateTimePicker
 import com.avcialper.lemur.ui.component.ImageUpdateSheet
 import com.avcialper.lemur.ui.component.TaskTypeSheet
@@ -58,6 +59,7 @@ class TaskUpdateFragment :
     }
 
     private fun initUI() = with(binding) {
+        // TODO owlcalendar'ı set et
         val (_, _, name, description, startDate, endDate, startTime, endTime, imageUrl, type, _, _) = task
 
         inputSubject.value = name
@@ -140,6 +142,13 @@ class TaskUpdateFragment :
                 vm.updateTask(task, imageFile)
             }
         }
+
+        buttonDelete.setOnClickListener {
+            AlertFragment(R.string.delete_task_message, true) {
+                vm.deleteTask(task.id)
+            }.show(parentFragmentManager, "alert")
+        }
+
     }
 
     private fun deleteImage() = with(binding) {
@@ -222,10 +231,15 @@ class TaskUpdateFragment :
 
     private fun observe() {
         vm.state.createResourceObserver(::handleSuccess, ::handleLoading)
+        vm.deleteState.createResourceObserver(::handleDeleteSuccess, ::handleLoading)
     }
 
     private fun handleSuccess() {
         goBack()
+    }
+
+    private fun handleDeleteSuccess() {
+        goBack(R.id.homeFragment)
     }
 
     private fun handleLoading(isLoading: Boolean) = with(binding) {
@@ -238,5 +252,6 @@ class TaskUpdateFragment :
         inputSubject.setLoadingState(isLoading)
         inputDescription.setLoadingState(isLoading)
         buttonUpdate.updateLoadingState(isLoading)
+        buttonDelete.updateLoadingState(isLoading)
     }
 }
