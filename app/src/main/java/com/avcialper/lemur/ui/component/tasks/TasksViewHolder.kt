@@ -17,7 +17,7 @@ class TasksViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(task: Task, onClick: (Task) -> Unit) = with(binding) {
-        textTaskName.text = task.name
+        textTaskName.text = task.subject
         textDescription.text = task.description
 
         root.setOnClickListener { onClick.invoke(task) }

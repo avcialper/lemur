@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 data class Task(
     var id: String,
     var ownerId: String,
-    var name: String,
+    var subject: String,
     var description: String,
     var startDate: String,
     var endDate: String?,
@@ -40,7 +40,7 @@ data class Task(
         hashMapOf(
             Constants.TASK_ID to id,
             Constants.OWNER_ID to ownerId,
-            Constants.NAME to name,
+            Constants.SUBJECT to subject,
             Constants.DESCRIPTION to description,
             Constants.START_DATE to startDate,
             Constants.END_DATE to endDate,

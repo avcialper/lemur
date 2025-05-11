@@ -116,7 +116,7 @@ class TasksFilterFragment :
                 val filterText = s?.toFixedString()?.lowercase() ?: ""
                 val tasks = vm.state.value.data ?: emptyList()
                 val filteredTasks = tasks.filter { task ->
-                    task.name.lowercase().contains(filterText)
+                    task.subject.lowercase().contains(filterText)
                             || task.description.lowercase().contains(filterText)
                 }
 

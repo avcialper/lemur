@@ -15,6 +15,7 @@ import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.component.DateTimePicker
 import com.avcialper.lemur.ui.component.ImageUpdateSheet
 import com.avcialper.lemur.ui.component.TaskTypeSheet
+import com.avcialper.lemur.util.constant.Constants
 import com.avcialper.lemur.util.constant.DateTimePickerType
 import com.avcialper.lemur.util.constant.TaskType
 import com.avcialper.lemur.util.extension.formatInvalidLengthError
@@ -176,7 +177,7 @@ class TaskCreateFragment :
                 startTime = splitTime[0].trim()
                 endTime = splitTime[1].trim()
 
-                task.name = inputSubject.value
+                task.subject = inputSubject.value
                 task.description = inputDescription.value
                 task.startDate = startDate
                 task.endDate = endDate
@@ -201,20 +202,28 @@ class TaskCreateFragment :
         val isValidSubject = inputSubject.validate(
             rules = listOf(
                 EmptyRule(),
-                MaxLengthRule(50)
+                MaxLengthRule(Constants.MAX_SUBJECT_LENGTH)
             ),
             formatErrorMessage = { errorMessage ->
-                errorMessage.formatInvalidLengthError(requireContext(), R.string.subject, 50)
+                errorMessage.formatInvalidLengthError(
+                    requireContext(),
+                    R.string.subject,
+                    Constants.MAX_SUBJECT_LENGTH
+                )
             }
         )
 
         val isValidContent = inputDescription.validate(
             rules = listOf(
                 EmptyRule(),
-                MaxLengthRule(500)
+                MaxLengthRule(Constants.MAX_DESCRIPTION_LENGTH)
             ),
             formatErrorMessage = { errorMessage ->
-                errorMessage.formatInvalidLengthError(requireContext(), R.string.description, 500)
+                errorMessage.formatInvalidLengthError(
+                    requireContext(),
+                    R.string.description,
+                    Constants.MAX_DESCRIPTION_LENGTH
+                )
             }
         )
 

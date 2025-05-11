@@ -20,7 +20,7 @@ object Constants {
     // Task Constants
     const val TASK_ID = "id"
     const val OWNER_ID = "ownerId"
-    const val NAME = "name"
+    const val SUBJECT = "subject"
     const val DESCRIPTION = "description"
     const val START_DATE = "startDate"
     const val END_DATE = "endDate"
@@ -36,5 +36,8 @@ object Constants {
     const val MAX_PASSWORD_LENGTH = 24
     const val MIN_USERNAME_LENGTH = 4
     const val MAX_USERNAME_LENGTH = 16
+    const val MAX_ABOUT_LENGTH = 100
+    const val MAX_SUBJECT_LENGTH = 50
+    const val MAX_DESCRIPTION_LENGTH = 500
 
 }

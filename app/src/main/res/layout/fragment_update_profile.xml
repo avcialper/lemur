@@ -24,7 +24,7 @@
             android:hint="@string/about"
             android:imeOptions="actionDone"
             android:inputType="textMultiLine"
-            app:counter_max_length="100"
+            app:counter_max_length="@integer/max_about_length"
             app:have_counter="true" />
 
         <Button

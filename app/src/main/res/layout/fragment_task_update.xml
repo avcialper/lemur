@@ -49,7 +49,7 @@
             android:hint="@string/subject"
             android:imeOptions="actionNext"
             android:inputType="textMultiLine"
-            app:counter_max_length="50"
+            app:counter_max_length="@integer/max_subject_length"
             app:have_counter="true" />
 
         <com.avcialper.lemur.ui.component.TextInput
@@ -58,7 +58,7 @@
             android:hint="@string/description"
             android:imeOptions="actionDone"
             android:inputType="textMultiLine"
-            app:counter_max_length="250"
+            app:counter_max_length="@integer/max_description_length"
             app:have_counter="true" />
 
         <Button

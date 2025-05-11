@@ -31,6 +31,9 @@
 
     <integer name="navigation_anim_duration">200</integer>
     <integer name="connectivity_anim_duration">200</integer>
+    <integer name="max_about_length">100</integer>
+    <integer name="max_subject_length">50</integer>
+    <integer name="max_description_length">500</integer>
 
     <dimen name="skeleton_height">14dp</dimen>
     <dimen name="skeleton_height_big">20dp</dimen>

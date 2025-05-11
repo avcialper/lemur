@@ -116,10 +116,14 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding>(
 
         val isValidAbout = inputAbout.validate(
             rules = listOf(
-                MaxLengthRule(100)
+                MaxLengthRule(Constants.MAX_ABOUT_LENGTH)
             ),
             formatErrorMessage = { errorMessage ->
-                errorMessage.formatInvalidLengthError(requireContext(), R.string.about, 100)
+                errorMessage.formatInvalidLengthError(
+                    requireContext(),
+                    R.string.about,
+                    Constants.MAX_ABOUT_LENGTH
+                )
             }
         )
 
