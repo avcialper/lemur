@@ -64,7 +64,7 @@ class StorageRepositoryImpl @Inject constructor(
     }
 
     override fun createTask(task: Task): Flow<Resource<Boolean>> = flowWithResource {
-        taskCollection.document().set(task.toMap()).await()
+        taskCollection.document(task.id).set(task.toMap()).await()
         true
     }
 
@@ -113,14 +113,8 @@ class StorageRepositoryImpl @Inject constructor(
     }
 
     override fun updateTask(task: Task): Flow<Resource<Boolean>> = flowWithResource {
-        val querySnapshot = taskCollection.whereEqualTo(Constants.TASK_ID, task.id).get().await()
-        if (!querySnapshot.isEmpty) {
-            val document = querySnapshot.documents.first()
-            taskCollection.document(document.id).update(task.toMap()).await()
-            true
-        } else {
-            throw Exception("Task not found")
-        }
+        taskCollection.document(task.id).update(task.toMap()).await()
+        true
     }
 
     private fun <T> getTasksByField(filed: String, value: T): Flow<Resource<List<Task>>> =
