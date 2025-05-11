@@ -40,16 +40,7 @@ class StorageRepositoryImpl @Inject constructor(
     }
 
     override fun createUser(userProfile: UserProfile): Flow<Resource<Boolean>> = flowWithResource {
-        val (id, username, about, imageUrl) = userProfile
-
-        val user = hashMapOf(
-            Constants.USER_ID to id,
-            Constants.USERNAME to username,
-            Constants.ABOUT to about,
-            Constants.IMAGE_URL to imageUrl,
-        )
-
-        userCollection.document(userProfile.id).set(user).await()
+        userCollection.document(userProfile.id).set(userProfile.toMap()).await()
         true
     }
 

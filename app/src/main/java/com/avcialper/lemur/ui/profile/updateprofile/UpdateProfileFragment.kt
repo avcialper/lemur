@@ -62,7 +62,7 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding>(
             if (isValid) {
                 var file: File? = null
                 if (imageUri != null)
-                    file = convert()
+                    file = imageUri!!.convertFile()
 
                 vm.update(inputUsername.value, inputAbout.value, imageUrl, file)
             }
@@ -129,7 +129,4 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding>(
 
         return isValidUsername && isValidAbout
     }
-
-    private fun convert(): File = imageUri!!.convertFile()
-
 }

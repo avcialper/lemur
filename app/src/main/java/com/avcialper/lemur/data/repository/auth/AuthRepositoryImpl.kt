@@ -25,7 +25,7 @@ class AuthRepositoryImpl @Inject constructor(
             auth.currentUser?.reload()?.await()
             emit(auth.currentUser)
         } catch (e: Exception) {
-            emit(auth.currentUser)
+            emit(null)
         }
     }
 
@@ -43,7 +43,6 @@ class AuthRepositoryImpl @Inject constructor(
         auth.signOut()
         true
     }
-
 
     override fun forgotPassword(email: String): Flow<Resource<Boolean>> = flowWithResource {
         auth.sendPasswordResetEmail(email).await()

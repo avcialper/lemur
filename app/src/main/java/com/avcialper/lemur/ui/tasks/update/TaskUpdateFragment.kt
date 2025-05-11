@@ -9,7 +9,6 @@ import com.avcialper.lemur.R
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.databinding.FragmentTaskUpdateBinding
 import com.avcialper.lemur.helper.ImagePicker
-import com.avcialper.lemur.helper.UriToFile
 import com.avcialper.lemur.helper.validator.EmptyRule
 import com.avcialper.lemur.helper.validator.MaxLengthRule
 import com.avcialper.lemur.ui.BaseFragment
@@ -28,7 +27,6 @@ import com.avcialper.lemur.util.splitDateData
 import com.avcialper.lemur.util.splitLineDate
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
-import java.util.UUID
 
 @AndroidEntryPoint
 class TaskUpdateFragment :
@@ -129,7 +127,7 @@ class TaskUpdateFragment :
             if (isValid) {
                 var imageFile: File? = null
                 if (imageUri != null)
-                    imageFile = convertToFile(imageUri!!)
+                    imageFile = imageUri!!.convertFile()
 
                 val selectedDate = binding.tvSelectedDate.text.trim()
                 val splitDate = selectedDate.split("-")
@@ -242,9 +240,6 @@ class TaskUpdateFragment :
 
         return isTimeEmpty.not() && isTypeEmpty.not() && isValidSubject && isValidContent
     }
-
-    private fun convertToFile(uri: Uri): File =
-        UriToFile(requireContext()).convert(UUID.randomUUID().toString(), uri)
 
     private fun observe() {
         vm.state.createResourceObserver(::handleSuccess, ::handleLoading)
