@@ -101,5 +101,5 @@
     <string name="update_task_button">Görev güncelleme butonu.</string>
     <string name="add_note">Not Ekle</string>
     <string name="notes">Notlar</string>
-    <string name="delete_task_message">Bu görevi silmek istediğine emin misin?</string>"
+    <string name="delete_task_message">Bu görevi silmek istediğine emin misin?</string>
 </resources>

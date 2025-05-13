@@ -9,4 +9,8 @@ data class Note(
     val ownerID: String,
     val date: String,
     val time: String
-) : Parcelable
+) : Parcelable {
+
+    constructor() : this("", "", "", "")
+
+}

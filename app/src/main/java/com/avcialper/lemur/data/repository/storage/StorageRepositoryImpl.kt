@@ -2,6 +2,7 @@ package com.avcialper.lemur.data.repository.storage
 
 import com.avcialper.lemur.BuildConfig
 import com.avcialper.lemur.data.UserManager
+import com.avcialper.lemur.data.model.local.Note
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.data.model.remote.ImgBBResponse
 import com.avcialper.lemur.data.model.remote.UserProfile
@@ -11,6 +12,7 @@ import com.avcialper.lemur.util.constant.Constants
 import com.avcialper.lemur.util.constant.Resource
 import com.avcialper.lemur.util.constant.TaskStatus
 import com.avcialper.lemur.util.constant.TaskType
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
@@ -110,6 +112,11 @@ class StorageRepositoryImpl @Inject constructor(
 
     override fun deleteTask(id: String): Flow<Resource<Boolean>> = flowWithResource {
         taskCollection.document(id).delete().await()
+        true
+    }
+
+    override fun addNote(id: String, note: Note): Flow<Resource<Boolean>> = flowWithResource {
+        taskCollection.document(id).update(Constants.NOTES, FieldValue.arrayUnion(note)).await()
         true
     }
 

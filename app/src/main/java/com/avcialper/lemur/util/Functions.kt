@@ -62,6 +62,13 @@ fun getCurrentDate(): String {
     return formatDate(dayOfMonth, month, year)
 }
 
+fun getCurrentTime(): String {
+    val calendar = Calendar.getInstance()
+    val hour = calendar.get(Calendar.HOUR_OF_DAY)
+    val minute = calendar.get(Calendar.MINUTE)
+    return formatTime(hour, minute)
+}
+
 fun splitDateData(date: String): StartDate {
     val splitDate = date.split(".")
     val year = splitDate[2].toInt()

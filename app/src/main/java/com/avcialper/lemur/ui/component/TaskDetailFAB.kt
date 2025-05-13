@@ -91,6 +91,18 @@ class TaskDetailFAB @JvmOverloads constructor(
             fifthFab.show()
     }
 
+    fun show() = with(binding) {
+        fifthFab.show()
+    }
+
+    fun hide() = with(binding) {
+        firstFab.hide()
+        secondFab.hide()
+        thirdFab.hide()
+        fourthFab.hide()
+        fifthFab.hide()
+    }
+
     fun setFirstFabClickListener(listener: () -> Unit) {
         firstFABClickListener = listener
     }

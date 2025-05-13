@@ -9,6 +9,8 @@
         <item name="android:textColorHighlight">@color/orange</item>
         <item name="android:colorControlActivated">@color/orange</item>
         <item name="cursorColor">@color/orange</item>
+        <item name="android:navigationBarColor">@color/nero</item>
+        <item name="android:statusBarColor">@color/soft_black</item>
     </style>
 
 </resources>

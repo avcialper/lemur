@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Fill">
 
-    <androidx.core.widget.NestedScrollView style="@style/ScrollView">
+    <androidx.core.widget.NestedScrollView
+        style="@style/ScrollView"
+        android:layout_height="@dimen/zero_dp"
+        app:layout_constraintBottom_toTopOf="@id/note_wrapper"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/wrapper"
@@ -51,7 +57,31 @@
         android:id="@+id/progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/note_wrapper"
+        style="@style/Note.Wrapper"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/et_note"
+            style="@style/Note.Input"
+            android:hint="@string/add_note"
+            android:importantForAutofill="no" />
+
+        <Button
+            android:id="@+id/btn_add_note"
+            style="@style/Button.Small"
+            android:text="@string/add_note" />
+
+    </LinearLayout>
 
     <com.avcialper.lemur.ui.component.TaskDetailFAB
         android:id="@+id/fab"
@@ -59,5 +89,8 @@
         app:fab_count="two"
         app:fab_icon="@drawable/ic_edit"
         app:first_fab_text="@string/update"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:second_fab_text="@string/add_note" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

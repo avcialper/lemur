@@ -1,11 +1,12 @@
 package com.avcialper.lemur.ui
 
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -41,8 +42,9 @@ class MainActivity : AppCompatActivity() {
             val isCompleted = (vm.isThemeChecked.value && vm.isCurrentUserChecked.value).not()
             isCompleted
         }
-        enableEdgeToEdge()
+//        enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
         val fragmentManager =
             supportFragmentManager.findFragmentById(binding.navGraph.id) as NavHostFragment
@@ -87,9 +89,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onDestinationChangedListener(destination: NavDestination) {
-        val visibility =
-            if (isNotBottomNavigationDestinations(destination)) View.GONE else View.VISIBLE
+        val isNotBottomNavigationDestinations = isNotBottomNavigationDestinations(destination)
+        val visibility = if (isNotBottomNavigationDestinations) View.GONE else View.VISIBLE
+        val colorId =
+            if (isNotBottomNavigationDestinations) R.attr.backgroundColor else R.attr.bottomMenuColor
+
         binding.bottomMenu.visibility = visibility
+        @Suppress("DEPRECATION")
+        window.navigationBarColor = getNavigationBarColor(colorId)
+
+    }
+
+    private fun getNavigationBarColor(id: Int): Int {
+        val typedValue = TypedValue()
+        theme.resolveAttribute(id, typedValue, true)
+        return typedValue.data
     }
 
     private fun isNotBottomNavigationDestinations(destination: NavDestination): Boolean {
