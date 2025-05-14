@@ -19,8 +19,10 @@ import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.databinding.FragmentTaskDetailBinding
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.MainActivity
+import com.avcialper.lemur.ui.component.AlertFragment
 import com.avcialper.lemur.util.concatStartAndEndDate
 import com.avcialper.lemur.util.concatStartAndEntTime
+import com.avcialper.lemur.util.constant.TaskStatus
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,6 +46,7 @@ class TaskDetailFragment :
     private fun observe() {
         vm.state.createResourceObserver(::handleSuccess, ::handleLoading)
         vm.noteState.createResourceObserver(::handleNoteSuccess, ::handleLoading)
+        vm.statusState.createResourceObserver(::handleStatusSuccess, ::handleLoading)
     }
 
     private fun handleSuccess(task: Task?) = with(binding) {
@@ -83,6 +86,7 @@ class TaskDetailFragment :
     private fun handleNoteSuccess(isSuccess: Boolean?) = with(binding) {
         if (isSuccess == true) {
             closeCommentArea()
+            vm.clearNoteState()
             vm.getTaskDetail(args.taskId)
             etNote.text.clear()
         }
@@ -114,6 +118,16 @@ class TaskDetailFragment :
                 imm.showSoftInput(etNote, InputMethodManager.SHOW_IMPLICIT)
                 fab.hide()
                 handleNavigationBarColor(true)
+            }
+            setThirdFabClickListener {
+                openAlertDialog(R.string.cancel_task_message) {
+                    vm.updateTaskStatus(args.taskId, TaskStatus.CANCELED)
+                }
+            }
+            setFourthFabClickListener {
+                openAlertDialog(R.string.complete_task_message) {
+                    vm.updateTaskStatus(args.taskId, TaskStatus.COMPLETED)
+                }
             }
         }
 
@@ -159,6 +173,16 @@ class TaskDetailFragment :
         val imm =
             context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(etNote.windowToken, 0)
+    }
+
+    private fun openAlertDialog(label: Int, onCompleted: () -> Unit) {
+        binding.fab.close()
+        AlertFragment(label, true, onCompleted).show(childFragmentManager, "alert")
+    }
+
+    private fun handleStatusSuccess() {
+        vm.clearStatusState()
+        vm.getTaskDetail(args.taskId)
     }
 
 }

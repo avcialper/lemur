@@ -86,11 +86,13 @@
     <com.avcialper.lemur.ui.component.TaskDetailFAB
         android:id="@+id/fab"
         style="@style/FAB"
-        app:fab_count="two"
+        app:fab_count="four"
         app:fab_icon="@drawable/ic_edit"
         app:first_fab_text="@string/update"
+        app:fourth_fab_text="@string/complete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:second_fab_text="@string/add_note" />
+        app:second_fab_text="@string/add_note"
+        app:third_fab_text="@string/cancel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

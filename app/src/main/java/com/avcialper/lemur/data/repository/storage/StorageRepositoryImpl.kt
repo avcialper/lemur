@@ -115,6 +115,12 @@ class StorageRepositoryImpl @Inject constructor(
         true
     }
 
+    override fun updateTaskStatus(id: String, status: TaskStatus): Flow<Resource<Boolean>> =
+        flowWithResource {
+            taskCollection.document(id).update(Constants.STATUS, status.name).await()
+            true
+        }
+
     override fun addNote(id: String, note: Note): Flow<Resource<Boolean>> = flowWithResource {
         taskCollection.document(id).update(Constants.NOTES, FieldValue.arrayUnion(note)).await()
         true

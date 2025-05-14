@@ -102,4 +102,8 @@
     <string name="add_note">Not Ekle</string>
     <string name="notes">Notlar</string>
     <string name="delete_task_message">Bu görevi silmek istediğine emin misin?</string>
+    <string name="cancel">İptal Et</string>
+    <string name="complete">Tamamla</string>
+    <string name="cancel_task_message">Bu görevi iptal etmek istediğine emin misin?</string>
+    <string name="complete_task_message">Bu görevi tammalamak istediğine emin misin?</string>
 </resources>

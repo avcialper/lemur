@@ -7,6 +7,7 @@ import com.avcialper.lemur.data.model.local.Note
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.data.repository.storage.StorageRepository
 import com.avcialper.lemur.util.constant.Resource
+import com.avcialper.lemur.util.constant.TaskStatus
 import com.avcialper.lemur.util.getCurrentDate
 import com.avcialper.lemur.util.getCurrentTime
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,6 +28,9 @@ class TaskDetailViewModel @Inject constructor(
     private val _noteState = MutableStateFlow<Resource<Boolean>?>(null)
     val noteState = _noteState.asStateFlow()
 
+    private val _statusState = MutableStateFlow<Resource<Boolean>?>(null)
+    val statusState = _statusState.asStateFlow()
+
     fun getTaskDetail(taskId: String) = viewModelScope.launch {
         storageRepository.getTaskDetail(taskId).collect { resource ->
             _state.update { resource }
@@ -39,6 +43,20 @@ class TaskDetailViewModel @Inject constructor(
         storageRepository.addNote(taskId, noteData).collect { resource ->
             _noteState.update { resource }
         }
+    }
+
+    fun updateTaskStatus(taskId: String, status: TaskStatus) = viewModelScope.launch {
+        storageRepository.updateTaskStatus(taskId, status).collect { resource ->
+
+        }
+    }
+
+    fun clearNoteState() {
+        _noteState.update { null }
+    }
+
+    fun clearStatusState() {
+        _statusState.update { null }
     }
 
 }

@@ -93,6 +93,7 @@ class TaskDetailFAB @JvmOverloads constructor(
 
     fun show() = with(binding) {
         fifthFab.show()
+        isFABOpen = false
     }
 
     fun hide() = with(binding) {
@@ -101,6 +102,15 @@ class TaskDetailFAB @JvmOverloads constructor(
         thirdFab.hide()
         fourthFab.hide()
         fifthFab.hide()
+        isFABOpen = false
+    }
+
+    fun close() = with(binding) {
+        firstFab.hide()
+        secondFab.hide()
+        thirdFab.hide()
+        fourthFab.hide()
+        isFABOpen = false
     }
 
     fun setFirstFabClickListener(listener: () -> Unit) {

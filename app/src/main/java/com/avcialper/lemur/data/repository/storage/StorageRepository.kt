@@ -5,6 +5,7 @@ import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.data.model.remote.ImgBBResponse
 import com.avcialper.lemur.data.model.remote.UserProfile
 import com.avcialper.lemur.util.constant.Resource
+import com.avcialper.lemur.util.constant.TaskStatus
 import kotlinx.coroutines.flow.Flow
 import java.io.File
 
@@ -30,4 +31,5 @@ interface StorageRepository {
     fun updateTask(task: Task): Flow<Resource<Boolean>>
     fun deleteTask(id: String): Flow<Resource<Boolean>>
     fun addNote(id: String, note: Note): Flow<Resource<Boolean>>
+    fun updateTaskStatus(id: String, status: TaskStatus): Flow<Resource<Boolean>>
 }
