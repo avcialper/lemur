@@ -8,7 +8,7 @@ import androidx.core.content.withStyledAttributes
 import com.avcialper.lemur.R
 import com.avcialper.lemur.databinding.ComponentTaskDetailFabBinding
 
-class TaskDetailFAB @JvmOverloads constructor(
+class CustomFAB @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0

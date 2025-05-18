@@ -640,4 +640,7 @@
         <item name="android:textColor">?attr/secondaryColor</item>
     </style>
 
+    <style name="CreateTeamImage" parent="TaskImage" />
+
+    <style name="CreateTeamSelectImage" parent="TaskDateAndTime" />
 </resources>

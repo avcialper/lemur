@@ -106,4 +106,7 @@
     <string name="complete">Tamamla</string>
     <string name="cancel_task_message">Bu görevi iptal etmek istediğine emin misin?</string>
     <string name="complete_task_message">Bu görevi tammalamak istediğine emin misin?</string>
+    <string name="create_team">Takım Oluştur</string>
+    <string name="join_team">Takıma Katıl</string>
+    <string name="team_name">Takım Adı</string>
 </resources>

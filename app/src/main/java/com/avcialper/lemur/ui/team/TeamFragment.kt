@@ -10,6 +10,14 @@ class TeamFragment : BaseFragment<FragmentTeamBinding>(FragmentTeamBinding::infl
     }
 
     private fun initUI() = with(binding) {
-
+        fab.apply {
+            setFirstFabClickListener {
+                val destination = TeamFragmentDirections.toCreateTeam()
+                destination.navigate()
+            }
+            setSecondFabClickListener {
+                // Open JoinTeamAlertDialog
+            }
+        }
     }
 }

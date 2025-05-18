@@ -75,7 +75,15 @@
         android:id="@+id/teamFragment"
         android:name="com.avcialper.lemur.ui.team.TeamFragment"
         android:label="fragment_team"
-        tools:layout="@layout/fragment_team" />
+        tools:layout="@layout/fragment_team">
+        <action
+            android:id="@+id/toCreateTeam"
+            app:destination="@id/createTeamFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.avcialper.lemur.ui.profile.ProfileFragment"
@@ -176,4 +184,9 @@
             android:name="task"
             app:argType="com.avcialper.lemur.data.model.local.Task" />
     </fragment>
+    <fragment
+        android:id="@+id/createTeamFragment"
+        android:name="com.avcialper.lemur.ui.team.create.CreateTeamFragment"
+        android:label="fragment_create_team"
+        tools:layout="@layout/fragment_create_team" />
 </navigation>

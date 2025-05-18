@@ -2,6 +2,7 @@ package com.avcialper.lemur.data.repository.storage
 
 import com.avcialper.lemur.data.model.local.Note
 import com.avcialper.lemur.data.model.local.Task
+import com.avcialper.lemur.data.model.local.Team
 import com.avcialper.lemur.data.model.remote.ImgBBResponse
 import com.avcialper.lemur.data.model.remote.UserProfile
 import com.avcialper.lemur.util.constant.Resource
@@ -32,4 +33,5 @@ interface StorageRepository {
     fun deleteTask(id: String): Flow<Resource<Boolean>>
     fun addNote(id: String, note: Note): Flow<Resource<Boolean>>
     fun updateTaskStatus(id: String, status: TaskStatus): Flow<Resource<Boolean>>
+    fun createTeam(team: Team): Flow<Resource<Boolean>>
 }

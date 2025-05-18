@@ -4,6 +4,7 @@ import com.avcialper.lemur.BuildConfig
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.local.Note
 import com.avcialper.lemur.data.model.local.Task
+import com.avcialper.lemur.data.model.local.Team
 import com.avcialper.lemur.data.model.remote.ImgBBResponse
 import com.avcialper.lemur.data.model.remote.UserProfile
 import com.avcialper.lemur.data.repository.flowWithResource
@@ -32,6 +33,7 @@ class StorageRepositoryImpl @Inject constructor(
 
     private val userCollection = db.collection(Constants.USERS_COLLECTION)
     private val taskCollection = db.collection(Constants.TASKS_COLLECTION)
+    private val teamCollection = db.collection(Constants.TEAMS_COLLECTION)
 
     override fun uploadImage(file: File): Flow<Resource<ImgBBResponse>> = flowWithResource {
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
@@ -123,6 +125,11 @@ class StorageRepositoryImpl @Inject constructor(
 
     override fun addNote(id: String, note: Note): Flow<Resource<Boolean>> = flowWithResource {
         taskCollection.document(id).update(Constants.NOTES, FieldValue.arrayUnion(note)).await()
+        true
+    }
+
+    override fun createTeam(team: Team): Flow<Resource<Boolean>> = flowWithResource {
+        teamCollection.document(team.id).set(team.toMap()).await()
         true
     }
 

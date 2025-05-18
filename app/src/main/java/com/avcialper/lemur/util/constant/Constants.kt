@@ -11,6 +11,7 @@ object Constants {
     // Collection Paths
     const val USERS_COLLECTION = "users"
     const val TASKS_COLLECTION = "tasks"
+    const val TEAMS_COLLECTION = "teams"
 
     // User Profile Constants
     const val USER_ID = "id"
@@ -30,6 +31,11 @@ object Constants {
     const val STATUS = "status"
     const val NOTES = "notes"
 
+    // Team Constants
+    const val TEAM_ID = "id"
+    const val TEAM_NAME = "name"
+    const val TEAM_DESCRIPTION = "description"
+
     const val IMAGE_URL = "imageUrl"
 
     const val MIN_PASSWORD_LENGTH = 8
@@ -39,5 +45,7 @@ object Constants {
     const val MAX_ABOUT_LENGTH = 100
     const val MAX_SUBJECT_LENGTH = 50
     const val MAX_DESCRIPTION_LENGTH = 500
+    const val MAX_TEAM_NAME_LENGTH = 24
+    const val MAX_TEAM_DESCRIPTION_LENGTH = 100
 
 }

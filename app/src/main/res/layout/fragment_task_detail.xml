@@ -88,7 +88,7 @@
 
     </LinearLayout>
 
-    <com.avcialper.lemur.ui.component.TaskDetailFAB
+    <com.avcialper.lemur.ui.component.CustomFAB
         android:id="@+id/fab"
         style="@style/FAB"
         app:fab_count="four"
