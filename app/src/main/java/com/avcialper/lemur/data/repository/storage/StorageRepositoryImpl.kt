@@ -133,11 +133,26 @@ class StorageRepositoryImpl @Inject constructor(
         true
     }
 
-    override fun getTeams(): Flow<Resource<List<Team>>> = flowWithResource {
-        val id = UserManager.user!!.id
-        val documents = teamCollection.whereEqualTo(Constants.TEAM_OWNER_ID, id).get().await()
-        documents.toObjects(Team::class.java)
-    }
+    override fun addTeamToUser(userId: String, teamId: String): Flow<Resource<Boolean>> =
+        flowWithResource {
+            userCollection.document(userId).update(Constants.TEAMS, FieldValue.arrayUnion(teamId))
+                .await()
+            true
+        }
+
+    override fun getUsersJoinedTeams(userId: String): Flow<Resource<List<Team>>> =
+        flowWithResource {
+            val document = userCollection.document(userId).get().await()
+            val teams = document.toObject(UserProfile::class.java)?.teams ?: emptyList()
+
+            val response = mutableListOf<Team>()
+            teams.forEach { id ->
+                val teamDocument = teamCollection.whereEqualTo(Constants.TEAM_ID, id).get().await()
+                val teamList = teamDocument.toObjects(Team::class.java)
+                response.addAll(teamList)
+            }
+            response
+        }
 
     private fun <T> getTasksByField(filed: String, value: T): Flow<Resource<List<Task>>> =
         flowWithResource {

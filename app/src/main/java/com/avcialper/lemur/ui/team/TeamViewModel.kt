@@ -2,6 +2,7 @@ package com.avcialper.lemur.ui.team
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.local.Team
 import com.avcialper.lemur.data.repository.storage.StorageRepository
 import com.avcialper.lemur.util.constant.Resource
@@ -21,7 +22,8 @@ class TeamViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     fun getTeams() = viewModelScope.launch {
-        storageRepository.getTeams().collect { resource ->
+        val userId = UserManager.user!!.id
+        storageRepository.getUsersJoinedTeams(userId).collect { resource ->
             _state.update { resource }
         }
     }

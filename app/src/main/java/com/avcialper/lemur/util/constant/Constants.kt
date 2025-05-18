@@ -17,6 +17,7 @@ object Constants {
     const val USER_ID = "id"
     const val USERNAME = "username"
     const val ABOUT = "about"
+    const val TEAMS = "teams"
 
     // Task Constants
     const val TASK_ID = "id"
@@ -36,6 +37,8 @@ object Constants {
     const val TEAM_OWNER_ID = "teamOwnerId"
     const val TEAM_NAME = "name"
     const val TEAM_DESCRIPTION = "description"
+    const val TEAM_MEMBERS = "members"
+    const val TEAM_ROLES = "roles"
 
     const val IMAGE_URL = "imageUrl"
 

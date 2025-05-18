@@ -3,6 +3,8 @@ package com.avcialper.lemur.ui.team.create
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.UserManager
+import com.avcialper.lemur.data.model.local.Member
+import com.avcialper.lemur.data.model.local.Role
 import com.avcialper.lemur.data.model.local.Team
 import com.avcialper.lemur.data.repository.storage.StorageRepository
 import com.avcialper.lemur.util.constant.Resource
@@ -43,11 +45,28 @@ class CreateTeamViewModel @Inject constructor(
     }
 
     private suspend fun addTeam(name: String, description: String) {
-        val uuid = UUID.randomUUID().toString()
-        val team = Team(uuid, UserManager.user!!.id, name, description, imageUrl.value)
+        val teamId = UUID.randomUUID().toString()
+        val userId = UserManager.user!!.id
+        val role = Role("ADMIN", "Admin")
+        val member = Member(userId, role.code)
+
+        val team = Team(
+            teamId,
+            UserManager.user!!.id,
+            name,
+            description,
+            imageUrl.value,
+            listOf(member),
+            listOf(role)
+        )
+
         storageRepository.createTeam(team).collect { resource ->
-            _state.update { resource }
+            if (resource is Resource.Success)
+                storageRepository.addTeamToUser(userId, teamId).collect {
+                    _state.update { resource }
+                }
+            else
+                _state.update { resource }
         }
     }
-
 }

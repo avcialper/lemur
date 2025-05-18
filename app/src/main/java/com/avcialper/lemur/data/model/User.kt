@@ -9,4 +9,5 @@ data class User(
     var about: String,
     var imageUrl: String,
     var email: String,
+    var teams: List<String>
 )

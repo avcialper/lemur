@@ -14,6 +14,7 @@ object UserManager {
         username: String,
         about: String?,
         imageUrl: String?,
+        teams: List<String>
     ) {
         val newUser = User(
             firebaseUser = firebaseUser,
@@ -22,12 +23,13 @@ object UserManager {
             about = about ?: "",
             imageUrl = imageUrl ?: "",
             email = firebaseUser.email ?: "",
+            teams
         )
         user = newUser
     }
 
     fun updateUser(firebaseUser: FirebaseUser) {
-        updateUser(firebaseUser, "", "", "")
+        updateUser(firebaseUser, "", "", "", emptyList())
     }
 
     fun logout() {

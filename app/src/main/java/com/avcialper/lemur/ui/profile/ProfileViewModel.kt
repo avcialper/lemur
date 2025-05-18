@@ -43,8 +43,8 @@ class ProfileViewModel @Inject constructor(
     private suspend fun getUserFromRepository(user: FirebaseUser) {
         storageRepository.getUser(user.uid).collect { resource ->
             if (resource.status == ResourceStatus.SUCCESS) {
-                resource.data?.let { (_, username, about, imageUrl) ->
-                    UserManager.updateUser(user, username, about, imageUrl)
+                resource.data?.let { (_, username, about, imageUrl, teams) ->
+                    UserManager.updateUser(user, username, about, imageUrl, teams ?: emptyList())
                     _user.update { UserManager.user }
                 }
             }

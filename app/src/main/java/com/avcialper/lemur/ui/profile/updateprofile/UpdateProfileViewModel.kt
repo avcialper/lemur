@@ -53,7 +53,8 @@ class UpdateProfileViewModel @Inject constructor(
             UserManager.user?.id!!,
             username,
             about,
-            newImageUrl.value ?: imageUrl
+            newImageUrl.value ?: imageUrl,
+            UserManager.user?.teams
         )
         storageRepository.updateUser(user).collect { resource ->
             _state.value = resource
