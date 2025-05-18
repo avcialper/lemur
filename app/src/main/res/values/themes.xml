@@ -619,4 +619,25 @@
         <item name="android:textSize">@dimen/text_size_normal</item>
     </style>
 
+    <style name="NoteCard.Wrapper" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingTop">@dimen/padding_medium</item>
+        <item name="android:paddingBottom">@dimen/padding_small</item>
+    </style>
+
+    <style name="NoteCard.Note" parent="Theme.Lemur">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="NoteCard.DateAndTime" parent="Theme.Lemur">
+        <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">textEnd</item>
+        <item name="android:layout_marginTop">@dimen/margin_small</item>
+        <item name="android:textColor">?attr/secondaryColor</item>
+    </style>
+
 </resources>

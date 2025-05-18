@@ -84,3 +84,6 @@ fun splitLineDate(startDate: String, endDate: String): LineDate {
     val lineEndDate = LineSelectedDate(end.year, end.month, end.dayOfMonth)
     return LineDate(lineStartDate, lineEndDate)
 }
+
+fun concatDateAndTime(date: String, time: String): String =
+    String.format(LOCALE, "%s - %s", date, time)

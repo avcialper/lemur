@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/NoteCard.Wrapper">
+
+    <TextView
+        android:id="@+id/tx_note"
+        style="@style/NoteCard.Note" />
+
+    <TextView
+        android:id="@+id/date_and_time"
+        style="@style/NoteCard.DateAndTime" />
+
+</LinearLayout>

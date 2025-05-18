@@ -50,6 +50,11 @@
             <com.avcialper.lemur.ui.component.HeaderAndDivider
                 style="@style/FillHorizontal"
                 app:label="@string/notes" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_notes"
+                style="@style/FillHorizontal" />
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

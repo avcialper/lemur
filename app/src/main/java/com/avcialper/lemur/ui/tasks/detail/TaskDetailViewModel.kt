@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,7 +40,8 @@ class TaskDetailViewModel @Inject constructor(
 
     fun addNote(taskId: String, note: String) = viewModelScope.launch {
         val ownerId = UserManager.user!!.id
-        val noteData = Note(note, ownerId, getCurrentDate(), getCurrentTime())
+        val uuid = UUID.randomUUID().toString()
+        val noteData = Note(uuid, note, ownerId, getCurrentDate(), getCurrentTime())
         storageRepository.addNote(taskId, noteData).collect { resource ->
             _noteState.update { resource }
         }
