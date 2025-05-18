@@ -34,4 +34,5 @@ interface StorageRepository {
     fun addNote(id: String, note: Note): Flow<Resource<Boolean>>
     fun updateTaskStatus(id: String, status: TaskStatus): Flow<Resource<Boolean>>
     fun createTeam(team: Team): Flow<Resource<Boolean>>
+    fun getTeams(): Flow<Resource<List<Team>>>
 }

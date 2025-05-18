@@ -643,4 +643,16 @@
     <style name="CreateTeamImage" parent="TaskImage" />
 
     <style name="CreateTeamSelectImage" parent="TaskDateAndTime" />
+
+    <style name="TeamCard.Wrapper" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:padding">@dimen/padding_medium</item>
+    </style>
+
+    <style name="TeamCard.Text" parent="Theme.Lemur">
+        <item name="android:layout_marginStart">@dimen/margin_medium</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:layout_width">@dimen/zero_dp</item>
+    </style>
 </resources>

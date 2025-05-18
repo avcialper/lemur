@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/FillHorizontal"
+    android:padding="@dimen/padding_medium">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/team_image"
+        android:layout_width="@dimen/team_image_size"
+        android:layout_height="@dimen/team_image_size"
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/RoundedImage" />
+
+    <TextView
+        android:id="@+id/team_name"
+        style="@style/TeamCard.Text"
+        android:textSize="@dimen/text_size_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/team_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/team_description"
+        style="@style/TeamCard.Text"
+        android:layout_marginTop="13dp"
+        android:textColor="?attr/secondaryColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/team_image"
+        app:layout_constraintTop_toBottomOf="@+id/team_name" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

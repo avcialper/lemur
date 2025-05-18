@@ -33,6 +33,7 @@ object Constants {
 
     // Team Constants
     const val TEAM_ID = "id"
+    const val TEAM_OWNER_ID = "teamOwnerId"
     const val TEAM_NAME = "name"
     const val TEAM_DESCRIPTION = "description"
 

@@ -133,6 +133,12 @@ class StorageRepositoryImpl @Inject constructor(
         true
     }
 
+    override fun getTeams(): Flow<Resource<List<Team>>> = flowWithResource {
+        val id = UserManager.user!!.id
+        val documents = teamCollection.whereEqualTo(Constants.TEAM_OWNER_ID, id).get().await()
+        documents.toObjects(Team::class.java)
+    }
+
     private fun <T> getTasksByField(filed: String, value: T): Flow<Resource<List<Task>>> =
         flowWithResource {
             val ownerId = UserManager.user!!.id
