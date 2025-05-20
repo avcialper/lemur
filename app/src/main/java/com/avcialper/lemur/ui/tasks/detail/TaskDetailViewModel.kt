@@ -49,7 +49,7 @@ class TaskDetailViewModel @Inject constructor(
 
     fun updateTaskStatus(taskId: String, status: TaskStatus) = viewModelScope.launch {
         storageRepository.updateTaskStatus(taskId, status).collect { resource ->
-
+            _statusState.update { resource }
         }
     }
 

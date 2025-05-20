@@ -39,6 +39,7 @@ object Constants {
     const val TEAM_DESCRIPTION = "description"
     const val TEAM_MEMBERS = "members"
     const val TEAM_ROLES = "roles"
+    const val TEAM_INVITE_CODE = "inviteCode"
 
     const val IMAGE_URL = "imageUrl"
 

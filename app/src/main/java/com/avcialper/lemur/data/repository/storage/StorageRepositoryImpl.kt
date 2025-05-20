@@ -2,6 +2,7 @@ package com.avcialper.lemur.data.repository.storage
 
 import com.avcialper.lemur.BuildConfig
 import com.avcialper.lemur.data.UserManager
+import com.avcialper.lemur.data.model.local.Member
 import com.avcialper.lemur.data.model.local.Note
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.data.model.local.Team
@@ -35,7 +36,7 @@ class StorageRepositoryImpl @Inject constructor(
     private val taskCollection = db.collection(Constants.TASKS_COLLECTION)
     private val teamCollection = db.collection(Constants.TEAMS_COLLECTION)
 
-    override fun uploadImage(file: File): Flow<Resource<ImgBBResponse>> = flowWithResource {
+    override suspend fun uploadImage(file: File): Flow<Resource<ImgBBResponse>> = flowWithResource {
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
         val image = MultipartBody.Part.createFormData("image", file.name, requestFile)
         val apiKey = BuildConfig.IMG_BB_API_KEY.toRequestBody("text/plain".toMediaTypeOrNull())
@@ -43,104 +44,107 @@ class StorageRepositoryImpl @Inject constructor(
         api.uploadImage(image, apiKey)
     }
 
-    override fun createUser(userProfile: UserProfile): Flow<Resource<Boolean>> = flowWithResource {
-        userCollection.document(userProfile.id).set(userProfile.toMap()).await()
-        true
-    }
+    override suspend fun createUser(userProfile: UserProfile): Flow<Resource<Boolean>> =
+        flowWithResource {
+            userCollection.document(userProfile.id).set(userProfile.toMap()).await()
+            true
+        }
 
-    override fun getUser(id: String): Flow<Resource<UserProfile>> = flowWithResource {
+    override suspend fun getUser(id: String): Flow<Resource<UserProfile>> = flowWithResource {
         val response = userCollection.document(id).get().await()
         response.toObject(UserProfile::class.java)!!
     }
 
-    override fun updateUser(userProfile: UserProfile): Flow<Resource<Boolean>> = flowWithResource {
-        userCollection.document(userProfile.id).set(userProfile).await()
-        true
-    }
+    override suspend fun updateUser(userProfile: UserProfile): Flow<Resource<Boolean>> =
+        flowWithResource {
+            userCollection.document(userProfile.id).set(userProfile).await()
+            true
+        }
 
-    override fun createTask(task: Task): Flow<Resource<Boolean>> = flowWithResource {
+    override suspend fun createTask(task: Task): Flow<Resource<Boolean>> = flowWithResource {
         taskCollection.document(task.id).set(task.toMap()).await()
         true
     }
 
-    override fun getSelectedDateTasks(date: String): Flow<Resource<List<Task>>> =
+    override suspend fun getSelectedDateTasks(date: String): Flow<Resource<List<Task>>> =
         getTasksByField(Constants.START_DATE, date)
 
-    override fun getContinuesTasks(): Flow<Resource<List<Task>>> =
+    override suspend fun getContinuesTasks(): Flow<Resource<List<Task>>> =
         getTasksByField(Constants.STATUS, TaskStatus.CONTINUES.name)
 
-    override fun getCompletedTasks(): Flow<Resource<List<Task>>> =
+    override suspend fun getCompletedTasks(): Flow<Resource<List<Task>>> =
         getTasksByField(Constants.STATUS, TaskStatus.COMPLETED.name)
 
-    override fun getCanceledTasks(): Flow<Resource<List<Task>>> =
+    override suspend fun getCanceledTasks(): Flow<Resource<List<Task>>> =
         getTasksByField(Constants.STATUS, TaskStatus.CANCELED.name)
 
-    override fun getPersonalTasks(): Flow<Resource<List<Task>>> =
+    override suspend fun getPersonalTasks(): Flow<Resource<List<Task>>> =
         getTasksByField(Constants.TYPE, TaskType.PERSONAL.name)
 
-    override fun getTeamTasks(): Flow<Resource<List<Task>>> =
+    override suspend fun getTeamTasks(): Flow<Resource<List<Task>>> =
         getTasksByField(Constants.TYPE, TaskType.TEAM.name)
 
-    override fun getMeets(): Flow<Resource<List<Task>>> =
+    override suspend fun getMeets(): Flow<Resource<List<Task>>> =
         getTasksByField(Constants.TYPE, TaskType.MEET.name)
 
-    override fun getSelectedDateTasksWithLimit(date: String): Flow<Resource<List<Task>>> =
+    override suspend fun getSelectedDateTasksWithLimit(date: String): Flow<Resource<List<Task>>> =
         getTasksByFieldWithLimit(Constants.START_DATE, date)
 
-    override fun getContinuesTasksWithLimit(): Flow<Resource<List<Task>>> =
+    override suspend fun getContinuesTasksWithLimit(): Flow<Resource<List<Task>>> =
         getTasksByFieldWithLimit(Constants.STATUS, TaskStatus.CONTINUES.name)
 
-    override fun getCompletedTasksWithLimit(): Flow<Resource<List<Task>>> =
+    override suspend fun getCompletedTasksWithLimit(): Flow<Resource<List<Task>>> =
         getTasksByFieldWithLimit(Constants.STATUS, TaskStatus.COMPLETED.name)
 
-    override fun getCanceledTasksWithLimit(): Flow<Resource<List<Task>>> =
+    override suspend fun getCanceledTasksWithLimit(): Flow<Resource<List<Task>>> =
         getTasksByFieldWithLimit(Constants.STATUS, TaskStatus.CANCELED.name)
 
-    override fun getUserTasks(): Flow<Resource<List<Task>>> = flowWithResource {
+    override suspend fun getUserTasks(): Flow<Resource<List<Task>>> = flowWithResource {
         val ownerId = UserManager.user!!.id
         val documents = taskCollection.whereEqualTo(Constants.OWNER_ID, ownerId).get().await()
         documents.toObjects(Task::class.java)
     }
 
-    override fun getTaskDetail(taskId: String): Flow<Resource<Task>> = flowWithResource {
+    override suspend fun getTaskDetail(taskId: String): Flow<Resource<Task>> = flowWithResource {
         val taskDocument = taskCollection.whereEqualTo(Constants.TASK_ID, taskId).get().await()
         taskDocument.toObjects(Task::class.java).first()
     }
 
-    override fun updateTask(task: Task): Flow<Resource<Boolean>> = flowWithResource {
+    override suspend fun updateTask(task: Task): Flow<Resource<Boolean>> = flowWithResource {
         taskCollection.document(task.id).update(task.toMap()).await()
         true
     }
 
-    override fun deleteTask(id: String): Flow<Resource<Boolean>> = flowWithResource {
+    override suspend fun deleteTask(id: String): Flow<Resource<Boolean>> = flowWithResource {
         taskCollection.document(id).delete().await()
         true
     }
 
-    override fun updateTaskStatus(id: String, status: TaskStatus): Flow<Resource<Boolean>> =
+    override suspend fun updateTaskStatus(id: String, status: TaskStatus): Flow<Resource<Boolean>> =
         flowWithResource {
             taskCollection.document(id).update(Constants.STATUS, status.name).await()
             true
         }
 
-    override fun addNote(id: String, note: Note): Flow<Resource<Boolean>> = flowWithResource {
-        taskCollection.document(id).update(Constants.NOTES, FieldValue.arrayUnion(note)).await()
-        true
-    }
+    override suspend fun addNote(id: String, note: Note): Flow<Resource<Boolean>> =
+        flowWithResource {
+            taskCollection.document(id).update(Constants.NOTES, FieldValue.arrayUnion(note)).await()
+            true
+        }
 
-    override fun createTeam(team: Team): Flow<Resource<Boolean>> = flowWithResource {
+    override suspend fun createTeam(team: Team): Flow<Resource<Boolean>> = flowWithResource {
         teamCollection.document(team.id).set(team.toMap()).await()
         true
     }
 
-    override fun addTeamToUser(userId: String, teamId: String): Flow<Resource<Boolean>> =
+    override suspend fun addTeamToUser(userId: String, teamId: String): Flow<Resource<Boolean>> =
         flowWithResource {
             userCollection.document(userId).update(Constants.TEAMS, FieldValue.arrayUnion(teamId))
                 .await()
             true
         }
 
-    override fun getUsersJoinedTeams(userId: String): Flow<Resource<List<Team>>> =
+    override suspend fun getUsersJoinedTeams(userId: String): Flow<Resource<List<Team>>> =
         flowWithResource {
             val document = userCollection.document(userId).get().await()
             val teams = document.toObject(UserProfile::class.java)?.teams ?: emptyList()
@@ -152,6 +156,28 @@ class StorageRepositoryImpl @Inject constructor(
                 response.addAll(teamList)
             }
             response
+        }
+
+    override suspend fun joinTeam(inviteCode: String, userId: String): Flow<Resource<Boolean>> =
+        flowWithResource {
+            val teamDocuments =
+                teamCollection.whereEqualTo(Constants.TEAM_INVITE_CODE, inviteCode).get().await()
+            if (teamDocuments.isEmpty)
+                return@flowWithResource false
+
+            val teamDocument = teamDocuments.documents.first()
+            val team = teamDocument.toObject(Team::class.java)!!
+
+            if (team.members.any { it.id == userId })
+                return@flowWithResource false
+
+            val member = Member(userId, "MEMBER")
+            val members = team.members + member
+
+            teamCollection.document(team.id).update(Constants.TEAM_MEMBERS, members).await()
+            addTeamToUser(userId, team.id).collect {}
+
+            true
         }
 
     private fun <T> getTasksByField(filed: String, value: T): Flow<Resource<List<Task>>> =

@@ -7,6 +7,7 @@ import com.avcialper.lemur.data.model.local.Team
 import com.avcialper.lemur.databinding.FragmentTeamBinding
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.team.adapter.TeamAdapter
+import com.avcialper.lemur.ui.team.join.JoinTeamBottomSheet
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,7 +43,10 @@ class TeamFragment : BaseFragment<FragmentTeamBinding>(FragmentTeamBinding::infl
                 destination.navigate()
             }
             setSecondFabClickListener {
-                // Open JoinTeamAlertDialog
+                close()
+                JoinTeamBottomSheet {
+                    vm.getTeams()
+                }.show(childFragmentManager, "join_team_bottom_sheet")
             }
         }
     }

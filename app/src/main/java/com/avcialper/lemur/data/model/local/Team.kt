@@ -9,10 +9,11 @@ data class Team(
     var description: String,
     var imageUrl: String?,
     var members: List<Member>,
-    var roles: List<Role>
+    var roles: List<Role>,
+    var inviteCode: String
 ) {
 
-    constructor() : this("", "", "", "", "", emptyList(), emptyList())
+    constructor() : this("", "", "", "", "", emptyList(), emptyList(), "")
 
     fun toMap(): Map<String, Any?> =
         hashMapOf(
@@ -22,7 +23,8 @@ data class Team(
             Constants.TEAM_DESCRIPTION to description,
             Constants.IMAGE_URL to imageUrl,
             Constants.TEAM_MEMBERS to members,
-            Constants.TEAM_ROLES to roles
+            Constants.TEAM_ROLES to roles,
+            Constants.TEAM_INVITE_CODE to inviteCode
         )
 
 }
