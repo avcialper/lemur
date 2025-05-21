@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.avcialper.lemur.data.model.local.Team
 import com.avcialper.lemur.databinding.TeamCardBinding
 
-class TeamAdapter(teams: List<Team>) : RecyclerView.Adapter<TeamViewHolder>() {
+class TeamAdapter(teams: List<Team>, private val navigate: (Team) -> Unit) :
+    RecyclerView.Adapter<TeamViewHolder>() {
 
     private var data = teams
 
@@ -19,7 +20,7 @@ class TeamAdapter(teams: List<Team>) : RecyclerView.Adapter<TeamViewHolder>() {
 
     override fun onBindViewHolder(holder: TeamViewHolder, position: Int) {
         val team = data[position]
-        holder.bind(team)
+        holder.bind(team, navigate)
     }
 
     override fun getItemCount(): Int = data.size

@@ -7,8 +7,12 @@ import com.avcialper.lemur.databinding.TeamCardBinding
 
 class TeamViewHolder(private val binding: TeamCardBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(team: Team) = with(binding) {
+    fun bind(team: Team, navigate: (Team) -> Unit) = with(binding) {
         val (_, _, name, description, image) = team
+
+        root.setOnClickListener {
+            navigate(team)
+        }
 
         image?.let {
             teamImage.load(it)

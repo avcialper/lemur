@@ -23,7 +23,10 @@ class TeamFragment : BaseFragment<FragmentTeamBinding>(FragmentTeamBinding::infl
     }
 
     private fun initUI() = with(binding) {
-        val teamAdapter = TeamAdapter(emptyList())
+        val teamAdapter = TeamAdapter(emptyList()) { team ->
+            val destination = TeamFragmentDirections.toTeamDetail()
+            destination.navigate()
+        }
         val teamLayoutManager = LinearLayoutManager(requireContext())
         val divider = MaterialDividerItemDecoration(
             requireContext(),

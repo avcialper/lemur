@@ -655,4 +655,36 @@
         <item name="android:maxLines">1</item>
         <item name="android:layout_width">@dimen/zero_dp</item>
     </style>
+
+    <style name="TeamDetail.Image" parent="RoundedImage">
+        <item name="android:layout_width">@dimen/team_image_size</item>
+        <item name="android:layout_height">@dimen/team_image_size</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:layout_margin">@dimen/margin_medium</item>
+        <item name="android:src">@drawable/logo</item>
+    </style>
+
+    <style name="TeamDetail.TeamName" parent="Theme.Lemur">
+        <item name="android:layout_width">@dimen/zero_dp</item>
+        <item name="android:layout_marginStart">@dimen/margin_medium</item>
+        <item name="android:textSize">@dimen/padding_large</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:layout_marginEnd">@dimen/margin_medium</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="TeamDetail.TeamDescription" parent="Theme.Lemur">
+        <item name="android:layout_width">@dimen/zero_dp</item>
+        <item name="android:layout_marginStart">@dimen/margin_medium</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="TeamDetail.Divider" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_small</item>
+        <item name="android:background">?attr/bottomMenuColor</item>
+    </style>
 </resources>
