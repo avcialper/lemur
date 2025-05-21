@@ -4,7 +4,7 @@ import android.text.Editable
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.avcialper.lemur.data.model.local.Task
+import com.avcialper.lemur.data.model.local.TaskCard
 import com.avcialper.lemur.databinding.FragmentTasksFilterBinding
 import com.avcialper.lemur.helper.SimplifiedTextWatcher
 import com.avcialper.lemur.helper.SmoothScroller
@@ -86,7 +86,7 @@ class TasksFilterFragment :
         vm.state.createResourceObserver(::handleSuccess, ::handleLoading)
     }
 
-    private fun handleSuccess(data: List<Task>?) {
+    private fun handleSuccess(data: List<TaskCard>?) {
         binding.componentTasks.changeList(data ?: emptyList())
     }
 
@@ -129,7 +129,7 @@ class TasksFilterFragment :
             }
         })
         componentTasks.setOnTaskClickListener {
-            val direction = TasksFilterFragmentDirections.filterToDetail(it.id)
+            val direction = TasksFilterFragmentDirections.filterToDetail(it)
             direction.navigate()
         }
     }

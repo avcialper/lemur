@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.avcialper.lemur.R
-import com.avcialper.lemur.data.model.local.Task
+import com.avcialper.lemur.data.model.local.TaskCard
 import com.avcialper.lemur.databinding.ComponentTasksBinding
 import com.avcialper.lemur.helper.NonScrollableLinerLayoutManager
 import com.google.android.material.divider.MaterialDividerItemDecoration
@@ -20,7 +20,7 @@ class Tasks @JvmOverloads constructor(
     private val layoutInflater = LayoutInflater.from(context)
     private val binding = ComponentTasksBinding.inflate(layoutInflater, this, true)
 
-    private var onClick: (Task) -> Unit = {}
+    private var onClick: (String) -> Unit = {}
 
     init {
         val a = context.obtainStyledAttributes(attrs, R.styleable.Tasks)
@@ -66,7 +66,7 @@ class Tasks @JvmOverloads constructor(
         binding.textEmpty.text = text
     }
 
-    fun changeList(tasks: List<Task>) = with(binding) {
+    fun changeList(tasks: List<TaskCard>) = with(binding) {
         val adapter = rvTasks.adapter as TasksAdapter
         adapter.changeList(tasks)
         if (tasks.isEmpty()) {
@@ -84,7 +84,7 @@ class Tasks @JvmOverloads constructor(
         skeleton.root.visibility = if (isLoading) VISIBLE else GONE
     }
 
-    fun setOnTaskClickListener(onClick: (Task) -> Unit) {
+    fun setOnTaskClickListener(onClick: (String) -> Unit) {
         this.onClick = onClick
     }
 

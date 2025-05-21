@@ -2,16 +2,16 @@ package com.avcialper.lemur.ui.team.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.avcialper.lemur.data.model.local.Team
+import com.avcialper.lemur.data.model.local.TeamCard
 import com.avcialper.lemur.databinding.TeamCardBinding
 
 class TeamViewHolder(private val binding: TeamCardBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(team: Team, navigate: (Team) -> Unit) = with(binding) {
-        val (_, _, name, description, image) = team
+    fun bind(team: TeamCard, navigate: (String) -> Unit) = with(binding) {
+        val (id, name, description, image) = team
 
         root.setOnClickListener {
-            navigate(team)
+            navigate(id)
         }
 
         image?.let {

@@ -2,7 +2,7 @@ package com.avcialper.lemur.ui.tasks.filter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.avcialper.lemur.data.model.local.Task
+import com.avcialper.lemur.data.model.local.TaskCard
 import com.avcialper.lemur.data.repository.storage.StorageRepository
 import com.avcialper.lemur.util.constant.Resource
 import com.avcialper.lemur.util.getCurrentDate
@@ -18,7 +18,7 @@ class TasksFilterViewModel @Inject constructor(
     private val repository: StorageRepository
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<Resource<List<Task>>>(Resource.Loading())
+    private val _state = MutableStateFlow<Resource<List<TaskCard>>>(Resource.Loading())
     val state = _state.asStateFlow()
 
     fun getAllTasks() = viewModelScope.launch {
@@ -58,7 +58,7 @@ class TasksFilterViewModel @Inject constructor(
         repository.getUserTasks().collect(::collector)
     }
 
-    private fun collector(resource: Resource<List<Task>>) {
+    private fun collector(resource: Resource<List<TaskCard>>) {
         _state.update { resource }
     }
 

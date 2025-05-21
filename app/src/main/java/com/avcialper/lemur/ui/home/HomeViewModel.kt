@@ -2,7 +2,7 @@ package com.avcialper.lemur.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.avcialper.lemur.data.model.local.Task
+import com.avcialper.lemur.data.model.local.TaskCard
 import com.avcialper.lemur.data.repository.storage.StorageRepository
 import com.avcialper.lemur.util.constant.Resource
 import com.avcialper.lemur.util.formatDate
@@ -19,21 +19,21 @@ class HomeViewModel @Inject constructor(
     private val storageRepository: StorageRepository
 ) : ViewModel() {
 
-    private val loading = Resource.Loading<List<Task>>()
+    private val loading = Resource.Loading<List<TaskCard>>()
 
-    private val _selectedDateTasks = MutableStateFlow<Resource<List<Task>>>(loading)
+    private val _selectedDateTasks = MutableStateFlow<Resource<List<TaskCard>>>(loading)
     val selectedDateTasks = _selectedDateTasks.asStateFlow()
 
-    private val _todayTasks = MutableStateFlow<Resource<List<Task>>>(loading)
+    private val _todayTasks = MutableStateFlow<Resource<List<TaskCard>>>(loading)
     val todayTasks = _todayTasks.asStateFlow()
 
-    private val _continuesTasks = MutableStateFlow<Resource<List<Task>>>(loading)
+    private val _continuesTasks = MutableStateFlow<Resource<List<TaskCard>>>(loading)
     val continuesTasks = _continuesTasks.asStateFlow()
 
-    private val _completedTasks = MutableStateFlow<Resource<List<Task>>>(loading)
+    private val _completedTasks = MutableStateFlow<Resource<List<TaskCard>>>(loading)
     val completedTasks = _completedTasks.asStateFlow()
 
-    private val _canceledTasks = MutableStateFlow<Resource<List<Task>>>(loading)
+    private val _canceledTasks = MutableStateFlow<Resource<List<TaskCard>>>(loading)
     val canceledTasks = _canceledTasks.asStateFlow()
 
     var date: StartDate? = null

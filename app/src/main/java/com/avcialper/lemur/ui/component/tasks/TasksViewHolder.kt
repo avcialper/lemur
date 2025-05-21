@@ -6,7 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.avcialper.lemur.R
-import com.avcialper.lemur.data.model.local.Task
+import com.avcialper.lemur.data.model.local.TaskCard
 import com.avcialper.lemur.databinding.ComponentTaskBinding
 import com.avcialper.lemur.util.constant.TaskStatus
 import com.avcialper.lemur.util.constant.TaskType
@@ -16,19 +16,19 @@ class TasksViewHolder(
     private val binding: ComponentTaskBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(task: Task, onClick: (Task) -> Unit) = with(binding) {
+    fun bind(task: TaskCard, onClick: (String) -> Unit) = with(binding) {
         textTaskName.text = task.subject
         textDescription.text = task.description
 
-        root.setOnClickListener { onClick.invoke(task) }
+        root.setOnClickListener { onClick.invoke(task.id) }
 
         handleDateFormat(task)
         handleTaskStatus(task.status)
         handleTaskType(task.type)
     }
 
-    private fun handleDateFormat(task: Task) = with(binding) {
-        val (_, _, _, _, startDate, endDate, startTime, endTime, _, _, _) = task
+    private fun handleDateFormat(task: TaskCard) = with(binding) {
+        val (_, _, _, startDate, endDate, startTime, endTime, _, _) = task
 
         if (endDate == null)
             textDateTime.text =

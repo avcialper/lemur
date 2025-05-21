@@ -3,7 +3,7 @@ package com.avcialper.lemur.ui.team
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.UserManager
-import com.avcialper.lemur.data.model.local.Team
+import com.avcialper.lemur.data.model.local.TeamCard
 import com.avcialper.lemur.data.repository.storage.StorageRepository
 import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +18,7 @@ class TeamViewModel @Inject constructor(
     private val storageRepository: StorageRepository
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<Resource<List<Team>>?>(null)
+    private val _state = MutableStateFlow<Resource<List<TeamCard>>?>(null)
     val state = _state.asStateFlow()
 
     fun getTeams() = viewModelScope.launch {

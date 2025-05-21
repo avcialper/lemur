@@ -4,14 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.avcialper.lemur.data.model.local.Task
+import com.avcialper.lemur.data.model.local.TaskCard
 import com.avcialper.lemur.databinding.ComponentTaskBinding
 import com.avcialper.lemur.helper.TasksDiffUtil
 
 class TasksAdapter(
-    private var tasks: List<Task>,
+    private var tasks: List<TaskCard>,
     private val isShort: Boolean = false,
-    private val onClick: (Task) -> Unit
+    private val onClick: (String) -> Unit
 ) : RecyclerView.Adapter<TasksViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TasksViewHolder {
@@ -27,7 +27,7 @@ class TasksAdapter(
 
     override fun getItemCount(): Int = if (isShort && tasks.size > 3) 3 else tasks.size
 
-    fun changeList(tasks: List<Task>) {
+    fun changeList(tasks: List<TaskCard>) {
         val diffCallback = TasksDiffUtil(this.tasks, tasks)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         this.tasks = tasks

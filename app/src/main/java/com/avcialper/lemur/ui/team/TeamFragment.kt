@@ -3,7 +3,7 @@ package com.avcialper.lemur.ui.team
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.avcialper.lemur.data.model.local.Team
+import com.avcialper.lemur.data.model.local.TeamCard
 import com.avcialper.lemur.databinding.FragmentTeamBinding
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.team.adapter.TeamAdapter
@@ -23,7 +23,7 @@ class TeamFragment : BaseFragment<FragmentTeamBinding>(FragmentTeamBinding::infl
     }
 
     private fun initUI() = with(binding) {
-        val teamAdapter = TeamAdapter(emptyList()) { team ->
+        val teamAdapter = TeamAdapter(emptyList()) {
             val destination = TeamFragmentDirections.toTeamDetail()
             destination.navigate()
         }
@@ -58,7 +58,7 @@ class TeamFragment : BaseFragment<FragmentTeamBinding>(FragmentTeamBinding::infl
         vm.state.createResourceObserver(::handleSuccess, ::handleLoading)
     }
 
-    private fun handleSuccess(teams: List<Team>?) {
+    private fun handleSuccess(teams: List<TeamCard>?) {
         teams?.let {
             (binding.rvTeams.adapter as TeamAdapter).changeList(it)
         }

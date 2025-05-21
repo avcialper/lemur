@@ -1,11 +1,11 @@
 package com.avcialper.lemur.ui.team.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.avcialper.lemur.data.model.local.Team
+import com.avcialper.lemur.data.model.local.TeamCard
 
 class TeamDiffUtil(
-    private val oldData: List<Team>,
-    private val newData: List<Team>
+    private val oldData: List<TeamCard>,
+    private val newData: List<TeamCard>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = oldData.size

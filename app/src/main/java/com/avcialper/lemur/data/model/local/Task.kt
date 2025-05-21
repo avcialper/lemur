@@ -51,4 +51,16 @@ data class Task(
             Constants.STATUS to status.name,
             Constants.NOTES to notes
         )
+
+    fun toTaskCard(): TaskCard = TaskCard(
+        id,
+        subject,
+        description,
+        startDate,
+        endDate,
+        startTime,
+        endTime,
+        type,
+        status
+    )
 }

@@ -4,7 +4,6 @@ import android.Manifest.permission.POST_NOTIFICATIONS
 import androidx.fragment.app.viewModels
 import com.avcialper.lemur.R
 import com.avcialper.lemur.data.AppManager
-import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.databinding.FragmentHomeBinding
 import com.avcialper.lemur.helper.PermissionManager
 import com.avcialper.lemur.ui.BaseFragment
@@ -86,8 +85,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         componentCanceled.setOnTaskClickListener(::onTaskClick)
     }
 
-    private fun onTaskClick(task: Task) {
-        val direction = HomeFragmentDirections.toTaskDetail(task.id)
+    private fun onTaskClick(id: String) {
+        val direction = HomeFragmentDirections.toTaskDetail(id)
         direction.navigate()
     }
 

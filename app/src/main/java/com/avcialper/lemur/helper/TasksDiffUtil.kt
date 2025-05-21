@@ -1,11 +1,11 @@
 package com.avcialper.lemur.helper
 
 import androidx.recyclerview.widget.DiffUtil
-import com.avcialper.lemur.data.model.local.Task
+import com.avcialper.lemur.data.model.local.TaskCard
 
 class TasksDiffUtil(
-    private val oldList: List<Task>,
-    private val newList: List<Task>
+    private val oldList: List<TaskCard>,
+    private val newList: List<TaskCard>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = oldList.size

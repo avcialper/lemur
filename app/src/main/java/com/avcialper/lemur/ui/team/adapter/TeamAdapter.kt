@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.avcialper.lemur.data.model.local.Team
+import com.avcialper.lemur.data.model.local.TeamCard
 import com.avcialper.lemur.databinding.TeamCardBinding
 
-class TeamAdapter(teams: List<Team>, private val navigate: (Team) -> Unit) :
+class TeamAdapter(teams: List<TeamCard>, private val navigate: (String) -> Unit) :
     RecyclerView.Adapter<TeamViewHolder>() {
 
     private var data = teams
@@ -25,7 +25,7 @@ class TeamAdapter(teams: List<Team>, private val navigate: (Team) -> Unit) :
 
     override fun getItemCount(): Int = data.size
 
-    fun changeList(data: List<Team>) {
+    fun changeList(data: List<TeamCard>) {
         val diffUtil = TeamDiffUtil(this.data, data)
         val diffResult = DiffUtil.calculateDiff(diffUtil)
         this.data = data

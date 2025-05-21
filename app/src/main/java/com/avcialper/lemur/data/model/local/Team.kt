@@ -27,4 +27,6 @@ data class Team(
             Constants.TEAM_INVITE_CODE to inviteCode
         )
 
+    fun toTeamCard(): TeamCard = TeamCard(id, name, description, imageUrl)
+
 }

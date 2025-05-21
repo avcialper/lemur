@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.core.content.withStyledAttributes
 import com.avcialper.lemur.R
-import com.avcialper.lemur.data.model.local.Task
+import com.avcialper.lemur.data.model.local.TaskCard
 import com.avcialper.lemur.databinding.ComponentTasksAreaBinding
 import com.avcialper.lemur.util.constant.FilterType
 import com.avcialper.lemur.util.formatDate
@@ -46,7 +46,7 @@ class TasksArea @JvmOverloads constructor(
     }
 
     fun create(
-        tasks: List<Task> = emptyList(),
+        tasks: List<TaskCard> = emptyList(),
         title: Int,
         filterType: FilterType = FilterType.ALL,
         filterDate: String? = null,
@@ -61,12 +61,12 @@ class TasksArea @JvmOverloads constructor(
         binding.componentTasks.handleLoading(isLoading)
     }
 
-    fun handleSuccess(data: List<Task>?) {
+    fun handleSuccess(data: List<TaskCard>?) {
         val tasks = data ?: emptyList()
         binding.componentTasks.changeList(tasks)
     }
 
-    fun setOnTaskClickListener(onClick: (Task) -> Unit) {
+    fun setOnTaskClickListener(onClick: (String) -> Unit) {
         binding.componentTasks.setOnTaskClickListener(onClick)
     }
 
