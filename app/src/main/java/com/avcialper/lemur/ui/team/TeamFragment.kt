@@ -7,7 +7,7 @@ import com.avcialper.lemur.data.model.local.TeamCard
 import com.avcialper.lemur.databinding.FragmentTeamBinding
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.team.adapter.TeamAdapter
-import com.avcialper.lemur.ui.team.join.JoinTeamBottomSheet
+import com.avcialper.lemur.ui.team.component.join.JoinTeamBottomSheet
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,8 +23,8 @@ class TeamFragment : BaseFragment<FragmentTeamBinding>(FragmentTeamBinding::infl
     }
 
     private fun initUI() = with(binding) {
-        val teamAdapter = TeamAdapter(emptyList()) {
-            val destination = TeamFragmentDirections.toTeamDetail()
+        val teamAdapter = TeamAdapter(emptyList()) { teamId ->
+            val destination = TeamFragmentDirections.toTeamDetail(teamId)
             destination.navigate()
         }
         val teamLayoutManager = LinearLayoutManager(requireContext())

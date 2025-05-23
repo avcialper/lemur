@@ -1,4 +1,4 @@
-package com.avcialper.lemur.ui.team.join
+package com.avcialper.lemur.ui.team.component.join
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

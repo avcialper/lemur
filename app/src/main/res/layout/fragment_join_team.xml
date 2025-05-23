@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/BottomSheetWrapper"
-    tools:context=".ui.team.join.JoinTeamBottomSheet">
+    tools:context=".ui.team.component.join.JoinTeamBottomSheet">
 
     <include layout="@layout/drag_handle" />
 

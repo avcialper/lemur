@@ -113,4 +113,10 @@
     <string name="invite_code">Davet kodu</string>
     <string name="join">Katıl</string>
     <string name="join_error">Hata oluştu.</string>
+    <string name="create_task">Görev Oluştur</string>
+    <string name="create_room">Oda Oluştur</string>
+    <string name="members">Üyeler</string>
+    <string name="leave_team">Takımdan Ayrıl</string>
+    <string name="role_management">Rol Yönetimi</string>
+    <string name="invite_code_big">Davet Kodu</string>
 </resources>

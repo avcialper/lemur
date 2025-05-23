@@ -1,4 +1,4 @@
-package com.avcialper.lemur.ui.team.join
+package com.avcialper.lemur.ui.team.component.join
 
 import android.os.Bundle
 import android.view.LayoutInflater

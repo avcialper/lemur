@@ -25,6 +25,7 @@
     <dimen name="profile_picture_size">150dp</dimen>
     <dimen name="image_selector_content">1dp</dimen>
     <dimen name="team_image_size">64dp</dimen>
+    <dimen name="team_image_size_sheet">164dp</dimen>
 
     <dimen name="icon_of_icon_label">64dp</dimen>
     <dimen name="icon_size">32dp</dimen>

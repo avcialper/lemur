@@ -53,3 +53,7 @@ enum class Theme(val value: String) {
         fun fromString(theme: String?): Theme = entries.find { it.value == theme } ?: SYSTEM_DEFAULT
     }
 }
+
+enum class TeamBottomSheetActions {
+    UPDATE, MEMBERS, INVITE_CODE, ROLE_MANAGEMENT, LEAVE_TEAM
+}

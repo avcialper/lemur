@@ -182,6 +182,11 @@ class StorageRepositoryImpl @Inject constructor(
             true
         }
 
+    override suspend fun getTeam(teamId: String): Flow<Resource<Team>> = flowWithResource {
+        val documentation = teamCollection.document(teamId).get().await()
+        documentation.toObject(Team::class.java)!!
+    }
+
     private fun <T> getTasksByField(filed: String, value: T): Flow<Resource<List<TaskCard>>> =
         flowWithResource {
             val ownerId = UserManager.user!!.id

@@ -656,12 +656,13 @@
         <item name="android:layout_width">@dimen/zero_dp</item>
     </style>
 
-    <style name="TeamDetail.Image" parent="RoundedImage">
+    <style name="TeamDetail.Image" parent="Theme.Lemur">
         <item name="android:layout_width">@dimen/team_image_size</item>
         <item name="android:layout_height">@dimen/team_image_size</item>
         <item name="android:scaleType">centerCrop</item>
         <item name="android:layout_margin">@dimen/margin_medium</item>
         <item name="android:src">@drawable/logo</item>
+        <item name="shapeAppearanceOverlay">@style/RoundedImage</item>
     </style>
 
     <style name="TeamDetail.TeamName" parent="Theme.Lemur">
@@ -683,8 +684,32 @@
 
     <style name="TeamDetail.Divider" parent="Theme.Lemur">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">2dp</item>
+        <item name="android:layout_height">4dp</item>
         <item name="android:layout_marginTop">@dimen/margin_small</item>
         <item name="android:background">?attr/bottomMenuColor</item>
     </style>
+
+    <style name="Sheet.TeamImage" parent="Theme.Lemur">
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/margin_medium</item>
+        <item name="android:layout_marginBottom">@dimen/margin_medium</item>
+        <item name="shapeAppearanceOverlay">@style/RoundedImage</item>
+        <item name="android:layout_width">@dimen/team_image_size_sheet</item>
+        <item name="android:layout_height">@dimen/team_image_size_sheet</item>
+        <item name="android:src">@drawable/logo</item>
+    </style>
+
+    <style name="Sheet.TeamName" parent="Theme.Lemur">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginBottom">@dimen/margin_small</item>
+    </style>
+
+    <style name="Sheet.TeamDescription" parent="Theme.Lemur">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_marginBottom">@dimen/margin_large</item>
+    </style>
+
 </resources>

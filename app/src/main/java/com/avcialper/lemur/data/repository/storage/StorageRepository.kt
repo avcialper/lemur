@@ -39,4 +39,5 @@ interface StorageRepository {
     suspend fun addTeamToUser(userId: String, teamId: String): Flow<Resource<Boolean>>
     suspend fun getUsersJoinedTeams(userId: String): Flow<Resource<List<TeamCard>>>
     suspend fun joinTeam(inviteCode: String, userId: String): Flow<Resource<Boolean>>
+    suspend fun getTeam(teamId: String): Flow<Resource<Team>>
 }
