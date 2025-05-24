@@ -153,4 +153,6 @@ abstract class BaseFragment<VB : ViewBinding>(
         val message = getString(messageId)
         toast(message)
     }
+
+    fun getInt(id: Int): Int = requireContext().resources.getInteger(id)
 }

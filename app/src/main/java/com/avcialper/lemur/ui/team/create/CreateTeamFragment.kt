@@ -10,7 +10,6 @@ import com.avcialper.lemur.helper.validator.EmptyRule
 import com.avcialper.lemur.helper.validator.MaxLengthRule
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.component.ImageUpdateSheet
-import com.avcialper.lemur.util.constant.Constants
 import com.avcialper.lemur.util.extension.formatInvalidLengthError
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -78,30 +77,32 @@ class CreateTeamFragment :
     }
 
     private fun validate(): Boolean {
+        val maxTeamNameLength = getInt(R.integer.max_team_name_length)
         val isValidTeamName = binding.inputTeamName.validate(
             rules = listOf(
                 EmptyRule(),
-                MaxLengthRule(Constants.MAX_TEAM_NAME_LENGTH)
+                MaxLengthRule(maxTeamNameLength)
             ),
             formatErrorMessage = { errorMessage ->
                 errorMessage.formatInvalidLengthError(
                     requireContext(),
                     R.string.team_name,
-                    Constants.MAX_TEAM_NAME_LENGTH
+                    maxTeamNameLength
                 )
             }
         )
 
+        val maxTeamDescriptionLength = getInt(R.integer.max_team_description_length)
         val isValidDescription = binding.inputTeamDescription.validate(
             rules = listOf(
                 EmptyRule(),
-                MaxLengthRule(Constants.MAX_TEAM_DESCRIPTION_LENGTH),
+                MaxLengthRule(maxTeamDescriptionLength),
             ),
             formatErrorMessage = { errorMessage ->
                 errorMessage.formatInvalidLengthError(
                     requireContext(),
                     R.string.description,
-                    Constants.MAX_TEAM_DESCRIPTION_LENGTH
+                    maxTeamDescriptionLength
                 )
             }
         )

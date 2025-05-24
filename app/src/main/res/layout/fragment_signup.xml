@@ -21,7 +21,7 @@
             style="@style/FillHorizontal"
             android:hint="@string/username"
             android:inputType="text"
-            app:counter_max_length="16"
+            app:counter_max_length="@integer/max_username_length"
             app:have_counter="true" />
 
         <com.avcialper.lemur.ui.component.TextInput

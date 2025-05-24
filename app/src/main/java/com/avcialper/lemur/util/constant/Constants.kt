@@ -42,15 +42,4 @@ object Constants {
     const val TEAM_INVITE_CODE = "inviteCode"
 
     const val IMAGE_URL = "imageUrl"
-
-    const val MIN_PASSWORD_LENGTH = 8
-    const val MAX_PASSWORD_LENGTH = 24
-    const val MIN_USERNAME_LENGTH = 4
-    const val MAX_USERNAME_LENGTH = 16
-    const val MAX_ABOUT_LENGTH = 100
-    const val MAX_SUBJECT_LENGTH = 50
-    const val MAX_DESCRIPTION_LENGTH = 500
-    const val MAX_TEAM_NAME_LENGTH = 24
-    const val MAX_TEAM_DESCRIPTION_LENGTH = 100
-
 }

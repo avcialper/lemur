@@ -18,7 +18,6 @@ import com.avcialper.lemur.ui.component.ImageUpdateSheet
 import com.avcialper.lemur.ui.component.TaskTypeSheet
 import com.avcialper.lemur.util.concatStartAndEndDate
 import com.avcialper.lemur.util.concatStartAndEntTime
-import com.avcialper.lemur.util.constant.Constants
 import com.avcialper.lemur.util.constant.DateTimePickerType
 import com.avcialper.lemur.util.extension.formatInvalidLengthError
 import com.avcialper.lemur.util.formatDate
@@ -203,42 +202,48 @@ class TaskUpdateFragment :
 
     private fun validate(): Boolean = with(binding) {
         val isTimeEmpty = tvSelectedTime.text == getString(R.string.select_time)
-        if (isTimeEmpty)
+        if (isTimeEmpty) {
             toast(R.string.select_time)
+            return false
+        }
 
         val isTypeEmpty = tvType.text == getString(R.string.select_task_type)
-        if (isTypeEmpty)
+        if (isTypeEmpty) {
             toast(R.string.select_task_type)
+            return false
+        }
 
+        val maxSubjectLength = getInt(R.integer.max_subject_length)
         val isValidSubject = inputSubject.validate(
             rules = listOf(
                 EmptyRule(),
-                MaxLengthRule(Constants.MAX_SUBJECT_LENGTH)
+                MaxLengthRule(maxSubjectLength)
             ),
             formatErrorMessage = { errorMessage ->
                 errorMessage.formatInvalidLengthError(
                     requireContext(),
                     R.string.subject,
-                    Constants.MAX_SUBJECT_LENGTH
+                    maxSubjectLength
                 )
             }
         )
 
+        val maxDescriptionLength = getInt(R.integer.max_description_length)
         val isValidContent = inputDescription.validate(
             rules = listOf(
                 EmptyRule(),
-                MaxLengthRule(Constants.MAX_DESCRIPTION_LENGTH)
+                MaxLengthRule(maxDescriptionLength)
             ),
             formatErrorMessage = { errorMessage ->
                 errorMessage.formatInvalidLengthError(
                     requireContext(),
                     R.string.description,
-                    Constants.MAX_DESCRIPTION_LENGTH
+                    maxDescriptionLength
                 )
             }
         )
 
-        return isTimeEmpty.not() && isTypeEmpty.not() && isValidSubject && isValidContent
+        return isValidSubject && isValidContent
     }
 
     private fun observe() {

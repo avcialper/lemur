@@ -11,7 +11,6 @@ import com.avcialper.lemur.helper.validator.EmptyRule
 import com.avcialper.lemur.helper.validator.LengthRule
 import com.avcialper.lemur.helper.validator.PasswordRule
 import com.avcialper.lemur.ui.auth.AuthBaseFragment
-import com.avcialper.lemur.util.constant.Constants
 import com.avcialper.lemur.util.extension.formatInvalidLengthError
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -72,17 +71,19 @@ class SignupFragment : AuthBaseFragment<FragmentSignupBinding>(FragmentSignupBin
     }
 
     override fun validate(): Boolean = with(binding) {
+        val minUsernameLength = getInt(R.integer.min_username_length)
+        val maxUsernameLength = getInt(R.integer.max_username_length)
         val isValidUsername = inputUsername.validate(
             rules = listOf(
                 EmptyRule(),
-                LengthRule(Constants.MIN_USERNAME_LENGTH, Constants.MAX_USERNAME_LENGTH)
+                LengthRule(minUsernameLength, maxUsernameLength)
             ),
             formatErrorMessage = { errorMessage ->
                 errorMessage.formatInvalidLengthError(
                     requireContext(),
                     R.string.username,
-                    Constants.MIN_USERNAME_LENGTH,
-                    Constants.MAX_USERNAME_LENGTH
+                    minUsernameLength,
+                    maxUsernameLength
                 )
             }
         )
@@ -94,18 +95,20 @@ class SignupFragment : AuthBaseFragment<FragmentSignupBinding>(FragmentSignupBin
             )
         )
 
+        val minPasswordLength = getInt(R.integer.min_password_length)
+        val maxPasswordLength = getInt(R.integer.max_password_length)
         val isValidPassword = inputPassword.validate(
             rules = listOf(
                 EmptyRule(),
-                LengthRule(Constants.MIN_PASSWORD_LENGTH, Constants.MAX_PASSWORD_LENGTH),
+                LengthRule(minPasswordLength, maxPasswordLength),
                 PasswordRule()
             ),
             formatErrorMessage = { errorMessage ->
                 errorMessage.formatInvalidLengthError(
                     requireContext(),
                     R.string.password,
-                    Constants.MIN_PASSWORD_LENGTH,
-                    Constants.MAX_PASSWORD_LENGTH
+                    minPasswordLength,
+                    maxPasswordLength
                 )
             }
         )
@@ -113,7 +116,7 @@ class SignupFragment : AuthBaseFragment<FragmentSignupBinding>(FragmentSignupBin
         val isValidConfirmPassword = inputConfirmPassword.validate(
             rules = listOf(
                 EmptyRule(),
-                LengthRule(Constants.MIN_PASSWORD_LENGTH, Constants.MAX_PASSWORD_LENGTH),
+                LengthRule(minPasswordLength, maxPasswordLength),
                 PasswordRule(),
                 ConfirmPasswordRule(inputPassword.value)
             ),
@@ -121,8 +124,8 @@ class SignupFragment : AuthBaseFragment<FragmentSignupBinding>(FragmentSignupBin
                 errorMessage.formatInvalidLengthError(
                     requireContext(),
                     R.string.password,
-                    Constants.MIN_PASSWORD_LENGTH,
-                    Constants.MAX_PASSWORD_LENGTH
+                    minPasswordLength,
+                    maxPasswordLength
                 )
             }
         )

@@ -9,7 +9,6 @@ import com.avcialper.lemur.helper.validator.LengthRule
 import com.avcialper.lemur.helper.validator.NotSameRule
 import com.avcialper.lemur.helper.validator.PasswordRule
 import com.avcialper.lemur.ui.BaseFragment
-import com.avcialper.lemur.util.constant.Constants
 import com.avcialper.lemur.util.extension.exceptionConverter
 import com.avcialper.lemur.util.extension.formatInvalidLengthError
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -63,10 +62,12 @@ class UpdatePasswordFragment : BaseFragment<FragmentUpdatePasswordBinding>(
     }
 
     private fun validate(): Boolean = with(binding) {
+        val minPasswordLength = getInt(R.integer.min_password_length)
+        val maxPasswordLength = getInt(R.integer.max_password_length)
         val isValidCurrentPassword = inputCurrentPassword.validate(
             rules = listOf(
                 EmptyRule(),
-                LengthRule(Constants.MIN_PASSWORD_LENGTH, Constants.MAX_PASSWORD_LENGTH),
+                LengthRule(minPasswordLength, maxPasswordLength),
                 PasswordRule()
             ),
             formatErrorMessage = ::formatErrorMessage
@@ -75,7 +76,7 @@ class UpdatePasswordFragment : BaseFragment<FragmentUpdatePasswordBinding>(
         val isValidNewPassword = inputNewPassword.validate(
             rules = listOf(
                 EmptyRule(),
-                LengthRule(Constants.MIN_PASSWORD_LENGTH, Constants.MAX_PASSWORD_LENGTH),
+                LengthRule(minPasswordLength, maxPasswordLength),
                 PasswordRule(),
                 NotSameRule(inputCurrentPassword.value)
             ),
@@ -85,7 +86,7 @@ class UpdatePasswordFragment : BaseFragment<FragmentUpdatePasswordBinding>(
         val isValidNewPasswordConfirm = inputNewPasswordConfirm.validate(
             rules = listOf(
                 EmptyRule(),
-                LengthRule(Constants.MIN_PASSWORD_LENGTH, Constants.MAX_PASSWORD_LENGTH),
+                LengthRule(minPasswordLength, maxPasswordLength),
                 PasswordRule(),
                 ConfirmPasswordRule(inputNewPassword.value)
             ),
@@ -95,12 +96,15 @@ class UpdatePasswordFragment : BaseFragment<FragmentUpdatePasswordBinding>(
         return isValidCurrentPassword && isValidNewPassword && isValidNewPasswordConfirm
     }
 
-    private fun formatErrorMessage(errorMessage: String): String =
-        errorMessage.formatInvalidLengthError(
+    private fun formatErrorMessage(errorMessage: String): String {
+        val minPasswordLength = getInt(R.integer.min_password_length)
+        val maxPasswordLength = getInt(R.integer.max_password_length)
+
+        return errorMessage.formatInvalidLengthError(
             requireContext(),
             R.string.password,
-            Constants.MIN_PASSWORD_LENGTH,
-            Constants.MAX_PASSWORD_LENGTH
+            minPasswordLength,
+            maxPasswordLength
         )
-
+    }
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="navigation_anim_duration">200</integer>
+    <integer name="connectivity_anim_duration">200</integer>
+    <integer name="max_about_length">100</integer>
+    <integer name="max_subject_length">50</integer>
+    <integer name="max_description_length">500</integer>
+    <integer name="max_team_name_length">24</integer>
+    <integer name="max_room_name_length">24</integer>
+    <integer name="max_room_description_length">100</integer>
+    <integer name="min_password_length">8</integer>
+    <integer name="max_password_length">24</integer>
+    <integer name="min_username_length">4</integer>
+    <integer name="max_username_length">16</integer>
+    <integer name="max_team_description_length">100</integer>
+</resources>

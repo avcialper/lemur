@@ -32,13 +32,6 @@
 
     <dimen name="zero_dp">0dp</dimen>
 
-    <integer name="navigation_anim_duration">200</integer>
-    <integer name="connectivity_anim_duration">200</integer>
-    <integer name="max_about_length">100</integer>
-    <integer name="max_subject_length">50</integer>
-    <integer name="max_description_length">500</integer>
-    <integer name="max_team_name_length">24</integer>
-
     <dimen name="skeleton_height">14dp</dimen>
     <dimen name="skeleton_height_big">20dp</dimen>
     <dimen name="skeleton_corner_radius">4dp</dimen>

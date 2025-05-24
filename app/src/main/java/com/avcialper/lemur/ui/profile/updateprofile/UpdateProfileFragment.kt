@@ -12,7 +12,6 @@ import com.avcialper.lemur.helper.validator.LengthRule
 import com.avcialper.lemur.helper.validator.MaxLengthRule
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.component.ImageUpdateSheet
-import com.avcialper.lemur.util.constant.Constants
 import com.avcialper.lemur.util.extension.formatInvalidLengthError
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -99,30 +98,33 @@ class UpdateProfileFragment : BaseFragment<FragmentUpdateProfileBinding>(
     }
 
     private fun validate(): Boolean = with(binding) {
+        val minUsernameLength = getInt(R.integer.min_username_length)
+        val maxUsernameLength = getInt(R.integer.max_username_length)
         val isValidUsername = inputUsername.validate(
             rules = listOf(
                 EmptyRule(),
-                LengthRule(Constants.MIN_USERNAME_LENGTH, Constants.MAX_USERNAME_LENGTH)
+                LengthRule(minUsernameLength, maxUsernameLength)
             ),
             formatErrorMessage = { errorMessage ->
                 errorMessage.formatInvalidLengthError(
                     requireContext(),
                     R.string.username,
-                    Constants.MIN_USERNAME_LENGTH,
-                    Constants.MAX_USERNAME_LENGTH
+                    minUsernameLength,
+                    maxUsernameLength
                 )
             }
         )
 
+        val maxAboutLength = getInt(R.integer.max_about_length)
         val isValidAbout = inputAbout.validate(
             rules = listOf(
-                MaxLengthRule(Constants.MAX_ABOUT_LENGTH)
+                MaxLengthRule(maxAboutLength)
             ),
             formatErrorMessage = { errorMessage ->
                 errorMessage.formatInvalidLengthError(
                     requireContext(),
                     R.string.about,
-                    Constants.MAX_ABOUT_LENGTH
+                    maxAboutLength
                 )
             }
         )
