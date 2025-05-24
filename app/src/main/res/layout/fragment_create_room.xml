@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/LinearPage"
+    tools:context=".ui.team.room.create.CreateRoomFragment">
+
+    <com.avcialper.lemur.ui.component.TextInput
+        android:id="@+id/input_room_name"
+        style="@style/FillHorizontal"
+        android:hint="@string/room_name"
+        app:counter_max_length="@integer/max_room_name_length"
+        app:have_counter="true" />
+
+    <com.avcialper.lemur.ui.component.TextInput
+        android:id="@+id/input_room_description"
+        style="@style/FillHorizontal"
+        android:hint="@string/description"
+        app:counter_max_length="@integer/max_room_description_length"
+        app:have_counter="true" />
+
+    <TextView
+        android:id="@+id/accessible_roles_label"
+        style="@style/FillHorizontal"
+        android:textSize="@dimen/text_size_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:text="@string/accessible_roles" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/cg_roles"
+        style="@style/FillHorizontal"
+        app:chipSpacing="@dimen/chip_spacing"
+        app:singleLine="false"
+        app:singleSelection="false" />
+
+    <Button
+        android:id="@+id/button_create_room"
+        style="@style/Button"
+        android:text="@string/create_room" />
+
+</LinearLayout>

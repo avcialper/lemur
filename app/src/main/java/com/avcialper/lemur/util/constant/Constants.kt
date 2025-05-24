@@ -12,6 +12,7 @@ object Constants {
     const val USERS_COLLECTION = "users"
     const val TASKS_COLLECTION = "tasks"
     const val TEAMS_COLLECTION = "teams"
+    const val ROOM_COLLECTION = "rooms"
 
     // User Profile Constants
     const val USER_ID = "id"
@@ -40,6 +41,14 @@ object Constants {
     const val TEAM_MEMBERS = "members"
     const val TEAM_ROLES = "roles"
     const val TEAM_INVITE_CODE = "inviteCode"
+    const val TEAM_ROOMS = "rooms"
+
+    // Room Constants
+    const val ROOM_ID = "id"
+    const val ROOM_TEAM_ID = "teamId"
+    const val ROOM_NAME = "name"
+    const val ROOM_DESCRIPTION = "description"
+    const val ROOM_ACCESSIBLE_ROLES = "accessibleRoles"
 
     const val IMAGE_URL = "imageUrl"
 }

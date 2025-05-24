@@ -712,4 +712,15 @@
         <item name="android:layout_marginBottom">@dimen/margin_large</item>
     </style>
 
+    <style name="SelectedRoleChip" parent="Theme.Lemur">
+        <item name="chipBackgroundColor">?attr/backgroundColor</item>
+        <item name="chipStrokeWidth">2dp</item>
+        <item name="chipStrokeColor">@color/orange</item>
+        <item name="android:textColor">?attr/primaryColor</item>
+        <item name="chipCornerRadius">16dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="closeIconVisible">false</item>
+    </style>
+
 </resources>

@@ -16,14 +16,15 @@ class ActionSheet(
     private val onActionHandle: (TeamBottomSheetActions) -> Unit
 ) : BottomSheetDialogFragment() {
 
-    private lateinit var binding: FragmentActionSheetBinding
+    private var _binding: FragmentActionSheetBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentActionSheetBinding.inflate(inflater, container, false)
+        _binding = FragmentActionSheetBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -58,4 +59,8 @@ class ActionSheet(
         dismiss()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

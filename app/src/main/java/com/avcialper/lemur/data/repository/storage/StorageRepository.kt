@@ -1,6 +1,7 @@
 package com.avcialper.lemur.data.repository.storage
 
 import com.avcialper.lemur.data.model.local.Note
+import com.avcialper.lemur.data.model.local.Room
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.data.model.local.TaskCard
 import com.avcialper.lemur.data.model.local.Team
@@ -40,4 +41,5 @@ interface StorageRepository {
     suspend fun getUsersJoinedTeams(userId: String): Flow<Resource<List<TeamCard>>>
     suspend fun joinTeam(inviteCode: String, userId: String): Flow<Resource<Boolean>>
     suspend fun getTeam(teamId: String): Flow<Resource<Team>>
+    suspend fun createRoom(room: Room): Flow<Resource<Boolean>>
 }

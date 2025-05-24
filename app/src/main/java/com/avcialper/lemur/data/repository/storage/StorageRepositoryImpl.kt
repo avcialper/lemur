@@ -4,6 +4,7 @@ import com.avcialper.lemur.BuildConfig
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.local.Member
 import com.avcialper.lemur.data.model.local.Note
+import com.avcialper.lemur.data.model.local.Room
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.data.model.local.TaskCard
 import com.avcialper.lemur.data.model.local.Team
@@ -37,6 +38,7 @@ class StorageRepositoryImpl @Inject constructor(
     private val userCollection = db.collection(Constants.USERS_COLLECTION)
     private val taskCollection = db.collection(Constants.TASKS_COLLECTION)
     private val teamCollection = db.collection(Constants.TEAMS_COLLECTION)
+    private val roomCollection = db.collection(Constants.ROOM_COLLECTION)
 
     override suspend fun uploadImage(file: File): Flow<Resource<ImgBBResponse>> = flowWithResource {
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
@@ -185,6 +187,13 @@ class StorageRepositoryImpl @Inject constructor(
     override suspend fun getTeam(teamId: String): Flow<Resource<Team>> = flowWithResource {
         val documentation = teamCollection.document(teamId).get().await()
         documentation.toObject(Team::class.java)!!
+    }
+
+    override suspend fun createRoom(room: Room): Flow<Resource<Boolean>> = flowWithResource {
+        roomCollection.document(room.id).set(room.toMap()).await()
+        teamCollection.document(room.teamId)
+            .update(Constants.TEAM_ROOMS, FieldValue.arrayUnion(room.id)).await()
+        true
     }
 
     private fun <T> getTasksByField(filed: String, value: T): Flow<Resource<List<TaskCard>>> =

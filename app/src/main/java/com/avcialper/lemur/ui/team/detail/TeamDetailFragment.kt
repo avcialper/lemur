@@ -61,6 +61,15 @@ class TeamDetailFragment :
                 childFragmentManager,
                 "action_sheet"
             )
+            fab.close()
+        }
+        root.setOnClickListener {
+            fab.close()
+        }
+        fab.setSecondFabClickListener {
+            val roles = vm.state.value.data?.roles?.toTypedArray() ?: emptyArray()
+            val destination = TeamDetailFragmentDirections.toCreateRoom(roles, args.teamId)
+            destination.navigate()
         }
     }
 

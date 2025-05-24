@@ -119,4 +119,7 @@
     <string name="leave_team">Takımdan Ayrıl</string>
     <string name="role_management">Rol Yönetimi</string>
     <string name="invite_code_big">Davet Kodu</string>
+    <string name="room_name">Oda adı</string>
+    <string name="accessible_roles">Erişim izni olan roller</string>
+    <string name="select_one_role">En az bir role yetki verilmelidir.</string>
 </resources>

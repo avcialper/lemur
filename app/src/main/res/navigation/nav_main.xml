@@ -204,5 +204,24 @@
         <argument
             android:name="teamId"
             app:argType="string" />
+        <action
+            android:id="@+id/toCreateRoom"
+            app:destination="@id/createRoomFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/createRoomFragment"
+        android:name="com.avcialper.lemur.ui.team.room.create.CreateRoomFragment"
+        android:label="fragment_create_room"
+        tools:layout="@layout/fragment_create_room" >
+        <argument
+            android:name="roles"
+            app:argType="com.avcialper.lemur.data.model.local.Role[]" />
+        <argument
+            android:name="teamId"
+            app:argType="string" />
     </fragment>
 </navigation>
