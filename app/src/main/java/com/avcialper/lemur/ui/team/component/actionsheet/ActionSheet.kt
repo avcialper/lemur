@@ -32,7 +32,8 @@ class ActionSheet(
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            teamImage.load(imageUrl)
+            if(imageUrl != null)
+                teamImage.load(imageUrl)
             tvTeamName.text = teamName
             tvTeamDescription.text = teamDescription
 

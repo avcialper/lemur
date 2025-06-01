@@ -2,6 +2,7 @@ package com.avcialper.lemur.ui.team.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.avcialper.lemur.data.model.local.Room
 import com.avcialper.lemur.data.model.local.Team
 import com.avcialper.lemur.data.repository.storage.StorageRepository
 import com.avcialper.lemur.util.constant.Resource
@@ -20,9 +21,18 @@ class TeamDetailViewModel @Inject constructor(
     private val _state = MutableStateFlow<Resource<Team>>(Resource.Loading())
     val state = _state.asStateFlow()
 
+    private val _roomState = MutableStateFlow<Resource<List<Room>>>(Resource.Loading())
+    val roomState = _roomState.asStateFlow()
+
     fun getTeam(teamId: String) = viewModelScope.launch {
         storageRepository.getTeam(teamId).collect { resource ->
             _state.update { resource }
+        }
+    }
+
+    fun getRooms(rooms: List<String>) = viewModelScope.launch {
+        storageRepository.getRooms(rooms).collect { resource ->
+            _roomState.update { resource }
         }
     }
 

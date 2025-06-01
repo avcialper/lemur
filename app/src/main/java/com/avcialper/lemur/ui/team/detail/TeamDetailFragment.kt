@@ -1,14 +1,20 @@
 package com.avcialper.lemur.ui.team.detail
 
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
+import com.avcialper.lemur.data.model.local.Room
 import com.avcialper.lemur.data.model.local.Team
 import com.avcialper.lemur.databinding.FragmentTeamDetailBinding
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.team.component.actionsheet.ActionSheet
+import com.avcialper.lemur.ui.team.detail.adapter.RoomAdapter
 import com.avcialper.lemur.util.constant.TeamBottomSheetActions
+import com.google.android.material.divider.MaterialDividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,14 +32,38 @@ class TeamDetailFragment :
 
     private fun observe() {
         vm.state.createResourceObserver(::handleSuccess, ::handleLoading)
+        vm.roomState.createResourceObserver(::handleRoomSuccess, ::handleLoading)
     }
 
     private fun handleSuccess(team: Team?) = with(binding) {
         team?.let {
-            teamImage.load(it.imageUrl)
+            if(it.imageUrl != null)
+                teamImage.load(it.imageUrl)
             tvTeamName.text = it.name
             tvTeamDescription.text = it.description
+            vm.getRooms(it.rooms)
         }
+    }
+
+    private fun handleRoomSuccess(rooms: List<Room>?) {
+        val adapter = RoomAdapter(rooms ?: emptyList(), ::onRoomClick)
+        val layoutManager = LinearLayoutManager(requireContext())
+        val itemDecoration = MaterialDividerItemDecoration(
+            requireContext(),
+            MaterialDividerItemDecoration.VERTICAL
+        ).apply {
+            isLastItemDecorated = false
+        }
+
+        binding.rooms.apply {
+            this.adapter = adapter
+            this.layoutManager = layoutManager
+            addItemDecoration(itemDecoration)
+        }
+    }
+
+    private fun onRoomClick(roomId: String){
+
     }
 
     private fun handleLoading(isLoading: Boolean) = with(binding) {

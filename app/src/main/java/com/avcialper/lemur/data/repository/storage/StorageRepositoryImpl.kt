@@ -196,6 +196,15 @@ class StorageRepositoryImpl @Inject constructor(
         true
     }
 
+    override suspend fun getRooms(rooms: List<String>): Flow<Resource<List<Room>>> = flowWithResource {
+        val response = mutableListOf<Room>()
+        rooms.forEach { id ->
+            val roomDocument = roomCollection.document(id).get().await()
+            response.add(roomDocument.toObject(Room::class.java)!!)
+        }
+        response
+    }
+
     private fun <T> getTasksByField(filed: String, value: T): Flow<Resource<List<TaskCard>>> =
         flowWithResource {
             val ownerId = UserManager.user!!.id

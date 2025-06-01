@@ -723,4 +723,13 @@
         <item name="closeIconVisible">false</item>
     </style>
 
+    <style name="RoomCard.Name" parent="Theme.Lemur">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="RoomCard.Description" parent="Theme.Lemur">
+        <item name="android:textSize">@dimen/text_size_normal</item>
+    </style>
+
 </resources>
