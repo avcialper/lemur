@@ -2,7 +2,6 @@ package com.avcialper.lemur.ui.team.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.local.Member
 import com.avcialper.lemur.data.model.local.Room
 import com.avcialper.lemur.data.model.local.Team
