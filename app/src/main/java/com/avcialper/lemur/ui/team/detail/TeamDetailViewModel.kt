@@ -2,6 +2,8 @@ package com.avcialper.lemur.ui.team.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.avcialper.lemur.data.UserManager
+import com.avcialper.lemur.data.model.local.Member
 import com.avcialper.lemur.data.model.local.Room
 import com.avcialper.lemur.data.model.local.Team
 import com.avcialper.lemur.data.repository.storage.StorageRepository
@@ -33,6 +35,17 @@ class TeamDetailViewModel @Inject constructor(
     fun getRooms(rooms: List<String>) = viewModelScope.launch {
         storageRepository.getRooms(rooms).collect { resource ->
             _roomState.update { resource }
+        }
+    }
+
+    fun leaveTeam(teamId: String, member: Member ,onSuccess: () -> Unit) = viewModelScope.launch {
+        _state.update { Resource.Loading() }
+        storageRepository.leaveTeam(teamId, member).collect { resource ->
+            if (resource is Resource.Success) {
+                onSuccess()
+            } else if (resource is Resource.Error) {
+                _state.update { Resource.Error(resource.throwable) }
+            }
         }
     }
 

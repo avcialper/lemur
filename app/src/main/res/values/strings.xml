@@ -122,4 +122,6 @@
     <string name="room_name">Oda adı</string>
     <string name="accessible_roles">Erişim izni olan roller</string>
     <string name="select_one_role">En az bir role yetki verilmelidir.</string>
+    <string name="invite_code_copied">Davet kodu kopyalandı.</string>
+    <string name="leave_team_question">Takımdan ayrılmak istediğinize emin misiniz?</string>
 </resources>

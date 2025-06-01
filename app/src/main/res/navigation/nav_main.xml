@@ -211,12 +211,40 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/toMembers"
+            app:destination="@id/membersFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/toRoles"
+            app:destination="@id/rolesFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/toUpdateTeam"
+            app:destination="@id/updateTeamFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/toRoomDetail"
+            app:destination="@id/roomDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/createRoomFragment"
         android:name="com.avcialper.lemur.ui.team.room.create.CreateRoomFragment"
         android:label="fragment_create_room"
-        tools:layout="@layout/fragment_create_room" >
+        tools:layout="@layout/fragment_create_room">
         <argument
             android:name="roles"
             app:argType="com.avcialper.lemur.data.model.local.Role[]" />
@@ -224,4 +252,24 @@
             android:name="teamId"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/membersFragment"
+        android:name="com.avcialper.lemur.ui.team.members.MembersFragment"
+        android:label="fragment_members"
+        tools:layout="@layout/fragment_members" />
+    <fragment
+        android:id="@+id/rolesFragment"
+        android:name="com.avcialper.lemur.ui.team.roles.RolesFragment"
+        android:label="fragment_roles"
+        tools:layout="@layout/fragment_roles" />
+    <fragment
+        android:id="@+id/updateTeamFragment"
+        android:name="com.avcialper.lemur.ui.team.update.UpdateTeamFragment"
+        android:label="fragment_update_team"
+        tools:layout="@layout/fragment_update_team" />
+    <fragment
+        android:id="@+id/roomDetailFragment"
+        android:name="com.avcialper.lemur.ui.team.room.detail.RoomDetailFragment"
+        android:label="fragment_room_detail"
+        tools:layout="@layout/fragment_room_detail" />
 </navigation>

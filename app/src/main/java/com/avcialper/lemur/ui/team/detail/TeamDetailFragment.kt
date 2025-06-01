@@ -1,14 +1,20 @@
 package com.avcialper.lemur.ui.team.detail
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context.CLIPBOARD_SERVICE
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
+import com.avcialper.lemur.R
+import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.local.Room
 import com.avcialper.lemur.data.model.local.Team
 import com.avcialper.lemur.databinding.FragmentTeamDetailBinding
 import com.avcialper.lemur.ui.BaseFragment
+import com.avcialper.lemur.ui.component.AlertFragment
 import com.avcialper.lemur.ui.team.component.actionsheet.ActionSheet
 import com.avcialper.lemur.ui.team.detail.adapter.RoomAdapter
 import com.avcialper.lemur.util.constant.TeamBottomSheetActions
@@ -61,7 +67,8 @@ class TeamDetailFragment :
     }
 
     private fun onRoomClick(roomId: String) {
-
+        val destination = TeamDetailFragmentDirections.toRoomDetail()
+        destination.navigate()
     }
 
     private fun handleLoading(isLoading: Boolean) = with(binding) {
@@ -102,26 +109,39 @@ class TeamDetailFragment :
     }
 
     private fun bottomSheetActionHandler(action: TeamBottomSheetActions) {
-        toast(action.name)
         when (action) {
             TeamBottomSheetActions.UPDATE -> {
-                // TODO navigate to update team
+                val destination = TeamDetailFragmentDirections.toUpdateTeam()
+                destination.navigate()
             }
 
             TeamBottomSheetActions.MEMBERS -> {
-                // TODO navigate to members
+                val destination = TeamDetailFragmentDirections.toMembers()
+                destination.navigate()
             }
 
             TeamBottomSheetActions.INVITE_CODE -> {
-                // TODO copy invite code
+                val clipboard =
+                    requireContext().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText("invite_code", vm.state.value.data?.inviteCode)
+                clipboard.setPrimaryClip(clip)
+                toast(R.string.invite_code_copied)
             }
 
             TeamBottomSheetActions.ROLE_MANAGEMENT -> {
-                // TODO navigate to role management
+                val destination = TeamDetailFragmentDirections.toRoles()
+                destination.navigate()
             }
 
             TeamBottomSheetActions.LEAVE_TEAM -> {
-                // TODO leave team
+                AlertFragment(R.string.leave_team_question, true) {
+                    val member = vm.state.value.data!!.members.find { member ->
+                        member.id == UserManager.user!!.id
+                    }
+                    vm.leaveTeam(args.teamId, member!!) {
+                        goBack()
+                    }
+                }.show(childFragmentManager, "alert")
             }
         }
     }

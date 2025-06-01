@@ -196,14 +196,25 @@ class StorageRepositoryImpl @Inject constructor(
         true
     }
 
-    override suspend fun getRooms(rooms: List<String>): Flow<Resource<List<Room>>> = flowWithResource {
-        val response = mutableListOf<Room>()
-        rooms.forEach { id ->
-            val roomDocument = roomCollection.document(id).get().await()
-            response.add(roomDocument.toObject(Room::class.java)!!)
+    override suspend fun getRooms(rooms: List<String>): Flow<Resource<List<Room>>> =
+        flowWithResource {
+            val response = mutableListOf<Room>()
+            rooms.forEach { id ->
+                val roomDocument = roomCollection.document(id).get().await()
+                response.add(roomDocument.toObject(Room::class.java)!!)
+            }
+            response
         }
-        response
-    }
+
+    override suspend fun leaveTeam(teamId: String, member: Member): Flow<Resource<Boolean>> =
+        flowWithResource {
+            userCollection.document(member.id).update(Constants.TEAMS, FieldValue.arrayRemove(teamId))
+                .await()
+            teamCollection.document(teamId)
+                .update(Constants.TEAM_MEMBERS, FieldValue.arrayRemove(member)).await()
+
+            true
+        }
 
     private fun <T> getTasksByField(filed: String, value: T): Flow<Resource<List<TaskCard>>> =
         flowWithResource {

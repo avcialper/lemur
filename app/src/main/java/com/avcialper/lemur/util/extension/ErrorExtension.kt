@@ -1,11 +1,13 @@
 package com.avcialper.lemur.util.extension
 
 import android.content.Context
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.avcialper.lemur.R
 import com.google.firebase.auth.FirebaseAuthException
 
 fun Context.exceptionConverter(e: Exception): String {
+    Log.e("ERROR", e.toString())
     return if (e is FirebaseAuthException) {
         val messageId = when (e.errorCode) {
             "ERROR_EMAIL_ALREADY_IN_USE" -> R.string.error_email_already_exists
