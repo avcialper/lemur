@@ -1,10 +1,8 @@
 package com.avcialper.lemur.ui.team.detail
 
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.avcialper.lemur.data.model.local.Room
@@ -37,7 +35,7 @@ class TeamDetailFragment :
 
     private fun handleSuccess(team: Team?) = with(binding) {
         team?.let {
-            if(it.imageUrl != null)
+            if (it.imageUrl != null)
                 teamImage.load(it.imageUrl)
             tvTeamName.text = it.name
             tvTeamDescription.text = it.description
@@ -62,7 +60,7 @@ class TeamDetailFragment :
         }
     }
 
-    private fun onRoomClick(roomId: String){
+    private fun onRoomClick(roomId: String) {
 
     }
 

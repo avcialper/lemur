@@ -6,6 +6,7 @@
         <item name="secondaryColor">@color/grey</item>
         <item name="bottomMenuColor">@color/seashell</item>
         <item name="inputAreaBackgroundColor">@color/white_smoke</item>
+        <item name="teamHeaderColor">@color/white_smoke</item>
         <item name="android:textColorHighlight">@color/salomie</item>
         <item name="android:colorControlActivated">@color/salomie</item>
         <item name="cursorColor">@color/salomie</item>

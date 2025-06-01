@@ -5,6 +5,7 @@
     <attr name="secondaryColor" format="color" />
     <attr name="bottomMenuColor" format="color" />
     <attr name="inputAreaBackgroundColor" format="color" />
+    <attr name="teamHeaderColor" format="color" />
     <declare-styleable name="TextInput">
         <attr name="android:autofillHints" />
         <attr name="android:hint" />

@@ -88,19 +88,24 @@ class MainActivity : AppCompatActivity() {
             false
     }
 
+    @Suppress("DEPRECATION")
     private fun onDestinationChangedListener(destination: NavDestination) {
         val isNotBottomNavigationDestinations = isNotBottomNavigationDestinations(destination)
         val visibility = if (isNotBottomNavigationDestinations) View.GONE else View.VISIBLE
-        val colorId =
+
+        val navigationBarColor =
             if (isNotBottomNavigationDestinations) R.attr.backgroundColor else R.attr.bottomMenuColor
 
+        val statusBarColor =
+            if (destination.id == R.id.teamDetailFragment) R.attr.teamHeaderColor else R.attr.backgroundColor
+
         binding.bottomMenu.visibility = visibility
-        @Suppress("DEPRECATION")
-        window.navigationBarColor = getNavigationBarColor(colorId)
+        window.navigationBarColor = getAttrColor(navigationBarColor)
+        window.statusBarColor = getAttrColor(statusBarColor)
 
     }
 
-    private fun getNavigationBarColor(id: Int): Int {
+    private fun getAttrColor(id: Int): Int {
         val typedValue = TypedValue()
         theme.resolveAttribute(id, typedValue, true)
         return typedValue.data
