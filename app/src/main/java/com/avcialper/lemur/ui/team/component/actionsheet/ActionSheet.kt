@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import coil.load
 import com.avcialper.lemur.databinding.FragmentActionSheetBinding
 import com.avcialper.lemur.util.constant.TeamBottomSheetActions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class ActionSheet(
@@ -28,11 +30,29 @@ class ActionSheet(
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        val dialog = dialog as? BottomSheetDialog
+        val bottomSheet =
+            dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+
+        bottomSheet?.let {
+            val behavior = BottomSheetBehavior.from(it)
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            behavior.skipCollapsed = true
+
+            val layoutParams = it.layoutParams
+            layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+            it.layoutParams = layoutParams
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            if(imageUrl != null)
+            if (imageUrl != null)
                 teamImage.load(imageUrl)
             tvTeamName.text = teamName
             tvTeamDescription.text = teamDescription

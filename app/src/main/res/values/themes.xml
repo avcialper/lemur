@@ -733,4 +733,5 @@
         <item name="android:textSize">@dimen/text_size_normal</item>
     </style>
 
+    <style name="UpdateTeamImage" parent="ProfileUpdateImage" />
 </resources>

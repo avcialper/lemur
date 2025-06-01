@@ -111,7 +111,7 @@ class TeamDetailFragment :
     private fun bottomSheetActionHandler(action: TeamBottomSheetActions) {
         when (action) {
             TeamBottomSheetActions.UPDATE -> {
-                val destination = TeamDetailFragmentDirections.toUpdateTeam()
+                val destination = TeamDetailFragmentDirections.toUpdateTeam(args.teamId)
                 destination.navigate()
             }
 

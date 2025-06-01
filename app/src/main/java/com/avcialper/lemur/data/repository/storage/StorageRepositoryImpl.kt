@@ -208,13 +208,31 @@ class StorageRepositoryImpl @Inject constructor(
 
     override suspend fun leaveTeam(teamId: String, member: Member): Flow<Resource<Boolean>> =
         flowWithResource {
-            userCollection.document(member.id).update(Constants.TEAMS, FieldValue.arrayRemove(teamId))
+            userCollection.document(member.id)
+                .update(Constants.TEAMS, FieldValue.arrayRemove(teamId))
                 .await()
             teamCollection.document(teamId)
                 .update(Constants.TEAM_MEMBERS, FieldValue.arrayRemove(member)).await()
 
             true
         }
+
+    override suspend fun updateTeam(
+        teamId: String,
+        imageUrl: String?,
+        name: String,
+        description: String
+    ): Flow<Resource<Boolean>> = flowWithResource {
+        teamCollection.document(teamId).update(
+            Constants.TEAM_NAME,
+            name,
+            Constants.TEAM_DESCRIPTION,
+            description,
+            Constants.IMAGE_URL,
+            imageUrl
+        ).await()
+        true
+    }
 
     private fun <T> getTasksByField(filed: String, value: T): Flow<Resource<List<TaskCard>>> =
         flowWithResource {

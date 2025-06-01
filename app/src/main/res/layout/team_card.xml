@@ -26,9 +26,7 @@
     <TextView
         android:id="@+id/team_description"
         style="@style/TeamCard.Text"
-        android:layout_marginTop="13dp"
         android:textColor="?attr/secondaryColor"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/team_image"
