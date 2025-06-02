@@ -46,6 +46,12 @@ class TeamDetailFragment :
             tvTeamName.text = it.name
             tvTeamDescription.text = it.description
             vm.getRooms(it.rooms)
+
+            val isAdmin = it.members.find { member ->
+                member.id == UserManager.user!!.id && member.roleCode == "ADMIN"
+            }
+            if (isAdmin == null)
+                emptyArea.hideActionButton()
         }
     }
 
@@ -64,11 +70,19 @@ class TeamDetailFragment :
             this.layoutManager = layoutManager
             addItemDecoration(itemDecoration)
         }
+
+        if (rooms.isNullOrEmpty()) {
+            binding.emptyArea.visibility = View.VISIBLE
+            binding.rooms.visibility = View.GONE
+        } else {
+            binding.emptyArea.visibility = View.GONE
+            binding.rooms.visibility = View.VISIBLE
+        }
     }
 
     private fun onRoomClick(roomId: String) {
-        val destination = TeamDetailFragmentDirections.toRoomDetail()
-        destination.navigate()
+        val direction = TeamDetailFragmentDirections.toRoomDetail()
+        direction.navigate()
     }
 
     private fun handleLoading(isLoading: Boolean) = with(binding) {
@@ -80,6 +94,8 @@ class TeamDetailFragment :
         tvTeamDescription.visibility = visibility
         divider.visibility = visibility
         rooms.visibility = visibility
+
+        emptyArea.visibility = View.GONE
 
         if (isLoading) fab.hide() else fab.show()
     }
@@ -103,21 +119,26 @@ class TeamDetailFragment :
         }
         fab.setSecondFabClickListener {
             val roles = vm.state.value.data?.roles?.toTypedArray() ?: emptyArray()
-            val destination = TeamDetailFragmentDirections.toCreateRoom(roles, args.teamId)
-            destination.navigate()
+            val direction = TeamDetailFragmentDirections.toCreateRoom(roles, args.teamId)
+            direction.navigate()
+        }
+        emptyArea.setButtonAction {
+            val roles = vm.state.value.data?.roles?.toTypedArray() ?: emptyArray()
+            val direction = TeamDetailFragmentDirections.toCreateRoom(roles, args.teamId)
+            direction.navigate()
         }
     }
 
     private fun bottomSheetActionHandler(action: TeamBottomSheetActions) {
         when (action) {
             TeamBottomSheetActions.UPDATE -> {
-                val destination = TeamDetailFragmentDirections.toUpdateTeam(args.teamId)
-                destination.navigate()
+                val direction = TeamDetailFragmentDirections.toUpdateTeam(args.teamId)
+                direction.navigate()
             }
 
             TeamBottomSheetActions.MEMBERS -> {
-                val destination = TeamDetailFragmentDirections.toMembers()
-                destination.navigate()
+                val direction = TeamDetailFragmentDirections.toMembers()
+                direction.navigate()
             }
 
             TeamBottomSheetActions.INVITE_CODE -> {
@@ -129,8 +150,8 @@ class TeamDetailFragment :
             }
 
             TeamBottomSheetActions.ROLE_MANAGEMENT -> {
-                val destination = TeamDetailFragmentDirections.toRoles()
-                destination.navigate()
+                val direction = TeamDetailFragmentDirections.toRoles()
+                direction.navigate()
             }
 
             TeamBottomSheetActions.LEAVE_TEAM -> {

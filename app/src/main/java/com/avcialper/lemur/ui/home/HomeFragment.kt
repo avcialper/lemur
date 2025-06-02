@@ -1,9 +1,12 @@
 package com.avcialper.lemur.ui.home
 
 import android.Manifest.permission.POST_NOTIFICATIONS
+import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.avcialper.lemur.R
 import com.avcialper.lemur.data.AppManager
+import com.avcialper.lemur.data.model.local.TaskLoadStatus
 import com.avcialper.lemur.databinding.FragmentHomeBinding
 import com.avcialper.lemur.helper.PermissionManager
 import com.avcialper.lemur.ui.BaseFragment
@@ -11,6 +14,8 @@ import com.avcialper.lemur.util.constant.FilterType
 import com.avcialper.lemur.util.formatDate
 import com.avcialper.owlcalendar.data.models.StartDate
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -59,7 +64,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private fun setListeners() = with(binding) {
         fab.setOnClickListener {
-            HomeFragmentDirections.toTaskCreate().navigate()
+            fab.hide()
+            val direction = HomeFragmentDirections.toTaskCreate()
+            direction.navigate()
         }
         scrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
             vm.scrollPosition = scrollY
@@ -83,6 +90,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         componentContinues.setOnTaskClickListener(::onTaskClick)
         componentCompleted.setOnTaskClickListener(::onTaskClick)
         componentCanceled.setOnTaskClickListener(::onTaskClick)
+
+        emptyArea.setButtonAction {
+            fab.hide()
+            val direction = HomeFragmentDirections.toTaskCreate()
+            direction.navigate()
+        }
     }
 
     private fun onTaskClick(id: String) {
@@ -128,6 +141,34 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             componentCanceled::handleSuccess,
             componentCanceled::handleLoading
         )
+        vm.taskLoadStatus.onEach(::handleAllTaskStatus).launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun handleAllTaskStatus(resource: TaskLoadStatus) = with(binding) {
+        if (resource.allLoaded) {
+            val visibility = if (resource.todayIsEmpty && resource.continuesIsEmpty &&
+                resource.completedIsEmpty && resource.canceledIsEmpty
+            )
+                View.GONE
+            else
+                View.VISIBLE
+
+            componentToday.visibility = visibility
+            componentContinues.visibility = visibility
+            componentCompleted.visibility = visibility
+            componentCanceled.visibility = visibility
+
+            emptyArea.visibility = if (visibility == View.GONE) View.VISIBLE else View.GONE
+        } else if (resource.hasError) {
+            toast(R.string.error_unknown)
+            val visibility = View.GONE
+            componentToday.visibility = visibility
+            componentContinues.visibility = visibility
+            componentCompleted.visibility = visibility
+            componentCanceled.visibility = visibility
+
+            emptyArea.visibility = View.VISIBLE
+        }
     }
 
     override fun onResume() {

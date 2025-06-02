@@ -3,13 +3,18 @@ package com.avcialper.lemur.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.model.local.TaskCard
+import com.avcialper.lemur.data.model.local.TaskLoadStatus
 import com.avcialper.lemur.data.repository.storage.StorageRepository
 import com.avcialper.lemur.util.constant.Resource
 import com.avcialper.lemur.util.formatDate
 import com.avcialper.owlcalendar.data.models.StartDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -35,6 +40,38 @@ class HomeViewModel @Inject constructor(
 
     private val _canceledTasks = MutableStateFlow<Resource<List<TaskCard>>>(loading)
     val canceledTasks = _canceledTasks.asStateFlow()
+
+    val taskLoadStatus: StateFlow<TaskLoadStatus> = combine(
+        todayTasks,
+        continuesTasks,
+        completedTasks,
+        canceledTasks
+    ) { today, continues, completed, canceled ->
+
+        val allSuccess =
+            listOf(today, continues, completed, canceled).all { it is Resource.Success }
+
+        val hasError = listOf(today, continues, completed, canceled).any { it is Resource.Error }
+
+        TaskLoadStatus(
+            allLoaded = allSuccess,
+            todayIsEmpty = (today as? Resource.Success)?.data?.isEmpty() ?: true,
+            continuesIsEmpty = (continues as? Resource.Success)?.data?.isEmpty() ?: true,
+            completedIsEmpty = (completed as? Resource.Success)?.data?.isEmpty() ?: true,
+            canceledIsEmpty = (canceled as? Resource.Success)?.data?.isEmpty() ?: true,
+            hasError = hasError
+        )
+    }.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(5000),
+        TaskLoadStatus(
+            allLoaded = false,
+            todayIsEmpty = true,
+            continuesIsEmpty = true,
+            completedIsEmpty = true,
+            canceledIsEmpty = true
+        )
+    )
 
     var date: StartDate? = null
     var todayDate: StartDate? = null

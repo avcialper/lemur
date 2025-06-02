@@ -96,6 +96,15 @@ class CustomFAB @JvmOverloads constructor(
         isFABOpen = false
     }
 
+    fun showChild() = with(binding) {
+        firstFab.show()
+        secondFab.show()
+        if (fabCount != 2) {
+            thirdFab.show()
+            fourthFab.show()
+        }
+    }
+
     fun hide() = with(binding) {
         firstFab.hide()
         secondFab.hide()

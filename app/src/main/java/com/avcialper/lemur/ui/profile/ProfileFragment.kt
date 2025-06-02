@@ -146,8 +146,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     private fun logout() {
         AlertFragment(R.string.logout_message) {
             vm.logout {
-                val destination = ProfileFragmentDirections.toLogin()
-                destination.navigate()
+                val direction = ProfileFragmentDirections.toLogin()
+                direction.navigate()
             }
         }.show(childFragmentManager, "alert")
     }

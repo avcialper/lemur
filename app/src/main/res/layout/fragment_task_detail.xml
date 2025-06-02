@@ -90,7 +90,7 @@
 
     <com.avcialper.lemur.ui.component.CustomFAB
         android:id="@+id/fab"
-        style="@style/FAB"
+        style="@style/Theme.Lemur"
         app:fab_count="four"
         app:fab_icon="@drawable/ic_edit"
         app:first_fab_text="@string/update"

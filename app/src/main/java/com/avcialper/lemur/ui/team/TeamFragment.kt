@@ -20,12 +20,13 @@ class TeamFragment : BaseFragment<FragmentTeamBinding>(FragmentTeamBinding::infl
         vm.getTeams()
         initUI()
         observe()
+        setListeners()
     }
 
     private fun initUI() = with(binding) {
         val teamAdapter = TeamAdapter(emptyList()) { teamId ->
-            val destination = TeamFragmentDirections.toTeamDetail(teamId)
-            destination.navigate()
+            val direction = TeamFragmentDirections.toTeamDetail(teamId)
+            direction.navigate()
         }
         val teamLayoutManager = LinearLayoutManager(requireContext())
         val divider = MaterialDividerItemDecoration(
@@ -39,28 +40,23 @@ class TeamFragment : BaseFragment<FragmentTeamBinding>(FragmentTeamBinding::infl
             layoutManager = teamLayoutManager
             addItemDecoration(divider)
         }
-
-        fab.apply {
-            setFirstFabClickListener {
-                val destination = TeamFragmentDirections.toCreateTeam()
-                destination.navigate()
-            }
-            setSecondFabClickListener {
-                close()
-                JoinTeamBottomSheet {
-                    vm.getTeams()
-                }.show(childFragmentManager, "join_team_bottom_sheet")
-            }
-        }
     }
 
     private fun observe() {
         vm.state.createResourceObserver(::handleSuccess, ::handleLoading)
     }
 
-    private fun handleSuccess(teams: List<TeamCard>?) {
+    private fun handleSuccess(teams: List<TeamCard>?) = with(binding) {
         teams?.let {
-            (binding.rvTeams.adapter as TeamAdapter).changeList(it)
+            (rvTeams.adapter as TeamAdapter).changeList(it)
+
+            if (it.isEmpty()) {
+                emptyArea.visibility = View.VISIBLE
+                rvTeams.visibility = View.GONE
+            } else {
+                emptyArea.visibility = View.GONE
+                rvTeams.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -73,6 +69,25 @@ class TeamFragment : BaseFragment<FragmentTeamBinding>(FragmentTeamBinding::infl
             rvTeams.visibility = View.VISIBLE
             fab.show()
             View.GONE
+        }
+    }
+
+    private fun setListeners() = with(binding) {
+        fab.apply {
+            setFirstFabClickListener {
+                val direction = TeamFragmentDirections.toCreateTeam()
+                direction.navigate()
+            }
+            setSecondFabClickListener {
+                close()
+                JoinTeamBottomSheet {
+                    vm.getTeams()
+                }.show(childFragmentManager, "join_team_bottom_sheet")
+            }
+        }
+
+        emptyArea.setButtonAction {
+            fab.showChild()
         }
     }
 }

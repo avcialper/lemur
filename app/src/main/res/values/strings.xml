@@ -124,4 +124,8 @@
     <string name="select_one_role">En az bir role yetki verilmelidir.</string>
     <string name="invite_code_copied">Davet kodu kopyalandı.</string>
     <string name="leave_team_question">Takımdan ayrılmak istediğinize emin misiniz?</string>
+    <string name="empty_task_content">Görev listeniz boş. Hemen bir görev ekleyin!</string>
+    <string name="join_or_create_team">Takım Oluştur / Takıma Katıl</string>
+    <string name="empty_team_content">Henüz bir takıma katılmadınız veya takım oluşturmadınız.</string>
+    <string name="empty_room_content">Henüz bir oda oluşturulmadı veya bir odaya eklenmediniz.</string>
 </resources>

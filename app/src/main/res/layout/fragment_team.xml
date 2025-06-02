@@ -12,14 +12,12 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.avcialper.lemur.ui.component.CustomFAB
         android:id="@+id/fab"
-        style="@style/FAB"
+        style="@style/Theme.Lemur"
         app:fab_count="two"
         app:fab_icon="@drawable/ic_add"
         app:first_fab_text="@string/create_team"
@@ -33,6 +31,17 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.avcialper.lemur.ui.component.EmptyArea
+        android:id="@+id/empty_area"
+        style="@style/FillHorizontal"
+        android:padding="@dimen/padding_medium"
+        android:visibility="gone"
+        app:buttonText="@string/join_or_create_team"
+        app:contentText="@string/empty_team_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
