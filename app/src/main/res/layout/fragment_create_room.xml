@@ -9,6 +9,8 @@
         android:id="@+id/input_room_name"
         style="@style/FillHorizontal"
         android:hint="@string/room_name"
+        android:imeOptions="actionNext"
+        android:inputType="text"
         app:counter_max_length="@integer/max_room_name_length"
         app:have_counter="true" />
 
@@ -16,15 +18,17 @@
         android:id="@+id/input_room_description"
         style="@style/FillHorizontal"
         android:hint="@string/description"
+        android:imeOptions="actionGo"
+        android:inputType="text"
         app:counter_max_length="@integer/max_room_description_length"
         app:have_counter="true" />
 
     <TextView
         android:id="@+id/accessible_roles_label"
         style="@style/FillHorizontal"
-        android:textSize="@dimen/text_size_medium"
         android:layout_marginTop="@dimen/margin_medium"
-        android:text="@string/accessible_roles" />
+        android:text="@string/accessible_roles"
+        android:textSize="@dimen/text_size_medium" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/cg_roles"
