@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.avcialper.lemur.helper
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE

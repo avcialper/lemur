@@ -29,6 +29,7 @@
 
     <dimen name="icon_of_icon_label">64dp</dimen>
     <dimen name="icon_size">32dp</dimen>
+    <dimen name="icon_size_small">24dp</dimen>
 
     <dimen name="zero_dp">0dp</dimen>
 
@@ -37,4 +38,6 @@
     <dimen name="skeleton_corner_radius">4dp</dimen>
 
     <dimen name="chip_spacing">4dp</dimen>
+
+    <dimen name="member_image_size">52dp</dimen>
 </resources>

@@ -49,7 +49,7 @@ class CreateTeamViewModel @Inject constructor(
         val userId = UserManager.user!!.id
         val adminRole = Role("ADMIN", "Yönetici")
         val memberRole = Role("MEMBER", "Üye")
-        val member = Member(userId, adminRole.code)
+        val member = Member(userId, adminRole.code, adminRole.name)
 
         val team = Team(
             teamId,

@@ -3,6 +3,7 @@ package com.avcialper.lemur.data.repository.storage
 import com.avcialper.lemur.BuildConfig
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.local.Member
+import com.avcialper.lemur.data.model.local.MemberCard
 import com.avcialper.lemur.data.model.local.Note
 import com.avcialper.lemur.data.model.local.Room
 import com.avcialper.lemur.data.model.local.Task
@@ -175,7 +176,7 @@ class StorageRepositoryImpl @Inject constructor(
             if (team.members.any { it.id == userId })
                 return@flowWithResource false
 
-            val member = Member(userId, "MEMBER")
+            val member = Member(userId, "MEMBER", "Üye")
             val members = team.members + member
 
             teamCollection.document(team.id).update(Constants.TEAM_MEMBERS, members).await()
@@ -233,6 +234,42 @@ class StorageRepositoryImpl @Inject constructor(
         ).await()
         true
     }
+
+    override suspend fun getMembers(teamId: String): Flow<Resource<List<MemberCard>>> =
+        flowWithResource {
+            val documents = teamCollection.document(teamId).get().await()
+            val members = documents.toObject(Team::class.java)?.members ?: emptyList()
+            val roles = documents.toObject(Team::class.java)?.roles ?: emptyList()
+            members.map { member ->
+                member.roleName = roles.find { role -> role.code == member.roleCode }?.name ?: ""
+                member
+            }
+
+            val memberCards = mutableListOf<MemberCard>()
+            members.forEach { member ->
+                val userDocument = userCollection.document(member.id).get().await()
+                val user = userDocument.toObject(UserProfile::class.java)!!
+                val memberCard = member.toMemberCard(user.username, user.imageUrl)
+                memberCards.add(memberCard)
+            }
+
+            memberCards
+        }
+
+    override suspend fun removeMemberFromTeam(
+        teamId: String,
+        member: Member
+    ): Flow<Resource<Boolean>> =
+        flowWithResource {
+            userCollection.document(member.id)
+                .update(Constants.TEAMS, FieldValue.arrayRemove(teamId))
+                .await()
+
+            teamCollection.document(teamId)
+                .update(Constants.TEAM_MEMBERS, FieldValue.arrayRemove(member)).await()
+
+            true
+        }
 
     private fun <T> getTasksByField(filed: String, value: T): Flow<Resource<List<TaskCard>>> =
         flowWithResource {

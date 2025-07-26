@@ -128,4 +128,7 @@
     <string name="join_or_create_team">Takım Oluştur / Takıma Katıl</string>
     <string name="empty_team_content">Henüz bir takıma katılmadınız veya takım oluşturmadınız.</string>
     <string name="empty_room_content">Henüz bir oda oluşturulmadı veya bir odaya eklenmediniz.</string>
+    <string name="member_image">Üye fotoğrafı</string>
+    <string name="remove_member_button">Kullanıcı kaldırma butonu.</string>
+    <string name="remove_member_message">Üyeyi takımdan çıkarmak istediğinize emin misniz?</string>
 </resources>

@@ -117,7 +117,3 @@ dependencies {
     // Shimmer
     implementation(libs.shimmer)
 }
-
-kapt {
-    correctErrorTypes = true
-}
