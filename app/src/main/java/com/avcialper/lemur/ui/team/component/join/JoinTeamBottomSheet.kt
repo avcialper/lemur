@@ -1,6 +1,7 @@
 package com.avcialper.lemur.ui.team.component.join
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,17 @@ class JoinTeamBottomSheet(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+
+            inviteCode.apply {
+                val uppercaseFilter = InputFilter { source, _, _, _, _, _ ->
+                    source.toString().uppercase()
+                }
+                val inviteCodeLength = context.resources.getInteger(R.integer.invite_code_length)
+
+                setFilters(arrayOf(uppercaseFilter))
+                setMaxLength(inviteCodeLength)
+            }
+
 
             btnJoin.setOnClickListener {
                 val isValid = validate()

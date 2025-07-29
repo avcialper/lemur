@@ -2,10 +2,12 @@ package com.avcialper.lemur.ui.component
 
 import android.content.Context
 import android.os.Build
+import android.text.InputFilter
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
 import androidx.core.content.withStyledAttributes
+import androidx.core.widget.doAfterTextChanged
 import com.avcialper.lemur.R
 import com.avcialper.lemur.databinding.ComponentTextInputBinding
 import com.avcialper.lemur.helper.validator.ValidationRule
@@ -78,6 +80,21 @@ class TextInput @JvmOverloads constructor(
                 imeOptions = aImeOptions
             }
 
+        }
+    }
+
+    fun setFilters(filters: Array<InputFilter>) = input.setFilters(filters)
+
+    fun setMaxLength(maxLength: Int = 0) {
+        if (maxLength <= 0)
+            return
+
+        input.doAfterTextChanged { text ->
+            if (text.toString().length > maxLength) {
+                val truncated = text.toString().substring(0, maxLength)
+                input.setText(truncated)
+                input.setSelection(truncated.length)
+            }
         }
     }
 }
