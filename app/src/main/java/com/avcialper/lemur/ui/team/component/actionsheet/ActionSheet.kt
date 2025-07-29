@@ -15,6 +15,7 @@ class ActionSheet(
     private val imageUrl: String?,
     private val teamName: String?,
     private val teamDescription: String?,
+    private val isAdmin: Boolean,
     private val onActionHandle: (TeamBottomSheetActions) -> Unit
 ) : BottomSheetDialogFragment() {
 
@@ -56,6 +57,11 @@ class ActionSheet(
                 teamImage.load(imageUrl)
             tvTeamName.text = teamName
             tvTeamDescription.text = teamDescription
+
+            if (!isAdmin) {
+                actionUpdate.visibility = View.GONE
+                actionRoleManagement.visibility = View.GONE
+            }
 
             actionUpdate.setOnClickListener {
                 handleAction(TeamBottomSheetActions.UPDATE)

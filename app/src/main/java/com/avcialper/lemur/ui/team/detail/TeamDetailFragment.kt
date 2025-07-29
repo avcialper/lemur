@@ -27,6 +27,7 @@ class TeamDetailFragment :
 
     private val vm: TeamDetailViewModel by viewModels()
     private val args: TeamDetailFragmentArgs by navArgs()
+    private var isAdmin: Boolean = false
 
     override fun FragmentTeamDetailBinding.initialize() {
         vm.getTeam(args.teamId)
@@ -47,11 +48,14 @@ class TeamDetailFragment :
             tvTeamDescription.text = it.description
             vm.getRooms(it.rooms)
 
-            val isAdmin = it.members.find { member ->
+            isAdmin = it.members.find { member ->
                 member.id == UserManager.user!!.id && member.roleCode == "ADMIN"
-            }
-            if (isAdmin == null)
+            } !== null
+
+            if (!isAdmin) {
+                fab.visibility = View.GONE
                 emptyArea.hideActionButton()
+            }
         }
     }
 
@@ -107,6 +111,7 @@ class TeamDetailFragment :
                 team?.imageUrl,
                 team?.name,
                 team?.description,
+                isAdmin,
                 ::bottomSheetActionHandler
             ).show(
                 childFragmentManager,
