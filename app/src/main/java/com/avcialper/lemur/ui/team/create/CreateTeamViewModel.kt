@@ -47,9 +47,10 @@ class CreateTeamViewModel @Inject constructor(
     private suspend fun addTeam(name: String, description: String) {
         val teamId = UUID.randomUUID().toString()
         val userId = UserManager.user!!.id
+        val ownerRole = Role("OWNER", "Takım Sahibi")
         val adminRole = Role("ADMIN", "Yönetici")
         val memberRole = Role("MEMBER", "Üye")
-        val member = Member(userId, adminRole.code, adminRole.name)
+        val member = Member(userId, ownerRole.code)
 
         val team = Team(
             teamId,
@@ -58,7 +59,7 @@ class CreateTeamViewModel @Inject constructor(
             description,
             imageUrl.value,
             listOf(member),
-            listOf(adminRole, memberRole),
+            listOf(ownerRole, adminRole, memberRole),
             teamId.take(8).uppercase(),
             emptyList()
         )

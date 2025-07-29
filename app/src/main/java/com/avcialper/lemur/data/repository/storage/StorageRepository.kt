@@ -46,12 +46,13 @@ interface StorageRepository {
     suspend fun createRoom(room: Room): Flow<Resource<Boolean>>
     suspend fun getRooms(rooms: List<String>): Flow<Resource<List<Room>>>
     suspend fun leaveTeam(teamId: String, member: Member): Flow<Resource<Boolean>>
+    suspend fun getMembers(teamId: String): Flow<Resource<List<MemberCard>>>
+    suspend fun removeMemberFromTeam(teamId: String, member: Member): Flow<Resource<Boolean>>
+    suspend fun deleteTeam(teamId: String, memberIDs: List<String>): Flow<Resource<Boolean>>
     suspend fun updateTeam(
         teamId: String,
         imageUrl: String?,
         name: String,
         description: String
     ): Flow<Resource<Boolean>>
-    suspend fun getMembers(teamId: String): Flow<Resource<List<MemberCard>>>
-    suspend fun removeMemberFromTeam(teamId: String, member: Member): Flow<Resource<Boolean>>
 }

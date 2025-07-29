@@ -17,6 +17,7 @@ import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.component.AlertFragment
 import com.avcialper.lemur.ui.team.component.actionsheet.ActionSheet
 import com.avcialper.lemur.ui.team.detail.adapter.RoomAdapter
+import com.avcialper.lemur.util.constant.Constants
 import com.avcialper.lemur.util.constant.TeamBottomSheetActions
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +28,7 @@ class TeamDetailFragment :
 
     private val vm: TeamDetailViewModel by viewModels()
     private val args: TeamDetailFragmentArgs by navArgs()
-    private var isAdmin: Boolean = false
+    private var isOwner: Boolean = false
 
     override fun FragmentTeamDetailBinding.initialize() {
         vm.getTeam(args.teamId)
@@ -48,11 +49,11 @@ class TeamDetailFragment :
             tvTeamDescription.text = it.description
             vm.getRooms(it.rooms)
 
-            isAdmin = it.members.find { member ->
-                member.id == UserManager.user!!.id && member.roleCode == "ADMIN"
+            isOwner = it.members.find { member ->
+                member.id == UserManager.user!!.id && member.roleCode == Constants.OWNER
             } !== null
 
-            if (!isAdmin) {
+            if (!isOwner) {
                 fab.visibility = View.GONE
                 emptyArea.hideActionButton()
             }
@@ -111,7 +112,7 @@ class TeamDetailFragment :
                 team?.imageUrl,
                 team?.name,
                 team?.description,
-                isAdmin,
+                isOwner,
                 ::bottomSheetActionHandler
             ).show(
                 childFragmentManager,
@@ -134,15 +135,17 @@ class TeamDetailFragment :
         }
     }
 
-    private fun bottomSheetActionHandler(action: TeamBottomSheetActions) {
+    private fun bottomSheetActionHandler(action: TeamBottomSheetActions, onSuccess: () -> Unit) {
         when (action) {
             TeamBottomSheetActions.UPDATE -> {
                 val direction = TeamDetailFragmentDirections.toUpdateTeam(args.teamId)
+                onSuccess()
                 direction.navigate()
             }
 
             TeamBottomSheetActions.MEMBERS -> {
                 val direction = TeamDetailFragmentDirections.toMembers(teamId = args.teamId)
+                onSuccess()
                 direction.navigate()
             }
 
@@ -156,6 +159,7 @@ class TeamDetailFragment :
 
             TeamBottomSheetActions.ROLE_MANAGEMENT -> {
                 val direction = TeamDetailFragmentDirections.toRoles()
+                onSuccess()
                 direction.navigate()
             }
 
@@ -165,6 +169,19 @@ class TeamDetailFragment :
                         member.id == UserManager.user!!.id
                     }
                     vm.leaveTeam(args.teamId, member!!) {
+                        onSuccess()
+                        goBack()
+                    }
+                }.show(childFragmentManager, "alert")
+            }
+
+            TeamBottomSheetActions.DELETE_TEAM -> {
+                AlertFragment(R.string.delete_team_question, true) {
+                    val memberIDs = vm.state.value.data!!.members.map { member ->
+                        member.id
+                    }
+                    vm.deleteTeam(args.teamId, memberIDs) {
+                        onSuccess()
                         goBack()
                     }
                 }.show(childFragmentManager, "alert")

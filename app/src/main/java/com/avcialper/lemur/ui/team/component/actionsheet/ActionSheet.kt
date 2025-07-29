@@ -15,8 +15,8 @@ class ActionSheet(
     private val imageUrl: String?,
     private val teamName: String?,
     private val teamDescription: String?,
-    private val isAdmin: Boolean,
-    private val onActionHandle: (TeamBottomSheetActions) -> Unit
+    private val isOwner: Boolean,
+    private val onActionHandle: (TeamBottomSheetActions, onSuccess: () -> Unit) -> Unit
 ) : BottomSheetDialogFragment() {
 
     private var _binding: FragmentActionSheetBinding? = null
@@ -58,9 +58,10 @@ class ActionSheet(
             tvTeamName.text = teamName
             tvTeamDescription.text = teamDescription
 
-            if (!isAdmin) {
+            if (!isOwner) {
                 actionUpdate.visibility = View.GONE
                 actionRoleManagement.visibility = View.GONE
+                actionDeleteTeam.visibility = View.GONE
             }
 
             actionUpdate.setOnClickListener {
@@ -78,12 +79,16 @@ class ActionSheet(
             actionLeaveTeam.setOnClickListener {
                 handleAction(TeamBottomSheetActions.LEAVE_TEAM)
             }
+            actionDeleteTeam.setOnClickListener {
+                handleAction(TeamBottomSheetActions.DELETE_TEAM)
+            }
         }
     }
 
     private fun handleAction(action: TeamBottomSheetActions) {
-        onActionHandle(action)
-        dismiss()
+        onActionHandle(action) {
+            dismiss()
+        }
     }
 
     override fun onDestroyView() {

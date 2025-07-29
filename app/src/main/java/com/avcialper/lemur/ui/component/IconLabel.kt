@@ -2,6 +2,7 @@ package com.avcialper.lemur.ui.component
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
@@ -29,9 +30,17 @@ class IconLabel @JvmOverloads constructor(
             val label = getString(R.styleable.IconLabel_android_label)
             val icon = getDrawable(R.styleable.IconLabel_left_icon)
 
+            val typedValue = TypedValue()
+            val theme = context.theme
+            theme.resolveAttribute(R.attr.primaryColor, typedValue, true)
+            val defTextColor = typedValue.data
+
+            val textColor = getColor(R.styleable.IconLabel_text_color, defTextColor)
+
             binding.apply {
                 textLabel.text = label
                 imageIcon.setImageDrawable(icon)
+                textLabel.setTextColor(textColor)
             }
 
         }

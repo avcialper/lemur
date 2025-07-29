@@ -131,4 +131,6 @@
     <string name="member_image">Üye fotoğrafı</string>
     <string name="remove_member_button">Kullanıcı kaldırma butonu.</string>
     <string name="remove_member_message">Üyeyi takımdan çıkarmak istediğinize emin misniz?</string>
+    <string name="delete_team">Takımı Sil</string>
+    <string name="delete_team_question">Takımı silmek istediğinize emin misiniz?</string>
 </resources>

@@ -176,7 +176,7 @@ class StorageRepositoryImpl @Inject constructor(
             if (team.members.any { it.id == userId })
                 return@flowWithResource false
 
-            val member = Member(userId, "MEMBER", "Üye")
+            val member = Member(userId, "MEMBER")
             val members = team.members + member
 
             teamCollection.document(team.id).update(Constants.TEAM_MEMBERS, members).await()
@@ -240,16 +240,13 @@ class StorageRepositoryImpl @Inject constructor(
             val documents = teamCollection.document(teamId).get().await()
             val members = documents.toObject(Team::class.java)?.members ?: emptyList()
             val roles = documents.toObject(Team::class.java)?.roles ?: emptyList()
-            members.map { member ->
-                member.roleName = roles.find { role -> role.code == member.roleCode }?.name ?: ""
-                member
-            }
 
             val memberCards = mutableListOf<MemberCard>()
             members.forEach { member ->
                 val userDocument = userCollection.document(member.id).get().await()
                 val user = userDocument.toObject(UserProfile::class.java)!!
-                val memberCard = member.toMemberCard(user.username, user.imageUrl)
+                val roleName = roles.find { role -> role.code === member.roleCode }?.name ?: ""
+                val memberCard = member.toMemberCard(user.username, roleName, user.imageUrl)
                 memberCards.add(memberCard)
             }
 
@@ -270,6 +267,21 @@ class StorageRepositoryImpl @Inject constructor(
 
             true
         }
+
+    override suspend fun deleteTeam(
+        teamId: String,
+        memberIDs: List<String>
+    ): Flow<Resource<Boolean>> = flowWithResource {
+
+        memberIDs.forEach { id ->
+            userCollection.document(id).update(Constants.TEAMS, FieldValue.arrayRemove(teamId))
+                .await()
+        }
+
+        teamCollection.document(teamId).delete().await()
+
+        true
+    }
 
     private fun <T> getTasksByField(filed: String, value: T): Flow<Resource<List<TaskCard>>> =
         flowWithResource {

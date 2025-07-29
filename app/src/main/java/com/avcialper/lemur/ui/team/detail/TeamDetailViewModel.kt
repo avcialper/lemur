@@ -37,8 +37,7 @@ class TeamDetailViewModel @Inject constructor(
         }
     }
 
-    fun leaveTeam(teamId: String, member: Member ,onSuccess: () -> Unit) = viewModelScope.launch {
-        _state.update { Resource.Loading() }
+    fun leaveTeam(teamId: String, member: Member, onSuccess: () -> Unit) = viewModelScope.launch {
         storageRepository.leaveTeam(teamId, member).collect { resource ->
             if (resource is Resource.Success) {
                 onSuccess()
@@ -47,5 +46,16 @@ class TeamDetailViewModel @Inject constructor(
             }
         }
     }
+
+    fun deleteTeam(teamId: String, memberIDs: List<String>, onSuccess: () -> Unit) =
+        viewModelScope.launch {
+            storageRepository.deleteTeam(teamId, memberIDs).collect { resource ->
+                if (resource is Resource.Success) {
+                    onSuccess()
+                } else if (resource is Resource.Error) {
+                    _state.update { Resource.Error(resource.throwable) }
+                }
+            }
+        }
 
 }

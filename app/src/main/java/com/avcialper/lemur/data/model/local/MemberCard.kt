@@ -8,6 +8,6 @@ data class MemberCard(
     val imageUrl: String?
 ) {
 
-    fun toMember(): Member = Member(id, roleCode, role)
+    fun toMember(): Member = Member(id, roleCode)
 
 }

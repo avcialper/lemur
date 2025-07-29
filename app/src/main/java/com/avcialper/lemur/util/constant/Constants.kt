@@ -51,4 +51,5 @@ object Constants {
     const val ROOM_ACCESSIBLE_ROLES = "accessibleRoles"
 
     const val IMAGE_URL = "imageUrl"
+    const val OWNER = "OWNER"
 }

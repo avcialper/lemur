@@ -51,4 +51,11 @@
         android:label="@string/leave_team"
         app:left_icon="@drawable/ic_logout" />
 
+    <com.avcialper.lemur.ui.component.IconLabel
+        android:id="@+id/action_delete_team"
+        style="@style/FillHorizontal"
+        android:label="@string/delete_team"
+        app:left_icon="@drawable/ic_delete_red"
+        app:text_color="@color/red" />
+
 </LinearLayout>

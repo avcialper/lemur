@@ -55,5 +55,5 @@ enum class Theme(val value: String) {
 }
 
 enum class TeamBottomSheetActions {
-    UPDATE, MEMBERS, INVITE_CODE, ROLE_MANAGEMENT, LEAVE_TEAM
+    UPDATE, MEMBERS, INVITE_CODE, ROLE_MANAGEMENT, LEAVE_TEAM, DELETE_TEAM
 }
