@@ -53,11 +53,6 @@ class ActionSheet(
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            if (imageUrl != null)
-                teamImage.load(imageUrl)
-            tvTeamName.text = teamName
-            tvTeamDescription.text = teamDescription
-
             if (!isOwner) {
                 actionUpdate.visibility = View.GONE
                 actionRoleManagement.visibility = View.GONE

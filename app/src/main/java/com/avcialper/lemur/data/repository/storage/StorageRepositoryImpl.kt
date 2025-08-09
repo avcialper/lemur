@@ -176,7 +176,7 @@ class StorageRepositoryImpl @Inject constructor(
             if (team.members.any { it.id == userId })
                 return@flowWithResource false
 
-            val member = Member(userId, "MEMBER")
+            val member = Member(userId, listOf("MEMBER"))
             val members = team.members + member
 
             teamCollection.document(team.id).update(Constants.TEAM_MEMBERS, members).await()
@@ -245,8 +245,10 @@ class StorageRepositoryImpl @Inject constructor(
             members.forEach { member ->
                 val userDocument = userCollection.document(member.id).get().await()
                 val user = userDocument.toObject(UserProfile::class.java)!!
-                val roleName = roles.find { role -> role.code == member.roleCode }?.name ?: ""
-                val memberCard = member.toMemberCard(user.username, roleName, user.imageUrl)
+                val roleNames = member.roleCodes.mapNotNull { code ->
+                    roles.find { role -> role.code == code }?.name
+                }
+                val memberCard = member.toMemberCard(user.username, roleNames, user.imageUrl)
                 memberCards.add(memberCard)
             }
 

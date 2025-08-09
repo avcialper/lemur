@@ -50,7 +50,7 @@ class TeamDetailFragment :
             vm.getRooms(it.rooms)
 
             isOwner = it.members.find { member ->
-                member.id == UserManager.user!!.id && member.roleCode == Constants.OWNER
+                member.id == UserManager.user!!.id && member.roleCodes.find { code -> code == Constants.OWNER } != null
             } !== null
 
             if (!isOwner) {

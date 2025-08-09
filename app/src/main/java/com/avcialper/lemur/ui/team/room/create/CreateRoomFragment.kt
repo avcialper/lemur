@@ -1,5 +1,6 @@
 package com.avcialper.lemur.ui.team.room.create
 
+import android.content.res.ColorStateList
 import android.view.ContextThemeWrapper
 import androidx.core.view.isNotEmpty
 import androidx.fragment.app.viewModels
@@ -106,6 +107,7 @@ class CreateRoomFragment :
 
             val chip = Chip(ContextThemeWrapper(context, R.style.SelectedRoleChip), null, 0).apply {
                 text = role.name
+                chipBackgroundColor = ColorStateList.valueOf(getInt(R.color.chardonnay))
             }
             binding.cgRoles.addView(chip)
         }

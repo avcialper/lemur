@@ -30,7 +30,7 @@ class MemberAdapter(members: List<MemberCard>, private val removeMember: (Member
 
     private fun isLoggedUserIsAdmin(): Boolean {
         val user = data.find { it.id == UserManager.user!!.id }
-        return user?.roleCode == "ADMIN"
+        return user?.roleCodes?.find { code -> code == "ADMIN" } != null
     }
 
     fun changeList(data: List<MemberCard>) {

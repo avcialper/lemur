@@ -7,6 +7,7 @@ import com.avcialper.lemur.data.model.local.Member
 import com.avcialper.lemur.data.model.local.Role
 import com.avcialper.lemur.data.model.local.Team
 import com.avcialper.lemur.data.repository.storage.StorageRepository
+import com.avcialper.lemur.util.constant.Permissions
 import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -47,10 +48,10 @@ class CreateTeamViewModel @Inject constructor(
     private suspend fun addTeam(name: String, description: String) {
         val teamId = UUID.randomUUID().toString()
         val userId = UserManager.user!!.id
-        val ownerRole = Role("OWNER", "Takım Sahibi")
-        val adminRole = Role("ADMIN", "Yönetici")
-        val memberRole = Role("MEMBER", "Üye")
-        val member = Member(userId, ownerRole.code)
+        val ownerRole = Role("OWNER", "Takım Sahibi", Permissions.allRoles)
+        val adminRole = Role("ADMIN", "Yönetici", Permissions.allRoles)
+        val memberRole = Role("MEMBER", "Üye", emptyList())
+        val member = Member(userId, listOf(ownerRole.code))
 
         val team = Team(
             teamId,

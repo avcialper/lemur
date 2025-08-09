@@ -25,23 +25,25 @@
         android:layout_marginStart="@dimen/margin_medium"
         android:textSize="@dimen/text_size_medium"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/image_member"
         app:layout_constraintStart_toEndOf="@id/image_member"
         app:layout_constraintTop_toTopOf="@id/image_member"
         tools:text="@string/app_name" />
 
-    <TextView
-        android:paddingTop="2dp"
-        android:id="@+id/text_role_name"
-        android:layout_width="wrap_content"
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chips_roles"
+        android:layout_width="@dimen/zero_dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_medium"
-        android:background="@drawable/role_name_background"
-        android:paddingStart="@dimen/padding_small"
-        android:paddingEnd="@dimen/padding_small"
-        app:layout_constraintBottom_toBottomOf="@id/image_member"
-        app:layout_constraintStart_toEndOf="@id/image_member"
-        app:layout_constraintTop_toBottomOf="@id/text_username"
-        tools:text="@string/app_name" />
+        android:clipToPadding="false"
+        android:foregroundGravity="left"
+        app:chipSpacingVertical="-4dp"
+        app:layout_constraintBaseline_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_member"
+        app:singleLine="false"
+        app:singleSelection="false" />
 
     <ImageView
         android:id="@+id/icon_remove_member"

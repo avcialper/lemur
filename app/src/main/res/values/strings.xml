@@ -133,4 +133,9 @@
     <string name="remove_member_message">Üyeyi takımdan çıkarmak istediğinize emin misniz?</string>
     <string name="delete_team">Takımı Sil</string>
     <string name="delete_team_question">Takımı silmek istediğinize emin misiniz?</string>
+    <string name="task_management_permission">Görev Yönetimi</string>
+    <string name="room_management_permission">Oda Yönetimi</string>
+    <string name="update_team_permission">Takım Güncelleme</string>
+    <string name="member_management_permission">Üye Yönetimi</string>
+    <string name="role_management_permission">Rol Yönetimi</string>
 </resources>

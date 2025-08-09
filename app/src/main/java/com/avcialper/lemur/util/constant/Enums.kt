@@ -57,3 +57,21 @@ enum class Theme(val value: String) {
 enum class TeamBottomSheetActions {
     UPDATE, MEMBERS, INVITE_CODE, ROLE_MANAGEMENT, LEAVE_TEAM, DELETE_TEAM
 }
+
+enum class Permissions(val label: Int) {
+    TASK_MANAGEMENT(R.string.task_management_permission),
+    ROOM_MANAGEMENT(R.string.room_management_permission),
+    UPDATE_TEAM(R.string.update_team_permission),
+    MEMBER_MANAGEMENT(R.string.member_management_permission),
+    ROLE_MANAGEMENT(R.string.role_management_permission);
+
+    companion object {
+        val allRoles = listOf(
+            TASK_MANAGEMENT.name,
+            ROOM_MANAGEMENT.name,
+            UPDATE_TEAM.name,
+            MEMBER_MANAGEMENT.name,
+            ROLE_MANAGEMENT.name
+        )
+    }
+}
