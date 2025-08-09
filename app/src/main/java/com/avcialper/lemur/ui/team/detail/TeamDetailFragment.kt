@@ -107,11 +107,7 @@ class TeamDetailFragment :
 
     private fun setListeners() = with(binding) {
         innerWrapper.setOnClickListener {
-            val team = vm.state.value.data
             ActionSheet(
-                team?.imageUrl,
-                team?.name,
-                team?.description,
                 isOwner,
                 ::bottomSheetActionHandler
             ).show(

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import coil.load
 import com.avcialper.lemur.databinding.FragmentActionSheetBinding
 import com.avcialper.lemur.util.constant.TeamBottomSheetActions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -12,9 +11,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class ActionSheet(
-    private val imageUrl: String?,
-    private val teamName: String?,
-    private val teamDescription: String?,
     private val isOwner: Boolean,
     private val onActionHandle: (TeamBottomSheetActions, onSuccess: () -> Unit) -> Unit
 ) : BottomSheetDialogFragment() {
