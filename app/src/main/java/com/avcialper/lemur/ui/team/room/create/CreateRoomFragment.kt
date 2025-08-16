@@ -30,7 +30,9 @@ class CreateRoomFragment :
     private var selectedRoles = emptyList<Role>()
 
     override fun FragmentCreateRoomBinding.initialize() {
-        roles = args.roles.filter { it.code != "ADMIN" }.map { it.toRoleCard() }.toTypedArray()
+        roles =
+            args.roles.filter { it.code != "ADMIN" && it.code != "OWNER" }.map { it.toRoleCard() }
+                .toTypedArray()
         setListeners()
         observe()
     }

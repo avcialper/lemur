@@ -130,14 +130,17 @@ class TeamDetailFragment :
             )
             fab.close()
         }
+
         root.setOnClickListener {
             fab.close()
         }
+
         fab.setSecondFabClickListener {
             val roles = vm.state.value.data?.roles?.toTypedArray() ?: emptyArray()
             val direction = TeamDetailFragmentDirections.toCreateRoom(roles, args.teamId)
             direction.navigate()
         }
+
         emptyArea.setButtonAction {
             val roles = vm.state.value.data?.roles?.toTypedArray() ?: emptyArray()
             val direction = TeamDetailFragmentDirections.toCreateRoom(roles, args.teamId)
