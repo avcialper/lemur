@@ -17,7 +17,7 @@ import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.component.AlertFragment
 import com.avcialper.lemur.ui.team.component.actionsheet.ActionSheet
 import com.avcialper.lemur.ui.team.detail.adapter.RoomAdapter
-import com.avcialper.lemur.util.constant.Constants
+import com.avcialper.lemur.util.constant.Permissions
 import com.avcialper.lemur.util.constant.TeamBottomSheetActions
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +28,7 @@ class TeamDetailFragment :
 
     private val vm: TeamDetailViewModel by viewModels()
     private val args: TeamDetailFragmentArgs by navArgs()
-    private var isOwner: Boolean = false
+    private var userPermissions: List<String> = emptyList()
 
     override fun FragmentTeamDetailBinding.initialize() {
         vm.getTeam(args.teamId)
@@ -45,15 +45,27 @@ class TeamDetailFragment :
         team?.let {
             if (it.imageUrl != null)
                 teamImage.load(it.imageUrl)
+
             tvTeamName.text = it.name
             tvTeamDescription.text = it.description
             vm.getRooms(it.rooms)
 
-            isOwner = it.members.find { member ->
-                member.id == UserManager.user!!.id && member.roleCodes.find { code -> code == Constants.OWNER } != null
-            } !== null
+            val userRoles = it.members.find { member ->
+                member.id == UserManager.user!!.id
+            }?.roleCodes ?: emptyList()
 
-            if (!isOwner) {
+            it.roles.forEach { role ->
+                if (userRoles.contains(role.code)) {
+                    userPermissions = userPermissions + role.permissions
+                }
+            }
+            userPermissions = userPermissions.distinct()
+
+            val isHaveRoomAndTaskPermission =
+                userPermissions.contains(Permissions.TASK_MANAGEMENT.name) &&
+                        userPermissions.contains(Permissions.ROOM_MANAGEMENT.name)
+
+            if (!isHaveRoomAndTaskPermission) {
                 fab.visibility = View.GONE
                 emptyArea.hideActionButton()
             }
@@ -107,8 +119,10 @@ class TeamDetailFragment :
 
     private fun setListeners() = with(binding) {
         innerWrapper.setOnClickListener {
+            val isOwner = vm.state.value.data?.teamOwnerId == UserManager.user?.id
             ActionSheet(
                 isOwner,
+                userPermissions,
                 ::bottomSheetActionHandler
             ).show(
                 childFragmentManager,

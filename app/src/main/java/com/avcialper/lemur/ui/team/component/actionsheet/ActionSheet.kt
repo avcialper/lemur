@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.avcialper.lemur.databinding.FragmentActionSheetBinding
+import com.avcialper.lemur.util.constant.Permissions
 import com.avcialper.lemur.util.constant.TeamBottomSheetActions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -12,6 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class ActionSheet(
     private val isOwner: Boolean,
+    private val permissions: List<String>,
     private val onActionHandle: (TeamBottomSheetActions, onSuccess: () -> Unit) -> Unit
 ) : BottomSheetDialogFragment() {
 
@@ -49,11 +51,14 @@ class ActionSheet(
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            if (!isOwner) {
+            if (!permissions.contains(Permissions.UPDATE_TEAM.name))
                 actionUpdate.visibility = View.GONE
+
+            if(!permissions.contains(Permissions.ROLE_MANAGEMENT.name))
                 actionRoleManagement.visibility = View.GONE
+
+            if(!isOwner)
                 actionDeleteTeam.visibility = View.GONE
-            }
 
             actionUpdate.setOnClickListener {
                 handleAction(TeamBottomSheetActions.UPDATE)
