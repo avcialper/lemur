@@ -12,6 +12,7 @@ import com.avcialper.lemur.databinding.FragmentAlertBinding
 
 class AlertFragment(
     private val label: Int = 0,
+    private val stringLabel: String = "",
     private val isCancelable: Boolean = true,
     private val onPositiveClick: () -> Unit = {},
 ) : DialogFragment() {
@@ -48,7 +49,7 @@ class AlertFragment(
 
         binding.apply {
             textLabel.text =
-                if (label != 0) ContextCompat.getString(requireContext(), label) else ""
+                if (label != 0) ContextCompat.getString(requireContext(), label) else stringLabel
 
             if (!isCancelable) {
                 textPositive.visibility = View.GONE

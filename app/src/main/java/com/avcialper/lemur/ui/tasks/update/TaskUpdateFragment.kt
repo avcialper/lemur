@@ -150,7 +150,7 @@ class TaskUpdateFragment :
         }
 
         buttonDelete.setOnClickListener {
-            AlertFragment(R.string.delete_task_message, true) {
+            AlertFragment(R.string.delete_task_message) {
                 vm.deleteTask(task.id)
             }.show(parentFragmentManager, "alert")
         }

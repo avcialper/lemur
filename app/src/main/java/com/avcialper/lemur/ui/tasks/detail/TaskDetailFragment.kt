@@ -200,7 +200,7 @@ class TaskDetailFragment :
 
     private fun openAlertDialog(label: Int, onCompleted: () -> Unit) {
         binding.fab.close()
-        AlertFragment(label, true, onCompleted).show(childFragmentManager, "alert")
+        AlertFragment(label, onPositiveClick = onCompleted).show(childFragmentManager, "alert")
     }
 
     private fun handleStatusSuccess() {

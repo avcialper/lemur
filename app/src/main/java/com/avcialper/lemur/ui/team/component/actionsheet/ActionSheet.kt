@@ -54,10 +54,10 @@ class ActionSheet(
             if (!permissions.contains(Permissions.UPDATE_TEAM.name))
                 actionUpdate.visibility = View.GONE
 
-            if(!permissions.contains(Permissions.ROLE_MANAGEMENT.name))
+            if (!permissions.contains(Permissions.ROLE_MANAGEMENT.name))
                 actionRoleManagement.visibility = View.GONE
 
-            if(!isOwner)
+            if (!isOwner)
                 actionDeleteTeam.visibility = View.GONE
 
             actionUpdate.setOnClickListener {
@@ -73,6 +73,7 @@ class ActionSheet(
                 handleAction(TeamBottomSheetActions.ROLE_MANAGEMENT)
             }
             actionLeaveTeam.setOnClickListener {
+                if (isOwner) dismiss()
                 handleAction(TeamBottomSheetActions.LEAVE_TEAM)
             }
             actionDeleteTeam.setOnClickListener {

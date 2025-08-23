@@ -53,7 +53,10 @@ class UpdateEmailFragment :
 
     private fun handleSuccess() {
         // After email was updated, show alert dialog for checking email
-        AlertFragment(R.string.check_email, false).show(childFragmentManager, "alert")
+        AlertFragment(R.string.check_email, isCancelable = false).show(
+            childFragmentManager,
+            "alert"
+        )
     }
 
     private fun handleIsUpdate(isUpdated: Boolean?) {
