@@ -142,7 +142,7 @@ class TeamDetailFragment :
     }
 
     private fun openActionSheet() {
-        val isOwner = vm.state.value.data?.teamOwnerId == UserManager.user?.id
+        val isOwner = vm.state.value.data?.teamLeadId == UserManager.user?.id
         ActionSheet(
             isOwner,
             userPermissions,
@@ -183,7 +183,7 @@ class TeamDetailFragment :
 
             TeamBottomSheetActions.LEAVE_TEAM -> {
 
-                val isOwner = vm.state.value.data?.teamOwnerId == UserManager.user?.id
+                val isOwner = vm.state.value.data?.teamLeadId == UserManager.user?.id
 
                 if (isOwner)
                     LeadSelectorFragment(

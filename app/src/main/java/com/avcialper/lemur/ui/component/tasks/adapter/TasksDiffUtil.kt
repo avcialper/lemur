@@ -1,4 +1,4 @@
-package com.avcialper.lemur.helper
+package com.avcialper.lemur.ui.component.tasks.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.avcialper.lemur.data.model.local.TaskCard

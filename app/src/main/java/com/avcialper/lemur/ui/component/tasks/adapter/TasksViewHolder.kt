@@ -1,4 +1,4 @@
-package com.avcialper.lemur.ui.component.tasks
+package com.avcialper.lemur.ui.component.tasks.adapter
 
 import android.graphics.drawable.Drawable
 import android.widget.TextView

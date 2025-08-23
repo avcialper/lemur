@@ -1,4 +1,4 @@
-package com.avcialper.lemur.ui.component.tasks
+package com.avcialper.lemur.ui.component.tasks.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.avcialper.lemur.data.model.local.TaskCard
 import com.avcialper.lemur.databinding.ComponentTaskBinding
-import com.avcialper.lemur.helper.TasksDiffUtil
 
 class TasksAdapter(
     private var tasks: List<TaskCard>,

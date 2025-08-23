@@ -9,6 +9,7 @@ import com.avcialper.lemur.R
 import com.avcialper.lemur.data.model.local.TaskCard
 import com.avcialper.lemur.databinding.ComponentTasksBinding
 import com.avcialper.lemur.helper.NonScrollableLinerLayoutManager
+import com.avcialper.lemur.ui.component.tasks.adapter.TasksAdapter
 import com.google.android.material.divider.MaterialDividerItemDecoration
 
 class Tasks @JvmOverloads constructor(

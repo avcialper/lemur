@@ -37,8 +37,8 @@ class LeadSelectorViewModel @Inject constructor(
         }
     }
 
-    fun changeTeamOwner(teamId: String, newOwnerId: String) = viewModelScope.launch {
-        repository.changeTeamOwner(teamId, newOwnerId).collect { resource ->
+    fun changeTeamLead(teamId: String, newLeadId: String) = viewModelScope.launch {
+        repository.changeTeamLead(teamId, newLeadId).collect { resource ->
             _changeState.update { resource }
         }
     }

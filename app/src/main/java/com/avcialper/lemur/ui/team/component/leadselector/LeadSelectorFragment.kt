@@ -106,7 +106,7 @@ class LeadSelectorFragment(
                     .replace("{0}", selectedLead!!.name)
 
             AlertFragment(stringLabel = label) {
-                vm.changeTeamOwner(teamId, selectedLead!!.id)
+                vm.changeTeamLead(teamId, selectedLead!!.id)
             }.show(childFragmentManager, "alert")
 
         }

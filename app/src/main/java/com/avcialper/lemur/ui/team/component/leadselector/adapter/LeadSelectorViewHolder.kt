@@ -11,7 +11,7 @@ class LeadSelectorViewHolder(private val binding: LeadSelectorCardBinding) :
 
     fun holder(member: SelectableMemberCard, handleSelect: () -> Unit) = with(binding) {
 
-        val (imageUrl, id, name, isSelected) = member
+        val (imageUrl, _, name, isSelected) = member
 
         if (!imageUrl.isNullOrEmpty())
             imageMember.load(imageUrl)

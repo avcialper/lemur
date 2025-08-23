@@ -35,7 +35,7 @@ object Constants {
 
     // Team Constants
     const val TEAM_ID = "id"
-    const val TEAM_OWNER_ID = "teamOwnerId"
+    const val TEAM_LEAD_ID = "teamLeadId"
     const val TEAM_NAME = "name"
     const val TEAM_DESCRIPTION = "description"
     const val TEAM_MEMBERS = "members"
@@ -51,5 +51,4 @@ object Constants {
     const val ROOM_ACCESSIBLE_ROLES = "accessibleRoles"
 
     const val IMAGE_URL = "imageUrl"
-    const val OWNER = "OWNER"
 }
