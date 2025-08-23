@@ -218,6 +218,20 @@ class StorageRepositoryImpl @Inject constructor(
             true
         }
 
+    override suspend fun changeTeamOwner(
+        teamId: String,
+        newOwnerId: String
+    ): Flow<Resource<Boolean>> = flowWithResource {
+        val teamDocument = teamCollection.document(teamId).get().await()
+        val team = teamDocument.toObject(Team::class.java)!!
+
+        team.teamOwnerId = newOwnerId
+        team.members.find { it.id == newOwnerId }?.roleCodes = listOf("OWNER")
+        teamCollection.document(teamId).set(team.toMap()).await()
+
+        true
+    }
+
     override suspend fun updateTeam(
         teamId: String,
         imageUrl: String?,

@@ -124,6 +124,8 @@
     <string name="select_one_role">En az bir role yetki verilmelidir.</string>
     <string name="invite_code_copied">Davet kodu kopyalandı.</string>
     <string name="leave_team_question">Takımdan ayrılmak istediğinize emin misiniz?</string>
+    <string name="change_team_owner_and_leave_team_question">{0} adlı kullanıcıyı takım lideri yapmak üzeresiniz. Bu işlem sonrası takımdan ayrılacaksınız. Devam etmek istediğinize emin misiniz?</string>
+    <string name="leave_team_and_delete_question">Takımdan ayrılmak üzeresiniz. Bu işlem sonrası takım silinecektir. Devam etmek istediğinize emin misiniz?</string>
     <string name="empty_task_content">Görev listeniz boş. Hemen bir görev ekleyin!</string>
     <string name="join_or_create_team">Takım Oluştur / Takıma Katıl</string>
     <string name="empty_team_content">Henüz bir takıma katılmadınız veya takım oluşturmadınız.</string>
@@ -138,4 +140,5 @@
     <string name="update_team_permission">Takım Güncelleme</string>
     <string name="member_management_permission">Üye Yönetimi</string>
     <string name="role_management_permission">Rol Yönetimi</string>
+    <string name="change_team_owner">Liderliği Devret</string>
 </resources>

@@ -16,6 +16,7 @@ import com.avcialper.lemur.databinding.FragmentTeamDetailBinding
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.component.AlertFragment
 import com.avcialper.lemur.ui.team.component.actionsheet.ActionSheet
+import com.avcialper.lemur.ui.team.component.leadselector.LeadSelectorFragment
 import com.avcialper.lemur.ui.team.detail.adapter.RoomAdapter
 import com.avcialper.lemur.util.constant.Permissions
 import com.avcialper.lemur.util.constant.TeamBottomSheetActions
@@ -119,15 +120,7 @@ class TeamDetailFragment :
 
     private fun setListeners() = with(binding) {
         innerWrapper.setOnClickListener {
-            val isOwner = vm.state.value.data?.teamOwnerId == UserManager.user?.id
-            ActionSheet(
-                isOwner,
-                userPermissions,
-                ::bottomSheetActionHandler
-            ).show(
-                childFragmentManager,
-                "action_sheet"
-            )
+            openActionSheet()
             fab.close()
         }
 
@@ -146,6 +139,18 @@ class TeamDetailFragment :
             val direction = TeamDetailFragmentDirections.toCreateRoom(roles, args.teamId)
             direction.navigate()
         }
+    }
+
+    private fun openActionSheet() {
+        val isOwner = vm.state.value.data?.teamOwnerId == UserManager.user?.id
+        ActionSheet(
+            isOwner,
+            userPermissions,
+            ::bottomSheetActionHandler
+        ).show(
+            childFragmentManager,
+            "action_sheet"
+        )
     }
 
     private fun bottomSheetActionHandler(action: TeamBottomSheetActions, onSuccess: () -> Unit) {
@@ -177,28 +182,48 @@ class TeamDetailFragment :
             }
 
             TeamBottomSheetActions.LEAVE_TEAM -> {
-                AlertFragment(R.string.leave_team_question, true) {
-                    val member = vm.state.value.data!!.members.find { member ->
-                        member.id == UserManager.user!!.id
-                    }
-                    vm.leaveTeam(args.teamId, member!!) {
-                        onSuccess()
-                        goBack()
-                    }
-                }.show(childFragmentManager, "alert")
+
+                val isOwner = vm.state.value.data?.teamOwnerId == UserManager.user?.id
+
+                if (isOwner)
+                    LeadSelectorFragment(
+                        args.teamId,
+                        ::openActionSheet,
+                        { leaveTeam(onSuccess) },
+                        { deleteTeam(onSuccess) }
+                    ).show(childFragmentManager, "lead_selector")
+                else
+                    AlertFragment(R.string.leave_team_question) {
+                        leaveTeam(onSuccess)
+                    }.show(childFragmentManager, "alert")
             }
 
             TeamBottomSheetActions.DELETE_TEAM -> {
-                AlertFragment(R.string.delete_team_question, true) {
-                    val memberIDs = vm.state.value.data!!.members.map { member ->
-                        member.id
-                    }
-                    vm.deleteTeam(args.teamId, memberIDs) {
-                        onSuccess()
-                        goBack()
-                    }
+                AlertFragment(R.string.delete_team_question) {
+                    deleteTeam(onSuccess)
                 }.show(childFragmentManager, "alert")
             }
+        }
+    }
+
+    private fun leaveTeam(onSuccess: () -> Unit) {
+        val member = vm.state.value.data!!.members.find { member ->
+            member.id == UserManager.user!!.id
+        }
+        vm.leaveTeam(args.teamId, member!!) {
+            onSuccess()
+            goBack()
+        }
+    }
+
+    private fun deleteTeam(onSuccess: () -> Unit) {
+        val memberIDs = vm.state.value.data!!.members.map { member ->
+            member.id
+        }
+
+        vm.deleteTeam(args.teamId, memberIDs) {
+            onSuccess()
+            goBack()
         }
     }
 }

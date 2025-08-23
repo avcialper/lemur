@@ -3,7 +3,7 @@ package com.avcialper.lemur.data.model.local
 
 data class Member(
     val id: String,
-    val roleCodes: List<String>,
+    var roleCodes: List<String>,
 ) {
     constructor() : this("", emptyList())
 

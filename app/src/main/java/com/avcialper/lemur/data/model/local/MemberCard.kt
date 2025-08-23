@@ -10,4 +10,5 @@ data class MemberCard(
 
     fun toMember(): Member = Member(id, roleCodes)
 
+    fun toSelectableMemberCard() = SelectableMemberCard(imageUrl, id, name)
 }
