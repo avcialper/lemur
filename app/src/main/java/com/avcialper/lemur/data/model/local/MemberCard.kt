@@ -5,7 +5,8 @@ data class MemberCard(
     val name: String,
     val roleCodes: List<String>,
     val roleNames: List<String>,
-    val imageUrl: String?
+    val imageUrl: String?,
+    val permissions: List<String>
 ) {
 
     fun toMember(): Member = Member(id, roleCodes)

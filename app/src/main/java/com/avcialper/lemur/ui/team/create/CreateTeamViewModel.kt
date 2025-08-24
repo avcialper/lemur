@@ -1,15 +1,19 @@
 package com.avcialper.lemur.ui.team.create
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.avcialper.lemur.R
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.local.Member
 import com.avcialper.lemur.data.model.local.Role
 import com.avcialper.lemur.data.model.local.Team
 import com.avcialper.lemur.data.repository.storage.StorageRepository
+import com.avcialper.lemur.util.constant.Constants
 import com.avcialper.lemur.util.constant.Permissions
 import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -20,7 +24,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateTeamViewModel @Inject constructor(
-    private val storageRepository: StorageRepository
+    private val storageRepository: StorageRepository,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<Resource<Boolean>?>(null)
@@ -48,10 +53,13 @@ class CreateTeamViewModel @Inject constructor(
     private suspend fun addTeam(name: String, description: String) {
         val teamId = UUID.randomUUID().toString()
         val userId = UserManager.user!!.id
-        val ownerRole = Role("OWNER", "Takım Sahibi", Permissions.allRoles)
-        val adminRole = Role("ADMIN", "Yönetici", Permissions.allRoles)
-        val memberRole = Role("MEMBER", "Üye", emptyList())
-        val member = Member(userId, listOf(ownerRole.code))
+        val leadRole =
+            Role(Constants.LEAD, getRoleName(R.string.team_lead_label), Permissions.allRoles)
+        val adminRole =
+            Role(Constants.ADMIN, getRoleName(R.string.team_admin_label), Permissions.allRoles)
+        val memberRole =
+            Role(Constants.MEMBER, getRoleName(R.string.team_member_label), emptyList())
+        val member = Member(userId, listOf(leadRole.code))
 
         val team = Team(
             teamId,
@@ -60,7 +68,7 @@ class CreateTeamViewModel @Inject constructor(
             description,
             imageUrl.value,
             listOf(member),
-            listOf(ownerRole, adminRole, memberRole),
+            listOf(leadRole, adminRole, memberRole),
             teamId.take(8).uppercase(),
             emptyList()
         )
@@ -73,5 +81,9 @@ class CreateTeamViewModel @Inject constructor(
             else
                 _state.update { resource }
         }
+    }
+
+    private fun getRoleName(id: Int): String {
+        return context.getString(id)
     }
 }

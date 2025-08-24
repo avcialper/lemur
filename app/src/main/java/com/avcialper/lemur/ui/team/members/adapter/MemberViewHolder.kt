@@ -7,10 +7,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.avcialper.lemur.R
-import com.avcialper.lemur.data.UserManager
-import com.avcialper.lemur.data.model.local.Member
 import com.avcialper.lemur.data.model.local.MemberCard
 import com.avcialper.lemur.databinding.ItemMemberCardBinding
+import com.avcialper.lemur.util.constant.Permissions
 import com.google.android.material.chip.Chip
 
 class MemberViewHolder(private val binding: ItemMemberCardBinding) :
@@ -19,7 +18,12 @@ class MemberViewHolder(private val binding: ItemMemberCardBinding) :
     private val myChipBackgroundColor =
         ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.chardonnay))
 
-    fun bind(memberCard: MemberCard, isAdmin: Boolean, removeMember: (Member) -> Unit) =
+    fun bind(
+        memberCard: MemberCard,
+        loggedUser: MemberCard?,
+        removeMember: (MemberCard) -> Unit,
+        teamLeadId: String
+    ) =
         with(binding) {
             textUsername.text = memberCard.name
             memberCard.roleNames.forEach { roleName ->
@@ -38,15 +42,20 @@ class MemberViewHolder(private val binding: ItemMemberCardBinding) :
             if (memberCard.imageUrl != null && memberCard.imageUrl != "")
                 imageMember.load(memberCard.imageUrl)
 
+            val isLoggedUser = loggedUser?.id == memberCard.id
+
+            val isHaveMemberManagementPermission =
+                loggedUser?.permissions?.contains(Permissions.MEMBER_MANAGEMENT.name) ?: false
+
             iconRemoveMember.visibility =
-                if (isAdmin && UserManager.user!!.id != memberCard.id)
+                if (isHaveMemberManagementPermission && !isLoggedUser && memberCard.id != teamLeadId)
                     View.VISIBLE
                 else
                     View.GONE
 
 
             iconRemoveMember.setOnClickListener {
-                removeMember(memberCard.toMember())
+                removeMember(memberCard)
             }
         }
 

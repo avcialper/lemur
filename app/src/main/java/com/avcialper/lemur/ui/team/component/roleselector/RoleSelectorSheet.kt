@@ -1,7 +1,6 @@
 package com.avcialper.lemur.ui.team.component.roleselector
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,8 +31,6 @@ class RoleSelectorSheet(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-
-        Log.e("ROLES", data.toString())
 
         binding.buttonSelect.setOnClickListener {
             val selectedRoles = data.filter { it.isSelected }.map { it.toRole() }

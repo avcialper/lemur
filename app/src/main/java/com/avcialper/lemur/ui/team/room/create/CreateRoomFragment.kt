@@ -14,6 +14,7 @@ import com.avcialper.lemur.helper.validator.EmptyRule
 import com.avcialper.lemur.helper.validator.MaxLengthRule
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.team.component.roleselector.RoleSelectorSheet
+import com.avcialper.lemur.util.constant.Constants
 import com.avcialper.lemur.util.extension.formatInvalidLengthError
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,7 +32,8 @@ class CreateRoomFragment :
 
     override fun FragmentCreateRoomBinding.initialize() {
         roles =
-            args.roles.filter { it.code != "ADMIN" && it.code != "OWNER" }.map { it.toRoleCard() }
+            args.roles.filter { it.code != Constants.LEAD && it.code != Constants.ADMIN }
+                .map { it.toRoleCard() }
                 .toTypedArray()
         setListeners()
         observe()

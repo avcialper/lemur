@@ -256,9 +256,12 @@
         android:id="@+id/membersFragment"
         android:name="com.avcialper.lemur.ui.team.members.MembersFragment"
         android:label="fragment_members"
-        tools:layout="@layout/fragment_members" >
+        tools:layout="@layout/fragment_members">
         <argument
             android:name="teamId"
+            app:argType="string" />
+        <argument
+            android:name="leadId"
             app:argType="string" />
     </fragment>
     <fragment

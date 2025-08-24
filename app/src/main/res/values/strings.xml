@@ -132,7 +132,7 @@
     <string name="empty_room_content">Henüz bir oda oluşturulmadı veya bir odaya eklenmediniz.</string>
     <string name="member_image">Üye fotoğrafı</string>
     <string name="remove_member_button">Kullanıcı kaldırma butonu.</string>
-    <string name="remove_member_message">Üyeyi takımdan çıkarmak istediğinize emin misniz?</string>
+    <string name="remove_member_message">{0} adlı kullanıcıyı takımdan çıkarmak istediğinize emin misiniz?</string>
     <string name="delete_team">Takımı Sil</string>
     <string name="delete_team_question">Takımı silmek istediğinize emin misiniz?</string>
     <string name="task_management_permission">Görev Yönetimi</string>
@@ -141,4 +141,7 @@
     <string name="member_management_permission">Üye Yönetimi</string>
     <string name="role_management_permission">Rol Yönetimi</string>
     <string name="change_team_owner">Liderliği Devret</string>
+    <string name="team_lead_label">Takım Lideri</string>
+    <string name="team_admin_label">Yönetici</string>
+    <string name="team_member_label">Üye</string>
 </resources>

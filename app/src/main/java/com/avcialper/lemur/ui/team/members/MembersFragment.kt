@@ -5,7 +5,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.avcialper.lemur.R
-import com.avcialper.lemur.data.model.local.Member
 import com.avcialper.lemur.data.model.local.MemberCard
 import com.avcialper.lemur.databinding.FragmentMembersBinding
 import com.avcialper.lemur.ui.BaseFragment
@@ -27,7 +26,7 @@ class MembersFragment : BaseFragment<FragmentMembersBinding>(FragmentMembersBind
     }
 
     private fun initUI() = with(binding) {
-        val adapter = MemberAdapter(emptyList(), ::removeMember)
+        val adapter = MemberAdapter(emptyList(), ::removeMember, args.leadId)
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val divider = MaterialDividerItemDecoration(
             requireContext(),
@@ -63,9 +62,12 @@ class MembersFragment : BaseFragment<FragmentMembersBinding>(FragmentMembersBind
         }
     }
 
-    private fun removeMember(member: Member) {
-        AlertFragment(R.string.remove_member_message) {
-            vm.removeMember(args.teamId, member)
+    private fun removeMember(member: MemberCard) {
+        val label = requireContext().resources.getString(R.string.remove_member_message)
+            .replace("{0}", member.name)
+
+        AlertFragment(stringLabel = label) {
+            vm.removeMember(args.teamId, member.toMember())
         }.show(childFragmentManager, "alert")
     }
 }

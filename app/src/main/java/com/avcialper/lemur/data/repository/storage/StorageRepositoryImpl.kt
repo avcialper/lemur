@@ -259,10 +259,19 @@ class StorageRepositoryImpl @Inject constructor(
             members.forEach { member ->
                 val userDocument = userCollection.document(member.id).get().await()
                 val user = userDocument.toObject(UserProfile::class.java)!!
+
                 val roleNames = member.roleCodes.mapNotNull { code ->
                     roles.find { role -> role.code == code }?.name
                 }
-                val memberCard = member.toMemberCard(user.username, roleNames, user.imageUrl)
+
+                val permissions = member.roleCodes.flatMap { roleCode ->
+                    roles.find { role ->
+                        role.code == roleCode
+                    }?.permissions ?: emptyList()
+                }.distinct()
+
+                val memberCard =
+                    member.toMemberCard(user.username, roleNames, user.imageUrl, permissions)
                 memberCards.add(memberCard)
             }
 

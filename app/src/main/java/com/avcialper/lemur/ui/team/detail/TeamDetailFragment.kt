@@ -162,7 +162,10 @@ class TeamDetailFragment :
             }
 
             TeamBottomSheetActions.MEMBERS -> {
-                val direction = TeamDetailFragmentDirections.toMembers(teamId = args.teamId)
+                val direction = TeamDetailFragmentDirections.toMembers(
+                    args.teamId,
+                    vm.state.value.data!!.teamLeadId
+                )
                 onSuccess()
                 direction.navigate()
             }
