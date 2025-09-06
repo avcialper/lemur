@@ -25,6 +25,10 @@ class MemberViewHolder(private val binding: ItemMemberCardBinding) :
         teamLeadId: String
     ) =
         with(binding) {
+
+            // Clear recent chips
+            chipsRoles.removeAllViews()
+
             textUsername.text = memberCard.name
             memberCard.roleNames.forEach { roleName ->
                 val chip = Chip(

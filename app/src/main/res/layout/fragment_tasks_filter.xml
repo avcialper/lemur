@@ -8,6 +8,7 @@
     <EditText
         android:id="@+id/search_bar"
         style="@style/SearchBar"
+        android:layout_marginHorizontal="@dimen/margin_medium"
         android:hint="@string/search_task"
         android:importantForAutofill="no" />
 

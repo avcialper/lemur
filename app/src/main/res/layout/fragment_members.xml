@@ -7,13 +7,34 @@
     android:padding="@dimen/padding_medium"
     tools:context=".ui.team.members.MembersFragment">
 
+    <EditText
+        android:id="@+id/search_bar"
+        style="@style/SearchBar"
+        android:hint="@string/search_member"
+        android:importantForAutofill="no"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/empty_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:text="@string/cannot_find_member"
+        android:textAlignment="center"
+        android:textSize="@dimen/text_size_medium"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/rv_members"
+        app:layout_constraintTop_toBottomOf="@id/search_bar" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_members"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/empty_user" />
 
     <ProgressBar
         android:id="@+id/progress"

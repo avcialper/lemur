@@ -104,6 +104,11 @@ class TeamDetailFragment :
     }
 
     private fun handleLoading(isLoading: Boolean) = with(binding) {
+
+        // Can't show loading state for go back time
+        if (vm.state.value.data != null && isLoading)
+            return@with
+
         progress.visibility = if (isLoading) View.VISIBLE else View.GONE
 
         val visibility = if (isLoading) View.GONE else View.VISIBLE

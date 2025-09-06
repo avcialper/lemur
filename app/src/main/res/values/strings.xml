@@ -144,4 +144,6 @@
     <string name="team_lead_label">Takım Lideri</string>
     <string name="team_admin_label">Yönetici</string>
     <string name="team_member_label">Üye</string>
+    <string name="search_member">Üye ara</string>
+    <string name="cannot_find_member">Üye bulunmuyor.</string>
 </resources>

@@ -5,8 +5,7 @@
     style="@style/FillHorizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/padding_medium"
-    android:paddingBottom="16dp">
+    android:paddingTop="@dimen/padding_medium">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_member"
