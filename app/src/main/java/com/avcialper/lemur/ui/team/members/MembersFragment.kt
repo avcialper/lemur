@@ -1,6 +1,5 @@
 package com.avcialper.lemur.ui.team.members
 
-import android.text.Editable
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -8,11 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.avcialper.lemur.R
 import com.avcialper.lemur.data.model.local.MemberCard
 import com.avcialper.lemur.databinding.FragmentMembersBinding
-import com.avcialper.lemur.helper.SimplifiedTextWatcher
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.component.AlertFragment
 import com.avcialper.lemur.ui.team.members.adapter.MemberAdapter
-import com.avcialper.lemur.util.extension.toFixedString
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,22 +45,19 @@ class MembersFragment : BaseFragment<FragmentMembersBinding>(FragmentMembersBind
     }
 
     private fun initListeners() = with(binding) {
-        searchBar.addTextChangedListener(object : SimplifiedTextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                val filterText = s?.toFixedString() ?: ""
-                val members = vm.state.value.data ?: emptyList()
-                val filteredMembers = members.filter { member ->
-                    member.name.lowercase().contains(filterText.lowercase())
-                }
-
-                val data = if (filterText.isNotEmpty())
-                    filteredMembers
-                else
-                    members
-
-                changeMemberAdapterData(data)
+        searchBar.addSearchTextChangedListener { searchedText ->
+            val members = vm.state.value.data ?: emptyList()
+            val filteredMembers = members.filter { member ->
+                member.name.contains(searchedText, true)
             }
-        })
+
+            val data = if (searchedText.isNotEmpty())
+                filteredMembers
+            else
+                members
+
+            changeMemberAdapterData(data)
+        }
     }
 
     private fun observe() {

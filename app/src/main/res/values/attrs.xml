@@ -48,4 +48,7 @@
         <attr name="contentText" format="string" />
         <attr name="buttonText" format="string" />
     </declare-styleable>
+    <declare-styleable name="SearchBar">
+        <attr name="android:hint" />
+    </declare-styleable>
 </resources>
