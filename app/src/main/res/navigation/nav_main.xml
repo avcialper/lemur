@@ -268,7 +268,11 @@
         android:id="@+id/rolesFragment"
         android:name="com.avcialper.lemur.ui.team.roles.RolesFragment"
         android:label="fragment_roles"
-        tools:layout="@layout/fragment_roles" />
+        tools:layout="@layout/fragment_roles">
+        <argument
+            android:name="teamId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/updateTeamFragment"
         android:name="com.avcialper.lemur.ui.team.update.UpdateTeamFragment"

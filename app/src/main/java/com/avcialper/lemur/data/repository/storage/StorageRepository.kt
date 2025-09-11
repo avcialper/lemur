@@ -3,6 +3,7 @@ package com.avcialper.lemur.data.repository.storage
 import com.avcialper.lemur.data.model.local.Member
 import com.avcialper.lemur.data.model.local.MemberCard
 import com.avcialper.lemur.data.model.local.Note
+import com.avcialper.lemur.data.model.local.Role
 import com.avcialper.lemur.data.model.local.Room
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.data.model.local.TaskCard
@@ -48,6 +49,7 @@ interface StorageRepository {
     suspend fun leaveTeam(teamId: String, member: Member): Flow<Resource<Boolean>>
     suspend fun changeTeamLead(teamId: String, newLeadId: String): Flow<Resource<Boolean>>
     suspend fun getMembers(teamId: String): Flow<Resource<List<MemberCard>>>
+    suspend fun getRoles(teamId: String): Flow<Resource<List<Role>>>
     suspend fun removeMemberFromTeam(teamId: String, member: Member): Flow<Resource<Boolean>>
     suspend fun deleteTeam(teamId: String, memberIDs: List<String>): Flow<Resource<Boolean>>
     suspend fun updateTeam(

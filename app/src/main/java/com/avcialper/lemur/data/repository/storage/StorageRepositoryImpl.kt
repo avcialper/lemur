@@ -5,6 +5,7 @@ import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.local.Member
 import com.avcialper.lemur.data.model.local.MemberCard
 import com.avcialper.lemur.data.model.local.Note
+import com.avcialper.lemur.data.model.local.Role
 import com.avcialper.lemur.data.model.local.Room
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.data.model.local.TaskCard
@@ -277,6 +278,12 @@ class StorageRepositoryImpl @Inject constructor(
 
             memberCards
         }
+
+    override suspend fun getRoles(teamId: String): Flow<Resource<List<Role>>> = flowWithResource {
+        val documents = teamCollection.document(teamId).get().await()
+        val team = documents.toObject(Team::class.java)!!
+        team.roles
+    }
 
     override suspend fun removeMemberFromTeam(
         teamId: String,

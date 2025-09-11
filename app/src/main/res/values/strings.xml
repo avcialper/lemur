@@ -147,4 +147,6 @@
     <string name="search_member">Üye ara</string>
     <string name="cannot_find_member">Üye bulunmuyor.</string>
     <string name="component_search_bar_hint">Ara</string>
+    <string name="search_role">Role ara</string>
+    <string name="cannot_find_role">Rol bulunmuyor.</string>
 </resources>
