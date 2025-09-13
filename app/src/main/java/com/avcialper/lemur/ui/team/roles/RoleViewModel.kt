@@ -18,9 +18,19 @@ class RoleViewModel @Inject constructor(private val repository: StorageRepositor
     private val _state = MutableStateFlow<Resource<List<Role>>>(Resource.Loading())
     val state = _state.asStateFlow()
 
+    private val _isUserHaveRoleManagementPermission =
+        MutableStateFlow<Resource<Boolean>>(Resource.Loading())
+    val isUserHaveRoleManagementPermission = _isUserHaveRoleManagementPermission.asStateFlow()
+
     fun getRoles(teamId: String) = viewModelScope.launch {
         repository.getRoles(teamId).collect { resource ->
             _state.update { resource }
+        }
+    }
+
+    fun checkUserHaveRoleManagementPermission(teamId: String, userId: String) = viewModelScope.launch {
+        repository.isUserHaveRoleManagementPermission(teamId, userId).collect { resource ->
+            _isUserHaveRoleManagementPermission.update { resource }
         }
     }
 

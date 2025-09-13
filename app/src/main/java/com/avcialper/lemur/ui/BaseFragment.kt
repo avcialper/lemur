@@ -141,6 +141,17 @@ abstract class BaseFragment<VB : ViewBinding>(
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
+    fun <T> StateFlow<Resource<T>?>.createResourceObserverWithoutLoadingState(handleSuccess: (T?) -> Unit) {
+        onEach { resource ->
+            when (resource) {
+                is Resource.Loading -> Unit
+                is Resource.Success -> handleSuccess(resource.data)
+                is Resource.Error -> toast(resource.throwable!!.message.toString())
+                null -> Unit
+            }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
     fun Uri.convertFile(): File =
         UriToFile(requireContext()).convert(UUID.randomUUID().toString(), this)
 

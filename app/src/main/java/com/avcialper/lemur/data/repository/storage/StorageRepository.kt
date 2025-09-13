@@ -18,9 +18,11 @@ import java.io.File
 
 interface StorageRepository {
     suspend fun uploadImage(file: File): Flow<Resource<ImgBBResponse>>
+
     suspend fun createUser(userProfile: UserProfile): Flow<Resource<Boolean>>
     suspend fun getUser(id: String): Flow<Resource<UserProfile>>
     suspend fun updateUser(userProfile: UserProfile): Flow<Resource<Boolean>>
+
     suspend fun createTask(task: Task): Flow<Resource<Boolean>>
     suspend fun getSelectedDateTasks(date: String): Flow<Resource<List<TaskCard>>>
     suspend fun getContinuesTasks(): Flow<Resource<List<TaskCard>>>
@@ -39,23 +41,31 @@ interface StorageRepository {
     suspend fun deleteTask(id: String): Flow<Resource<Boolean>>
     suspend fun addNote(id: String, note: Note): Flow<Resource<Boolean>>
     suspend fun updateTaskStatus(id: String, status: TaskStatus): Flow<Resource<Boolean>>
+
     suspend fun createTeam(team: Team): Flow<Resource<Boolean>>
     suspend fun addTeamToUser(userId: String, teamId: String): Flow<Resource<Boolean>>
     suspend fun getUsersJoinedTeams(userId: String): Flow<Resource<List<TeamCard>>>
     suspend fun joinTeam(inviteCode: String, userId: String): Flow<Resource<Boolean>>
     suspend fun getTeam(teamId: String): Flow<Resource<Team>>
-    suspend fun createRoom(room: Room): Flow<Resource<Boolean>>
-    suspend fun getRooms(rooms: List<String>): Flow<Resource<List<Room>>>
     suspend fun leaveTeam(teamId: String, member: Member): Flow<Resource<Boolean>>
     suspend fun changeTeamLead(teamId: String, newLeadId: String): Flow<Resource<Boolean>>
-    suspend fun getMembers(teamId: String): Flow<Resource<List<MemberCard>>>
-    suspend fun getRoles(teamId: String): Flow<Resource<List<Role>>>
-    suspend fun removeMemberFromTeam(teamId: String, member: Member): Flow<Resource<Boolean>>
     suspend fun deleteTeam(teamId: String, memberIDs: List<String>): Flow<Resource<Boolean>>
     suspend fun updateTeam(
         teamId: String,
         imageUrl: String?,
         name: String,
         description: String
+    ): Flow<Resource<Boolean>>
+
+    suspend fun createRoom(room: Room): Flow<Resource<Boolean>>
+    suspend fun getRooms(rooms: List<String>): Flow<Resource<List<Room>>>
+
+    suspend fun getMembers(teamId: String): Flow<Resource<List<MemberCard>>>
+    suspend fun removeMemberFromTeam(teamId: String, member: Member): Flow<Resource<Boolean>>
+
+    suspend fun getRoles(teamId: String): Flow<Resource<List<Role>>>
+    suspend fun isUserHaveRoleManagementPermission(
+        teamId: String,
+        userId: String
     ): Flow<Resource<Boolean>>
 }

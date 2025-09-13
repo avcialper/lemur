@@ -4,6 +4,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.local.Role
 import com.avcialper.lemur.databinding.FragmentRolesBinding
 import com.avcialper.lemur.ui.BaseFragment
@@ -19,6 +20,7 @@ class RolesFragment : BaseFragment<FragmentRolesBinding>(FragmentRolesBinding::i
 
     override fun FragmentRolesBinding.initialize() {
         vm.getRoles(args.teamId)
+        vm.checkUserHaveRoleManagementPermission(args.teamId, UserManager.user!!.id)
         initUI()
         observer()
     }
@@ -56,15 +58,24 @@ class RolesFragment : BaseFragment<FragmentRolesBinding>(FragmentRolesBinding::i
 
     private fun observer() {
         vm.state.createResourceObserver(::handleSuccess, ::handleLoading)
+        vm.isUserHaveRoleManagementPermission.createResourceObserverWithoutLoadingState(::handleUserPermissionSuccess)
     }
 
-    private fun handleSuccess(roles: List<Role>?) = with(binding) {
+    private fun handleSuccess(roles: List<Role>?) {
         val data = roles ?: emptyList()
         changeRoleAdapterData(data)
     }
 
     private fun handleLoading(loading: Boolean) = with(binding) {
         progress.visibility = if (loading) View.VISIBLE else View.GONE
+    }
+
+    private fun handleUserPermissionSuccess(isHaveRoleManagementPermission: Boolean?) {
+        binding.fabCreateRole.visibility =
+            if (isHaveRoleManagementPermission == true)
+                View.VISIBLE
+            else
+                View.GONE
     }
 
     private fun changeRoleAdapterData(data: List<Role>) = with(binding) {

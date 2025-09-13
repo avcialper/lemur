@@ -16,6 +16,7 @@ import com.avcialper.lemur.data.model.remote.UserProfile
 import com.avcialper.lemur.data.repository.flowWithResource
 import com.avcialper.lemur.data.repository.remote.StorageApi
 import com.avcialper.lemur.util.constant.Constants
+import com.avcialper.lemur.util.constant.Permissions
 import com.avcialper.lemur.util.constant.Resource
 import com.avcialper.lemur.util.constant.TaskStatus
 import com.avcialper.lemur.util.constant.TaskType
@@ -283,6 +284,27 @@ class StorageRepositoryImpl @Inject constructor(
         val documents = teamCollection.document(teamId).get().await()
         val team = documents.toObject(Team::class.java)!!
         team.roles
+    }
+
+    override suspend fun isUserHaveRoleManagementPermission(
+        teamId: String,
+        userId: String
+    ): Flow<Resource<Boolean>> = flowWithResource {
+        val teamDocument = teamCollection.document(teamId).get().await()
+        val team = teamDocument.toObject(Team::class.java)!!
+        val user = team.members.find { member -> member.id == userId }
+        val roles = team.roles
+
+        val roleManagementPermissions = roles.filter { role ->
+            role.permissions.contains(Permissions.ROLE_MANAGEMENT.name)
+        }
+
+        user?.roleCodes?.forEach { roleCode ->
+            if (roleManagementPermissions.any { it.code == roleCode })
+                return@flowWithResource true
+        }
+
+        false
     }
 
     override suspend fun removeMemberFromTeam(

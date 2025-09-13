@@ -149,4 +149,5 @@
     <string name="component_search_bar_hint">Ara</string>
     <string name="search_role">Role ara</string>
     <string name="cannot_find_role">Rol bulunmuyor.</string>
+    <string name="create_role_fab">Rol oluştur.</string>
 </resources>
