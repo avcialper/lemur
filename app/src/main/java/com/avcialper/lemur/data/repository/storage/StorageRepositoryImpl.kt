@@ -286,6 +286,26 @@ class StorageRepositoryImpl @Inject constructor(
         team.roles
     }
 
+    override suspend fun getMembersByRole(
+        teamId: String,
+        roleCode: String
+    ): Flow<Resource<List<MemberCard>>> = flowWithResource {
+        val documents = teamCollection.document(teamId).get().await()
+        val members = documents.toObject(Team::class.java)?.members ?: emptyList()
+
+        val filteredMembers = members.filter { member ->
+            member.roleCodes.contains(roleCode)
+        }
+
+        filteredMembers.map { member ->
+            val userDocument = userCollection.document(member.id).get().await()
+            val user = userDocument.toObject(UserProfile::class.java)!!
+
+            member.toMemberCard(user.username, emptyList(), user.imageUrl, emptyList())
+        }
+
+    }
+
     override suspend fun isUserHaveRoleManagementPermission(
         teamId: String,
         userId: String

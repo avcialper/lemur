@@ -272,6 +272,13 @@
         <argument
             android:name="teamId"
             app:argType="string" />
+        <action
+            android:id="@+id/toRoleDetail"
+            app:destination="@id/roleDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/updateTeamFragment"
@@ -287,4 +294,16 @@
         android:name="com.avcialper.lemur.ui.team.room.detail.RoomDetailFragment"
         android:label="fragment_room_detail"
         tools:layout="@layout/fragment_room_detail" />
+    <fragment
+        android:id="@+id/roleDetailFragment"
+        android:name="com.avcialper.lemur.ui.team.roles.detail.RoleDetailFragment"
+        android:label="fragment_role_detail"
+        tools:layout="@layout/fragment_role_detail">
+        <argument
+            android:name="teamId"
+            app:argType="string" />
+        <argument
+            android:name="role"
+            app:argType="com.avcialper.lemur.data.model.local.Role" />
+    </fragment>
 </navigation>

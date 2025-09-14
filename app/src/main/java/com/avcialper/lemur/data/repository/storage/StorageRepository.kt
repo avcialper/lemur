@@ -64,6 +64,7 @@ interface StorageRepository {
     suspend fun removeMemberFromTeam(teamId: String, member: Member): Flow<Resource<Boolean>>
 
     suspend fun getRoles(teamId: String): Flow<Resource<List<Role>>>
+    suspend fun getMembersByRole(teamId: String, roleCode: String): Flow<Resource<List<MemberCard>>>
     suspend fun isUserHaveRoleManagementPermission(
         teamId: String,
         userId: String

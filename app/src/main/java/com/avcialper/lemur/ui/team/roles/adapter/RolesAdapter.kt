@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.avcialper.lemur.data.model.local.Role
 import com.avcialper.lemur.databinding.RoleCardBinding
 
-class RolesAdapter(roles: List<Role>) : RecyclerView.Adapter<RolesViewHolder>() {
+class RolesAdapter(roles: List<Role>, private val onItemClicked: (Role) -> Unit) :
+    RecyclerView.Adapter<RolesViewHolder>() {
 
     private var data = roles
 
@@ -19,7 +20,7 @@ class RolesAdapter(roles: List<Role>) : RecyclerView.Adapter<RolesViewHolder>() 
 
     override fun onBindViewHolder(holder: RolesViewHolder, position: Int) {
         val role = data[position]
-        holder.bind(role)
+        holder.bind(role, onItemClicked)
     }
 
     override fun getItemCount(): Int = data.size

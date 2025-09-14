@@ -26,7 +26,10 @@ class RolesFragment : BaseFragment<FragmentRolesBinding>(FragmentRolesBinding::i
     }
 
     private fun initUI() = with(binding) {
-        val adapter = RolesAdapter(emptyList())
+        val adapter = RolesAdapter(emptyList()) { role ->
+            val action = RolesFragmentDirections.toRoleDetail(args.teamId, role)
+            action.navigate()
+        }
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val divider = MaterialDividerItemDecoration(
             requireContext(),

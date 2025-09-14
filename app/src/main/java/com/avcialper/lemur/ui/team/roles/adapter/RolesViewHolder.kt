@@ -16,8 +16,11 @@ class RolesViewHolder(private val binding: RoleCardBinding) :
     private val myChipBackgroundColor =
         ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.chardonnay))
 
-    fun bind(role: Role) = with(binding) {
+    fun bind(role: Role, onItemClicked: (Role) -> Unit) = with(binding) {
         tvRoleName.text = role.name
+        root.setOnClickListener {
+            onItemClicked(role)
+        }
 
         chipsPermissions.removeAllViews()
 
