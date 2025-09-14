@@ -43,7 +43,9 @@ class MemberViewHolder(private val binding: ItemMemberCardBinding) :
                 chipsRoles.addView(chip)
             }
 
-            if (memberCard.imageUrl != null && memberCard.imageUrl != "")
+            if (memberCard.imageUrl.isNullOrEmpty())
+                imageMember.load(R.drawable.logo)
+            else
                 imageMember.load(memberCard.imageUrl)
 
             val isLoggedUser = loggedUser?.id == memberCard.id
