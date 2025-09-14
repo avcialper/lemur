@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.avcialper.lemur.R
 import com.avcialper.lemur.data.model.local.TaskCard
 import com.avcialper.lemur.databinding.ComponentTasksBinding
+import com.avcialper.lemur.helper.Divider
 import com.avcialper.lemur.helper.NonScrollableLinerLayoutManager
 import com.avcialper.lemur.ui.component.tasks.adapter.TasksAdapter
-import com.google.android.material.divider.MaterialDividerItemDecoration
 
 class Tasks @JvmOverloads constructor(
     context: Context,
@@ -51,9 +51,7 @@ class Tasks @JvmOverloads constructor(
         }
         val layoutManager =
             if (isShort) NonScrollableLinerLayoutManager(context) else LinearLayoutManager(context)
-        val itemDecoration = MaterialDividerItemDecoration(context, VERTICAL).apply {
-            isLastItemDecorated = false
-        }
+        val itemDecoration = Divider(context)
 
         binding.rvTasks.apply {
             this.adapter = adapter

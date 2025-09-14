@@ -18,6 +18,7 @@ import coil.load
 import com.avcialper.lemur.R
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.databinding.FragmentTaskDetailBinding
+import com.avcialper.lemur.helper.Divider
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.MainActivity
 import com.avcialper.lemur.ui.component.AlertFragment
@@ -25,7 +26,6 @@ import com.avcialper.lemur.ui.tasks.detail.note.NoteAdapter
 import com.avcialper.lemur.util.concatStartAndEndDate
 import com.avcialper.lemur.util.concatStartAndEntTime
 import com.avcialper.lemur.util.constant.TaskStatus
-import com.google.android.material.divider.MaterialDividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -50,13 +50,7 @@ class TaskDetailFragment :
     private fun initUI() = with(binding) {
         val noteAdapter = NoteAdapter(emptyList())
         val noteLayoutManager = LinearLayoutManager(context)
-        val divider =
-            MaterialDividerItemDecoration(
-                requireContext(),
-                MaterialDividerItemDecoration.VERTICAL
-            ).apply {
-                isLastItemDecorated = false
-            }
+        val divider = Divider(requireContext())
         rvNotes.apply {
             adapter = noteAdapter
             layoutManager = noteLayoutManager

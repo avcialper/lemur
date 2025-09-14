@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.local.Role
 import com.avcialper.lemur.databinding.FragmentRolesBinding
+import com.avcialper.lemur.helper.Divider
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.team.roles.adapter.RolesAdapter
-import com.google.android.material.divider.MaterialDividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,12 +31,7 @@ class RolesFragment : BaseFragment<FragmentRolesBinding>(FragmentRolesBinding::i
             action.navigate()
         }
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        val divider = MaterialDividerItemDecoration(
-            requireContext(),
-            MaterialDividerItemDecoration.VERTICAL
-        ).apply {
-            isLastItemDecorated = false
-        }
+        val divider = Divider(requireContext())
 
         rvRoles.apply {
             this.adapter = adapter

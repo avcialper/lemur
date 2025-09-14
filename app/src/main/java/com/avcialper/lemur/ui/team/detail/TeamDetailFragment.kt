@@ -13,6 +13,7 @@ import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.local.Room
 import com.avcialper.lemur.data.model.local.Team
 import com.avcialper.lemur.databinding.FragmentTeamDetailBinding
+import com.avcialper.lemur.helper.Divider
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.component.AlertFragment
 import com.avcialper.lemur.ui.team.component.actionsheet.ActionSheet
@@ -20,7 +21,6 @@ import com.avcialper.lemur.ui.team.component.leadselector.LeadSelectorFragment
 import com.avcialper.lemur.ui.team.detail.adapter.RoomAdapter
 import com.avcialper.lemur.util.constant.Permissions
 import com.avcialper.lemur.util.constant.TeamBottomSheetActions
-import com.google.android.material.divider.MaterialDividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -76,12 +76,7 @@ class TeamDetailFragment :
     private fun handleRoomSuccess(rooms: List<Room>?) {
         val adapter = RoomAdapter(rooms ?: emptyList(), ::onRoomClick)
         val layoutManager = LinearLayoutManager(requireContext())
-        val itemDecoration = MaterialDividerItemDecoration(
-            requireContext(),
-            MaterialDividerItemDecoration.VERTICAL
-        ).apply {
-            isLastItemDecorated = false
-        }
+        val itemDecoration = Divider(requireContext())
 
         binding.rooms.apply {
             this.adapter = adapter

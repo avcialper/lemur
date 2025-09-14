@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.avcialper.lemur.R
 import com.avcialper.lemur.data.model.local.SelectableMemberCard
 import com.avcialper.lemur.databinding.FragmentLeadSelectorBinding
+import com.avcialper.lemur.helper.Divider
 import com.avcialper.lemur.ui.component.AlertFragment
 import com.avcialper.lemur.ui.team.component.leadselector.adapter.LeadSelectorAdapter
 import com.avcialper.lemur.util.constant.Resource
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.divider.MaterialDividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -119,13 +119,7 @@ class LeadSelectorFragment(
             selectedLead = it
         }
         val layoutManager = LinearLayoutManager(requireContext())
-        val divider =
-            MaterialDividerItemDecoration(
-                requireContext(),
-                MaterialDividerItemDecoration.VERTICAL
-            ).apply {
-                isLastItemDecorated = false
-            }
+        val divider = Divider(requireContext())
 
         binding.rvMembers.apply {
             this.adapter = adapter

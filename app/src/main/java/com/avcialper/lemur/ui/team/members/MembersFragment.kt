@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.avcialper.lemur.R
 import com.avcialper.lemur.data.model.local.MemberCard
 import com.avcialper.lemur.databinding.FragmentMembersBinding
+import com.avcialper.lemur.helper.Divider
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.component.AlertFragment
 import com.avcialper.lemur.ui.team.members.adapter.MemberAdapter
-import com.google.android.material.divider.MaterialDividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,12 +29,7 @@ class MembersFragment : BaseFragment<FragmentMembersBinding>(FragmentMembersBind
     private fun initUI() = with(binding) {
         val adapter = MemberAdapter(emptyList(), ::removeMember, args.leadId)
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        val divider = MaterialDividerItemDecoration(
-            requireContext(),
-            MaterialDividerItemDecoration.VERTICAL
-        ).apply {
-            isLastItemDecorated = false
-        }
+        val divider = Divider(requireContext())
 
         rvMembers.apply {
             this.adapter = adapter

@@ -5,10 +5,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.avcialper.lemur.data.model.local.TeamCard
 import com.avcialper.lemur.databinding.FragmentTeamBinding
+import com.avcialper.lemur.helper.Divider
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.team.adapter.TeamAdapter
 import com.avcialper.lemur.ui.team.component.join.JoinTeamBottomSheet
-import com.google.android.material.divider.MaterialDividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,12 +29,7 @@ class TeamFragment : BaseFragment<FragmentTeamBinding>(FragmentTeamBinding::infl
             direction.navigate()
         }
         val teamLayoutManager = LinearLayoutManager(requireContext())
-        val divider = MaterialDividerItemDecoration(
-            requireContext(),
-            MaterialDividerItemDecoration.VERTICAL
-        ).apply {
-            isLastItemDecorated = false
-        }
+        val divider = Divider(requireContext())
         rvTeams.apply {
             adapter = teamAdapter
             layoutManager = teamLayoutManager
