@@ -179,7 +179,10 @@ class TeamDetailFragment :
             }
 
             TeamBottomSheetActions.ROLE_MANAGEMENT -> {
-                val direction = TeamDetailFragmentDirections.toRoles(args.teamId)
+                val direction = TeamDetailFragmentDirections.toRoles(
+                    args.teamId,
+                    vm.state.value.data!!.teamLeadId
+                )
                 onSuccess()
                 direction.navigate()
             }

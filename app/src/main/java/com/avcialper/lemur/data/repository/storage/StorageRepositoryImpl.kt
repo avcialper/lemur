@@ -291,7 +291,9 @@ class StorageRepositoryImpl @Inject constructor(
         roleCode: String
     ): Flow<Resource<List<MemberCard>>> = flowWithResource {
         val documents = teamCollection.document(teamId).get().await()
-        val members = documents.toObject(Team::class.java)?.members ?: emptyList()
+        val team = documents.toObject(Team::class.java)!!
+        val members = team.members
+        val roles = team.roles
 
         val filteredMembers = members.filter { member ->
             member.roleCodes.contains(roleCode)
@@ -301,9 +303,32 @@ class StorageRepositoryImpl @Inject constructor(
             val userDocument = userCollection.document(member.id).get().await()
             val user = userDocument.toObject(UserProfile::class.java)!!
 
-            member.toMemberCard(user.username, emptyList(), user.imageUrl, emptyList())
+            val permissions = member.roleCodes.flatMap { roleCode ->
+                roles.find { role ->
+                    role.code == roleCode
+                }?.permissions ?: emptyList()
+            }.distinct()
+
+            member.toMemberCard(user.username, emptyList(), user.imageUrl, permissions)
         }
 
+    }
+
+    override suspend fun removeRoleFromMember(
+        teamId: String,
+        memberId: String,
+        roleCode: String
+    ): Flow<Resource<Boolean>> = flowWithResource {
+        val document = teamCollection.document(teamId).get().await()
+        val team = document.toObject(Team::class.java)!!
+        val members = team.members.map { member ->
+            if (member.id == memberId) {
+                member.roleCodes = member.roleCodes.filter { it != roleCode }
+            }
+            member
+        }
+        teamCollection.document(teamId).update(Constants.TEAM_MEMBERS, members).await()
+        true
     }
 
     override suspend fun isUserHaveRoleManagementPermission(

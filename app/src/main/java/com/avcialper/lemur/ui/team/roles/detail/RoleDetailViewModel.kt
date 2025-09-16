@@ -24,4 +24,14 @@ class RoleDetailViewModel @Inject constructor(private val storageRepository: Sto
         }
     }
 
+    fun removeRoleFromMember(teamId: String, memberId: String, roleCode: String) =
+        viewModelScope.launch {
+            _state.update { Resource.Loading() }
+            storageRepository.removeRoleFromMember(teamId, memberId, roleCode).collect { resource ->
+                if (resource is Resource.Success)
+                    getMembersByRole(teamId, roleCode)
+                else if (resource is Resource.Error)
+                    _state.update { Resource.Error(resource.throwable) }
+            }
+        }
 }

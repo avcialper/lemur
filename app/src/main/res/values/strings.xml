@@ -133,6 +133,7 @@
     <string name="member_image">Üye fotoğrafı</string>
     <string name="remove_member_button">Kullanıcı kaldırma butonu.</string>
     <string name="remove_member_message">{0} adlı kullanıcıyı takımdan çıkarmak istediğinize emin misiniz?</string>
+    <string name="remove_role_from_member_message">{0} adlı kullanıcıdan {1} rolünü kaldırmak istediğinize emin misiniz?</string>
     <string name="delete_team">Takımı Sil</string>
     <string name="delete_team_question">Takımı silmek istediğinize emin misiniz?</string>
     <string name="task_management_permission">Görev Yönetimi</string>
@@ -150,4 +151,5 @@
     <string name="search_role">Role ara</string>
     <string name="cannot_find_role">Rol bulunmuyor.</string>
     <string name="create_role_fab">Rol oluştur.</string>
+    <string name="remove_role_button">Rol kaldırma butonu.</string>
 </resources>

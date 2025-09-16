@@ -279,6 +279,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="teamLeadId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/updateTeamFragment"
@@ -305,5 +308,8 @@
         <argument
             android:name="role"
             app:argType="com.avcialper.lemur.data.model.local.Role" />
+        <argument
+            android:name="teamLeadId"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -51,10 +51,7 @@ interface StorageRepository {
     suspend fun changeTeamLead(teamId: String, newLeadId: String): Flow<Resource<Boolean>>
     suspend fun deleteTeam(teamId: String, memberIDs: List<String>): Flow<Resource<Boolean>>
     suspend fun updateTeam(
-        teamId: String,
-        imageUrl: String?,
-        name: String,
-        description: String
+        teamId: String, imageUrl: String?, name: String, description: String
     ): Flow<Resource<Boolean>>
 
     suspend fun createRoom(room: Room): Flow<Resource<Boolean>>
@@ -65,8 +62,11 @@ interface StorageRepository {
 
     suspend fun getRoles(teamId: String): Flow<Resource<List<Role>>>
     suspend fun getMembersByRole(teamId: String, roleCode: String): Flow<Resource<List<MemberCard>>>
+    suspend fun removeRoleFromMember(
+        teamId: String, memberId: String, roleCode: String
+    ): Flow<Resource<Boolean>>
+
     suspend fun isUserHaveRoleManagementPermission(
-        teamId: String,
-        userId: String
+        teamId: String, userId: String
     ): Flow<Resource<Boolean>>
 }

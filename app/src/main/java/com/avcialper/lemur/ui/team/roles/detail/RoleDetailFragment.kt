@@ -4,10 +4,12 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.avcialper.lemur.R
 import com.avcialper.lemur.data.model.local.MemberCard
 import com.avcialper.lemur.databinding.FragmentRoleDetailBinding
 import com.avcialper.lemur.helper.Divider
 import com.avcialper.lemur.ui.BaseFragment
+import com.avcialper.lemur.ui.component.AlertFragment
 import com.avcialper.lemur.ui.team.roles.detail.adapter.RoleDetailAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,7 +31,7 @@ class RoleDetailFragment :
     }
 
     private fun initUI() = with(binding) {
-        val adapter = RoleDetailAdapter(emptyList())
+        val adapter = RoleDetailAdapter(emptyList(), args.teamLeadId, ::removeRoleFromMember)
         val layoutManager = LinearLayoutManager(requireContext())
         val divider = Divider(requireContext())
 
@@ -59,7 +61,7 @@ class RoleDetailFragment :
         val fixedData = data ?: emptyList()
         changeMemberDataChange(fixedData)
 
-        // TODO check current user is have role management permission, remove user role, add user role
+        // TODO(add user role, create role, delete role)
     }
 
     private fun handleLoading(loading: Boolean) {
@@ -69,5 +71,14 @@ class RoleDetailFragment :
     private fun changeMemberDataChange(data: List<MemberCard>) {
         (binding.rvMember.adapter as RoleDetailAdapter).changeData(data)
         binding.emptyState.visibility = if (data.isEmpty()) View.VISIBLE else View.GONE
+    }
+
+    private fun removeRoleFromMember(member: MemberCard) {
+        val label = requireContext().resources.getString(R.string.remove_role_from_member_message)
+            .replace("{0}", member.name).replace("{1}", args.role.name)
+
+        AlertFragment(stringLabel = label) {
+            vm.removeRoleFromMember(args.teamId, member.id, args.role.code)
+        }.show(childFragmentManager, "alert")
     }
 }
