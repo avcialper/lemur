@@ -4,6 +4,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.local.Role
 import com.avcialper.lemur.databinding.FragmentRolesBinding
@@ -37,6 +38,16 @@ class RolesFragment : BaseFragment<FragmentRolesBinding>(FragmentRolesBinding::i
             this.adapter = adapter
             this.layoutManager = layoutManager
             addItemDecoration(divider)
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (dy > 10 && fabCreateRole.isShown)
+                        fabCreateRole.hide()
+                    else if (dy < -10 && !fabCreateRole.isShown)
+                        fabCreateRole.show()
+                }
+            })
         }
 
         searchBar.addSearchTextChangedListener { searchedText ->

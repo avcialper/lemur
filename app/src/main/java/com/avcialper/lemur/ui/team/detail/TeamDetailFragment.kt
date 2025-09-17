@@ -7,6 +7,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.avcialper.lemur.R
 import com.avcialper.lemur.data.UserManager
@@ -139,6 +140,16 @@ class TeamDetailFragment :
             val direction = TeamDetailFragmentDirections.toCreateRoom(roles, args.teamId)
             direction.navigate()
         }
+
+        rooms.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 10 && fab.isVisible())
+                    fab.hide()
+                else if (dy < -10 && fab.isGone())
+                    fab.show()
+            }
+        })
     }
 
     private fun openActionSheet() {

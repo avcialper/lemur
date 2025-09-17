@@ -4,6 +4,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.avcialper.lemur.R
 import com.avcialper.lemur.data.model.local.MemberCard
 import com.avcialper.lemur.databinding.FragmentRoleDetailBinding
@@ -39,7 +40,19 @@ class RoleDetailFragment :
             this.adapter = adapter
             this.layoutManager = layoutManager
             addItemDecoration(divider)
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (dy > 10 && customFab.isVisible())
+                        customFab.hide()
+                    else if (dy < -10 && customFab.isGone())
+                        customFab.show()
+                }
+            })
         }
+
+        textRoleName.text = args.role.name
 
         searchBar.addSearchTextChangedListener { searchText ->
             val members = vm.state.value.data ?: emptyList()

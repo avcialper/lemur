@@ -68,8 +68,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             val direction = HomeFragmentDirections.toTaskCreate()
             direction.navigate()
         }
-        scrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+        scrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             vm.scrollPosition = scrollY
+
+            if (scrollY > (oldScrollY + 10) && fab.isShown)
+                fab.hide()
+            else if (scrollY < (oldScrollY - 10) && !fab.isShown)
+                fab.show()
         }
         owlCalendar.setOnDayClickListener { date ->
             val selectedDate = StartDate(date.year, date.month, date.dayOfMonth)

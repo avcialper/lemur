@@ -91,13 +91,14 @@ class MainActivity : AppCompatActivity() {
     @Suppress("DEPRECATION")
     private fun onDestinationChangedListener(destination: NavDestination) {
         val isNotBottomNavigationDestinations = isNotBottomNavigationDestinations(destination)
+        val isDestinationHaveHeader = isDestinationHaveHeader(destination)
         val visibility = if (isNotBottomNavigationDestinations) View.GONE else View.VISIBLE
 
         val navigationBarColor =
             if (isNotBottomNavigationDestinations) R.attr.backgroundColor else R.attr.bottomMenuColor
 
         val statusBarColor =
-            if (destination.id == R.id.teamDetailFragment) R.attr.teamHeaderColor else R.attr.backgroundColor
+            if (isDestinationHaveHeader) R.attr.headerColor else R.attr.backgroundColor
 
         binding.bottomMenu.visibility = visibility
         window.navigationBarColor = getAttrColor(navigationBarColor)
@@ -116,6 +117,12 @@ class MainActivity : AppCompatActivity() {
             listOf(R.id.homeFragment, R.id.teamFragment, R.id.profileFragment)
         val index = bottomViewDestinations.indexOf(destination.id)
         return index == -1
+    }
+
+    private fun isDestinationHaveHeader(destination: NavDestination): Boolean {
+        val haveHeaderDestinations = listOf(R.id.teamDetailFragment, R.id.roleDetailFragment)
+        val index = haveHeaderDestinations.indexOf(destination.id)
+        return index != -1
     }
 
     private fun observeInternetConnection() = with(binding) {

@@ -153,6 +153,13 @@ class TaskDetailFragment :
             if (note.isNotEmpty())
                 vm.addNote(vm.state.value!!.data!!.id, note)
         }
+
+        nestedScroll.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+            if (scrollY > (oldScrollY + 10) && fab.isVisible())
+                fab.hide()
+            else if (scrollY < (oldScrollY - 10) && fab.isGone())
+                fab.show()
+        }
     }
 
     private fun getDrawable(id: Int): Drawable? =

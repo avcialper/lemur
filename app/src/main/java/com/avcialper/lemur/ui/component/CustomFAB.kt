@@ -122,6 +122,10 @@ class CustomFAB @JvmOverloads constructor(
         isFABOpen = false
     }
 
+    fun isVisible() = binding.fifthFab.isShown
+
+    fun isGone() = !binding.fifthFab.isShown
+
     fun setFirstFabClickListener(listener: () -> Unit) {
         firstFABClickListener = listener
     }

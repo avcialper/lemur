@@ -6,6 +6,7 @@
     style="@style/Fill">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll"
         style="@style/ScrollView"
         android:layout_height="@dimen/zero_dp"
         app:layout_constraintBottom_toTopOf="@id/note_wrapper"

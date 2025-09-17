@@ -3,6 +3,7 @@ package com.avcialper.lemur.ui.team
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.avcialper.lemur.data.model.local.TeamCard
 import com.avcialper.lemur.databinding.FragmentTeamBinding
 import com.avcialper.lemur.helper.Divider
@@ -84,5 +85,15 @@ class TeamFragment : BaseFragment<FragmentTeamBinding>(FragmentTeamBinding::infl
         emptyArea.setButtonAction {
             fab.showChild()
         }
+
+        rvTeams.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 10 && fab.isVisible())
+                    fab.hide()
+                else if (dy < -10 && fab.isGone())
+                    fab.show()
+            }
+        })
     }
 }
