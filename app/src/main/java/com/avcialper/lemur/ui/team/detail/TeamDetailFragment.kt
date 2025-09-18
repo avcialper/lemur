@@ -189,7 +189,7 @@ class TeamDetailFragment :
                 toast(R.string.invite_code_copied)
             }
 
-            TeamBottomSheetActions.ROLE_MANAGEMENT -> {
+            TeamBottomSheetActions.ROLES -> {
                 val direction = TeamDetailFragmentDirections.toRoles(
                     args.teamId,
                     vm.state.value.data!!.teamLeadId

@@ -55,7 +55,7 @@ enum class Theme(val value: String) {
 }
 
 enum class TeamBottomSheetActions {
-    UPDATE, MEMBERS, INVITE_CODE, ROLE_MANAGEMENT, LEAVE_TEAM, DELETE_TEAM
+    UPDATE, MEMBERS, INVITE_CODE, ROLES, LEAVE_TEAM, DELETE_TEAM
 }
 
 enum class Permissions(val label: Int) {
@@ -74,4 +74,8 @@ enum class Permissions(val label: Int) {
             ROLE_MANAGEMENT.name
         )
     }
+}
+
+enum class RoleBottomSheetActions {
+    MEMBERS, ADD_NEW_MEMBER, UPDATE, DELETE
 }

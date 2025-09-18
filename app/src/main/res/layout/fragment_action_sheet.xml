@@ -26,7 +26,7 @@
         app:left_icon="@drawable/ic_link" />
 
     <com.avcialper.lemur.ui.component.IconLabel
-        android:id="@+id/action_role_management"
+        android:id="@+id/action_roles"
         style="@style/FillHorizontal"
         android:label="@string/role_management"
         app:left_icon="@drawable/ic_badge" />

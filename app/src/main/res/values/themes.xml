@@ -763,4 +763,11 @@
         <item name="backgroundTint">@color/orange</item>
     </style>
 
+    <style name="LabelWithArrow" parent="Theme.Lemur">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="drawableRightCompat">@drawable/ic_right_arrow</item>
+        <item name="android:layout_marginBottom">@dimen/margin_small</item>
+    </style>
+
 </resources>

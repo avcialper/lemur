@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/BottomSheetWrapper"
+    tools:context=".ui.team.component.roleactionsheet.RoleActionSheet">
+
+    <include layout="@layout/drag_handle" />
+
+    <TextView
+        android:id="@+id/text_role_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginBottom="@dimen/margin_medium"
+        android:textSize="@dimen/text_size_medium"
+        android:textStyle="bold"
+        tools:text="@string/app_name" />
+
+    <TextView
+        android:id="@+id/lwa_open_members"
+        style="@style/LabelWithArrow"
+        android:text="@string/members" />
+
+    <TextView
+        android:id="@+id/lwa_add_member"
+        style="@style/LabelWithArrow"
+        android:text="@string/add_new_member" />
+
+    <TextView
+        android:id="@+id/lwa_update_role"
+        style="@style/LabelWithArrow"
+        android:text="@string/edit_role" />
+
+    <TextView
+        android:id="@+id/lwa_delete_role"
+        style="@style/FillHorizontal"
+        android:text="@string/delete_role"
+        android:textColor="@color/red"
+        android:textSize="@dimen/text_size_medium" />
+
+</LinearLayout>

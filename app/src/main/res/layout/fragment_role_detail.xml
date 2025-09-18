@@ -59,15 +59,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.avcialper.lemur.ui.component.CustomFAB
-        android:id="@+id/custom_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:fab_count="two"
-        app:fab_icon="@drawable/ic_edit"
-        app:first_fab_text="FIRST"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:second_fab_text="SECOND" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

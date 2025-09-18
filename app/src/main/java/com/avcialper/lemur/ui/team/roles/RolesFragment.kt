@@ -10,7 +10,9 @@ import com.avcialper.lemur.data.model.local.Role
 import com.avcialper.lemur.databinding.FragmentRolesBinding
 import com.avcialper.lemur.helper.Divider
 import com.avcialper.lemur.ui.BaseFragment
+import com.avcialper.lemur.ui.team.component.roleactionsheet.RoleActionSheet
 import com.avcialper.lemur.ui.team.roles.adapter.RolesAdapter
+import com.avcialper.lemur.util.constant.RoleBottomSheetActions
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,8 +30,19 @@ class RolesFragment : BaseFragment<FragmentRolesBinding>(FragmentRolesBinding::i
 
     private fun initUI() = with(binding) {
         val adapter = RolesAdapter(emptyList()) { role ->
-            val action = RolesFragmentDirections.toRoleDetail(args.teamId, role, args.teamLeadId)
-            action.navigate()
+
+            val isHaveRoleManagementPermission = vm.isUserHaveRoleManagementPermission.value.data
+
+            if (isHaveRoleManagementPermission == true)
+                RoleActionSheet(role, ::handleRoleActions).show(
+                    childFragmentManager,
+                    "role_action_sheet"
+                )
+            else {
+                val direction =
+                    RolesFragmentDirections.toRoleDetail(args.teamId, role, args.teamLeadId)
+                direction.navigate()
+            }
         }
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val divider = Divider(requireContext())
@@ -91,5 +104,35 @@ class RolesFragment : BaseFragment<FragmentRolesBinding>(FragmentRolesBinding::i
         (rvRoles.adapter as RolesAdapter).changeData(data)
 
         emptyRole.visibility = if (data.isEmpty()) View.VISIBLE else View.GONE
+    }
+
+    private fun handleRoleActions(
+        actionType: RoleBottomSheetActions,
+        role: Role,
+        onSuccess: () -> Unit
+    ) {
+        when (actionType) {
+            RoleBottomSheetActions.MEMBERS -> {
+                val direction =
+                    RolesFragmentDirections.toRoleDetail(args.teamId, role, args.teamLeadId)
+                onSuccess()
+                direction.navigate()
+            }
+
+            RoleBottomSheetActions.ADD_NEW_MEMBER -> {
+                // TODO handle add member
+                toast("handle_add_member")
+            }
+
+            RoleBottomSheetActions.UPDATE -> {
+                // TODO handle update role, name and permissions
+                toast("handle_update_role_name_and_permissions")
+            }
+
+            RoleBottomSheetActions.DELETE -> {
+                // TODO handle delete role
+                toast("handle_delete_role")
+            }
+        }
     }
 }

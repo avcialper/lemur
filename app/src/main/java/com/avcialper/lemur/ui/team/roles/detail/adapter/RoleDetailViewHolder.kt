@@ -25,11 +25,11 @@ class RoleDetailViewHolder(private val binding: RoleMemberCardBinding) :
             imageMember.load(data.imageUrl)
 
         val isLoggedUser = loggedUser?.id == data.id
-        val isHaveMemberManagementPermission =
-            loggedUser?.permissions?.contains(Permissions.MEMBER_MANAGEMENT.name) ?: false
+        val isHaveRoleManagementPermission =
+            loggedUser?.permissions?.contains(Permissions.ROLE_MANAGEMENT.name) ?: false
 
         iconRemoveRole.visibility =
-            if (isHaveMemberManagementPermission && !isLoggedUser && data.id != teamLeadId)
+            if (isHaveRoleManagementPermission && !isLoggedUser && data.id != teamLeadId)
                 View.VISIBLE
             else
                 View.GONE
