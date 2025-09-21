@@ -201,7 +201,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textStyle">bold</item>
-        <item name="drawableRightCompat">@drawable/ic_right_arrow</item>
+        <item name="android:gravity">center_vertical|start</item>
+        <item name="drawableEndCompat">@drawable/ic_right_arrow</item>
     </style>
 
     <!-- Task Area Tasks Wrapper -->
@@ -766,7 +767,8 @@
     <style name="LabelWithArrow" parent="Theme.Lemur">
         <item name="android:layout_width">match_parent</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
-        <item name="drawableRightCompat">@drawable/ic_right_arrow</item>
+        <item name="android:gravity">center_vertical|start</item>
+        <item name="drawableEndCompat">@drawable/ic_right_arrow</item>
         <item name="android:layout_marginBottom">@dimen/margin_small</item>
     </style>
 
