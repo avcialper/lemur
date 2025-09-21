@@ -12,6 +12,7 @@ import com.avcialper.lemur.helper.Divider
 import com.avcialper.lemur.ui.BaseFragment
 import com.avcialper.lemur.ui.team.component.roleactionsheet.RoleActionSheet
 import com.avcialper.lemur.ui.team.roles.adapter.RolesAdapter
+import com.avcialper.lemur.util.constant.Constants
 import com.avcialper.lemur.util.constant.RoleBottomSheetActions
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,7 +34,7 @@ class RolesFragment : BaseFragment<FragmentRolesBinding>(FragmentRolesBinding::i
 
             val isHaveRoleManagementPermission = vm.isUserHaveRoleManagementPermission.value.data
 
-            if (isHaveRoleManagementPermission == true)
+            if (isHaveRoleManagementPermission == true && role.code != Constants.LEAD)
                 RoleActionSheet(role, ::handleRoleActions).show(
                     childFragmentManager,
                     "role_action_sheet"
@@ -125,8 +126,9 @@ class RolesFragment : BaseFragment<FragmentRolesBinding>(FragmentRolesBinding::i
             }
 
             RoleBottomSheetActions.UPDATE -> {
-                // TODO handle update role, name and permissions
-                toast("handle_update_role_name_and_permissions")
+                val direction = RolesFragmentDirections.toRoleUpdate(args.teamId, role.code)
+                onSuccess()
+                direction.navigate()
             }
 
             RoleBottomSheetActions.DELETE -> {

@@ -111,6 +111,7 @@
     <string name="join_team">Takıma Katıl</string>
     <string name="team_name">Takım Adı</string>
     <string name="invite_code">Davet kodu</string>
+    <string name="role">Rol</string>
     <string name="join">Katıl</string>
     <string name="join_error">Hata oluştu.</string>
     <string name="create_task">Görev Oluştur</string>
@@ -148,11 +149,13 @@
     <string name="search_member">Üye ara</string>
     <string name="cannot_find_member">Üye bulunmuyor.</string>
     <string name="component_search_bar_hint">Ara</string>
-    <string name="search_role">Role ara</string>
+    <string name="search_role">Rol ara</string>
     <string name="cannot_find_role">Rol bulunmuyor.</string>
     <string name="create_role_fab">Rol oluştur.</string>
     <string name="remove_role_button">Rol kaldırma butonu.</string>
     <string name="add_new_member">Yeni Üye Ekle</string>
     <string name="edit_role">Düzenle</string>
     <string name="delete_role">Rolü Sil</string>
+    <string name="role_name">Rol Adı</string>
+    <string name="change_permissions">İzinleri güncellemek için tıklayınız.</string>
 </resources>

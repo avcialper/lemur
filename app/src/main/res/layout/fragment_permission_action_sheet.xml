@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/BottomSheetWrapper"
+    tools:context=".ui.team.component.permissionactionsheet.PermissionActionSheet">
+
+    <include layout="@layout/drag_handle" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_permissions"
+        style="@style/FillHorizontal" />
+
+    <Button
+        android:id="@+id/button_select"
+        style="@style/Button"
+        android:text="@string/confirm" />
+
+</LinearLayout>

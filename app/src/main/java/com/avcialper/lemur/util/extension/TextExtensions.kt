@@ -28,3 +28,14 @@ fun String.formatInvalidLengthError(
         .replace("{0}", label, true)
         .replace("{1}", maxLength.toString(), true)
 }
+
+fun String.formatInvalidMinLengthError(
+    context: Context,
+    labelId: Int,
+    minLength: Int
+): String {
+    val label = context.getString(labelId)
+    return this
+        .replace("{0}", label, true)
+        .replace("{1}", minLength.toString(), true)
+}

@@ -14,4 +14,5 @@
     <integer name="max_username_length">16</integer>
     <integer name="max_team_description_length">100</integer>
     <integer name="invite_code_length">8</integer>
+    <integer name="min_role_name_length">3</integer>
 </resources>
