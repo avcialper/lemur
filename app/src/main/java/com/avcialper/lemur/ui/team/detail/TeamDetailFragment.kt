@@ -74,23 +74,32 @@ class TeamDetailFragment :
         }
     }
 
-    private fun handleRoomSuccess(rooms: List<Room>?) {
+    private fun handleRoomSuccess(rooms: List<Room>?) = with(binding) {
         val adapter = RoomAdapter(rooms ?: emptyList(), ::onRoomClick)
         val layoutManager = LinearLayoutManager(requireContext())
         val itemDecoration = Divider(requireContext())
 
-        binding.rooms.apply {
+        this.rooms.apply {
             this.adapter = adapter
             this.layoutManager = layoutManager
             addItemDecoration(itemDecoration)
         }
 
+        val isHaveRoomAndTaskPermission =
+            userPermissions.contains(Permissions.TASK_MANAGEMENT.name) &&
+                    userPermissions.contains(Permissions.ROOM_MANAGEMENT.name)
+
+        if (isHaveRoomAndTaskPermission)
+            emptyArea.showActionButton()
+        else
+            emptyArea.hideActionButton()
+
         if (rooms.isNullOrEmpty()) {
-            binding.emptyArea.visibility = View.VISIBLE
-            binding.rooms.visibility = View.GONE
+            emptyArea.visibility = View.VISIBLE
+            this.rooms.visibility = View.GONE
         } else {
-            binding.emptyArea.visibility = View.GONE
-            binding.rooms.visibility = View.VISIBLE
+            emptyArea.visibility = View.GONE
+            this.rooms.visibility = View.VISIBLE
         }
     }
 
