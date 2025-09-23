@@ -3,7 +3,8 @@ package com.avcialper.lemur.ui.team.roles
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.model.local.Role
-import com.avcialper.lemur.data.repository.storage.StorageRepository
+import com.avcialper.lemur.data.repository.storage.role.RoleRepository
+import com.avcialper.lemur.data.repository.storage.team.TeamRepository
 import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +14,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RoleViewModel @Inject constructor(private val repository: StorageRepository) : ViewModel() {
+class RoleViewModel @Inject constructor(
+    private val teamRepository: TeamRepository,
+    private val roleRepository: RoleRepository
+) : ViewModel() {
 
     private val _state = MutableStateFlow<Resource<List<Role>>>(Resource.Loading())
     val state = _state.asStateFlow()
@@ -23,21 +27,22 @@ class RoleViewModel @Inject constructor(private val repository: StorageRepositor
     val isUserHaveRoleManagementPermission = _isUserHaveRoleManagementPermission.asStateFlow()
 
     fun getRoles(teamId: String) = viewModelScope.launch {
-        repository.getRoles(teamId).collect { resource ->
+        roleRepository.getRoles(teamId).collect { resource ->
             _state.update { resource }
         }
     }
 
     fun checkUserHaveRoleManagementPermission(teamId: String, userId: String) =
         viewModelScope.launch {
-            repository.isUserHaveRoleManagementPermission(teamId, userId).collect { resource ->
-                _isUserHaveRoleManagementPermission.update { resource }
-            }
+            teamRepository.isUserHaveRoleManagementPermission(teamId, userId)
+                .collect { resource ->
+                    _isUserHaveRoleManagementPermission.update { resource }
+                }
         }
 
     fun deleteRole(teamId: String, roleCode: String) = viewModelScope.launch {
         _state.update { Resource.Loading() }
-        repository.deleteRole(teamId, roleCode).collect { resource ->
+        roleRepository.deleteRole(teamId, roleCode).collect { resource ->
             if (resource is Resource.Success)
                 getRoles(teamId)
             else if (resource is Resource.Error)

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.model.local.Team
 import com.avcialper.lemur.data.repository.storage.StorageRepository
+import com.avcialper.lemur.data.repository.storage.team.TeamRepository
 import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UpdateTeamViewModel @Inject constructor(
-    private val storageRepository: StorageRepository
+    private val storageRepository: StorageRepository,
+    private val teamRepository: TeamRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<Resource<Team>>(Resource.Loading())
@@ -27,7 +29,7 @@ class UpdateTeamViewModel @Inject constructor(
     private val newImageUrl = MutableStateFlow<String?>(null)
 
     fun getTeamDetails(teamId: String) = viewModelScope.launch {
-        storageRepository.getTeam(teamId).collect { resource ->
+        teamRepository.getTeam(teamId).collect { resource ->
             _state.update { resource }
         }
     }
@@ -62,7 +64,7 @@ class UpdateTeamViewModel @Inject constructor(
         imageUrl: String?
     ) {
         val url = newImageUrl.value ?: imageUrl
-        storageRepository.updateTeam(teamId, url, name, description).collect { resource ->
+        teamRepository.updateTeam(teamId, url, name, description).collect { resource ->
             _updateState.update { resource }
         }
     }

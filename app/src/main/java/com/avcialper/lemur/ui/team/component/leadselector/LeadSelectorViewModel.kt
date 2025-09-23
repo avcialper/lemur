@@ -3,7 +3,7 @@ package com.avcialper.lemur.ui.team.component.leadselector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.model.local.SelectableMemberCard
-import com.avcialper.lemur.data.repository.storage.StorageRepository
+import com.avcialper.lemur.data.repository.storage.team.TeamRepository
 import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,9 +13,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LeadSelectorViewModel @Inject constructor(
-    private val repository: StorageRepository
-) : ViewModel() {
+class LeadSelectorViewModel @Inject constructor(private val teamRepository: TeamRepository) :
+    ViewModel() {
 
     private val _state = MutableStateFlow<Resource<List<SelectableMemberCard>>>(Resource.Loading())
     val state = _state.asStateFlow()
@@ -24,7 +23,7 @@ class LeadSelectorViewModel @Inject constructor(
     val changeState = _changeState.asStateFlow()
 
     fun getMembers(teamId: String) = viewModelScope.launch {
-        repository.getMembers(teamId).collect { resource ->
+        teamRepository.getMembers(teamId).collect { resource ->
             when (resource) {
                 is Resource.Error -> _state.update { Resource.Error(resource.throwable) }
                 is Resource.Loading -> _state.update { Resource.Loading() }
@@ -38,7 +37,7 @@ class LeadSelectorViewModel @Inject constructor(
     }
 
     fun changeTeamLead(teamId: String, newLeadId: String) = viewModelScope.launch {
-        repository.changeTeamLead(teamId, newLeadId).collect { resource ->
+        teamRepository.changeTeamLead(teamId, newLeadId).collect { resource ->
             _changeState.update { resource }
         }
     }

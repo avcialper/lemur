@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.data.repository.storage.StorageRepository
+import com.avcialper.lemur.data.repository.storage.task.TaskRepository
 import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TaskUpdateViewModel @Inject constructor(
-    private val storageRepository: StorageRepository
+    private val storageRepository: StorageRepository,
+    private val taskRepository: TaskRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<Resource<Boolean>?>(null)
@@ -42,13 +44,13 @@ class TaskUpdateViewModel @Inject constructor(
     }
 
     private suspend fun update(task: Task) {
-        storageRepository.updateTask(task).collect { resource ->
+        taskRepository.updateTask(task).collect { resource ->
             _state.update { resource }
         }
     }
 
     fun deleteTask(id: String) = viewModelScope.launch {
-        storageRepository.deleteTask(id).collect { resource ->
+        taskRepository.deleteTask(id).collect { resource ->
             _deleteState.update { resource }
         }
     }

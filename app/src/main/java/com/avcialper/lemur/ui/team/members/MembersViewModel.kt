@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.model.local.Member
 import com.avcialper.lemur.data.model.local.MemberCard
-import com.avcialper.lemur.data.repository.storage.StorageRepository
+import com.avcialper.lemur.data.repository.storage.team.TeamRepository
 import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,22 +15,20 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MembersViewModel
-@Inject constructor(
-    private val repository: StorageRepository
-) : ViewModel() {
+@Inject constructor(private val teamRepository: TeamRepository) : ViewModel() {
 
     private val _state = MutableStateFlow<Resource<List<MemberCard>>>(Resource.Loading())
     val state = _state.asStateFlow()
 
     fun getMembers(teamId: String) = viewModelScope.launch {
-        repository.getMembers(teamId).collect { resource ->
+        teamRepository.getMembers(teamId).collect { resource ->
             _state.update { resource }
         }
     }
 
     fun removeMember(teamId: String, member: Member) = viewModelScope.launch {
         _state.update { Resource.Loading() }
-        repository.removeMemberFromTeam(teamId, member).collect { resource ->
+        teamRepository.removeMemberFromTeam(teamId, member).collect { resource ->
             if (resource is Resource.Success)
                 getMembers(teamId)
             else if (resource is Resource.Error)

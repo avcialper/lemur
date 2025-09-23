@@ -5,7 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.model.local.Member
 import com.avcialper.lemur.data.model.local.Room
 import com.avcialper.lemur.data.model.local.Team
-import com.avcialper.lemur.data.repository.storage.StorageRepository
+import com.avcialper.lemur.data.repository.storage.room.RoomRepository
+import com.avcialper.lemur.data.repository.storage.team.TeamRepository
 import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TeamDetailViewModel @Inject constructor(
-    private val storageRepository: StorageRepository
+    private val teamRepository: TeamRepository,
+    private val roomRepository: RoomRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<Resource<Team>>(Resource.Loading())
@@ -26,19 +28,19 @@ class TeamDetailViewModel @Inject constructor(
     val roomState = _roomState.asStateFlow()
 
     fun getTeam(teamId: String) = viewModelScope.launch {
-        storageRepository.getTeam(teamId).collect { resource ->
+        teamRepository.getTeam(teamId).collect { resource ->
             _state.update { resource }
         }
     }
 
     fun getRooms(rooms: List<String>) = viewModelScope.launch {
-        storageRepository.getRooms(rooms).collect { resource ->
+        roomRepository.getRooms(rooms).collect { resource ->
             _roomState.update { resource }
         }
     }
 
     fun leaveTeam(teamId: String, member: Member, onSuccess: () -> Unit) = viewModelScope.launch {
-        storageRepository.leaveTeam(teamId, member).collect { resource ->
+        teamRepository.leaveTeam(teamId, member).collect { resource ->
             if (resource is Resource.Success) {
                 onSuccess()
             } else if (resource is Resource.Error) {
@@ -49,7 +51,7 @@ class TeamDetailViewModel @Inject constructor(
 
     fun deleteTeam(teamId: String, memberIDs: List<String>, onSuccess: () -> Unit) =
         viewModelScope.launch {
-            storageRepository.deleteTeam(teamId, memberIDs).collect { resource ->
+            teamRepository.deleteTeam(teamId, memberIDs).collect { resource ->
                 if (resource is Resource.Success) {
                     onSuccess()
                 } else if (resource is Resource.Error) {

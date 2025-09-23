@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.AppManager
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.repository.auth.AuthRepository
-import com.avcialper.lemur.data.repository.storage.StorageRepository
+import com.avcialper.lemur.data.repository.storage.user.UserRepository
 import com.avcialper.lemur.util.constant.Resource
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val auth: AuthRepository,
-    private val storageRepository: StorageRepository
+    private val userRepository: UserRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<Resource<FirebaseUser>?>(null)
@@ -45,7 +45,7 @@ class LoginViewModel @Inject constructor(
     // If user is logged in successfully get user data from storage
     private suspend fun getUser() {
         val currentUser = auth.currentUser
-        storageRepository.getUser(currentUser!!.uid).collect { resource ->
+        userRepository.getUser(currentUser!!.uid).collect { resource ->
             when (resource) {
                 is Resource.Error -> _state.update { Resource.Error(resource.throwable) }
                 is Resource.Loading -> _state.update { Resource.Loading() }

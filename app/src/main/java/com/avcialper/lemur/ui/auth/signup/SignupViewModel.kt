@@ -9,6 +9,7 @@ import com.avcialper.lemur.data.model.remote.ImgBBData
 import com.avcialper.lemur.data.model.remote.UserProfile
 import com.avcialper.lemur.data.repository.auth.AuthRepository
 import com.avcialper.lemur.data.repository.storage.StorageRepository
+import com.avcialper.lemur.data.repository.storage.user.UserRepository
 import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SignupViewModel @Inject constructor(
     private val auth: AuthRepository,
-    private val storageRepository: StorageRepository
+    private val storageRepository: StorageRepository,
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<Resource<Boolean>?>(null)
@@ -76,7 +78,7 @@ class SignupViewModel @Inject constructor(
     private suspend fun createUser(id: String, username: String) {
         val userProfile = UserProfile(id, username, "", _imageBB.value?.url, emptyList())
 
-        storageRepository.createUser(userProfile).collect { resource ->
+        userRepository.createUser(userProfile).collect { resource ->
             _state.update { resource }
         }
         auth.logout().collect {

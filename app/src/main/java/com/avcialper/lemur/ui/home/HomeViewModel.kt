@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.model.local.TaskCard
 import com.avcialper.lemur.data.model.local.TaskLoadStatus
-import com.avcialper.lemur.data.repository.storage.StorageRepository
+import com.avcialper.lemur.data.repository.storage.task.TaskRepository
 import com.avcialper.lemur.util.constant.Resource
 import com.avcialper.lemur.util.formatDate
 import com.avcialper.owlcalendar.data.models.StartDate
@@ -20,9 +20,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val storageRepository: StorageRepository
-) : ViewModel() {
+class HomeViewModel @Inject constructor(private val taskRepository: TaskRepository) : ViewModel() {
 
     private val loading = Resource.Loading<List<TaskCard>>()
 
@@ -79,32 +77,32 @@ class HomeViewModel @Inject constructor(
 
     fun getSelectedDateTasks() = viewModelScope.launch {
         val formattedDate = formatDate(date!!)
-        storageRepository.getSelectedDateTasksWithLimit(formattedDate).collect { resource ->
+        taskRepository.getSelectedDateTasksWithLimit(formattedDate).collect { resource ->
             _selectedDateTasks.update { resource }
         }
     }
 
     fun getTodayTasks() = viewModelScope.launch {
         val formattedDate = formatDate(todayDate!!)
-        storageRepository.getSelectedDateTasksWithLimit(formattedDate).collect { resource ->
+        taskRepository.getSelectedDateTasksWithLimit(formattedDate).collect { resource ->
             _todayTasks.update { resource }
         }
     }
 
     fun getContinuesTasks() = viewModelScope.launch {
-        storageRepository.getContinuesTasksWithLimit().collect { resource ->
+        taskRepository.getContinuesTasksWithLimit().collect { resource ->
             _continuesTasks.update { resource }
         }
     }
 
     fun getCompletedTasks() = viewModelScope.launch {
-        storageRepository.getCompletedTasksWithLimit().collect { resource ->
+        taskRepository.getCompletedTasksWithLimit().collect { resource ->
             _completedTasks.update { resource }
         }
     }
 
     fun getCanceledTasks() = viewModelScope.launch {
-        storageRepository.getCanceledTasksWithLimit().collect { resource ->
+        taskRepository.getCanceledTasksWithLimit().collect { resource ->
             _canceledTasks.update { resource }
         }
     }

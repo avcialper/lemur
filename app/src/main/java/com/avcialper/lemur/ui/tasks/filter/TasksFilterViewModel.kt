@@ -3,7 +3,7 @@ package com.avcialper.lemur.ui.tasks.filter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.model.local.TaskCard
-import com.avcialper.lemur.data.repository.storage.StorageRepository
+import com.avcialper.lemur.data.repository.storage.task.TaskRepository
 import com.avcialper.lemur.util.constant.Resource
 import com.avcialper.lemur.util.getCurrentDate
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,48 +14,47 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TasksFilterViewModel @Inject constructor(
-    private val repository: StorageRepository
-) : ViewModel() {
+class TasksFilterViewModel @Inject constructor(private val taskRepository: TaskRepository) :
+    ViewModel() {
 
     private val _state = MutableStateFlow<Resource<List<TaskCard>>>(Resource.Loading())
     val state = _state.asStateFlow()
 
     fun getAllTasks() = viewModelScope.launch {
-        repository.getUserTasks().collect(::collector)
+        taskRepository.getUserTasks().collect(::collector)
     }
 
     fun getTasksByDate(date: String) = viewModelScope.launch {
-        repository.getSelectedDateTasks(date).collect(::collector)
+        taskRepository.getSelectedDateTasks(date).collect(::collector)
     }
 
     fun getTodayTasks() = viewModelScope.launch {
         val today = getCurrentDate()
-        repository.getSelectedDateTasks(today).collect(::collector)
+        taskRepository.getSelectedDateTasks(today).collect(::collector)
     }
 
     fun getPersonalTasks() = viewModelScope.launch {
-        repository.getPersonalTasks().collect(::collector)
+        taskRepository.getPersonalTasks().collect(::collector)
     }
 
     fun getTeamTasks() = viewModelScope.launch {
-        repository.getTeamTasks().collect(::collector)
+        taskRepository.getTeamTasks().collect(::collector)
     }
 
     fun getMeets() = viewModelScope.launch {
-        repository.getMeets().collect(::collector)
+        taskRepository.getMeets().collect(::collector)
     }
 
     fun getContinuesTasks() = viewModelScope.launch {
-        repository.getContinuesTasks().collect(::collector)
+        taskRepository.getContinuesTasks().collect(::collector)
     }
 
     fun getCompletedTasks() = viewModelScope.launch {
-        repository.getCompletedTasks().collect(::collector)
+        taskRepository.getCompletedTasks().collect(::collector)
     }
 
     fun getCanceledTasks() = viewModelScope.launch {
-        repository.getUserTasks().collect(::collector)
+        taskRepository.getUserTasks().collect(::collector)
     }
 
     private fun collector(resource: Resource<List<TaskCard>>) {

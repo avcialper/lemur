@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.local.Note
 import com.avcialper.lemur.data.model.local.Task
-import com.avcialper.lemur.data.repository.storage.StorageRepository
+import com.avcialper.lemur.data.repository.storage.task.TaskRepository
 import com.avcialper.lemur.util.constant.Resource
 import com.avcialper.lemur.util.constant.TaskStatus
 import com.avcialper.lemur.util.getCurrentDate
@@ -19,9 +19,8 @@ import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
-class TaskDetailViewModel @Inject constructor(
-    private val storageRepository: StorageRepository
-) : ViewModel() {
+class TaskDetailViewModel @Inject constructor(private val taskRepository: TaskRepository) :
+    ViewModel() {
 
     private val _state = MutableStateFlow<Resource<Task>?>(null)
     val state = _state.asStateFlow()
@@ -33,7 +32,7 @@ class TaskDetailViewModel @Inject constructor(
     val statusState = _statusState.asStateFlow()
 
     fun getTaskDetail(taskId: String) = viewModelScope.launch {
-        storageRepository.getTaskDetail(taskId).collect { resource ->
+        taskRepository.getTaskDetail(taskId).collect { resource ->
             _state.update { resource }
         }
     }
@@ -42,13 +41,13 @@ class TaskDetailViewModel @Inject constructor(
         val ownerId = UserManager.user!!.id
         val uuid = UUID.randomUUID().toString()
         val noteData = Note(uuid, note, ownerId, getCurrentDate(), getCurrentTime())
-        storageRepository.addNote(taskId, noteData).collect { resource ->
+        taskRepository.addNote(taskId, noteData).collect { resource ->
             _noteState.update { resource }
         }
     }
 
     fun updateTaskStatus(taskId: String, status: TaskStatus) = viewModelScope.launch {
-        storageRepository.updateTaskStatus(taskId, status).collect { resource ->
+        taskRepository.updateTaskStatus(taskId, status).collect { resource ->
             _statusState.update { resource }
         }
     }

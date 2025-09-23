@@ -9,6 +9,7 @@ import com.avcialper.lemur.data.model.local.Member
 import com.avcialper.lemur.data.model.local.Role
 import com.avcialper.lemur.data.model.local.Team
 import com.avcialper.lemur.data.repository.storage.StorageRepository
+import com.avcialper.lemur.data.repository.storage.team.TeamRepository
 import com.avcialper.lemur.util.constant.Constants
 import com.avcialper.lemur.util.constant.Permissions
 import com.avcialper.lemur.util.constant.Resource
@@ -25,6 +26,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateTeamViewModel @Inject constructor(
     private val storageRepository: StorageRepository,
+    private val teamRepository: TeamRepository,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
@@ -73,9 +75,9 @@ class CreateTeamViewModel @Inject constructor(
             emptyList()
         )
 
-        storageRepository.createTeam(team).collect { resource ->
+        teamRepository.createTeam(team).collect { resource ->
             if (resource is Resource.Success)
-                storageRepository.addTeamToUser(userId, teamId).collect {
+                teamRepository.addTeamToUser(userId, teamId).collect {
                     _state.update { resource }
                 }
             else

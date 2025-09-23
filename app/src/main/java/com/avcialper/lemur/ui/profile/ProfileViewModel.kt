@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.repository.auth.AuthRepository
-import com.avcialper.lemur.data.repository.storage.StorageRepository
+import com.avcialper.lemur.data.repository.storage.user.UserRepository
 import com.avcialper.lemur.helper.DataStoreManager
 import com.avcialper.lemur.util.constant.ResourceStatus
 import com.google.firebase.auth.FirebaseUser
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val auth: AuthRepository,
-    private val storageRepository: StorageRepository,
+    private val userRepository: UserRepository,
     private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
 
@@ -41,7 +41,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private suspend fun getUserFromRepository(user: FirebaseUser) {
-        storageRepository.getUser(user.uid).collect { resource ->
+        userRepository.getUser(user.uid).collect { resource ->
             if (resource.status == ResourceStatus.SUCCESS) {
                 resource.data?.let { (_, username, about, imageUrl, teams) ->
                     UserManager.updateUser(user, username, about, imageUrl, teams ?: emptyList())

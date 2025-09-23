@@ -6,6 +6,7 @@ import com.avcialper.lemur.data.AppManager
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.remote.UserProfile
 import com.avcialper.lemur.data.repository.storage.StorageRepository
+import com.avcialper.lemur.data.repository.storage.user.UserRepository
 import com.avcialper.lemur.util.constant.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UpdateProfileViewModel @Inject constructor(
     private val storageRepository: StorageRepository,
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<Resource<Boolean>?>(null)
@@ -56,7 +58,7 @@ class UpdateProfileViewModel @Inject constructor(
             newImageUrl.value ?: imageUrl,
             UserManager.user?.teams
         )
-        storageRepository.updateUser(user).collect { resource ->
+        userRepository.updateUser(user).collect { resource ->
             _state.value = resource
         }
     }
