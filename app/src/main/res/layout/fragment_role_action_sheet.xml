@@ -22,7 +22,7 @@
         android:text="@string/members" />
 
     <TextView
-        android:id="@+id/lwa_add_member"
+        android:id="@+id/lwa_assign_role"
         style="@style/LabelWithArrow"
         android:text="@string/add_new_member" />
 

@@ -35,8 +35,8 @@ class RoleActionSheet(
                 handleActions(RoleBottomSheetActions.MEMBERS)
             }
 
-            lwaAddMember.setOnClickListener {
-                handleActions(RoleBottomSheetActions.ADD_NEW_MEMBER)
+            lwaAssignRole.setOnClickListener {
+                handleActions(RoleBottomSheetActions.ASSIGN_ROLE)
             }
 
             lwaUpdateRole.setOnClickListener {

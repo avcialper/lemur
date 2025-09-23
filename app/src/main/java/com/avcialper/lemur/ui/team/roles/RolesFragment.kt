@@ -120,9 +120,10 @@ class RolesFragment : BaseFragment<FragmentRolesBinding>(FragmentRolesBinding::i
                 direction.navigate()
             }
 
-            RoleBottomSheetActions.ADD_NEW_MEMBER -> {
-                // TODO handle add member
-                toast("handle_add_member")
+            RoleBottomSheetActions.ASSIGN_ROLE -> {
+                val direction = RolesFragmentDirections.toAssignRole(args.teamId, role)
+                onSuccess()
+                direction.navigate()
             }
 
             RoleBottomSheetActions.UPDATE -> {
@@ -132,7 +133,6 @@ class RolesFragment : BaseFragment<FragmentRolesBinding>(FragmentRolesBinding::i
             }
 
             RoleBottomSheetActions.DELETE -> {
-                // TODO handle delete role
                 toast("handle_delete_role")
             }
         }

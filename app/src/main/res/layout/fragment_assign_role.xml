@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.team.roles.assignrole.AssignRoleFragment">
+
+    <TextView
+        android:id="@+id/text_role_name"
+        style="@style/FillHorizontal"
+        android:background="?attr/headerColor"
+        android:padding="@dimen/padding_medium"
+        android:textSize="@dimen/text_size_medium"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/app_name" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_selected_members"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_role_name" />
+
+    <com.avcialper.lemur.ui.component.SearchBar
+        android:id="@+id/search_bar"
+        style="@style/FillHorizontal"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:hint="@string/search_member"
+        android:paddingHorizontal="@dimen/padding_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_selected_members" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_member"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/zero_dp"
+        android:layout_margin="@dimen/margin_medium"
+        app:layout_constraintBottom_toTopOf="@id/button_confirm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_bar" />
+
+    <TextView
+        android:id="@+id/empty_state"
+        style="@style/FillHorizontal"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:text="@string/cannot_find_member"
+        android:textAlignment="center"
+        android:textSize="@dimen/text_size_medium"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_bar" />
+
+    <Button
+        android:id="@+id/button_confirm"
+        style="@style/Button"
+        android:layout_margin="@dimen/margin_medium"
+        android:text="@string/confirm"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        style="@style/FillHorizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

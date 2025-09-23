@@ -35,6 +35,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
 
+    private val bottomViewDestinations =
+        listOf(R.id.homeFragment, R.id.teamFragment, R.id.profileFragment)
+
+    private val haveHeaderDestinations =
+        listOf(R.id.teamDetailFragment, R.id.roleDetailFragment, R.id.assignRoleFragment)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen().setKeepOnScreenCondition {
@@ -113,14 +119,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isNotBottomNavigationDestinations(destination: NavDestination): Boolean {
-        val bottomViewDestinations =
-            listOf(R.id.homeFragment, R.id.teamFragment, R.id.profileFragment)
         val index = bottomViewDestinations.indexOf(destination.id)
         return index == -1
     }
 
     private fun isDestinationHaveHeader(destination: NavDestination): Boolean {
-        val haveHeaderDestinations = listOf(R.id.teamDetailFragment, R.id.roleDetailFragment)
         val index = haveHeaderDestinations.indexOf(destination.id)
         return index != -1
     }

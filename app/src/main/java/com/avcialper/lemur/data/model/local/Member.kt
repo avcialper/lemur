@@ -14,4 +14,7 @@ data class Member(
         permissions: List<String>
     ) =
         MemberCard(id, name, roleCodes, roleNames, imageUrl, permissions)
+
+    fun toSelectableMemberCard(name: String, imageUrl: String?) =
+        SelectableMemberCard(imageUrl, id, name)
 }

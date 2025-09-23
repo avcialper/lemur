@@ -77,5 +77,5 @@ enum class Permissions(val label: Int) {
 }
 
 enum class RoleBottomSheetActions {
-    MEMBERS, ADD_NEW_MEMBER, UPDATE, DELETE
+    MEMBERS, ASSIGN_ROLE, UPDATE, DELETE
 }

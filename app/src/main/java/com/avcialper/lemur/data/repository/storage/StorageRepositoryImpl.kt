@@ -7,6 +7,7 @@ import com.avcialper.lemur.data.model.local.MemberCard
 import com.avcialper.lemur.data.model.local.Note
 import com.avcialper.lemur.data.model.local.Role
 import com.avcialper.lemur.data.model.local.Room
+import com.avcialper.lemur.data.model.local.SelectableMemberCard
 import com.avcialper.lemur.data.model.local.Task
 import com.avcialper.lemur.data.model.local.TaskCard
 import com.avcialper.lemur.data.model.local.Team
@@ -314,6 +315,24 @@ class StorageRepositoryImpl @Inject constructor(
 
     }
 
+    override suspend fun getMembersNotInRole(
+        teamId: String,
+        roleCode: String
+    ): Flow<Resource<List<SelectableMemberCard>>> = flowWithResource {
+        val documents = teamCollection.document(teamId).get().await()
+        val team = documents.toObject(Team::class.java)
+        val members = team?.members ?: emptyList()
+
+        members.filter { member ->
+            !member.roleCodes.contains(roleCode)
+        }.map { member ->
+            val userDocument = userCollection.document(member.id).get().await()
+            val user = userDocument.toObject(UserProfile::class.java)!!
+
+            member.toSelectableMemberCard(user.username, user.imageUrl)
+        }
+    }
+
     override suspend fun getRole(teamId: String, roleCode: String): Flow<Resource<Role>> =
         flowWithResource {
             val document = teamCollection.document(teamId).get().await()
@@ -350,6 +369,27 @@ class StorageRepositoryImpl @Inject constructor(
             member
         }
         teamCollection.document(teamId).update(Constants.TEAM_MEMBERS, members).await()
+        true
+    }
+
+    override suspend fun assignRoleToMembers(
+        teamId: String,
+        memberIds: List<String>,
+        roleCode: String
+    ): Flow<Resource<Boolean>> = flowWithResource {
+        val document = teamCollection.document(teamId).get().await()
+        val team = document.toObject(Team::class.java)!!
+
+        val updatedMembers = team.members.map { member ->
+            if (memberIds.contains(member.id)) {
+                member.copy(roleCodes = member.roleCodes + roleCode)
+            } else {
+                member
+            }
+        }
+
+        teamCollection.document(teamId).update(Constants.TEAM_MEMBERS, updatedMembers).await()
+
         true
     }
 

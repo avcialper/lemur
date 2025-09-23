@@ -2,8 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/FillHorizontal"
-    android:padding="@dimen/padding_small">
+    android:layout_width="68dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/margin_small">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_member"
@@ -11,31 +12,32 @@
         android:layout_height="@dimen/member_image_size"
         android:contentDescription="@string/member_image"
         android:src="@drawable/logo"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/RoundedImage" />
 
-    <TextView
-        android:id="@+id/text_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_medium"
-        android:textSize="@dimen/text_size_medium"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/image_member"
-        app:layout_constraintStart_toEndOf="@id/image_member"
-        app:layout_constraintTop_toTopOf="@id/image_member"
-        tools:text="@string/app_name" />
-
     <ImageView
-        android:id="@+id/image_is_selected"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:importantForAccessibility="no"
-        android:src="@drawable/ic_select_circle"
+        android:contentDescription="@string/remove_selection_icon"
+        android:src="@drawable/ic_cancel"
+        app:layout_constraintBottom_toBottomOf="@id/image_member"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/text_member_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="2"
+        android:maxLines="2"
+        android:textSize="@dimen/text_size_small"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/image_member"
+        app:layout_constraintStart_toStartOf="@id/image_member"
+        app:layout_constraintTop_toBottomOf="@id/image_member"
+        tools:text="@string/app_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
