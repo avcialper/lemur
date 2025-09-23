@@ -5,11 +5,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.avcialper.lemur.R
 import com.avcialper.lemur.data.UserManager
 import com.avcialper.lemur.data.model.local.Role
 import com.avcialper.lemur.databinding.FragmentRolesBinding
 import com.avcialper.lemur.helper.Divider
 import com.avcialper.lemur.ui.BaseFragment
+import com.avcialper.lemur.ui.component.AlertFragment
 import com.avcialper.lemur.ui.team.component.roleactionsheet.RoleActionSheet
 import com.avcialper.lemur.ui.team.roles.adapter.RolesAdapter
 import com.avcialper.lemur.util.constant.Constants
@@ -103,7 +105,6 @@ class RolesFragment : BaseFragment<FragmentRolesBinding>(FragmentRolesBinding::i
 
     private fun changeRoleAdapterData(data: List<Role>) = with(binding) {
         (rvRoles.adapter as RolesAdapter).changeData(data)
-
         emptyRole.visibility = if (data.isEmpty()) View.VISIBLE else View.GONE
     }
 
@@ -133,7 +134,13 @@ class RolesFragment : BaseFragment<FragmentRolesBinding>(FragmentRolesBinding::i
             }
 
             RoleBottomSheetActions.DELETE -> {
-                toast("handle_delete_role")
+                val questionLabel =
+                    getString(R.string.delete_role_question).replace("{0}", role.name)
+
+                AlertFragment(stringLabel = questionLabel) {
+                    vm.deleteRole(args.teamId, role.code)
+                    onSuccess()
+                }.show(childFragmentManager, "delete_role")
             }
         }
     }

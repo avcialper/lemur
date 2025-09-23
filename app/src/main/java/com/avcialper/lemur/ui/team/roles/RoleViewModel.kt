@@ -28,10 +28,20 @@ class RoleViewModel @Inject constructor(private val repository: StorageRepositor
         }
     }
 
-    fun checkUserHaveRoleManagementPermission(teamId: String, userId: String) = viewModelScope.launch {
-        repository.isUserHaveRoleManagementPermission(teamId, userId).collect { resource ->
-            _isUserHaveRoleManagementPermission.update { resource }
+    fun checkUserHaveRoleManagementPermission(teamId: String, userId: String) =
+        viewModelScope.launch {
+            repository.isUserHaveRoleManagementPermission(teamId, userId).collect { resource ->
+                _isUserHaveRoleManagementPermission.update { resource }
+            }
+        }
+
+    fun deleteRole(teamId: String, roleCode: String) = viewModelScope.launch {
+        _state.update { Resource.Loading() }
+        repository.deleteRole(teamId, roleCode).collect { resource ->
+            if (resource is Resource.Success)
+                getRoles(teamId)
+            else if (resource is Resource.Error)
+                _state.update { Resource.Error(resource.throwable) }
         }
     }
-
 }

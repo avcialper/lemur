@@ -393,6 +393,22 @@ class StorageRepositoryImpl @Inject constructor(
         true
     }
 
+    override suspend fun deleteRole(teamId: String, roleCode: String): Flow<Resource<Boolean>> =
+        flowWithResource {
+            val document = teamCollection.document(teamId).get().await()
+            val team = document.toObject(Team::class.java)!!
+
+            val updatedRoles = team.roles.filter { role -> role.code != roleCode }
+            val updatedMembers = team.members.map { member ->
+                member.copy(roleCodes = member.roleCodes.filter { code -> code != roleCode })
+            }
+
+            teamCollection.document(teamId).update(Constants.TEAM_ROLES, updatedRoles).await()
+            teamCollection.document(teamId).update(Constants.TEAM_MEMBERS, updatedMembers).await()
+
+            true
+        }
+
     override suspend fun isUserHaveRoleManagementPermission(
         teamId: String,
         userId: String

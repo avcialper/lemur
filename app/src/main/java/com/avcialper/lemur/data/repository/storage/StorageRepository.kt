@@ -67,7 +67,6 @@ interface StorageRepository {
         teamId: String,
         roleCode: String
     ): Flow<Resource<List<SelectableMemberCard>>>
-
     suspend fun getRole(teamId: String, roleCode: String): Flow<Resource<Role>>
     suspend fun updateRole(teamId: String, updatedRole: Role): Flow<Resource<Boolean>>
     suspend fun removeRoleFromMember(
@@ -78,6 +77,7 @@ interface StorageRepository {
         memberIds: List<String>,
         roleCode: String
     ): Flow<Resource<Boolean>>
+    suspend fun deleteRole(teamId: String, roleCode: String): Flow<Resource<Boolean>>
 
     suspend fun isUserHaveRoleManagementPermission(
         teamId: String, userId: String

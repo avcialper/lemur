@@ -160,4 +160,5 @@
     <string name="change_permissions">İzinleri güncellemek için tıklayınız.</string>
     <string name="remove_selection_icon">Seçim kaldırma ikonu.</string>
     <string name="assign_role_question">Seçili kişiye/kişilere {0} rolünü atamak istediğinize emin misiniz?</string>
+    <string name="delete_role_question">{0} rolünü kaldırmak istediğinize emin misiniz?</string>
 </resources>
