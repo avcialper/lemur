@@ -296,6 +296,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/toCreateRole"
+            app:destination="@id/createRoleFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/updateTeamFragment"
@@ -349,5 +356,14 @@
         <argument
             android:name="role"
             app:argType="com.avcialper.lemur.data.model.local.Role" />
+    </fragment>
+    <fragment
+        android:id="@+id/createRoleFragment"
+        android:name="com.avcialper.lemur.ui.team.roles.create.CreateRoleFragment"
+        android:label="fragment_create_role"
+        tools:layout="@layout/fragment_create_role">
+        <argument
+            android:name="teamId"
+            app:argType="string" />
     </fragment>
 </navigation>

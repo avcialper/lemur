@@ -79,6 +79,11 @@ class RolesFragment : BaseFragment<FragmentRolesBinding>(FragmentRolesBinding::i
 
             changeRoleAdapterData(data)
         }
+
+        fabCreateRole.setOnClickListener {
+            val direction = RolesFragmentDirections.toCreateRole(args.teamId)
+            direction.navigate()
+        }
     }
 
     private fun observer() {

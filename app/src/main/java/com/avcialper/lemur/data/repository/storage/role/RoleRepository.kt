@@ -24,4 +24,5 @@ interface RoleRepository {
         roleCode: String
     ): Flow<Resource<Boolean>>
     suspend fun deleteRole(teamId: String, roleCode: String): Flow<Resource<Boolean>>
+    suspend fun createRole(teamId: String, role: Role): Flow<Resource<Boolean>>
 }

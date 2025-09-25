@@ -147,4 +147,12 @@ class RoleRepositoryImpl @Inject constructor(db: FirebaseFirestore) : RoleReposi
             true
         }
 
+    override suspend fun createRole(teamId: String, role: Role): Flow<Resource<Boolean>> =
+        flowWithResource {
+            val document = teamCollection.document(teamId).get().await()
+            val team = document.toObject(Team::class.java)!!
+            val updatedRoles = team.roles + role
+            teamCollection.document(teamId).update(Constants.TEAM_ROLES, updatedRoles).await()
+            true
+        }
 }

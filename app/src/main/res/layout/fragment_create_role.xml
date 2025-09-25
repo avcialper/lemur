@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/LinearPage"
+    tools:context=".ui.team.roles.create.CreateRoleFragment">
+
+    <com.avcialper.lemur.ui.component.TextInput
+        android:id="@+id/component_role_name"
+        style="@style/FillHorizontal"
+        android:hint="@string/role_name"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/text_select_permissions"
+        style="@style/FillHorizontal"
+        android:text="@string/select_permission"
+        android:textSize="@dimen/text_size_medium" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/cg_permissions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:clipToPadding="false"
+        android:foregroundGravity="left"
+        app:chipSpacingVertical="-4dp"
+        app:singleLine="false"
+        app:singleSelection="false" />
+
+    <Button
+        android:id="@+id/button_create"
+        style="@style/Button"
+        android:text="@string/create_role" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+
+</LinearLayout>
